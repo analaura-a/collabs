@@ -1,0 +1,24 @@
+{
+  "name": "Collabs",
+  "version": "1.0.0",
+  "description": "Plataforma de búsqueda de colaboradores para proyectos voluntarios del rubro IT",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./app/server.js",
+    "dev": "nodemon ./app/server.js"
+  },
+  "author": "Ana Almirón y Brisa Marca",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "5.1.1",
+    "cors": "2.8.5",
+    "express": "4.18.2",
+    "jsonwebtoken": "9.0.2",
+    "mongodb": "6.1.0",
+    "yup": "1.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "3.0.1"
+  }
+}
