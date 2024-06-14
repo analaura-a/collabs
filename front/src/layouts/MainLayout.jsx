@@ -1,7 +1,12 @@
+import { Outlet } from 'react-router-dom';
+
 const MainLayout = () => {
 
     return (
-        <h1>Navbar y footer</h1>
+        <div>
+            <h1>Navbar y footer</h1>
+            <Outlet />
+        </div>
     )
 }
 
