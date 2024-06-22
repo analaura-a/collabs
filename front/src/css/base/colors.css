@@ -1,0 +1,28 @@
+:root {
+    --color-primary-logo: hsl(234, 72%, 61%);
+    --color-primary-button: hsl(234, 79%, 63%);
+    --color-primary-text: hsl(234, 79%, 60%);
+    --color-primary-light: hsl(229, 100%, 97%); /*Light purple*/
+    --color-primary-selected: hsl(231, 28%, 95%);
+    --color-primary-hover: hsl(233, 82%, 91%);
+
+    --color-black: hsl(220, 5%, 12%);
+    --color-black-subtitle: hsl(240, 1%, 23%);
+    --color-black-light: hsl(240, 0%, 41%); /*Subtitle lighter*/
+
+    --color-gray-placeholder: hsl(240, 5%, 57%);
+    --color-gray-line: hsl(218, 22%, 79%);
+    --color-gray-line-light: hsl(216, 12%, 92%);
+
+    --color-gray: hsl(240, 9%, 93%);
+    --color-gray-icon: hsl(218, 15%, 71%);
+
+    --color-white-background: hsl(240, 20%, 99%);
+
+    --color-red-background: hsl(0, 48%, 94%);
+    --color-red-text: hsl(0, 60%, 40%);
+    --color-yellow-background: hsl(52, 48%, 94%);
+    --color-yellow-text: hsl(51, 59%, 30%);
+    --color-green-background: hsl(128, 48%, 94%);
+    --color-green-text: hsl(128, 59%, 30%);
+}
