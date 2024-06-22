@@ -34,7 +34,15 @@ const GuestNavbar = () => {
                         <Link to="#funcionalidades">Funcionalidades</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/">Explorar</Link>
+                        <p>Explorar</p>
+                        <ul>
+                            <li>
+                                <Link to="#funcionalidades">Proyectos</Link>
+                            </li>
+                            <li>
+                                <Link to="#funcionalidades">Colaboradores</Link>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
