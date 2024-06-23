@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
+import smallLogo from '../../assets/svg/collabs-isotipo.svg';
+import largeLogo from '../../assets/svg/collabs-logo.svg';
 
 const GuestNavbar = () => {
 
@@ -20,7 +22,11 @@ const GuestNavbar = () => {
 
             <div className="container navbar-container">
                 <Link to="/">
-                    <img src="assets/svg/collabs-logo.svg" alt="Collabs" />
+                    <picture>
+                        <source media="(max-width: 386px)" srcSet={smallLogo} />
+                        <source media="(min-width: 387px)" srcSet={largeLogo} />
+                        <img src={largeLogo} alt="Collabs" />
+                    </picture>
                 </Link>
 
                 <button className="mobile-nav-toggle" id="nav-toggle" aria-controls="primary-navigation" aria-expanded="false"></button>
