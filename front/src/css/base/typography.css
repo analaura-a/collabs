@@ -19,3 +19,11 @@
     --font-semibold: 600;
     --font-bold: 700;
 }
+
+.navbar-text{
+    font-family: var(--inter);
+    font-size: var(--font-16px);
+    font-weight: var(--font-medium);
+    color: var(--color-black-subtitle);
+    letter-spacing: -0.02em;
+}
