@@ -1,9 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import smallLogo from '../../assets/svg/collabs-isotipo.svg';
 import largeLogo from '../../assets/svg/collabs-logo.svg';
 
 const GuestNavbar = () => {
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const location = useLocation();
     useEffect(() => {
@@ -29,6 +31,8 @@ const GuestNavbar = () => {
         if (navToggleRef) {
             navToggleRef.setAttribute('aria-expanded', "false");
         }
+
+        setIsDropdownOpen(false)
     }, [location.pathname])
 
     const handleNavbarToggle = () => {
@@ -50,6 +54,11 @@ const GuestNavbar = () => {
             navToggleRef.setAttribute('aria-expanded', newValue);
             console.log('(Expanded) Después del click:', newValue);
         }
+    };
+
+    const handleDropdownToggle = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+        console.log("hice click en el toggle")
     };
 
     return (
@@ -78,18 +87,18 @@ const GuestNavbar = () => {
                             <Link to="/iniciar-sesion" className="navbar-text">Funcionalidades</Link>
                         </li>
                         <li>
-                            <div className="nav-link-with-icon">
+                            <div className="nav-link-with-icon" onClick={handleDropdownToggle}>
                                 <p className="navbar-text">Explorar</p>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48" fill="none" className="icon-svg">
                                     <path stroke="#3E4B62" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2.5" d="m33 19-7.41 9.186c-.874 1.085-2.306 1.085-3.18 0L15 19"></path>
                                 </svg>
                             </div>
-                            <ul className="dropdown-menu display-none">
+                            <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
                                 <li>
-                                    <Link to="#funcionalidades" className="navbar-text">Proyectos</Link>
+                                    <Link to="/" className="navbar-text">Proyectos</Link>
                                 </li>
                                 <li>
-                                    <Link to="#funcionalidades" className="navbar-text">Colaboradores</Link>
+                                    <Link to="/" className="navbar-text">Colaboradores</Link>
                                 </li>
                             </ul>
                         </li>
