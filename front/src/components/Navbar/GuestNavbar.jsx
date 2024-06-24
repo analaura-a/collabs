@@ -17,6 +17,14 @@ const GuestNavbar = () => {
     }, [location]);
 
     const myRef = useRef(null);
+
+    useEffect(() => {
+        const navbarRef = myRef.current;
+        if (navbarRef) {
+            navbarRef.setAttribute('data-visible', "false");
+        }
+    }, [location])
+
     const handleNavbarToggle = () => {
         const navbarRef = myRef.current;
 
@@ -53,7 +61,7 @@ const GuestNavbar = () => {
                             <Link to="#como-funciona" className="navbar-text">Cómo funciona</Link>
                         </li>
                         <li>
-                            <Link to="#funcionalidades" className="navbar-text">Funcionalidades</Link>
+                            <Link to="/iniciar-sesion" className="navbar-text">Funcionalidades</Link>
                         </li>
                         <li>
                             <div className="nav-link-with-icon">
