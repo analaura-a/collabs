@@ -16,25 +16,39 @@ const GuestNavbar = () => {
         }
     }, [location]);
 
-    const myRef = useRef(null);
+    const primaryNavigation = useRef(null);
+    const navToggle = useRef(null);
 
     useEffect(() => {
-        const navbarRef = myRef.current;
+        const navbarRef = primaryNavigation.current;
+        const navToggleRef = navToggle.current;
+
         if (navbarRef) {
             navbarRef.setAttribute('data-visible', "false");
         }
-    }, [location])
+        if (navToggleRef) {
+            navToggleRef.setAttribute('aria-expanded', "false");
+        }
+    }, [location.pathname])
 
     const handleNavbarToggle = () => {
-        const navbarRef = myRef.current;
+        const navbarRef = primaryNavigation.current;
+        const navToggleRef = navToggle.current;
 
         if (navbarRef) {
             const currentVisibility = navbarRef.getAttribute('data-visible');
-            console.log("Antes del click:", currentVisibility)
 
             const newVisibility = currentVisibility === 'true' ? 'false' : 'true';
             navbarRef.setAttribute('data-visible', newVisibility);
-            console.log('Después del click:', newVisibility);
+            console.log('(Visibility) Después del click:', newVisibility);
+        }
+
+        if (navToggleRef) {
+            const isExpanded = navToggleRef.getAttribute('aria-expanded');
+
+            const newValue = isExpanded === 'true' ? 'false' : 'true';
+            navToggleRef.setAttribute('aria-expanded', newValue);
+            console.log('(Expanded) Después del click:', newValue);
         }
     };
 
@@ -50,10 +64,10 @@ const GuestNavbar = () => {
                     </picture>
                 </Link>
 
-                <button className="mobile-nav-toggle" id="nav-toggle" aria-controls="primary-navigation" aria-expanded="false" onClick={handleNavbarToggle}></button>
+                <button ref={navToggle} className="mobile-nav-toggle" id="nav-toggle" aria-controls="primary-navigation" aria-expanded="false" onClick={handleNavbarToggle}></button>
 
                 <nav>
-                    <ul ref={myRef} id="primary-navigation" className="primary-navigation" data-visible="false">
+                    <ul ref={primaryNavigation} id="primary-navigation" className="primary-navigation" data-visible="false">
                         <li>
                             <Link to="#que-es" className="navbar-text">Qué es</Link>
                         </li>
