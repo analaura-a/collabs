@@ -18,7 +18,7 @@
     align-items: center;
 }
 
-.navbar-container .button-small{
+.navbar-container .button-small {
     margin-right: 56px;
 }
 
@@ -37,6 +37,10 @@
     border-left: 0.5px solid var(--color-gray-line);
 
     transform: translateX(100%);
+}
+
+.primary-navigation[data-visible="true"] {
+    transform: translateX(0%);
 }
 
 .nav-link-with-icon {
@@ -92,7 +96,7 @@
         display: none;
     }
 
-    .navbar-container .button-small{
+    .navbar-container .button-small {
         margin-right: 0;
     }
 

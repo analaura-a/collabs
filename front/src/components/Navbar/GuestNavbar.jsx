@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import smallLogo from '../../assets/svg/collabs-isotipo.svg';
 import largeLogo from '../../assets/svg/collabs-logo.svg';
@@ -6,7 +6,6 @@ import largeLogo from '../../assets/svg/collabs-logo.svg';
 const GuestNavbar = () => {
 
     const location = useLocation();
-
     useEffect(() => {
         const hash = location.hash;
         if (hash) {
@@ -16,6 +15,20 @@ const GuestNavbar = () => {
             }
         }
     }, [location]);
+
+    const myRef = useRef(null);
+    const handleNavbarToggle = () => {
+        const navbarRef = myRef.current;
+
+        if (navbarRef) {
+            const currentVisibility = navbarRef.getAttribute('data-visible');
+            console.log("Antes del click:", currentVisibility)
+
+            const newVisibility = currentVisibility === 'true' ? 'false' : 'true';
+            navbarRef.setAttribute('data-visible', newVisibility);
+            console.log('Después del click:', newVisibility);
+        }
+    };
 
     return (
         <header className="navbar">
@@ -29,10 +42,10 @@ const GuestNavbar = () => {
                     </picture>
                 </Link>
 
-                <button className="mobile-nav-toggle" id="nav-toggle" aria-controls="primary-navigation" aria-expanded="false"></button>
+                <button className="mobile-nav-toggle" id="nav-toggle" aria-controls="primary-navigation" aria-expanded="false" onClick={handleNavbarToggle}></button>
 
                 <nav>
-                    <ul id="primary-navigation" className="primary-navigation">
+                    <ul ref={myRef} id="primary-navigation" className="primary-navigation" data-visible="false">
                         <li>
                             <Link to="#que-es" className="navbar-text">Qué es</Link>
                         </li>
@@ -69,5 +82,3 @@ const GuestNavbar = () => {
 }
 
 export default GuestNavbar;
-
-
