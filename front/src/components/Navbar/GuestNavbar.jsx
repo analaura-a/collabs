@@ -80,7 +80,7 @@ const GuestNavbar = () => {
                         <li>
                             <div className="nav-link-with-icon">
                                 <p className="navbar-text">Explorar</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48" fill="none" className="icon-svg">
                                     <path stroke="#3E4B62" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2.5" d="m33 19-7.41 9.186c-.874 1.085-2.306 1.085-3.18 0L15 19"></path>
                                 </svg>
                             </div>

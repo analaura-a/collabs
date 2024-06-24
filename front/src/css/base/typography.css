@@ -20,10 +20,15 @@
     --font-bold: 700;
 }
 
-.navbar-text{
+.navbar-text {
     font-family: var(--inter);
     font-size: var(--font-16px);
     font-weight: var(--font-medium);
     color: var(--color-black-subtitle);
     letter-spacing: -0.02em;
+    transition: color 280ms ease;
+}
+
+.navbar-text:hover {
+    color: var(--color-primary-text);
 }

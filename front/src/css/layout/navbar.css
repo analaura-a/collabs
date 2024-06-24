@@ -51,6 +51,14 @@
     cursor: pointer;
 }
 
+.nav-link-with-icon:hover .icon-svg {
+    stroke: var(--color-primary-text);
+}
+
+.icon-svg {
+    transition: all 280ms ease;
+}
+
 .mobile-nav-toggle {
     display: block;
     position: absolute;
