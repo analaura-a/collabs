@@ -29,6 +29,6 @@
     transition: color 280ms ease;
 }
 
-.navbar-text:hover {
+.nav-link-with-icon:hover .navbar-text {
     color: var(--color-primary-text);
 }

@@ -5,6 +5,7 @@ import MainLayout from '../layouts/MainLayout.jsx'
 import LandingPage from '../pages/LandingPage/LandingPage.jsx'
 import LoginPage from '../pages/LoginPage/LoginPage.jsx'
 import SignupPage from '../pages/SignupPage/SignupPage.jsx'
+import HomePage from '../pages/HomePage/HomePage.jsx'
 
 
 const AppRoutes = createBrowserRouter([
@@ -25,6 +26,10 @@ const AppRoutes = createBrowserRouter([
             {
                 path: "/crear-cuenta",
                 element: <SignupPage />,
+            },
+            {
+                path: "/inicio",
+                element: <HomePage />,
             }
         ]
     }

@@ -8,6 +8,7 @@ const GuestNavbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const location = useLocation();
+
     useEffect(() => {
         const hash = location.hash;
         if (hash) {
@@ -58,7 +59,6 @@ const GuestNavbar = () => {
 
     const handleDropdownToggle = () => {
         setIsDropdownOpen(!isDropdownOpen);
-        console.log("hice click en el toggle")
     };
 
     return (
