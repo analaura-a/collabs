@@ -84,12 +84,12 @@ const GuestNavbar = () => {
                                     <path stroke="#3E4B62" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2.5" d="m33 19-7.41 9.186c-.874 1.085-2.306 1.085-3.18 0L15 19"></path>
                                 </svg>
                             </div>
-                            <ul className="display-none">
+                            <ul className="dropdown-menu display-none">
                                 <li>
-                                    <Link to="#funcionalidades">Proyectos</Link>
+                                    <Link to="#funcionalidades" className="navbar-text">Proyectos</Link>
                                 </li>
                                 <li>
-                                    <Link to="#funcionalidades">Colaboradores</Link>
+                                    <Link to="#funcionalidades" className="navbar-text">Colaboradores</Link>
                                 </li>
                             </ul>
                         </li>
