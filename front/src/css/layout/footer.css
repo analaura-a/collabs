@@ -1,0 +1,63 @@
+footer {
+    margin-top: 200px;
+    margin-bottom: 24px;
+    /*¿SACAR?*/
+    padding: 0 24px;
+}
+
+footer>.container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--color-gray);
+    border-radius: 32px;
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-credits {
+    margin-top: 64px;
+    padding: 48px 0 0 0;
+    border-top: 0.8px solid var(--color-gray-line);
+}
+
+
+@media only screen and (min-width: 992px) {
+
+    footer {
+        margin-bottom: 64px;
+    }
+
+    footer>.container {
+        width: 85%;
+        margin: 0 auto;
+        padding: 80px 80px 48px 80px;
+    }
+
+    .footer-info {
+        flex-direction: row;
+    }
+
+    .footer-links {
+        flex-direction: row;
+        justify-content: center;
+        gap: 72px;
+    }
+
+}

@@ -5,5 +5,6 @@
 
 @import './layout/container.css';
 @import './layout/navbar.css';
+@import './layout/footer.css';
 
 @import './components/button.css';
