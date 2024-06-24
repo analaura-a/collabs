@@ -29,6 +29,14 @@
     transition: color 280ms ease;
 }
 
+.navbar-text:hover {
+    color: var(--color-primary-text);
+}
+
 .nav-link-with-icon:hover .navbar-text {
+    color: var(--color-primary-text);
+}
+
+.dropdown-menu>li:hover .navbar-text {
     color: var(--color-primary-text);
 }

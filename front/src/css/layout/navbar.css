@@ -181,6 +181,10 @@
     order: 2;
 }
 
+.profile-button .dropdown-menu {
+    z-index: 999;
+}
+
 @media only screen and (min-width: 992px) {
 
     .navbar {
@@ -211,10 +215,6 @@
 
     .navbar-container .navbar-buttons-container {
         margin-right: 0;
-    }
-
-    .dropdown-menu {
-        top: 100%;
     }
 
     .navbar-buttons-container {

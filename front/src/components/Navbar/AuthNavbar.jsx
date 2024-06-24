@@ -6,6 +6,8 @@ import largeLogo from '../../assets/svg/collabs-logo.svg';
 const AuthNavbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isProfileDropdownOpen, setisProfileDropdownOpen] = useState(false);
+    
 
     const location = useLocation();
 
@@ -49,6 +51,10 @@ const AuthNavbar = () => {
 
     const handleDropdownToggle = () => {
         setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleProfileDropdownToggle = () => {
+        setisProfileDropdownOpen(!isProfileDropdownOpen);
     };
 
     return (
@@ -103,10 +109,18 @@ const AuthNavbar = () => {
                     <li className="notification-button">
                         <button className="navbar-button notification"></button>
                     </li>
-                    <li className="profile-button">
+                    <li className="profile-button" onClick={handleProfileDropdownToggle}>
                         <div className="navbar-profile-photo">
                             <img src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095205-stock-illustration-businessman-profile-icon.jpg" alt="" />
                         </div>
+                        <ul className={`dropdown-menu ${isProfileDropdownOpen ? 'show' : ''}`}>
+                            <li>
+                                <Link to="/" className="navbar-text">Mi perfil</Link>
+                            </li>
+                            <li>
+                                <Link to="/" className="navbar-text">Cerrar sesión</Link>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
