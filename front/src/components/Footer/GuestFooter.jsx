@@ -13,12 +13,12 @@ const GuestFooter = () => {
                         <Link to="/">
                             <img src='assets/svg/collabs-logo.svg' alt="Collabs" />
                         </Link>
-                        <p>Busca proyectos, únete a colaborar y crece profesionalmente junto a otros.</p>
+                        <p className='light-paragraph'>Busca proyectos, únete a colaborar y crece profesionalmente junto a otros.</p>
                     </div>
 
                     <ul className="footer-links">
                         <li>
-                            <h2>Acerca de</h2>
+                            <h2 className='footer-headings'>Acerca de</h2>
                             <ul>
                                 <li>
                                     <Link to="#que-es">¿Qué es Collabs?</Link>
@@ -32,7 +32,7 @@ const GuestFooter = () => {
                             </ul>
                         </li>
                         <li>
-                            <h2>Explora</h2>
+                            <h2 className='footer-headings'>Explora</h2>
                             <ul>
                                 <li>
                                     <Link to="/">Proyectos</Link>
@@ -43,7 +43,7 @@ const GuestFooter = () => {
                             </ul>
                         </li>
                         <li>
-                            <h2>Ponte en contacto</h2>
+                            <h2 className='footer-headings'>Ponte en contacto</h2>
                             <ul>
                                 <li>
                                     <a href="https://www.facebook.com" target="_blank">
