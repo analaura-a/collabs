@@ -76,6 +76,26 @@
     letter-spacing: -0.01em;
 }
 
+/*Landing Page*/
+.hero-section__title h1 {
+    font-family: var(--inter);
+    font-size: var(--font-48px);
+    font-weight: var(--font-semibold);
+    color: var(--color-black);
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+}
+
+.hero-section__info p {
+    font-family: var(--inter);
+    font-size: var(--font-20px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-light);
+    letter-spacing: -0.03em;
+    line-height: 1.4;
+    max-width: 550px;
+}
+
 
 /*General*/
 .light-paragraph {

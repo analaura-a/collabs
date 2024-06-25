@@ -8,13 +8,13 @@ const MainLayout = () => {
 
     return (
         <>
-            {/* <GuestNavbar /> */}
-            <AuthNavbar />
+            <GuestNavbar />
+            {/* <AuthNavbar /> */}
 
             <Outlet />
 
-            {/* <GuestFooter /> */}
-            <AuthFooter />
+            <GuestFooter />
+            {/* <AuthFooter /> */}
         </>
     )
 }

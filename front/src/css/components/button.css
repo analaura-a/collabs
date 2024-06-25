@@ -1,4 +1,4 @@
-.button-small{
+.button-small {
     font-family: var(--inter);
     font-size: var(--font-16px);
     font-weight: var(--font-semibold);
@@ -10,3 +10,50 @@
     border-radius: 10px;
     padding: 0.6rem 0.8rem;
 }
+
+
+/*General*/
+.btn {
+    font-family: var(--inter);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: all 280ms ease-out;
+}
+
+/*Colores*/
+.btn-primary {
+    background-color: var(--color-primary-button);
+    color: var(--color-white-background);
+}
+
+.btn-secondary {
+    background-color: var(--color-white-background);
+    color: var(--color-black);
+    border: 1px solid var(--color-gray-line);
+}
+
+/*Hover*/
+.btn-primary:hover {
+    background-color: var(--color-primary-text);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-gray);
+}
+
+/*Tamaños*/
+.btn-medium {
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    padding: 11px 16px;
+    border-radius: 10px;
+}
+
+/*Width*/
+.btn-fitcontent {
+    width: fit-content;
+}
+
+
+
+@media only screen and (min-width: 700px) {}

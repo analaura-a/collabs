@@ -7,4 +7,6 @@
 @import './layout/navbar.css';
 @import './layout/footer.css';
 
+@import './pages/landingPage.css';
+
 @import './components/button.css';

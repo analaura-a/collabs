@@ -1,6 +1,4 @@
 .navbar {
-    margin-bottom: 200px; /*¿SACAR?*/
-
     background-color: var(--color-white-background);
     border-bottom: 0.5px solid var(--color-gray-line);
 
