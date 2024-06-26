@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from 'react-router-dom';
+import Button from "../Button/Button";
 import smallLogo from '../../assets/svg/collabs-isotipo.svg';
 import largeLogo from '../../assets/svg/collabs-logo.svg';
 
@@ -105,7 +106,7 @@ const GuestNavbar = () => {
                     </ul>
                 </nav>
 
-                <button className="btn btn-primary btn-small btn-fitcontent">Crear cuenta</button>
+                <Button size="small">Crear cuenta</Button>
             </div>
 
         </header>

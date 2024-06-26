@@ -1,4 +1,5 @@
 import ArrowIcon from '../../assets/svg/arrow-right.svg?react';
+import Button from '../../components/Button/Button';
 
 const LandingPage = () => {
 
@@ -19,8 +20,8 @@ const LandingPage = () => {
                     </div>
 
                     <div className="hero-section__buttons">
-                        <button className="btn btn-secondary btn-medium btn-fitcontent">Cómo funciona</button>
-                        <button className="btn btn-with-icon btn-primary btn-medium btn-fitcontent">Empezar a colaborar <span><ArrowIcon /></span></button>
+                        <Button color="secondary">Cómo funciona</Button>
+                        <Button icon={<ArrowIcon />}>Empezar a colaborar</Button>
                     </div>
 
                 </div>
