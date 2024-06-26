@@ -79,7 +79,7 @@ const GuestNavbar = () => {
                 <nav>
                     <ul ref={primaryNavigation} id="primary-navigation" className="primary-navigation" data-visible="false">
                         <li>
-                            <Link to="#que-es" className="navbar-text">Qué es</Link>
+                            <Link to="/#que-es" className="navbar-text">Qué es</Link>
                         </li>
                         <li>
                             <Link to="#como-funciona" className="navbar-text">Cómo funciona</Link>

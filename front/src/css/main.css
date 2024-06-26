@@ -8,5 +8,6 @@
 @import './layout/footer.css';
 
 @import './pages/landingPage.css';
+@import './pages/errorPage.css';
 
 @import './components/button.css';

@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button';
 const LandingPage = () => {
 
     return (
-        <main>
+        <main className="landing-page">
 
             <section className="container hero-section">
 
@@ -16,7 +16,7 @@ const LandingPage = () => {
                             <h1 className="title-with-faces">junto a <span><img src="assets/svg/faces.svg" alt="" /></span> otros</h1>
                         </div>
 
-                        <p>En Collabs podrás buscar proyectos, unirte a colaborar, ganar experiencia, hacer conexiones y avanzar en tu carrera.</p>
+                        <p className='big-subtitle'>En Collabs podrás buscar proyectos, unirte a colaborar, ganar experiencia, hacer conexiones y avanzar en tu carrera.</p>
                     </div>
 
                     <div className="hero-section__buttons">
