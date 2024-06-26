@@ -20,8 +20,8 @@ const LandingPage = () => {
                     </div>
 
                     <div className="hero-section__buttons">
-                        <Button color="secondary">Cómo funciona</Button>
-                        <Button icon={<ArrowIcon />}>Empezar a colaborar</Button>
+                        <Button color="secondary" width="full-then-fit">Cómo funciona</Button>
+                        <Button width="full-then-fit" icon={<ArrowIcon />}>Empezar a colaborar</Button>
                     </div>
 
                 </div>

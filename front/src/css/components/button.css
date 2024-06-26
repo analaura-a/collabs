@@ -49,6 +49,20 @@
     width: fit-content;
 }
 
+.btn-fullwidth {
+    width: 100%;
+}
+
+.btn-full-then-fit {
+    width: 100%;
+}
+
+@media only screen and (min-width: 800px) {
+    .btn-full-then-fit {
+        width: fit-content;
+    }
+}
+
 /*Botón con ícono*/
 .btn-with-icon {
     display: flex;
@@ -57,7 +71,3 @@
     align-items: center;
     gap: 0.5rem;
 }
-
-
-
-@media only screen and (min-width: 700px) {}
