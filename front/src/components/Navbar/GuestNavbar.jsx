@@ -105,7 +105,7 @@ const GuestNavbar = () => {
                     </ul>
                 </nav>
 
-                <button className="button-small">Crear cuenta</button>
+                <button className="btn btn-primary btn-small btn-fitcontent">Crear cuenta</button>
             </div>
 
         </header>

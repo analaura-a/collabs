@@ -1,17 +1,3 @@
-.button-small {
-    font-family: var(--inter);
-    font-size: var(--font-16px);
-    font-weight: var(--font-semibold);
-    color: var(--color-white-background);
-    letter-spacing: -0.02em;
-
-    height: fit-content;
-    background-color: var(--color-primary-button);
-    border-radius: 10px;
-    padding: 0.6rem 0.8rem;
-}
-
-
 /*General*/
 .btn {
     font-family: var(--inter);
@@ -42,9 +28,18 @@
 }
 
 /*Tamaños*/
+.btn-small {
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    /* min-height: 44px; */
+    padding: 10px 13px;
+    border-radius: 10px;
+}
+
 .btn-medium {
     font-size: 16px;
     letter-spacing: -0.02em;
+    min-height: 48px;
     padding: 11px 16px;
     border-radius: 10px;
 }
@@ -52,6 +47,15 @@
 /*Width*/
 .btn-fitcontent {
     width: fit-content;
+}
+
+/*Botón con ícono*/
+.btn-with-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 

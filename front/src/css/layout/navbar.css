@@ -12,7 +12,7 @@
     align-items: center;
 }
 
-.navbar-container .button-small {
+.navbar-container .btn {
     margin-right: 56px;
 }
 
@@ -207,7 +207,7 @@
         display: none;
     }
 
-    .navbar-container .button-small {
+    .navbar-container .btn {
         margin-right: 0;
     }
 

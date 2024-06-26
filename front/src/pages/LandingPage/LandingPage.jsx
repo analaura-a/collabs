@@ -20,7 +20,7 @@ const LandingPage = () => {
 
                     <div className="hero-section__buttons">
                         <button className="btn btn-secondary btn-medium btn-fitcontent">Cómo funciona</button>
-                        <button className="btn btn-primary btn-medium btn-fitcontent">Empezar a colaborar <span><ArrowIcon /></span></button>
+                        <button className="btn btn-with-icon btn-primary btn-medium btn-fitcontent">Empezar a colaborar <span><ArrowIcon /></span></button>
                     </div>
 
                 </div>
