@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from "../Button/Button";
 import smallLogo from '../../assets/svg/collabs-isotipo.svg';
 import largeLogo from '../../assets/svg/collabs-logo.svg';
@@ -8,6 +8,7 @@ const GuestNavbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
@@ -106,7 +107,7 @@ const GuestNavbar = () => {
                     </ul>
                 </nav>
 
-                <Button size="small">Crear cuenta</Button>
+                <Button size="small" onClick={() => navigate('/crear-cuenta')}>Crear cuenta</Button>
             </div>
 
         </header>
