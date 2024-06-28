@@ -2,6 +2,7 @@ import React from 'react'
 import { createBrowserRouter } from "react-router-dom"
 
 import MainLayout from '../layouts/MainLayout.jsx'
+import AuthLayout from '../layouts/AuthLayout.jsx'
 import Error404Page from '../pages/404Page/Error404Page.jsx'
 import LandingPage from '../pages/LandingPage/LandingPage.jsx'
 import LoginPage from '../pages/LoginPage/LoginPage.jsx'
@@ -21,16 +22,23 @@ const AppRoutes = createBrowserRouter([
                 element: <LandingPage />,
             },
             {
-                path: "/iniciar-sesion",
+                path: "/inicio",
+                element: <HomePage />,
+            }
+        ]
+    },
+    {
+        path: "/auth",
+        element: <AuthLayout />,
+        errorElement: <Error404Page />,
+        children: [
+            {
+                path: "/auth/iniciar-sesion",
                 element: <LoginPage />,
             },
             {
-                path: "/crear-cuenta",
+                path: "/auth/crear-cuenta",
                 element: <SignupPage />,
-            },
-            {
-                path: "/inicio",
-                element: <HomePage />,
             }
         ]
     }

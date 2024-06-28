@@ -107,7 +107,7 @@ const GuestNavbar = () => {
                     </ul>
                 </nav>
 
-                <Button size="small" onClick={() => navigate('/crear-cuenta')}>Crear cuenta</Button>
+                <Button size="small" onClick={() => navigate('/auth/crear-cuenta')}>Crear cuenta</Button>
             </div>
 
         </header>
