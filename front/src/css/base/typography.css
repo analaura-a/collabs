@@ -109,10 +109,55 @@
     line-height: 1.4;
 }
 
+.subtitle {
+    font-family: var(--inter);
+    font-size: var(--font-16px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-subtitle);
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+}
+
 .light-paragraph {
     font-family: var(--inter);
     font-size: var(--font-16px);
     font-weight: var(--font-regular);
     color: var(--color-black-light);
     letter-spacing: -0.02em;
+}
+
+.link {
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-text);
+}
+
+.primary-color-text {
+    color: var(--color-primary-text);
+}
+
+/*Formulario*/
+.form-label {
+    font-family: var(--inter);
+    font-size: var(--font-16px);
+    font-weight: var(--font-medium);
+    color: var(--color-black);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+
+input {
+    font-family: var(--inter);
+    font-size: var(--font-16px);
+    font-weight: var(--font-regular);
+    color: var(--color-black);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+}
+
+.form-text {
+    font-family: var(--inter);
+    font-size: var(--font-14px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-light);
+    line-height: 1.5;
 }
