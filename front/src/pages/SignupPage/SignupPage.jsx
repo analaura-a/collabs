@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import Input from "../../components/Inputs/Input";
 
 const SignupPage = () => {
 
@@ -25,34 +26,38 @@ const SignupPage = () => {
                         <form action="">
 
                             <div className="form__fullname">
-                                <div className="form__label-input">
+                                <Input label="Nombre" type="text" placeholder="Nombre" required></Input>
+                                <Input label="Apellido" type="text" placeholder="Apellido" required></Input>
+                            </div>
+
+                            <Input label="Correo electrónico" type="email" placeholder="ejemplo@email.com" required></Input>
+
+                            <Input label="Contraseña" type="password" placeholder="***************" helperText="Debe contener mínimo 8 caracteres." required></Input>
+
+                            <Button type="submit" size="large" width="fullwidth">Crear cuenta</Button>
+
+                            {/* <div className="input-group">
                                     <label htmlFor="name" className="form-label">Nombre<span className="primary-color-text">*</span></label>
                                     <input type="text" id="name" placeholder="Nombre"></input>
                                 </div>
 
-                                <div className="form__label-input">
+                                <div className="input-group">
                                     <label htmlFor="lastname" className="form-label">Apellido<span className="primary-color-text">*</span></label>
                                     <input type="text" id="lastname" placeholder="Apellido"></input>
                                 </div>
-                            </div>
-
-                            <div className="form__label-input">
+                            
+                            <div className="input-group">
                                 <label htmlFor="email" className="form-label">Correo electrónico<span className="primary-color-text">*</span></label>
                                 <input type="email" id="email" placeholder="ejemplo@email.com" ></input>
                             </div>
 
-                            <div className="form__label-input-with-text">
-                                <div className="form__label-input">
+                            <div className="input-group-with-text">
+                                <div className="input-group">
                                     <label htmlFor="password" className="form-label">Contraseña<span className="primary-color-text">*</span></label>
                                     <input type="password" id="password" aria-describedby="passwordHelpBlock" placeholder="***************" ></input>
                                 </div>
-                                <p className="form-text">Debe contener mínimo 8 caracteres.</p>
-                                {/* <div id="passwordHelpBlock" className="form-text">
-                                    Debe contener al menos 6 caracteres.
-                                </div> */}
-                            </div>
-
-                            <Button type="submit" size="large" width="fullwidth">Crear cuenta</Button>
+                                <p className="helper-text">Debe contener mínimo 8 caracteres.</p>
+                            </div> */}
 
                         </form>
 
@@ -60,13 +65,13 @@ const SignupPage = () => {
 
                 </div>
 
-            </div>
+            </div >
 
             <div className="signup-image">
                 <img src="../assets/png/collaborators-in-circle-facing-left.png" alt="Crea tu cuenta en Collabs" />
             </div>
 
-        </section>
+        </section >
 
     )
 }

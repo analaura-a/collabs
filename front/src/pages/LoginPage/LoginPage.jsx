@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import Input from "../../components/Inputs/Input";
 
 const LoginPage = () => {
 
@@ -24,17 +25,19 @@ const LoginPage = () => {
 
                         <form action="">
 
-                            <div className="form__label-input">
+                            {/* <div className="input-group">
                                 <label htmlFor="email" className="form-label">Correo electrónico<span className="primary-color-text">*</span></label>
                                 <input type="email" id="email" placeholder="ejemplo@email.com" ></input>
-                            </div>
+                            </div> 
+                            
+                            <div className="input-group">
+                                <label htmlFor="password" className="form-label">Contraseña<span className="primary-color-text">*</span></label>
+                                <input type="password" id="password" aria-describedby="passwordHelpBlock" placeholder="***************" ></input>
+                            </div>*/}
 
-                            <div className="form__label-input-with-text">
-                                <div className="form__label-input">
-                                    <label htmlFor="password" className="form-label">Contraseña<span className="primary-color-text">*</span></label>
-                                    <input type="password" id="password" aria-describedby="passwordHelpBlock" placeholder="***************" ></input>
-                                </div>
-                            </div>
+                            <Input label="Correo electrónico" type="email" placeholder="ejemplo@email.com" required></Input>
+
+                            <Input label="Contraseña" type="password" placeholder="***************" required></Input>
 
                             <Button type="submit" size="large" width="fullwidth">Iniciar sesión</Button>
 

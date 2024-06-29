@@ -1,0 +1,33 @@
+.input-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+
+    width: 100%;
+}
+
+.input-group-with-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+
+    width: 100%;
+}
+
+.input-group>input {
+    background-color: var(--color-white-background);
+    border: 1px solid var(--color-gray-line);
+    border-radius: 14px;
+    height: 56px;
+    padding: 22px;
+
+    width: 100%;
+}
+
+.input-group>input:active,
+.input-group>input:focus {
+    outline: 1.5px solid var(--color-primary-logo);
+    box-shadow: 0px 0px 8.6px 0px #5e71ee33;
+}

@@ -154,10 +154,18 @@ input {
     letter-spacing: -0.01em;
 }
 
-.form-text {
+.helper-text {
     font-family: var(--inter);
     font-size: var(--font-14px);
     font-weight: var(--font-regular);
     color: var(--color-black-light);
+    line-height: 1.5;
+}
+
+.error-text {
+    font-family: var(--inter);
+    font-size: var(--font-14px);
+    font-weight: var(--font-regular);
+    color: var(--color-red-text);
     line-height: 1.5;
 }
