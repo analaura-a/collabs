@@ -9,6 +9,6 @@
 
 @import './pages/landingPage.css';
 @import './pages/errorPage.css';
-@import './pages/signupPage.css';
+@import './pages/authPages.css';
 
 @import './components/button.css';

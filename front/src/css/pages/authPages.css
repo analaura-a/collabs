@@ -1,10 +1,15 @@
-.signup-container {
+.signup-container,
+.login-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 100vh;
 }
 
-/* .signup-form {} */
+.signup-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .signup-form__content-container {
     margin: 0 auto;
@@ -82,7 +87,17 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-primary-logo);
+    background-color: var(--color-primary-button);
+}
+
+.login-image {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    background-color: var(--color-primary-button);
+    background-image: url(../assets/svg/patron-login.svg);
+    background-position: initial;
+    background-repeat: repeat;
 }
 
 .signup-image img {
@@ -95,8 +110,13 @@ input:focus {
 
 @media (max-width: 1024px) {
 
-    .signup-container {
+    .signup-container,
+    .login-container {
         grid-template-columns: 1fr;
+    }
+
+    .signup-form {
+        align-items: flex-start;
     }
 
     .signup-form__content-container {
@@ -108,7 +128,8 @@ input:focus {
         gap: 32px;
     }
 
-    .signup-image {
+    .signup-image,
+    .login-image {
         display: none;
     }
 
