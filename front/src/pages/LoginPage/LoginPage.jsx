@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../../components/Button/Button";
-import Input from "../../components/Inputs/Input";
+import LoginForm from "../../components/Form/LoginForm";
 
 const LoginPage = () => {
 
@@ -23,25 +22,7 @@ const LoginPage = () => {
                             <p className="subtitle">¿Aún no tienes una cuenta? <Link to="/auth/crear-cuenta" className="link">Regístrate</Link></p>
                         </div>
 
-                        <form action="">
-
-                            {/* <div className="input-group">
-                                <label htmlFor="email" className="form-label">Correo electrónico<span className="primary-color-text">*</span></label>
-                                <input type="email" id="email" placeholder="ejemplo@email.com" ></input>
-                            </div> 
-                            
-                            <div className="input-group">
-                                <label htmlFor="password" className="form-label">Contraseña<span className="primary-color-text">*</span></label>
-                                <input type="password" id="password" aria-describedby="passwordHelpBlock" placeholder="***************" ></input>
-                            </div>*/}
-
-                            <Input label="Correo electrónico" type="email" placeholder="ejemplo@email.com" required></Input>
-
-                            <Input label="Contraseña" type="password" placeholder="***************" required></Input>
-
-                            <Button type="submit" size="large" width="fullwidth">Iniciar sesión</Button>
-
-                        </form>
+                        <LoginForm />
 
                     </div>
 
