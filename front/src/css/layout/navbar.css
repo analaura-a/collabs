@@ -3,6 +3,9 @@
     border-bottom: 0.5px solid var(--color-gray-line);
 
     padding: 24px 0;
+
+    position: sticky;
+    top: 0;
 }
 
 .navbar-container {
