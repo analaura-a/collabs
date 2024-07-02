@@ -8,6 +8,7 @@ import LandingPage from '../pages/LandingPage/LandingPage.jsx'
 import LoginPage from '../pages/LoginPage/LoginPage.jsx'
 import SignupPage from '../pages/SignupPage/SignupPage.jsx'
 import HomePage from '../pages/HomePage/HomePage.jsx'
+import ForgottenPasswordPage from '../pages/PasswordPage/ForgottenPasswordPage.jsx'
 
 
 const AppRoutes = createBrowserRouter([
@@ -39,7 +40,15 @@ const AppRoutes = createBrowserRouter([
             {
                 path: "/auth/crear-cuenta",
                 element: <SignupPage />,
-            }
+            },
+            {
+                path: "/auth/contraseña-olvidada",
+                element: <ForgottenPasswordPage />,
+            },
+            // {
+            //     path: "/auth/reestablecer-contraseña",
+            //     element: <ResetPasswordPage />,
+            // }
         ]
     }
 
