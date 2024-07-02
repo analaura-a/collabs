@@ -9,6 +9,7 @@ import LoginPage from '../pages/LoginPage/LoginPage.jsx'
 import SignupPage from '../pages/SignupPage/SignupPage.jsx'
 import HomePage from '../pages/HomePage/HomePage.jsx'
 import ForgottenPasswordPage from '../pages/PasswordPage/ForgottenPasswordPage.jsx'
+import ResetPasswordPage from '../pages/PasswordPage/ResetPasswordPage.jsx'
 
 
 const AppRoutes = createBrowserRouter([
@@ -45,10 +46,10 @@ const AppRoutes = createBrowserRouter([
                 path: "/auth/contraseña-olvidada",
                 element: <ForgottenPasswordPage />,
             },
-            // {
-            //     path: "/auth/reestablecer-contraseña",
-            //     element: <ResetPasswordPage />,
-            // }
+            {
+                path: "/auth/reestablecer-contraseña",
+                element: <ResetPasswordPage />,
+            }
         ]
     }
 

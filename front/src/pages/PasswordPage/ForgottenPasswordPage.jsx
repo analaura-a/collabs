@@ -19,7 +19,7 @@ const ForgottenPasswordPage = () => {
                     <p className="subtitle">No te preocupes, enviaremos un link al correo electrónico con el que te registraste para que puedas reestablecer tu contraseña.</p>
                 </div>
 
-                <form action="">
+                <form action="" className="forgotten-password-form">
                     <Input label="Correo electrónico" type="email" placeholder="ejemplo@email.com" required />
                     <Button type="submit" size="large" width="fullwidth">Enviar link de recuperación</Button>
                 </form>
