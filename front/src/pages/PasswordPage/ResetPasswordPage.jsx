@@ -15,7 +15,7 @@ const ResetPasswordPage = () => {
             <div>
 
                 <div className="password-page-container__title">
-                    <h1 className="title-40">Reestablecer contraseña</h1>
+                    <h1 className="title-40">Restablecer contraseña</h1>
                 </div>
 
                 <form action="" className="reset-password-form">

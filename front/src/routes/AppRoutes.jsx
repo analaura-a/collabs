@@ -47,7 +47,7 @@ const AppRoutes = createBrowserRouter([
                 element: <ForgottenPasswordPage />,
             },
             {
-                path: "/auth/reestablecer-contraseña",
+                path: "/auth/restablecer-contraseña",
                 element: <ResetPasswordPage />,
             }
         ]
