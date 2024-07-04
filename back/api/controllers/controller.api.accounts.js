@@ -4,9 +4,12 @@ import * as tokenService from "../../services/token.services.js";
 //Crear cuenta
 const createAccount = async (req, res) => {
 
-    return service.createAccount(req.body)
-        .then(() => res.status(201).json({ message: "Cuenta creada con éxito" }))
-        .catch((err) => res.status(400).json({ error: { message: err.message } }))
+    try {
+        await service.createAccount(req.body);
+        res.status(201).json({ message: "Cuenta creada con éxito." });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 
 }
 

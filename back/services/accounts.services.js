@@ -7,17 +7,26 @@ const accounts = db.collection("accounts")
 
 async function createAccount(account) {
 
-    await client.connect()
+    try {
 
-    const exists = await accounts.findOne({ email: account.email })
+        await client.connect()
 
-    if (exists) throw new Error("Esa cuenta ya existe")
+        //Verificar si el usuario existe
+        const exists = await accounts.findOne({ email: account.email })
+        if (exists) {
+            throw new Error('Ya existe una cuenta asociada a ese correo electrónico.');
+        }
 
-    const newAccount = { ...account }
+        //Crear cuenta nueva
+        const newAccount = { ...account }
+        newAccount.password = await bcrypt.hash(account.password, 10)
+        await accounts.insertOne(newAccount)
 
-    newAccount.password = await bcrypt.hash(account.password, 10)
-
-    await accounts.insertOne(newAccount)
+    } catch (error) {
+        throw new Error(error.message || 'Error del servidor, por favor inténtalo de nuevo más tarde.');
+    } finally {
+        await client.close();
+    }
 
 }
 

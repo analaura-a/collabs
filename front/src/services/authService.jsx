@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3333/api/';
+const API_URL = 'http://localhost:3333/api';
 
 export const register = async (userData) => {
 
@@ -13,9 +13,9 @@ export const register = async (userData) => {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || 'El registro falló');
+        throw new Error(data.message || 'Ocurrió un error al intentar crear la cuenta, inténtalo de nuevo más tarde.'); //Revisar
     }
 
     return data;
-    
+
 };

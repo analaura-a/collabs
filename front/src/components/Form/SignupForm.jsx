@@ -83,7 +83,13 @@ const SignupForm = () => {
             });
 
         } catch (error) {
-            console.log("Ocurrió un error al intentar crear la cuenta.") //Mostrárselo al usuario
+
+            if (error.message === 'Ya existe una cuenta asociada a ese correo electrónico.') {
+                setErrors({ email: error.message });
+            } else {
+                console.log("Error del back") //Mostrárselo al usuario | setErrorMessage(error.message); 
+            }
+
         } finally {
             setIsSubmitting(false);
         }
