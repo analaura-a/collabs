@@ -32,21 +32,30 @@ async function createAccount(account) {
 
 async function login(account) {
 
-    await client.connect()
+    try {
 
-    const accountExists = await accounts.findOne({ email: account.email })
+        await client.connect()
 
-    if (!accountExists) {
-        throw new Error("Esa cuenta no existe")
+        //Verificar si la cuenta existe
+        const accountExists = await accounts.findOne({ email: account.email })
+        if (!accountExists) {
+            throw new Error("No existe una cuenta asociada a ese correo electrónico.")
+        }
+
+        //Verificar si la contraseña es correcta
+        const isMatch = await bcrypt.compare(account.password, accountExists.password)
+        if (!isMatch) {
+            throw new Error("La contraseña es incorrecta.")
+        }
+
+        //Devuelve los datos de la cuenta
+        return { ...accountExists, password: undefined }
+
+    } catch (error) {
+        throw new Error(error.message || 'Error del servidor, por favor inténtalo de nuevo más tarde.');
+    } finally {
+        await client.close();
     }
-
-    const isMatch = await bcrypt.compare(account.password, accountExists.password)
-
-    if (!isMatch) {
-        throw new Error("La contraseña es incorrecta")
-    }
-
-    return { ...accountExists, password: undefined }
 
 }
 

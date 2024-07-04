@@ -25,7 +25,7 @@ const login = async (req, res) => {
             res.status(200).json(auth)
         )
 
-        .catch((err) => res.status(404).json({ error: { message: err.message } }))
+        .catch((error) => res.status(404).json({ message: error.message }))
 
 }
 
