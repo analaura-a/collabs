@@ -63,11 +63,9 @@ const SignupForm = () => {
 
         const isValid = await validateForm();
         if (!isValid) {
-            //console.log("No pasó la validación")
             return;
         }
 
-        //console.log("Pasó la validación")
         setIsSubmitting(true);
 
         const apiData = mapToApiFormat(formData);
@@ -81,6 +79,9 @@ const SignupForm = () => {
                 email: '',
                 password: '',
             });
+
+            //Iniciar sesión (crear token)
+            //Redirigir a página de onboarding.
 
         } catch (error) {
 
