@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import Input from "../Inputs/Input";
-import { register } from "../../services/authService";
+import { register, login } from "../../services/authService";
 import { SignupSchema } from "../../validation/signupValidation.jsx";
 
 const SignupForm = () => {
@@ -71,7 +71,9 @@ const SignupForm = () => {
         const apiData = mapToApiFormat(formData);
 
         try {
-            const data = await register(apiData);
+
+            //Crear cuenta
+            const account = await register(apiData);
 
             setFormData({
                 firstName: '',
@@ -81,7 +83,13 @@ const SignupForm = () => {
             });
 
             //Iniciar sesión (crear token)
-            //Redirigir a página de onboarding.
+            const auth = await login({ email: formData.email, password: formData.password });
+            localStorage.setItem('token', auth.token);
+
+            //Guardar datos del usuario con sesión activa
+            localStorage.setItem('user', JSON.stringify(auth.account)); //Revisar
+
+            //Redirigir a página de onboarding
 
         } catch (error) {
 
