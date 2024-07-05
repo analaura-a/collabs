@@ -7,9 +7,10 @@ import Error404Page from '../pages/404Page/Error404Page.jsx'
 import LandingPage from '../pages/LandingPage/LandingPage.jsx'
 import LoginPage from '../pages/LoginPage/LoginPage.jsx'
 import SignupPage from '../pages/SignupPage/SignupPage.jsx'
-import HomePage from '../pages/HomePage/HomePage.jsx'
 import ForgottenPasswordPage from '../pages/PasswordPage/ForgottenPasswordPage.jsx'
 import ResetPasswordPage from '../pages/PasswordPage/ResetPasswordPage.jsx'
+import OnboardingPage from '../pages/Onboarding/OnboardingPage.jsx'
+import HomePage from '../pages/HomePage/HomePage.jsx'
 
 
 const AppRoutes = createBrowserRouter([
@@ -49,6 +50,10 @@ const AppRoutes = createBrowserRouter([
             {
                 path: "/auth/restablecer-contraseña",
                 element: <ResetPasswordPage />,
+            },
+            {
+                path: "/auth/onboarding",
+                element: <OnboardingPage />,
             }
         ]
     }

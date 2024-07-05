@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Button from "../Button/Button";
 import Input from "../Inputs/Input";
 import { register, login } from "../../services/authService";
@@ -14,6 +15,7 @@ const SignupForm = () => {
     });
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
 
 
     const handleChange = (e) => {
@@ -75,13 +77,6 @@ const SignupForm = () => {
             //Crear cuenta
             const account = await register(apiData);
 
-            setFormData({
-                firstName: '',
-                lastName: '',
-                email: '',
-                password: '',
-            });
-
             //Iniciar sesión (crear token)
             const auth = await login({ email: formData.email, password: formData.password });
             localStorage.setItem('token', auth.token);
@@ -89,7 +84,15 @@ const SignupForm = () => {
             //Guardar datos del usuario con sesión activa
             localStorage.setItem('user', JSON.stringify(auth.account)); //Revisar
 
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+            });
+
             //Redirigir a página de onboarding
+            navigate('/auth/onboarding');
 
         } catch (error) {
 
