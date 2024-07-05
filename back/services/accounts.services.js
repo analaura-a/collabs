@@ -20,6 +20,7 @@ async function createAccount(account) {
         //Crear cuenta nueva
         const newAccount = { ...account }
         newAccount.password = await bcrypt.hash(account.password, 10)
+        newAccount.onboardingComplete = false;
         await accounts.insertOne(newAccount)
 
     } catch (error) {
