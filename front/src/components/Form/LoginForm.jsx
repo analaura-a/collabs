@@ -55,7 +55,13 @@ const LoginForm = () => {
         setIsSubmitting(true);
 
         try {
-            const data = await login(formData);
+
+            //Iniciar sesión (crear token)
+            const auth = await login(formData);
+            localStorage.setItem('token', auth.token);
+
+            //Guardar datos del usuario con sesión activa
+            localStorage.setItem('user', JSON.stringify(auth.account)); //Revisar
 
             setFormData({
                 email: '',
@@ -63,6 +69,7 @@ const LoginForm = () => {
             });
 
             //Redirigir al usuario al inicio
+            
 
         } catch (error) {
 
