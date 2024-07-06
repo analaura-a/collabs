@@ -16,13 +16,15 @@ async function getUsers() {
 //Obtener un usuario en específico
 async function getUserById(id) {
 
+    // await client.connect();
+
     const user = await db.collection("users").findOne({ _id: new ObjectId(id) });
 
     if (!user) {
-        throw new Error("No existe el perfil de ese usuario")
+        throw new Error("El perfil de ese usuario no existe.")
     }
 
-    return user
+    return user;
 }
 
 //Crear un nuevo perfil de usuario (vinculado a una cuenta)

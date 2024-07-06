@@ -34,7 +34,7 @@ const getUserProfile = (req, res) => {
 
     return service.getUserById(req.account._id)
         .then(profile => res.status(200).json(profile))
-        .catch(err => res.status(400).json({ error: { message: err.message } }))
+        .catch(err => res.status(400).json({ message: err.message }))
 
 }
 
