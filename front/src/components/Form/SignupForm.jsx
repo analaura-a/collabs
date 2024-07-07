@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import Button from "../Button/Button";
 import Input from "../Inputs/Input";
-import { register, login } from "../../services/authService";
+import { register } from "../../services/authService";
 import { SignupSchema } from "../../validation/signupValidation.jsx";
+import AuthContext from "../../context/AuthContext.jsx";
 
 const SignupForm = () => {
 
@@ -16,7 +17,7 @@ const SignupForm = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
-
+    const { login } = useContext(AuthContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -78,11 +79,7 @@ const SignupForm = () => {
             const account = await register(apiData);
 
             //Iniciar sesión (crear token)
-            const auth = await login({ email: formData.email, password: formData.password });
-            localStorage.setItem('token', auth.token);
-
-            //Guardar datos del usuario con sesión activa
-            localStorage.setItem('user', JSON.stringify(auth.userProfile)); //Revisar
+            const auth = await login({ email: formData.email, password: formData.password }); //reemplazar por el contexto
 
             setFormData({
                 firstName: '',
