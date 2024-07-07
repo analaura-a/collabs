@@ -21,13 +21,14 @@ async function getUserById(id) {
     const user = await db.collection("users").findOne({ _id: new ObjectId(id) });
 
     if (!user) {
-        throw new Error("El perfil de ese usuario no existe.")
+        throw new Error("No se encontró un perfil para ese usuario.")
     }
 
     return user;
 }
 
 //Crear un nuevo perfil de usuario (vinculado a una cuenta)
+//Deberá ser borrado:
 async function createUser(account, userProfileData) {
 
     const userProfile = {

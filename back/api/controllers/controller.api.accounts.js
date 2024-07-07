@@ -1,5 +1,6 @@
 import * as service from "../../services/accounts.services.js";
 import * as tokenService from "../../services/token.services.js";
+import * as userService from "../../services/users.services.js"
 
 //Crear cuenta
 const createAccount = async (req, res) => {
@@ -19,7 +20,9 @@ const login = async (req, res) => {
     return service.login(req.body)
 
         .then(async (account) => {
-            return { token: await tokenService.createToken(account), account }
+            const token = await tokenService.createToken(account);
+            const userProfile = await userService.getUserById(account._id);
+            return { token, userProfile };
         })
         .then((auth) =>
             res.status(200).json(auth)

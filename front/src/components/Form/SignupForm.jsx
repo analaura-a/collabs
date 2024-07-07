@@ -82,7 +82,7 @@ const SignupForm = () => {
             localStorage.setItem('token', auth.token);
 
             //Guardar datos del usuario con sesión activa
-            localStorage.setItem('user', JSON.stringify(auth.account)); //Revisar
+            localStorage.setItem('user', JSON.stringify(auth.userProfile)); //Revisar
 
             setFormData({
                 firstName: '',
