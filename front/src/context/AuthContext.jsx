@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
             setAuthState({ token, user: userProfile, error: null });
         } catch (error) {
             setAuthState({ token: null, user: null, error: error.message });
+            throw error;
         }
 
     };

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 import Input from "../Inputs/Input";
-import { login } from "../../services/authService";
+import AuthContext from "../../context/AuthContext.jsx";
 import { LoginSchema } from "../../validation/loginValidation";
 
 const LoginForm = () => {
@@ -13,6 +13,8 @@ const LoginForm = () => {
     });
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,18 +60,14 @@ const LoginForm = () => {
 
             //Iniciar sesión (crear token)
             const auth = await login(formData);
-            localStorage.setItem('token', auth.token);
-
-            //Guardar datos del usuario con sesión activa
-            localStorage.setItem('user', JSON.stringify(auth.userProfile)); //Revisar
 
             setFormData({
                 email: '',
                 password: '',
             });
 
-            //Redirigir al usuario al inicio
-            
+            //Redirigir usuario al home
+            navigate('/inicio');
 
         } catch (error) {
 

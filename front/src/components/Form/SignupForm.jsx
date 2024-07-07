@@ -79,7 +79,7 @@ const SignupForm = () => {
             const account = await register(apiData);
 
             //Iniciar sesión (crear token)
-            const auth = await login({ email: formData.email, password: formData.password }); //reemplazar por el contexto
+            const auth = await login({ email: formData.email, password: formData.password });
 
             setFormData({
                 firstName: '',
