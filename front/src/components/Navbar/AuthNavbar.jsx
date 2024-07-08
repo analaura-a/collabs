@@ -1,15 +1,19 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useRef, useState, useContext } from "react";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import smallLogo from '../../assets/svg/collabs-isotipo.svg';
 import largeLogo from '../../assets/svg/collabs-logo.svg';
+import AuthContext from "../../context/AuthContext";
 
 const AuthNavbar = () => {
 
+    const { authState, logout } = useContext(AuthContext);
+    // const { user } = authState; Para cuando mostremos dinámicamente la foto de perfil
+
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isProfileDropdownOpen, setisProfileDropdownOpen] = useState(false);
-    
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     const primaryNavigation = useRef(null);
     const navToggle = useRef(null);
@@ -55,6 +59,11 @@ const AuthNavbar = () => {
 
     const handleProfileDropdownToggle = () => {
         setisProfileDropdownOpen(!isProfileDropdownOpen);
+    };
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/auth/iniciar-sesion');
     };
 
     return (
@@ -110,7 +119,7 @@ const AuthNavbar = () => {
                         <button className="navbar-button notification"></button>
                     </li>
                     <li className="profile-button" onClick={handleProfileDropdownToggle}>
-                        <div className="navbar-profile-photo">
+                        <div className="navbar-profile-photo"> {/*Mostrar dinámicamente */}
                             <img src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095205-stock-illustration-businessman-profile-icon.jpg" alt="" />
                         </div>
                         <ul className={`dropdown-menu ${isProfileDropdownOpen ? 'show' : ''}`}>
@@ -118,7 +127,7 @@ const AuthNavbar = () => {
                                 <Link to="/" className="navbar-text">Mi perfil</Link>
                             </li>
                             <li>
-                                <Link to="/" className="navbar-text">Cerrar sesión</Link>
+                                <Link to="/" className="navbar-text" onClick={handleLogout}>Cerrar sesión</Link>
                             </li>
                         </ul>
                     </li>
