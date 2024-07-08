@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { login as loginService } from '../services/authService';
+import { login as loginService, logout as logoutService } from '../services/authService';
 // import { fetchUserProfile as fetchUserProfileService } from '../services/userService';
 
 const AuthContext = createContext();
@@ -40,11 +40,20 @@ export const AuthProvider = ({ children }) => {
 
     };
 
-    const logout = () => {
-        //Falta borrar el token en la database
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setAuthState({ token: null, user: null, error: null, loading: false });
+    const logout = async () => {
+
+        try {
+            const token = authState.token;
+            await logoutService(token);
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            setAuthState({ token: null, user: null, error: null, loading: false });
+        } catch (error) {
+            console.error('Error al cerrar sesión:', error);
+            setAuthState({ error: error.message });
+        }
+
     };
 
     const updateUser = (user) => {

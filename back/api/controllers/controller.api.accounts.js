@@ -43,11 +43,10 @@ const logout = async (req, res) => {
             res.status(200).json({ message: "Sesión cerrada con éxito" });
         })
         .catch((err) => {
-            res.status(400).json({ error: { message: err.message } });
+            res.status(400).json({ message: err.message });
         });
 
 }
-
 
 export {
     createAccount,

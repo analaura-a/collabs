@@ -20,14 +20,14 @@ export const register = async (userData) => {
 
 };
 
-export const login = async (userData) => {
+export const login = async (credentials) => {
 
     const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(credentials),
     });
 
     const data = await response.json();
@@ -38,4 +38,20 @@ export const login = async (userData) => {
 
     return data;
 
+};
+
+export const logout = async (token) => {
+
+    const response = await fetch(`${API_URL}/auth/logout`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token,
+        },
+    });
+
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Ocurrió un error al intentar cerrar la sesión.'); //Revisar
+    }
 };
