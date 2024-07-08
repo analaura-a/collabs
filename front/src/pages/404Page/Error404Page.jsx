@@ -1,12 +1,21 @@
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GuestNavbar from "../../components/Navbar/GuestNavbar";
+import AuthNavbar from '../../components/Navbar/AuthNavbar';
 import GuestFooter from "../../components/Footer/GuestFooter";
+import AuthFooter from '../../components/Footer/AuthFooter';
 import Button from "../../components/Button/Button";
+import AuthContext from '../../context/AuthContext';
 
 const Error404Page = () => {
+
+    const { authState } = useContext(AuthContext);
+    const { token, user } = authState;
+    const navigate = useNavigate();
+
     return (
         <>
-            <GuestNavbar />
-            {/* <AuthNavbar /> */}
+            {token && user ? <AuthNavbar /> : <GuestNavbar />}
 
             <main className="container error-page">
 
@@ -17,12 +26,11 @@ const Error404Page = () => {
 
                 <img src="assets/png/error-page.png" alt="Error 404: página no encontrada" />
 
-                <Button size="large" width="full-then-fit">Volver al inicio</Button>
+                {token && user ? <Button size="large" width="full-then-fit" onClick={() => navigate('/inicio')}>Volver al inicio</Button> : <Button size="large" width="full-then-fit" onClick={() => navigate('/')}>Volver al inicio</Button>}
 
             </main>
 
-            <GuestFooter />
-            {/* <AuthFooter /> */}
+            {token && user ? <AuthFooter /> : <GuestFooter />}
         </>
     )
 }
