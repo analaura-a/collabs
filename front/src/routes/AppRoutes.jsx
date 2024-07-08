@@ -12,6 +12,7 @@ import ResetPasswordPage from '../pages/PasswordPage/ResetPasswordPage.jsx'
 import OnboardingPage from '../pages/Onboarding/OnboardingPage.jsx'
 import HomePage from '../pages/HomePage/HomePage.jsx'
 
+import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 
 const AppRoutes = createBrowserRouter([
 
@@ -26,7 +27,9 @@ const AppRoutes = createBrowserRouter([
             },
             {
                 path: "/inicio",
-                element: <HomePage />,
+                element: (<ProtectedRoute>
+                    <HomePage />
+                </ProtectedRoute>),
             }
         ]
     },

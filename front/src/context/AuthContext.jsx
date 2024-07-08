@@ -9,7 +9,8 @@ export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState({
         token: null,
         user: null,
-        error: null
+        error: null,
+        loading: true
     });
 
     useEffect(() => {
@@ -18,7 +19,9 @@ export const AuthProvider = ({ children }) => {
         const user = JSON.parse(localStorage.getItem('user'));
 
         if (token && user) {
-            setAuthState({ token, user, error: null });
+            setAuthState({ token, user, error: null, loading: false });
+        } else {
+            setAuthState((prevState) => ({ ...prevState, loading: false }));
         }
 
     }, []);
@@ -29,9 +32,9 @@ export const AuthProvider = ({ children }) => {
             const { token, userProfile } = await loginService(credentials);
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(userProfile));
-            setAuthState({ token, user: userProfile, error: null });
+            setAuthState({ token, user: userProfile, error: null, loading: false });
         } catch (error) {
-            setAuthState({ token: null, user: null, error: error.message });
+            setAuthState({ token: null, user: null, error: error.message, loading: false });
             throw error;
         }
 
@@ -41,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         //Falta borrar el token en la database
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        setAuthState({ token: null, user: null, error: null });
+        setAuthState({ token: null, user: null, error: null, loading: false });
     };
 
     const updateUser = (user) => {
