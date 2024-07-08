@@ -37,14 +37,12 @@ const logout = async (req, res) => {
 
     const token = req.headers["auth-token"];
 
-    return tokenService
-        .removeToken(token)
-        .then(() => {
-            res.status(200).json({ message: "Sesión cerrada con éxito" });
-        })
-        .catch((err) => {
-            res.status(400).json({ message: err.message });
-        });
+    try {
+        const result = await tokenService.removeToken(token);
+        res.status(200).json({ message: result.message });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
 
 }
 

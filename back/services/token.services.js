@@ -40,10 +40,23 @@ async function validateToken(token) {
 
 //Eliminar token
 async function removeToken(token) {
-    await client.connect()
-    await tokenCollection.deleteOne({ token })
-}
 
+    try {
+        await client.connect();
+        const result = await tokenCollection.deleteOne({ token });
+
+        if (result.deletedCount === 0) {
+            throw new Error('Token no encontrado.');
+        }
+
+        return { message: 'Sesión cerrada con éxito. ¡Te esperamos pronto!' };
+    } catch (error) {
+        throw new Error(`Error al eliminar el token: ${error.message}`);
+    } finally {
+        await client.close();
+    }
+
+}
 
 export {
     createToken,

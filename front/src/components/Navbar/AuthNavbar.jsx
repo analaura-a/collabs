@@ -62,8 +62,14 @@ const AuthNavbar = () => {
     };
 
     const handleLogout = async () => {
-        await logout();
-        navigate('/auth/iniciar-sesion');
+        try {
+            await logout();
+            navigate('/auth/iniciar-sesion');
+            //Incluir mensaje de éxito
+        } catch (error) {
+            // setErrorMessage('Error al cerrar sesión. Inténtalo de nuevo.');  Avisarle del error al usuario
+            console.log(error)
+        }
     };
 
     return (
