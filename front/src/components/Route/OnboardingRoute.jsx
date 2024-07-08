@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
-const ProtectedRoute = ({ children }) => {
+const OnboardingRoute = ({ children }) => {
 
     const { authState } = useContext(AuthContext);
     const { token, user, loading } = authState;
@@ -15,12 +15,11 @@ const ProtectedRoute = ({ children }) => {
         return <Navigate to="/auth/iniciar-sesion" />;
     }
 
-    if (user && !user.onboardingComplete) {
-        return <Navigate to="/auth/onboarding" />;
+    if (user && user.onboardingComplete) {
+        return <Navigate to="/inicio" />;
     }
 
     return children;
-
 };
 
-export default ProtectedRoute;
+export default OnboardingRoute;

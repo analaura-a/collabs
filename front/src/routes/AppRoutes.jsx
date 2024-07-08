@@ -13,6 +13,7 @@ import OnboardingPage from '../pages/Onboarding/OnboardingPage.jsx'
 import HomePage from '../pages/HomePage/HomePage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
+import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
 
 const AppRoutes = createBrowserRouter([
 
@@ -56,7 +57,9 @@ const AppRoutes = createBrowserRouter([
             },
             {
                 path: "/auth/onboarding",
-                element: <OnboardingPage />,
+                element: (<OnboardingRoute>
+                    <OnboardingPage />
+                </OnboardingRoute>),
             }
         ]
     }
