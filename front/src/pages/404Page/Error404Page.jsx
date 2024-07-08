@@ -24,7 +24,7 @@ const Error404Page = () => {
                     <p className="big-subtitle">Puede que la página que estés buscando no exista o fuese eliminada.</p>
                 </div>
 
-                <img src="assets/png/error-page.png" alt="Error 404: página no encontrada" />
+                <img src="../../assets/png/error-page.png" alt="Error 404: página no encontrada" />
 
                 {token && user ? <Button size="large" width="full-then-fit" onClick={() => navigate('/inicio')}>Volver al inicio</Button> : <Button size="large" width="full-then-fit" onClick={() => navigate('/')}>Volver al inicio</Button>}
 

@@ -136,14 +136,14 @@
 }
 
 .message {
-    background-image: url(assets/svg/messages.svg);
+    background-image: url(../assets/svg/messages.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-color: transparent;
 }
 
 .notification {
-    background-image: url(assets/svg/notifications.svg);
+    background-image: url(../assets/svg/notifications.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-color: transparent;

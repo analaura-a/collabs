@@ -11,7 +11,7 @@ const GuestFooter = () => {
 
                     <div className="footer-logo">
                         <Link to="/">
-                            <img src='assets/svg/collabs-logo.svg' alt="Collabs" />
+                            <img src='../../assets/svg/collabs-logo.svg' alt="Collabs" />
                         </Link>
                         <p className='light-paragraph'>Busca proyectos, únete a colaborar y crece profesionalmente junto a otros.</p>
                     </div>
