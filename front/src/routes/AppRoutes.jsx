@@ -14,6 +14,7 @@ import HomePage from '../pages/HomePage/HomePage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
+import AuthRoute from '../components/Route/AuthRoute.jsx'
 
 const AppRoutes = createBrowserRouter([
 
@@ -41,19 +42,27 @@ const AppRoutes = createBrowserRouter([
         children: [
             {
                 path: "/auth/iniciar-sesion",
-                element: <LoginPage />,
+                element: (<AuthRoute>
+                    <LoginPage />
+                </AuthRoute>),
             },
             {
                 path: "/auth/crear-cuenta",
-                element: <SignupPage />,
+                element: (<AuthRoute>
+                    <SignupPage />
+                </AuthRoute>),
             },
             {
                 path: "/auth/contraseña-olvidada",
-                element: <ForgottenPasswordPage />,
+                element: (<AuthRoute>
+                    <ForgottenPasswordPage />
+                </AuthRoute>),
             },
             {
                 path: "/auth/restablecer-contraseña",
-                element: <ResetPasswordPage />,
+                element: (<AuthRoute>
+                    <ResetPasswordPage />
+                </AuthRoute>),
             },
             {
                 path: "/auth/onboarding",
