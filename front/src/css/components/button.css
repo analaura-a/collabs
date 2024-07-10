@@ -27,6 +27,11 @@
     background-color: var(--color-gray);
 }
 
+/*Disabled*/
+.btn-primary:disabled {
+    background-color: var(--color-primary-button-disabled);
+}
+
 /*Tamaños*/
 .btn-small {
     font-size: 16px;

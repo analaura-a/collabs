@@ -1,6 +1,7 @@
 :root {
     --color-primary-logo: hsl(234, 72%, 61%);
     --color-primary-button: hsl(234, 79%, 63%);
+    --color-primary-button-disabled: hsl(234deg 78.36% 75.21%);
     --color-primary-text: hsl(234, 79%, 60%);
     --color-primary-light: hsl(229, 100%, 97%); /*Light purple*/
     --color-primary-selected: hsl(231, 28%, 95%);

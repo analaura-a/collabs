@@ -4,7 +4,7 @@ import Button from "../../components/Button/Button";
 -Renderiza el formulario del paso actual y maneja la navegación entre los pasos.
 -Llama a la función handleSubmit al finalizar el onboarding.
 */
-const OnboardingStep = ({ title, subtitle, form, currentStep, totalSteps, nextStep, prevStep }) => {
+const OnboardingStep = ({ title, subtitle, form, currentStep, totalSteps, nextStep, prevStep, isNextDisabled }) => {
 
     return (
 
@@ -19,8 +19,8 @@ const OnboardingStep = ({ title, subtitle, form, currentStep, totalSteps, nextSt
 
             <div className="onboarding-page-buttons">
                 {currentStep > 0 && <Button size="large" color="secondary" width="full-then-fit" onClick={prevStep}>Atrás</Button>}
-                {currentStep < totalSteps - 1 && <Button size="large" width="full-then-fit" onClick={nextStep}>Siguiente</Button>}
-                {currentStep === totalSteps - 1 && <Button size="large" width="full-then-fit" onClick={nextStep}>Finalizar</Button>}
+                {currentStep < totalSteps - 1 && <Button size="large" width="full-then-fit" onClick={nextStep} disabled={isNextDisabled}>Siguiente</Button>}
+                {currentStep === totalSteps - 1 && <Button size="large" width="full-then-fit" onClick={nextStep} disabled={isNextDisabled}>Finalizar</Button>}
             </div>
 
         </div>

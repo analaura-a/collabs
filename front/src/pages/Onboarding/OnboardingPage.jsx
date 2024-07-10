@@ -6,13 +6,13 @@ import OnboardingForm2 from '../../components/Form/Onboarding/OnboardingForm2';
 const steps = [
     {
         title: 'Crea tu nombre de usuario',
-        subtitle: 'Se verá reflejado en la URL pública de tu perfil. Debe tener máximo 15 caracteres, estar en minúsculas y solo tener letras, números o guiones.',
-        form: <OnboardingForm1 />,
+        subtitle: 'Se verá reflejado en la URL pública de tu perfil. Debe tener mínimo 4 caracteres, estar en minúsculas y solo tener letras, números o guiones.',
+        form: OnboardingForm1,
     },
     {
         title: '¿Cuál es tu perfil profesional?',
         subtitle: 'Selecciona los roles con los que te gustaría unirte a colaborar en proyectos.',
-        form: <OnboardingForm2 />,
+        form: OnboardingForm2,
     }
 ];
 
@@ -24,18 +24,35 @@ const steps = [
 const OnboardingPage = () => {
 
     const [currentStep, setCurrentStep] = useState(0);
+    const [formData, setFormData] = useState({});
+    const [isStepValid, setIsStepValid] = useState(false);
 
     const nextStep = () => {
-        if (currentStep < steps.length - 1) {
+        if (isStepValid && currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
+            setIsStepValid(false); // Reset validation for the next step
         }
     };
 
     const prevStep = () => {
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
+            setIsStepValid(true); // Assume previous step is valid
         }
     };
+
+    const handleFormChange = (step, data) => {
+        setFormData(prevData => ({
+            ...prevData,
+            [step]: data,
+        }));
+    };
+
+    const handleFormValidation = (isValid) => {
+        setIsStepValid(isValid);
+    };
+
+    const CurrentForm = steps[currentStep].form;
 
     return (
 
@@ -46,11 +63,13 @@ const OnboardingPage = () => {
             <OnboardingStep
                 title={steps[currentStep].title}
                 subtitle={steps[currentStep].subtitle}
-                form={steps[currentStep].form}
+                form={<CurrentForm onChange={data => handleFormChange(currentStep, data)} onValidate={handleFormValidation} />}
                 currentStep={currentStep}
                 totalSteps={steps.length}
                 nextStep={nextStep}
-                prevStep={prevStep} />
+                prevStep={prevStep}
+                isNextDisabled={!isStepValid}
+            />
 
         </section>
 
