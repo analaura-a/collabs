@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import OnboardingStep from '../../components/Step/OnboardingStep';
+import OnboardingForm1 from '../../components/Form/Onboarding/OnboardingForm1';
+import OnboardingForm2 from '../../components/Form/Onboarding/OnboardingForm2';
 
 const steps = [
     {
         title: 'Crea tu nombre de usuario',
         subtitle: 'Se verá reflejado en la URL pública de tu perfil. Debe tener máximo 15 caracteres, estar en minúsculas y solo tener letras, números o guiones.',
-        // form: <OnboardingForm1 />,
+        form: <OnboardingForm1 />,
     },
     {
         title: '¿Cuál es tu perfil profesional?',
-        subtitle: 'Selecciona los roles con los que te gustaría unirte a colaborar en proyectos',
-        // form: <OnboardingForm2 />,
+        subtitle: 'Selecciona los roles con los que te gustaría unirte a colaborar en proyectos.',
+        form: <OnboardingForm2 />,
     }
 ];
 
@@ -41,7 +43,14 @@ const OnboardingPage = () => {
 
             <img src='../assets/svg/collabs-logo.svg' alt="Collabs" />
 
-            <OnboardingStep/>
+            <OnboardingStep
+                title={steps[currentStep].title}
+                subtitle={steps[currentStep].subtitle}
+                form={steps[currentStep].form}
+                currentStep={currentStep}
+                totalSteps={steps.length}
+                nextStep={nextStep}
+                prevStep={prevStep} />
 
         </section>
 
