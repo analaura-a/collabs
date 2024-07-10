@@ -12,6 +12,9 @@ route.get('/users', controllers.getUsers);
 //Obtener un usuario en especifico
 route.get('/users/:id', controllers.getUserById);
 
+//Verificar si ya existe un usuario con el mismo username
+route.post('/users/check-username', controllers.checkUsernameAvailability);
+
 //Obtener el perfil del usuario que inició sesión
 route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile)
 

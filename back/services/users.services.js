@@ -27,6 +27,19 @@ async function getUserById(id) {
     return user;
 }
 
+//Verificar si ya existe un usuario con el mismo username
+const isUsernameAvailable = async (username) => {
+    try {
+        await client.connect();
+        const user = await db.collection("users").findOne({ username });
+        return !user;
+    } catch (error) {
+        throw new Error('Error al comprobar la disponibilidad del username.');
+    } finally {
+        await client.close();
+    }
+};
+
 //Crear un nuevo perfil de usuario (vinculado a una cuenta)
 //Deberá ser borrado:
 async function createUser(account, userProfileData) {
@@ -59,6 +72,7 @@ async function editUser(id, user) {
 export {
     getUsers,
     getUserById,
+    isUsernameAvailable,
     createUser,
     editUser
 }

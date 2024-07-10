@@ -29,6 +29,16 @@ const getUserById = (req, res) => {
 
 };
 
+//Verificar si ya existe un usuario con el mismo username
+const checkUsernameAvailability = async (req, res) => {
+    try {
+        const isAvailable = await service.isUsernameAvailable(req.body.username);
+        res.status(200).json({ isAvailable });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 //Obtener el perfil del usuario que inició sesión
 const getUserProfile = (req, res) => {
 
@@ -71,6 +81,7 @@ const editUser = (req, res) => {
 export {
     getUsers,
     getUserById,
+    checkUsernameAvailability,
     getUserProfile,
     createUser,
     editUser
