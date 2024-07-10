@@ -65,7 +65,7 @@
     width: 100%;
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 1024px) {
     .btn-full-then-fit {
         width: fit-content;
     }

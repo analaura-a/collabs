@@ -1,0 +1,3 @@
+/*
+Manejan los cambios en los datos del formulario y los pasan al componente OnboardingPage.
+*/

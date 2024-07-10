@@ -11,6 +11,7 @@
 @import './pages/errorPage.css';
 @import './pages/authPages.css';
 @import './pages/resetPasswordPages.css';
+@import './pages/onboardingPages.css';
 
 @import './components/button.css';
 @import './components/input.css';
