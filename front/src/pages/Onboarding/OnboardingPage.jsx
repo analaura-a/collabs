@@ -63,7 +63,7 @@ const OnboardingPage = () => {
             <OnboardingStep
                 title={steps[currentStep].title}
                 subtitle={steps[currentStep].subtitle}
-                form={<CurrentForm onChange={data => handleFormChange(currentStep, data)} onValidate={handleFormValidation} />}
+                form={<CurrentForm onChange={data => handleFormChange(currentStep, data)} onValidate={handleFormValidation} initialData={formData[currentStep]} />}
                 currentStep={currentStep}
                 totalSteps={steps.length}
                 nextStep={nextStep}

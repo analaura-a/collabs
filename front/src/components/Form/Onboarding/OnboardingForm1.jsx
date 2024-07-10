@@ -7,9 +7,9 @@ const usernameSchema = yup.string()
     .min(4, 'El username debe tener entre 4 y 15 caracteres.')
     .max(15, 'El username debe tener entre 4 y 15 caracteres.');
 
-const OnboardingForm1 = ({ onChange, onValidate }) => {
+const OnboardingForm1 = ({ onChange, onValidate, initialData }) => {
 
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(initialData?.username || '');
     const [error, setError] = useState('');
     const [isValid, setIsValid] = useState(false);
 
