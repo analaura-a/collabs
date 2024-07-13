@@ -23,3 +23,22 @@ export const fetchUserProfile = async () => {
 
     return await response.json();
 };
+
+export const checkUsernameAvailability = async (username) => {
+
+    const response = await fetch(`${API_URL}/users/check-username`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Ocurrió un error al intentar comprobar el username.');
+    }
+
+    const data = await response.json();
+    return data.isAvailable;
+
+};

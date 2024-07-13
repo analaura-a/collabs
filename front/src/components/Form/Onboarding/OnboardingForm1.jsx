@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as yup from 'yup';
 import Input from "../../Inputs/Input";
+import { checkUsernameAvailability } from '../../../services/userService';
 
 const usernameSchema = yup.string()
     .matches(/^[a-z0-9-]+$/, 'El username solo puede contener letras minúsculas, números y guiones.')
@@ -15,10 +16,19 @@ const OnboardingForm1 = ({ onChange, onValidate, initialData }) => {
 
     const validateUsername = async (username) => {
         try {
+            //Validar requisitos para el username
             await usernameSchema.validate(username);
+
             //Validar username único en el back
-            setError('');
-            setIsValid(true);
+            const isAvailable = await checkUsernameAvailability(username);
+
+            if (!isAvailable) {
+                setError('Ese nombre de usuario ya está en uso.');
+                setIsValid(false);
+            } else {
+                setError('');
+                setIsValid(true);
+            }
         } catch (validationError) {
             setError(validationError.message);
             setIsValid(false);
@@ -40,7 +50,7 @@ const OnboardingForm1 = ({ onChange, onValidate, initialData }) => {
 
     return (
 
-        <form className="onboarding-form-1">
+        <form className="onboarding-form-1" onSubmit={(e) => { e.preventDefault() }} noValidate>
             <Input label="Nombre de usuario" id="username" name="username" placeholder="Nombre de usuario" helperText={'collabs.com/colaboradores/' + username} errorText={error} value={username} onChange={(e) => setUsername(e.target.value)} required />
         </form>
 
