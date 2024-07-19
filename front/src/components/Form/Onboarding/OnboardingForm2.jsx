@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import OnboardingCheckbox from '../../Inputs/OnboardingCheckbox';
 
 const roles = [
     'UX/UI Designer',
@@ -31,18 +32,19 @@ const OnboardingForm2 = ({ onChange, onValidate, initialData }) => {
 
     return (
         <form>
-            {roles.map((role) => (
-                <label key={role}>
-                    <input
-                        type="checkbox"
-                        name={role}
-                        value={role}
-                        checked={selectedRoles.includes(role)}
+            <div className="onboarding-form-2">
+                {roles.map((role, index) => (
+
+                    <OnboardingCheckbox
+                        key={role}
+                        id={`checkbox-${index}`}
+                        label={role}
+                        isChecked={selectedRoles.includes(role)}
                         onChange={() => handleCheckboxChange(role)}
                     />
-                    {role}
-                </label>
-            ))}
+
+                ))}
+            </div>
         </form>
     );
 
