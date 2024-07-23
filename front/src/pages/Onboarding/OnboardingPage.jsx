@@ -3,6 +3,7 @@ import OnboardingStep from '../../components/Step/OnboardingStep';
 import OnboardingForm1 from '../../components/Form/Onboarding/OnboardingForm1';
 import OnboardingForm2 from '../../components/Form/Onboarding/OnboardingForm2';
 import OnboardingForm4 from '../../components/Form/Onboarding/OnboardingForm4';
+import OnboardingForm6 from '../../components/Form/Onboarding/OnboardingForm6';
 
 const steps = [
     {
@@ -19,6 +20,11 @@ const steps = [
         title: '¿Cuál es tu nivel de conocimiento?',
         subtitle: 'La expertiz puede medirse de varias formas, pero por ahora solo elige el tiempo que llevas estudiando las skills que seleccionaste en el paso anterior.',
         form: OnboardingForm4,
+    },
+    {
+        title: '¿Cuánto tiempo puedes dedicarle a los proyectos?',
+        subtitle: 'El tiempo es estimativo, para que las demás personas puedan conocer cuál es el nivel de compromiso que puedes dedicarle a los proyectos.',
+        form: OnboardingForm6,
     }
 ];
 

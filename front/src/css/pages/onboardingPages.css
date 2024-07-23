@@ -146,7 +146,7 @@
         justify-content: center;
     }
 
-    .onboarding-form-2 {
+    .onboarding-input-container {
         grid-template-columns: 1fr;
     }
 
