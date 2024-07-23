@@ -11,6 +11,7 @@ const OnboardingCheckbox = ({ label, isChecked, onChange, id }) => {
                 type="checkbox"
                 id={id}
                 name={label}
+                value={label}
                 checked={isChecked}
                 onChange={(e) => e.stopPropagation()}
                 className="hidden-input"

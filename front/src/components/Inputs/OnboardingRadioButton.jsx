@@ -11,6 +11,7 @@ const OnboardingRadioButton = ({ label, isSelected, onChange, id, name }) => {
                 type="radio"
                 id={id}
                 name={name}
+                value={label}
                 checked={isSelected}
                 onChange={(e) => e.stopPropagation()}
                 className="hidden-input"
