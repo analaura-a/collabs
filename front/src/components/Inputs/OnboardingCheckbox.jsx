@@ -5,7 +5,7 @@ const OnboardingCheckbox = ({ label, isChecked, onChange, id }) => {
     };
 
     return (
-        <div className={`onboarding-checkbox ${isChecked ? 'checkbox-checked' : ''}`} onClick={handleClick}>
+        <div className={`onboarding-input-box ${isChecked ? 'onboarding-input-checked' : ''}`} onClick={handleClick}>
 
             <input
                 type="checkbox"
@@ -13,7 +13,7 @@ const OnboardingCheckbox = ({ label, isChecked, onChange, id }) => {
                 name={label}
                 checked={isChecked}
                 onChange={(e) => e.stopPropagation()}
-                className="hidden-checkbox"
+                className="hidden-input"
             />
 
             <label htmlFor={id} onClick={handleClick}>

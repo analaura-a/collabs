@@ -5,7 +5,7 @@ const OnboardingRadioButton = ({ label, isSelected, onChange, id, name }) => {
     };
 
     return (
-        <div className={`onboarding-checkbox ${isSelected ? 'checkbox-checked' : ''}`} onClick={handleClick}>
+        <div className={`onboarding-input-box ${isSelected ? 'onboarding-input-checked' : ''}`} onClick={handleClick}>
 
             <input
                 type="radio"
@@ -13,7 +13,7 @@ const OnboardingRadioButton = ({ label, isSelected, onChange, id, name }) => {
                 name={name}
                 checked={isSelected}
                 onChange={(e) => e.stopPropagation()}
-                className="hidden-checkbox"
+                className="hidden-input"
             />
 
             <label htmlFor={id} onClick={handleClick}>

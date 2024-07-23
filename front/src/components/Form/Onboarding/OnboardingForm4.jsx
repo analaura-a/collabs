@@ -25,7 +25,7 @@ const OnboardingForm4 = ({ onChange, onValidate, initialData }) => {
 
     return (
         <form>
-            <div className="onboarding-form-2">
+            <div className="onboarding-input-container">
                 {options.map((option, index) => (
                     <OnboardingRadioButton
                         key={option}

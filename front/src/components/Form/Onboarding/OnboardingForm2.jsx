@@ -32,7 +32,7 @@ const OnboardingForm2 = ({ onChange, onValidate, initialData }) => {
 
     return (
         <form>
-            <div className="onboarding-form-2">
+            <div className="onboarding-input-container">
                 {roles.map((role, index) => (
 
                     <OnboardingCheckbox
