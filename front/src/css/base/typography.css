@@ -4,6 +4,7 @@
     --font-12px: 0.75rem;
     --font-14px: 0.875rem;
     --font-16px: 1rem;
+    --font-18px: 1.125rem;
     --font-20px: 1.25rem;
     --font-24px: 1.5rem;
     --font-28px: 1.75rem;
@@ -168,4 +169,23 @@ input {
     font-weight: var(--font-regular);
     color: var(--color-red-text);
     line-height: 1.5;
+}
+
+/*Onboarding*/
+.onboarding-input-box-with-description>div>label {
+    font-family: var(--inter);
+    font-size: var(--font-18px);
+    font-weight: var(--font-medium);
+    color: var(--color-black);
+    line-height: 1.5;
+    letter-spacing: -0.03em;
+}
+
+.onboarding-input-box-with-description>div>p {
+    font-family: var(--inter);
+    font-size: var(--font-16px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-light);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
 }
