@@ -18,15 +18,20 @@ const getSkills = async () => {
     }
 };
 
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const addSkill = async (name) => {
     try {
         await client.connect();
         const skillsCollection = db.collection('skills');
-        const existingSkill = await skillsCollection.findOne({ name });
+        const normalizedSkill = capitalizeFirstLetter(name.trim());
+        const existingSkill = await skillsCollection.findOne({ name: normalizedSkill });
         if (existingSkill) {
             throw new Error('Esa skill ya existe.');
         }
-        await skillsCollection.insertOne({ name });
+        await skillsCollection.insertOne({ name: normalizedSkill });
     } catch (error) {
         console.error('Error al agregar la skill:', error);
         throw error;
