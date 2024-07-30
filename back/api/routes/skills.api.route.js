@@ -7,4 +7,7 @@ const route = Router();
 //Obtener todas las skills
 route.get('/skills', controllers.getSkills);
 
+//Agregar una nueva skill
+route.post('/skills', controllers.addSkill);
+
 export default route;
