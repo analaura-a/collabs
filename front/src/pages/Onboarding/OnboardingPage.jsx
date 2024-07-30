@@ -2,6 +2,7 @@ import { useState } from 'react';
 import OnboardingStep from '../../components/Step/OnboardingStep';
 import OnboardingForm1 from '../../components/Form/Onboarding/OnboardingForm1';
 import OnboardingForm2 from '../../components/Form/Onboarding/OnboardingForm2';
+import OnboardingForm3 from '../../components/Form/Onboarding/OnboardingForm3';
 import OnboardingForm4 from '../../components/Form/Onboarding/OnboardingForm4';
 import OnboardingForm5 from '../../components/Form/Onboarding/OnboardingForm5';
 import OnboardingForm6 from '../../components/Form/Onboarding/OnboardingForm6';
@@ -16,6 +17,11 @@ const steps = [
         title: '¿Cuál es tu perfil profesional?',
         subtitle: 'Selecciona los roles con los que te gustaría unirte a colaborar en proyectos.',
         form: OnboardingForm2,
+    },
+    {
+        title: '¿Cuáles son tus skills?',
+        subtitle: 'Selecciona las habilidades, tecnologías o conocimientos que aplican a tu perfil profesional (mínimo 3).',
+        form: OnboardingForm3,
     },
     {
         title: '¿Cuál es tu nivel de conocimiento?',
