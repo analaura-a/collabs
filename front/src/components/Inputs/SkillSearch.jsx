@@ -13,7 +13,7 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
             const fetchedSkills = await fetchSkills();
             setSkills(fetchedSkills);
         } catch (error) {
-            console.error('Error al cargar las habilidades:', error);
+            console.error('Error al cargar las skills:', error);
             //Agregar feedback al usuario
         }
     };
@@ -37,6 +37,7 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
     }, [searchTerm, skills, selectedSkills]);
 
     const handleSkillAdd = async (skill) => {
+
         const capitalizeFirstLetter = (string) => {
             return string.charAt(0).toUpperCase() + string.slice(1);
         };
@@ -47,49 +48,59 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
                 await addSkill(normalizedSkill);
                 setSkills([...skills, normalizedSkill]);
             } catch (error) {
-                console.error('Error al agregar la habilidad:', error);
+                console.error('Error al agregar la skill a la database:', error);
             }
         }
+
         onSkillAdd(normalizedSkill);
         setSearchTerm('');
+
     };
 
     return (
-        <form>
+        <div className="skill-search-container">
 
-            <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Buscá tecnologías, habilidades, conocimientos..."
-            />
+            <form className="skill-search">
 
-            {filteredSkills.length > 0 && (
-                <ul >
-                    {filteredSkills.map((skill) => (
-                        <li key={skill} onClick={() => handleSkillAdd(skill)}>
-                            {skill}
+                <input
+                    type="search"
+                    name="search-skills"
+                    value={searchTerm}
+                    className="skill-search-input"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Busca tecnologías, habilidades, conocimientos..."
+                />
+
+                {filteredSkills.length > 0 && (
+                    <ul className="skill-search-options">
+                        {filteredSkills.map((skill) => (
+                            <li key={skill} onClick={() => handleSkillAdd(skill)}>
+                                {skill}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+                {showAddOption && (
+                    <ul className="skill-search-options">
+                        <li onClick={() => handleSkillAdd(searchTerm)}>
+                            Agregar "{searchTerm.trim().charAt(0).toUpperCase() + searchTerm.trim().slice(1)}"
                         </li>
-                    ))}
-                </ul>
-            )}
+                    </ul>
+                )}
 
-            {showAddOption && (
-                <div onClick={() => handleSkillAdd(searchTerm)}>
-                    Agregar "{searchTerm.trim().charAt(0).toUpperCase() + searchTerm.trim().slice(1)}"
-                </div>
-            )}
+            </form>
 
-            <div>
+            <ul className="skill-search__selected">
                 {selectedSkills.map((skill) => (
-                    <div key={skill} >
+                    <li key={skill} >
                         {skill}
-                        <button type="button" onClick={() => onSkillRemove(skill)}>X</button>
-                    </div>
+                        <button type="button" className="skill-search__selected__delete" onClick={() => onSkillRemove(skill)}><img src="../../assets/svg/x.svg" /></button>
+                    </li>
                 ))}
-            </div>
+            </ul>
 
-        </form>
+        </div>
     );
 
 };
