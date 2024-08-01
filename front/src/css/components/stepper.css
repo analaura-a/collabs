@@ -1,0 +1,26 @@
+.stepper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.stepper-line {
+    flex: 1;
+    height: 4px;
+    background-color: var(--color-primary-hover);
+    border-radius: 100px;
+    transition: background-color 0.3s ease;
+}
+
+.stepper-line-completed {
+    background-color: var(--color-primary-logo);
+}
+
+@media only screen and (min-width: 1024px) {
+
+    .stepper {
+        gap: 8px;
+    }
+
+}

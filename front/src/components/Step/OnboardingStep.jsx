@@ -1,4 +1,5 @@
 import Button from "../../components/Button/Button";
+import Stepper from "../../components/Stepper/Stepper"
 
 /* 
 -Renderiza el formulario del paso actual y maneja la navegación entre los pasos.
@@ -9,6 +10,8 @@ const OnboardingStep = ({ title, subtitle, form, currentStep, totalSteps, nextSt
     return (
 
         <div>
+
+            <Stepper currentStep={currentStep} totalSteps={totalSteps} />
 
             <div className="onboarding-page-container__title">
                 <h1 className="title-40">{title}</h1>
