@@ -96,7 +96,7 @@ const SignupForm = () => {
             if (error.message === 'Ya existe una cuenta asociada a ese correo electrónico.') {
                 setErrors({ email: error.message });
             } else {
-                console.log("Error del back") //Mostrárselo al usuario | setErrorMessage(error.message); 
+                console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message); 
             }
 
         } finally {

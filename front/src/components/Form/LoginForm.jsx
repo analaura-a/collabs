@@ -76,7 +76,7 @@ const LoginForm = () => {
             } else if (error.message === "La contraseña es incorrecta.") {
                 setErrors({ password: error.message });
             } else {
-                console.log("Error del back") //Mostrárselo al usuario | setErrorMessage(error.message); 
+                console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message); 
             }
 
         } finally {
