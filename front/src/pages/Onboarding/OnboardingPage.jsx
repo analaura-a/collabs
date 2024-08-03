@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import AuthContext from "../../context/AuthContext";
 import OnboardingStep from '../../components/Step/OnboardingStep';
 import OnboardingForm1 from '../../components/Form/Onboarding/OnboardingForm1';
 import OnboardingForm2 from '../../components/Form/Onboarding/OnboardingForm2';
@@ -50,6 +51,7 @@ const OnboardingPage = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
     const [isStepValid, setIsStepValid] = useState(false);
+    const { authState, completeOnboarding } = useContext(AuthContext);
 
     const nextStep = () => {
         if (isStepValid && currentStep < steps.length - 1) {
@@ -76,6 +78,22 @@ const OnboardingPage = () => {
         setIsStepValid(isValid);
     };
 
+    const flattenFormData = (formData) => {
+        return Object.values(formData).reduce((acc, data) => {
+            return { ...acc, ...data };
+        }, {});
+    };
+
+    const handleComplete = async () => {
+        const flattenedData = flattenFormData(formData);
+        try {
+            await completeOnboarding(authState.user._id, flattenedData);
+            console.log("Onboarding completado con éxito")
+        } catch (error) {
+            console.error('Error al completar el onboarding:', error);
+        }
+    };
+
     const CurrentForm = steps[currentStep].form;
 
     return (
@@ -93,6 +111,7 @@ const OnboardingPage = () => {
                 nextStep={nextStep}
                 prevStep={prevStep}
                 isNextDisabled={!isStepValid}
+                handleComplete={handleComplete}
             />
 
         </section>

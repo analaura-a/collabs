@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { login as loginService, logout as logoutService } from '../services/authService';
+import { completeOnboarding as completeOnboardingService } from '../services/userService'
 // import { fetchUserProfile as fetchUserProfileService } from '../services/userService';
 
 const AuthContext = createContext();
@@ -61,6 +62,24 @@ export const AuthProvider = ({ children }) => {
         setAuthState((prevState) => ({ ...prevState, user }));
     };
 
+    const completeOnboarding = async (userId, onboardingData) => {
+
+        try {
+            await completeOnboardingService(userId, onboardingData);
+            const updatedUser = { ...authState.user, onboardingComplete: true, ...onboardingData };
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            setAuthState((prevState) => ({
+                ...prevState,
+                user: updatedUser,
+            }));
+        } catch (error) {
+            console.error('Error al completar el onboarding:', error);
+            setAuthState((prevState) => ({ ...prevState, error: error.message }));
+            throw error;
+        }
+
+    };
+
     // const fetchUserProfile = async () => {
     //     try {
     //         const userProfile = await fetchUserProfileService();
@@ -72,7 +91,7 @@ export const AuthProvider = ({ children }) => {
     // };
 
     return (
-        <AuthContext.Provider value={{ authState, login, logout, updateUser }}>
+        <AuthContext.Provider value={{ authState, login, logout, updateUser, completeOnboarding }}>
             {children}
         </AuthContext.Provider>
     );

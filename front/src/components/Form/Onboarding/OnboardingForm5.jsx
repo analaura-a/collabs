@@ -25,11 +25,11 @@ const OnboardingForm5 = ({ onChange, onValidate, initialData }) => {
         onValidate(selectedPreferences.length > 0);
     }, [selectedPreferences]);
 
-    const handleCheckboxChange = (id) => {
+    const handleCheckboxChange = (title) => {
         setSelectedPreferences((prevSelectedPreferences) =>
-            prevSelectedPreferences.includes(id)
-                ? prevSelectedPreferences.filter((pref) => pref !== id)
-                : [...prevSelectedPreferences, id]
+            prevSelectedPreferences.includes(title)
+                ? prevSelectedPreferences.filter((pref) => pref !== title)
+                : [...prevSelectedPreferences, title]
         );
     };
 
@@ -43,8 +43,8 @@ const OnboardingForm5 = ({ onChange, onValidate, initialData }) => {
                         svg={preference.svg}
                         title={preference.title}
                         description={preference.description}
-                        isChecked={selectedPreferences.includes(preference.id)}
-                        onChange={() => handleCheckboxChange(preference.id)}
+                        isChecked={selectedPreferences.includes(preference.title)}
+                        onChange={() => handleCheckboxChange(preference.title)}
                     />
                 ))}
             </div>

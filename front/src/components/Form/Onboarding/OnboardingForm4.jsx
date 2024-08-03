@@ -15,7 +15,7 @@ const OnboardingForm4 = ({ onChange, onValidate, initialData }) => {
     const [selectedOption, setSelectedOption] = useState(initialData?.option || '');
 
     useEffect(() => {
-        onChange({ option: selectedOption });
+        onChange({ experience: selectedOption });
         onValidate(selectedOption !== '');
     }, [selectedOption]);
 

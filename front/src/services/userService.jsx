@@ -42,3 +42,28 @@ export const checkUsernameAvailability = async (username) => {
     return data.isAvailable;
 
 };
+
+export const completeOnboarding = async (userId, onboardingData) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró un token.');
+    }
+
+    const response = await fetch(`${API_URL}/users/complete-onboarding`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        },
+        body: JSON.stringify({ userId, onboardingData }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Ocurrió un error al intentar completar el onboarding.');
+    }
+
+    return response.json();
+
+};

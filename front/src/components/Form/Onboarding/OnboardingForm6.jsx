@@ -13,7 +13,7 @@ const OnboardingForm6 = ({ onChange, onValidate, initialData }) => {
     const [selectedOption, setSelectedOption] = useState(initialData?.option || '');
 
     useEffect(() => {
-        onChange({ option: selectedOption });
+        onChange({ availability: selectedOption });
         onValidate(selectedOption !== '');
     }, [selectedOption]);
 
