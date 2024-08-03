@@ -1,6 +1,6 @@
 import * as service from "../../services/users.services.js";
 
-//Traer todos los usuarios
+//Obtener todos los usuarios
 const getUsers = (req, res) => {
 
     service.getUsers()
@@ -13,7 +13,7 @@ const getUsers = (req, res) => {
 
 };
 
-//Traer un usuario en particular
+//Obtener un usuario en especifico
 const getUserById = (req, res) => {
 
     const id = req.params.id;
@@ -62,6 +62,17 @@ const createUser = (req, res) => {
 
 };
 
+//Completar y agregar todos los datos del onboarding al perfil del usuario
+const completeOnboarding = async (req, res) => {
+    try {
+        const { userId, onboardingData } = req.body;
+        await service.completeOnboarding(userId, onboardingData);
+        res.status(200).json({ message: '¡El onboarding fue completado con éxito!' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 //Editar un usuario
 const editUser = (req, res) => {
 
@@ -84,5 +95,6 @@ export {
     checkUsernameAvailability,
     getUserProfile,
     createUser,
+    completeOnboarding,
     editUser
 }

@@ -21,6 +21,9 @@ route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile
 //Crear nuevo perfil de usuario (asociado a una cuenta creada)
 route.post('/users', [validateTokenMiddleware, validateUserCreate], controllers.createUser)
 
+//Completar y agregar todos los datos del onboarding al perfil del usuario
+route.post('/users/complete-onboarding', [validateTokenMiddleware], controllers.completeOnboarding);
+
 //Editar usuario
 route.patch('/users/:id', [validateUserPatch], controllers.editUser);
 

@@ -63,6 +63,37 @@ async function createUser(account, userProfileData) {
     return userProfile;
 }
 
+//Completar y agregar todos los datos del onboarding al perfil del usuario
+const completeOnboarding = async (userId, onboardingData) => {
+    try {
+        await client.connect();
+        const accountsCollection = db.collection('accounts');
+        const usersCollection = db.collection('users');
+
+        await accountsCollection.updateOne(
+            { _id: new ObjectId(userId) },
+            { $set: { onboardingComplete: true } }
+        );
+
+        const userUpdateData = {
+            _id: new ObjectId(userId),
+            onboardingComplete: true,
+            ...onboardingData,
+        };
+
+        await usersCollection.updateOne(
+            { _id: new ObjectId(userId) },
+            { $set: userUpdateData },
+            { upsert: true }
+        );
+    } catch (error) {
+        console.error('Ocurrió un error al completar el onboarding:', error);
+        throw error;
+    } finally {
+        await client.close();
+    }
+};
+
 //Editar un usuario
 async function editUser(id, user) {
     const editedUser = await db.collection("users").updateOne({ _id: new ObjectId(id) }, { $set: user });
@@ -74,5 +105,6 @@ export {
     getUserById,
     isUsernameAvailable,
     createUser,
+    completeOnboarding,
     editUser
 }
