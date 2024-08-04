@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthContext from "../../context/AuthContext";
 import OnboardingStep from '../../components/Step/OnboardingStep';
 import OnboardingForm1 from '../../components/Form/Onboarding/OnboardingForm1';
@@ -51,6 +52,7 @@ const OnboardingPage = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
     const [isStepValid, setIsStepValid] = useState(false);
+    const navigate = useNavigate();
     const { authState, completeOnboarding } = useContext(AuthContext);
 
     const nextStep = () => {
@@ -88,7 +90,7 @@ const OnboardingPage = () => {
         const flattenedData = flattenFormData(formData);
         try {
             await completeOnboarding(authState.user._id, flattenedData);
-            console.log("Onboarding completado con éxito")
+            navigate('/auth/onboarding-completado');
         } catch (error) {
             console.error('Error al completar el onboarding:', error);
         }

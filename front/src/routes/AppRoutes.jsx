@@ -10,6 +10,7 @@ import SignupPage from '../pages/SignupPage/SignupPage.jsx'
 import ForgottenPasswordPage from '../pages/PasswordPage/ForgottenPasswordPage.jsx'
 import ResetPasswordPage from '../pages/PasswordPage/ResetPasswordPage.jsx'
 import OnboardingPage from '../pages/Onboarding/OnboardingPage.jsx'
+import OnboardingCompletePage from '../pages/Onboarding/OnboardingCompletePage.jsx'
 import HomePage from '../pages/HomePage/HomePage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
@@ -69,6 +70,10 @@ const AppRoutes = createBrowserRouter([
                 element: (<OnboardingRoute>
                     <OnboardingPage />
                 </OnboardingRoute>),
+            },
+            {
+                path: "/auth/onboarding-completado",
+                element: <OnboardingCompletePage />,
             }
         ]
     }
