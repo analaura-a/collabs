@@ -75,15 +75,12 @@ const completeOnboarding = async (userId, onboardingData) => {
             { $set: { onboardingComplete: true } }
         );
 
-        const userUpdateData = {
-            _id: new ObjectId(userId),
-            onboardingComplete: true,
-            ...onboardingData,
-        };
+        const { _id, ...updateData } = onboardingData;
+        updateData.onboardingComplete = true;
 
         await usersCollection.updateOne(
             { _id: new ObjectId(userId) },
-            { $set: userUpdateData },
+            { $set: updateData },
             { upsert: true }
         );
     } catch (error) {
