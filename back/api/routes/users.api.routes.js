@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.users.js';
-import { validateUserCreate, validateUserPatch } from '../../middleware/users.validate.middleware.js'
+import { validateUserCreate, validateUserPatch, validateOnboarding } from '../../middleware/users.validate.middleware.js'
 import { validateTokenMiddleware } from "../../middleware/token.validate.middleware.js"
 
 const route = Router();
@@ -22,7 +22,7 @@ route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile
 route.post('/users', [validateTokenMiddleware, validateUserCreate], controllers.createUser)
 
 //Completar y agregar todos los datos del onboarding al perfil del usuario
-route.post('/users/complete-onboarding', [validateTokenMiddleware], controllers.completeOnboarding);
+route.post('/users/complete-onboarding', [validateTokenMiddleware, validateOnboarding], controllers.completeOnboarding);
 
 //Editar usuario
 route.patch('/users/:id', [validateUserPatch], controllers.editUser);
