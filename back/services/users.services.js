@@ -40,29 +40,6 @@ const isUsernameAvailable = async (username) => {
     }
 };
 
-//Crear un nuevo perfil de usuario (vinculado a una cuenta)
-//Deberá ser borrado:
-async function createUser(account, userProfileData) {
-
-    const userProfile = {
-        ...userProfileData,
-        email: account.email,
-        _id: new ObjectId(account._id)
-    }
-
-    await client.connect()
-
-    const exists = await db.collection("users").findOne({ email: account.email })
-
-    if (exists) {
-        throw new Error("Ya existe un perfil creado para ese usuario")
-    }
-
-    await db.collection("users").insertOne(userProfile)
-
-    return userProfile;
-}
-
 //Completar y agregar todos los datos del onboarding al perfil del usuario
 const completeOnboarding = async (userId, onboardingData) => {
     try {
@@ -91,7 +68,7 @@ const completeOnboarding = async (userId, onboardingData) => {
     }
 };
 
-//Editar un usuario
+//Editar un usuario en especifico
 async function editUser(id, user) {
     const editedUser = await db.collection("users").updateOne({ _id: new ObjectId(id) }, { $set: user });
     return editedUser;
@@ -101,7 +78,6 @@ export {
     getUsers,
     getUserById,
     isUsernameAvailable,
-    createUser,
     completeOnboarding,
     editUser
 }

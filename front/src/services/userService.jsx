@@ -1,5 +1,6 @@
 const API_URL = 'http://localhost:3333/api';
 
+//No se usa (todavía):
 export const fetchUserProfile = async () => {
 
     const token = localStorage.getItem('token');

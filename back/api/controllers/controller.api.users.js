@@ -48,20 +48,6 @@ const getUserProfile = (req, res) => {
 
 }
 
-//Crear un nuevo perfil de usuario (asociado a una cuenta existente)
-const createUser = (req, res) => {
-
-    service
-        .createUser(req.account, req.body)
-        .then((newUser) => {
-            res.status(201).json(newUser);
-        })
-        .catch((error) => {
-            res.status(500).json({ error: { message: error.message } });
-        });
-
-};
-
 //Completar y agregar todos los datos del onboarding al perfil del usuario
 const completeOnboarding = async (req, res) => {
     try {
@@ -73,7 +59,7 @@ const completeOnboarding = async (req, res) => {
     }
 };
 
-//Editar un usuario
+//Editar un usuario en especifico
 const editUser = (req, res) => {
 
     const id = req.params.id;
@@ -94,7 +80,6 @@ export {
     getUserById,
     checkUsernameAvailability,
     getUserProfile,
-    createUser,
     completeOnboarding,
     editUser
 }

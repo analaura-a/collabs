@@ -5,7 +5,7 @@ import { validateTokenMiddleware } from "../../middleware/token.validate.middlew
 
 const route = Router();
 
-/* API PERFIL DE USUARIOS */
+/* API PERFIL DE USUARIO */
 //Obtener todos los usuarios
 route.get('/users', controllers.getUsers);
 
@@ -18,13 +18,10 @@ route.post('/users/check-username', controllers.checkUsernameAvailability);
 //Obtener el perfil del usuario que inició sesión
 route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile)
 
-//Crear nuevo perfil de usuario (asociado a una cuenta creada)
-route.post('/users', [validateTokenMiddleware, validateUserCreate], controllers.createUser)
-
 //Completar y agregar todos los datos del onboarding al perfil del usuario
 route.post('/users/complete-onboarding', [validateTokenMiddleware, validateOnboarding], controllers.completeOnboarding);
 
-//Editar usuario
+//Editar un usuario en especifico
 route.patch('/users/:id', [validateUserPatch], controllers.editUser);
 
 export default route;
