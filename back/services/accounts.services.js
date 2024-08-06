@@ -32,6 +32,10 @@ async function createAccount(account) {
             name: newAccount.name,
             last_name: newAccount.last_name,
             username: "user-" + accountId,
+            profile_pic: null,
+            bio: null,
+            location: null,
+            portfolio_link: null,
             onboardingComplete: false
         };
         await users.insertOne(basicUserProfile);

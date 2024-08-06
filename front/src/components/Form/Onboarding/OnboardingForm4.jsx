@@ -12,10 +12,10 @@ const options = [
 
 const OnboardingForm4 = ({ onChange, onValidate, initialData }) => {
 
-    const [selectedOption, setSelectedOption] = useState(initialData?.experience || '');
+    const [selectedOption, setSelectedOption] = useState(initialData?.experience_level || '');
 
     useEffect(() => {
-        onChange({ experience: selectedOption });
+        onChange({ experience_level: selectedOption });
         onValidate(selectedOption !== '');
     }, [selectedOption]);
 
