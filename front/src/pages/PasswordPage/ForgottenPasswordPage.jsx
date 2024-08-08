@@ -5,8 +5,10 @@ import Button from "../../components/Button/Button";
 const ForgottenPasswordPage = () => {
 
     return (
+        <main className='faded-pattern-container'>
 
-        <main>
+            <div className="faded-pattern faded-pattern-top-left"></div>
+            <div className="faded-pattern faded-pattern-bottom-right"></div>
 
             <section className="password-page-container">
 
@@ -33,7 +35,6 @@ const ForgottenPasswordPage = () => {
             </section>
 
         </main>
-
     )
 }
 
