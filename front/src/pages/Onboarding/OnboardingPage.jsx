@@ -99,25 +99,30 @@ const OnboardingPage = () => {
     const CurrentForm = steps[currentStep].form;
 
     return (
+        <main className='faded-pattern-container'>
 
-        <section className="onboarding-page-container">
+            <div className="faded-pattern faded-pattern-top-left"></div>
+            <div className="faded-pattern faded-pattern-bottom-right"></div>
 
-            <img src='../assets/svg/collabs-logo.svg' alt="Collabs" />
+            <section className="onboarding-page-container">
 
-            <OnboardingStep
-                title={steps[currentStep].title}
-                subtitle={steps[currentStep].subtitle}
-                form={<CurrentForm onChange={data => handleFormChange(currentStep, data)} onValidate={handleFormValidation} initialData={formData[currentStep]} />}
-                currentStep={currentStep}
-                totalSteps={steps.length}
-                nextStep={nextStep}
-                prevStep={prevStep}
-                isNextDisabled={!isStepValid}
-                handleComplete={handleComplete}
-            />
+                <img src='../assets/svg/collabs-logo.svg' alt="Collabs" />
 
-        </section>
+                <OnboardingStep
+                    title={steps[currentStep].title}
+                    subtitle={steps[currentStep].subtitle}
+                    form={<CurrentForm onChange={data => handleFormChange(currentStep, data)} onValidate={handleFormValidation} initialData={formData[currentStep]} />}
+                    currentStep={currentStep}
+                    totalSteps={steps.length}
+                    nextStep={nextStep}
+                    prevStep={prevStep}
+                    isNextDisabled={!isStepValid}
+                    handleComplete={handleComplete}
+                />
 
+            </section>
+
+        </main>
     )
 
 }

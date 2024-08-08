@@ -1,0 +1,30 @@
+.faded-pattern-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.faded-pattern {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+}
+
+.faded-pattern-top-left {
+    top: 0;
+    left: 0;
+    background-image: url('../assets/svg/patron-degradado-top-izq.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.faded-pattern-bottom-right {
+    bottom: 0;
+    right: 0;
+    background-image: url('../assets/svg/patron-degradado-bottom-der.svg');
+}
+
+@media (max-width: 1024px) {
+    .pattern {
+        display: none;
+    }
+}

@@ -6,27 +6,31 @@ const ResetPasswordPage = () => {
 
     return (
 
-        <section className="password-page-container">
+        <main>
 
-            <Link to="/">
-                <img src='../assets/svg/collabs-logo.svg' alt="Collabs" />
-            </Link>
+            <section className="password-page-container">
 
-            <div>
+                <Link to="/">
+                    <img src='../assets/svg/collabs-logo.svg' alt="Collabs" />
+                </Link>
 
-                <div className="password-page-container__title">
-                    <h1 className="title-40">Restablecer contraseña</h1>
+                <div>
+
+                    <div className="password-page-container__title">
+                        <h1 className="title-40">Restablecer contraseña</h1>
+                    </div>
+
+                    <form action="" className="reset-password-form">
+                        <Input label="Nueva contraseña" type="password" placeholder="***************" helperText="Debe contener mínimo 8 caracteres." required />
+                        <Input label="Confirmar nueva contraseña" type="password" placeholder="***************" required />
+                        <Button type="submit" size="large" width="fullwidth">Guardar contraseña</Button>
+                    </form>
+
                 </div>
 
-                <form action="" className="reset-password-form">
-                    <Input label="Nueva contraseña" type="password" placeholder="***************" helperText="Debe contener mínimo 8 caracteres." required />
-                    <Input label="Confirmar nueva contraseña" type="password" placeholder="***************" required />
-                    <Button type="submit" size="large" width="fullwidth">Guardar contraseña</Button>
-                </form>
+            </section>
 
-            </div>
-
-        </section>
+        </main>
 
     )
 }

@@ -1,9 +1,15 @@
 const OnboardingCompletePage = () => {
 
     return (
-        <section >
-            ¡Onboarding completado con éxito!
-        </section>
+
+        <main>
+
+            <section >
+                ¡Onboarding completado con éxito!
+            </section>
+
+        </main>
+
     )
 
 }

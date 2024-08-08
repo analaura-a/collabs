@@ -14,7 +14,7 @@ const Error404Page = () => {
     const navigate = useNavigate();
 
     return (
-        <>
+        <main>
             {token && user ? <AuthNavbar /> : <GuestNavbar />}
 
             <main className="container error-page">
@@ -31,7 +31,7 @@ const Error404Page = () => {
             </main>
 
             {token && user ? <AuthFooter /> : <GuestFooter />}
-        </>
+        </main>
     )
 }
 
