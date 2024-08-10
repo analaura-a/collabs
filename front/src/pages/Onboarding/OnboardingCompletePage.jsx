@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import Button from "../../components/Button/Button";
 
 const OnboardingCompletePage = () => {
+
+    const navigate = useNavigate();
 
     return (
         <main className='faded-pattern-container'>
@@ -19,7 +22,7 @@ const OnboardingCompletePage = () => {
                         <p className="subtitle">En Collabs podrás trabajar junto a otros, adquirir habilidades, hacer conexiones y dar el próximo paso en tu carrera profesional.</p>
                     </div>
 
-                    <Button size="large" width="full-then-fit">Comenzar</Button>
+                    <Button size="large" width="full-then-fit" onClick={() => { navigate('/inicio'); }}>Comenzar</Button>
 
                 </div>
 
