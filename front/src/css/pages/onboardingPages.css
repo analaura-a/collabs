@@ -159,6 +159,28 @@
     gap: 4px;
 }
 
+.onboarding-complete-container {
+    justify-content: center;
+}
+
+.onboarding-complete-content {
+    align-items: center;
+}
+
+.onboarding-complete__image {
+    display: none;
+}
+
+
+
+@media (min-height: 800px) {
+    .onboarding-complete__image {
+        display: block;
+        position: absolute;
+        bottom: 0;
+    }
+}
+
 
 
 @media (max-width: 1024px) {
@@ -188,6 +210,14 @@
 
     .onboarding-input-box {
         padding: 52px 0px;
+    }
+
+    .onboarding-complete-container {
+        justify-content: flex-start;
+    }
+
+    .onboarding-complete__image {
+        display: none;
     }
 
 }
