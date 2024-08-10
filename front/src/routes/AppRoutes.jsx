@@ -73,7 +73,9 @@ const AppRoutes = createBrowserRouter([
             },
             {
                 path: "/auth/onboarding-completado",
-                element: <OnboardingCompletePage />,
+                element: (<ProtectedRoute>
+                    <OnboardingCompletePage />
+                </ProtectedRoute>),
             }
         ]
     }
