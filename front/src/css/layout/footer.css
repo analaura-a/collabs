@@ -59,6 +59,7 @@ footer>.container {
 
     footer {
         margin-bottom: 64px;
+        padding: 0px;
     }
 
     footer>.container {

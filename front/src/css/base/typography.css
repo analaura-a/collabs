@@ -3,6 +3,7 @@
 
     --font-12px: 0.75rem;
     --font-14px: 0.875rem;
+    --font-15px: 0.9375rem;
     --font-16px: 1rem;
     --font-18px: 1.125rem;
     --font-20px: 1.25rem;
@@ -101,6 +102,24 @@
     line-height: 1.2;
 }
 
+.title-32 {
+    font-family: var(--inter);
+    font-size: var(--font-32px);
+    font-weight: var(--font-semibold);
+    color: var(--color-black);
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+}
+
+.title-18 {
+    font-family: var(--inter);
+    font-size: var(--font-18px);
+    font-weight: var(--font-medium);
+    color: var(--color-black);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
 .big-subtitle {
     font-family: var(--inter);
     font-size: var(--font-20px);
@@ -134,6 +153,11 @@
 
 .primary-color-text {
     color: var(--color-primary-text);
+}
+
+.bolder-text {
+    font-weight: var(--font-semibold) !important;
+    color: var(--color-black) !important;
 }
 
 /*Formulario*/
@@ -206,4 +230,41 @@ input {
     color: var(--color-black-light);
     line-height: 1.4;
     letter-spacing: -0.02em;
+}
+
+/*Profile*/
+.profile-username {
+    font-family: var(--inter);
+    font-size: var(--font-18px);
+    font-weight: var(--font-medium);
+    color: var(--color-primary-text);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+}
+
+.profile-bio {
+    font-family: var(--inter);
+    font-size: var(--font-18px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-subtitle);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    max-width: 48ch;
+}
+
+.profile-bio__details {
+    font-family: var(--inter);
+    font-size: var(--font-15px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-light);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+}
+
+/*Misc*/
+.title-with-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
 }

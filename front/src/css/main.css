@@ -12,6 +12,7 @@
 @import './pages/authPages.css';
 @import './pages/resetPasswordPages.css';
 @import './pages/onboardingPages.css';
+@import './pages/profilePage.css';
 
 @import './components/button.css';
 @import './components/input.css';
