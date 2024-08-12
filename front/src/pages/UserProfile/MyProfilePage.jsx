@@ -1,7 +1,25 @@
+import React, { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
 import EditIcon from '../../assets/svg/edit.svg?react';
 import Button from "../../components/Button/Button";
 
 const MyProfilePage = () => {
+
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
+
+    if (!user) {
+        return <div>Cargando...</div>; //Reemplazar por componente de carga
+    }
+
+    const formatRoles = (roles) => {
+        return roles.map((role, index) => (
+            <React.Fragment key={index}>
+                <span className="bolder-text">{role}</span>
+                {index < roles.length - 2 ? ', ' : index === roles.length - 2 ? ' o ' : ''}
+            </React.Fragment>
+        ));
+    };
 
     return (
         <main>
@@ -17,13 +35,13 @@ const MyProfilePage = () => {
                             </div>
 
                             <div className="profile-page__header__profile-info__name-container">
-                                <h1 className="title-32">Salvador Reynoso</h1>
-                                <p className="profile-username">@salvadoreynoso</p>
+                                <h1 className="title-32">{user.name} {user.last_name}</h1>
+                                <p className="profile-username">@{user.username}</p>
                             </div>
                         </div>
 
                         <div className="profile-page__header__profile-info__bio-container">
-                            <p className="profile-bio">Quiero unirme a colaborar en proyectos como <span className="bolder-text">UX/UI Designer</span>, <span className="bolder-text">Web Designer</span> o <span className="bolder-text">No-code Developer.</span></p>
+                            <p className="profile-bio">Quiero unirme a colaborar en proyectos como {formatRoles(user.roles)}.</p>
 
                             <div>
                                 <div className="profile-page__header__profile-info__bio-details-container">
