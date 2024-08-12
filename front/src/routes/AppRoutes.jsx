@@ -12,6 +12,7 @@ import ResetPasswordPage from '../pages/PasswordPage/ResetPasswordPage.jsx'
 import OnboardingPage from '../pages/Onboarding/OnboardingPage.jsx'
 import OnboardingCompletePage from '../pages/Onboarding/OnboardingCompletePage.jsx'
 import HomePage from '../pages/HomePage/HomePage.jsx'
+import MyProfilePage from '../pages/UserProfile/MyProfilePage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -32,6 +33,12 @@ const AppRoutes = createBrowserRouter([
                 path: "/inicio",
                 element: (<ProtectedRoute>
                     <HomePage />
+                </ProtectedRoute>),
+            },
+            {
+                path: "/mi-perfil",
+                element: (<ProtectedRoute>
+                    <MyProfilePage />
                 </ProtectedRoute>),
             }
         ]

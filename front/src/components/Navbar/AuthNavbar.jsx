@@ -130,7 +130,7 @@ const AuthNavbar = () => {
                         </div>
                         <ul className={`dropdown-menu ${isProfileDropdownOpen ? 'show' : ''}`}>
                             <li>
-                                <Link to="/" className="navbar-text">Mi perfil</Link>
+                                <Link to="/mi-perfil" className="navbar-text">Mi perfil</Link>
                             </li>
                             <li>
                                 <Link to="/" className="navbar-text" onClick={handleLogout}>Cerrar sesión</Link>
