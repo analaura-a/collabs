@@ -72,13 +72,22 @@ const MyProfilePage = () => {
                         <div className="profile-page__header__actions__portfolio-container">
 
                             <div className="title-with-icon">
-                                <img src="../assets/svg/notes-with-background.svg" alt="" />
+                                <img src="../assets/svg/notes-with-background.svg" alt="Portfolio" />
                                 <h2 className="title-18">Portfolio</h2>
                             </div>
 
-                            <a href="#" className="profile-page__header__actions__portfolio-container__portfolio-link">www.salvadorreynoso.com <img src="../assets/svg/export.svg" alt="" /></a>
-
-                            <Button width="fullwidth" size="large" icon={<EditIcon />}>Editar portfolio</Button>
+                            {user.portfolio_link ? (
+                                <>
+                                    <a href="#" className="profile-page__header__actions__portfolio-container__portfolio-link">www.salvadorreynoso.com <img src="../assets/svg/export.svg" alt="Link externo" /></a>
+                                    <Button width="fullwidth" size="large" icon={<EditIcon />}>Editar portfolio</Button>
+                                </>
+                            ) : (
+                                <>
+                                    <p className="subtitle">Aún no agregaste tu portfolio.</p>
+                                    <Button width="fullwidth" size="large" icon={<EditIcon />}>Agregar portfolio</Button>
+                                </>
+                            )
+                            }
 
                         </div>
 
