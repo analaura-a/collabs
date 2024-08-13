@@ -50,13 +50,14 @@ const MyProfilePage = () => {
                             <p className="profile-bio">Quiero unirme a colaborar en proyectos como {formatRoles(user.roles)}.</p>
 
                             <div>
-                                <div className="profile-page__header__profile-info__bio-details-container"> {/* Mostrar condicionalmente */}
-                                    <img src="../assets/svg/location.svg" alt="" />
-                                    <p className="profile-bio__details">Buenos Aires, Argentina</p>
-                                </div>
+                                {user.location &&
+                                    <div className="profile-page__header__profile-info__bio-details-container">
+                                        <img src="../assets/svg/location.svg" alt="Ubicación" />
+                                        <p className="profile-bio__details">{user.location}</p>
+                                    </div>}
 
                                 <div className="profile-page__header__profile-info__bio-details-container">
-                                    <img src="../assets/svg/calendar.svg" alt="" />
+                                    <img src="../assets/svg/calendar.svg" alt="Fecha de creación de cuenta" />
                                     <p className="profile-bio__details">Se unió en {formatJoinDate(user.createdAt)}</p>
                                 </div>
                             </div>
