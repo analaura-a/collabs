@@ -155,6 +155,11 @@
     color: var(--color-primary-text);
 }
 
+.bold-text {
+    font-weight: var(--font-medium) !important;
+    color: var(--color-black) !important;
+}
+
 .bolder-text {
     font-weight: var(--font-semibold) !important;
     color: var(--color-black) !important;

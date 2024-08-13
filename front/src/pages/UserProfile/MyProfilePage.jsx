@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
-import EditIcon from '../../assets/svg/edit.svg?react';
 import Button from "../../components/Button/Button";
+import Tabs from '../../components/Tabs/Tabs';
+import EditIcon from '../../assets/svg/edit.svg?react';
 
 const MyProfilePage = () => {
 
@@ -26,6 +27,11 @@ const MyProfilePage = () => {
         const date = new Date(dateString);
         return date.toLocaleDateString('es-ES', options);
     };
+
+    const tabs = [
+        { label: 'Perfil', content: <div>Contenido del Perfil</div> },
+        { label: 'Reseñas', content: <div>Contenido de Reseñas</div> },
+    ];
 
     return (
         <main>
@@ -94,6 +100,8 @@ const MyProfilePage = () => {
                     </div>
 
                 </section>
+
+                <Tabs tabs={tabs} />
 
             </div>
         </main>
