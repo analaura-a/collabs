@@ -21,6 +21,12 @@ const MyProfilePage = () => {
         ));
     };
 
+    const formatJoinDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', options);
+    };
+
     return (
         <main>
             <div className="container profile-page-container">{/* contenedor general */}
@@ -29,7 +35,7 @@ const MyProfilePage = () => {
 
                     <div className="profile-page__header__profile-info">
 
-                        <div className="profile-page__header__profile-info__photo-and-name-container">
+                        <div className="profile-page__header__profile-info__photo-and-name-container"> {/* Mostrar condicionalmente */}
                             <div className="profile-page__header__profile-info__photo-container">
                                 <img src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095205-stock-illustration-businessman-profile-icon.jpg" alt="" />
                             </div>
@@ -44,14 +50,14 @@ const MyProfilePage = () => {
                             <p className="profile-bio">Quiero unirme a colaborar en proyectos como {formatRoles(user.roles)}.</p>
 
                             <div>
-                                <div className="profile-page__header__profile-info__bio-details-container">
+                                <div className="profile-page__header__profile-info__bio-details-container"> {/* Mostrar condicionalmente */}
                                     <img src="../assets/svg/location.svg" alt="" />
                                     <p className="profile-bio__details">Buenos Aires, Argentina</p>
                                 </div>
 
                                 <div className="profile-page__header__profile-info__bio-details-container">
                                     <img src="../assets/svg/calendar.svg" alt="" />
-                                    <p className="profile-bio__details">Se unió en abril de 2024</p>
+                                    <p className="profile-bio__details">Se unió en {formatJoinDate(user.createdAt)}</p>
                                 </div>
                             </div>
                         </div>

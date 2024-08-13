@@ -22,6 +22,8 @@ async function createAccount(account) {
         const newAccount = { ...account }
         newAccount.password = await bcrypt.hash(account.password, 10)
         newAccount.onboardingComplete = false;
+        newAccount.createdAt = new Date();
+
         const result = await accounts.insertOne(newAccount);
         const accountId = result.insertedId;
 
@@ -36,7 +38,8 @@ async function createAccount(account) {
             bio: null,
             location: null,
             portfolio_link: null,
-            onboardingComplete: false
+            onboardingComplete: false,
+            createdAt: newAccount.createdAt
         };
         await users.insertOne(basicUserProfile);
 
