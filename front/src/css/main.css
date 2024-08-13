@@ -19,5 +19,6 @@
 @import './components/skillSearch.css';
 @import './components/stepper.css';
 @import './components/tabs.css';
+@import './components/tabsContent/Profile/tabProfileContent.css';
 
 @import './misc/faded-pattern.css';

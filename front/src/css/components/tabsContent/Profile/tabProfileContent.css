@@ -1,0 +1,198 @@
+.tab-profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+
+    width: 100%;
+    padding: 40px 0px 0px 0px;
+}
+
+.tab-profile__user-info-column {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    width: 100%;
+}
+
+.tab-profile__space-between {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tab-profile__user-info-column__collab-profile {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.tab-profile__user-info-column__collab-profile>li {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.helper-purple-icon {
+    display: block;
+    width: 45px;
+    height: auto;
+    aspect-ratio: 1;
+
+    background-color: var(--color-primary-light);
+    border-radius: 8px;
+    border: 1.5px solid var(--color-primary-button);
+    transition: all 240ms ease-out;
+}
+
+.availability-icon {
+    background-image: url(../assets/svg/menu-board.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.experience-level-icon {
+    background-image: url(../assets/svg/teacher.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.tab-profile__user-info-column__skills {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tab-profile__user-info-column__skills>li {
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-gray);
+    border-radius: 0.75rem;
+}
+
+.tab-profile__user-info-column__socials {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px 40px;
+}
+
+.tab-profile__user-info-column__socials>li>a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+
+    cursor: pointer;
+}
+
+.tab-profile__user-info-column__socials>li>a:hover .small-button-with-icon {
+    background-color: var(--color-gray);
+}
+
+.small-button-with-icon {
+    display: block;
+    width: 45px;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    border: 1px solid var(--color-gray-line);
+    cursor: pointer;
+    transition: all 240ms ease-out;
+}
+
+.small-button-with-icon:hover {
+    background-color: var(--color-gray);
+}
+
+.linkedin-social {
+    background-image: url(../assets/svg/linkedin.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.tab-profile__collab-stats-column {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    width: 100%;
+}
+
+.tab-profile__collab-stats-column__status {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tab-profile__collab-stats-column__status>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+    padding: 12px;
+    background-color: var(--color-primary-light);
+    border-radius: 12px;
+}
+
+.tab-profile__collab-stats-column__stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px 0px;
+}
+
+.tab-profile__collab-stats-column__stats>li {
+    width: 48%;
+    padding: 2.5rem 2rem 2rem 2rem;
+
+    border: 0.0625rem solid var(--color-gray-line);
+    border-radius: 1.5rem;
+}
+
+
+
+@media only screen and (min-width: 1024px) {
+
+    .tab-profile-container {
+        flex-direction: row;
+        gap: 0px;
+        padding: 48px 0px 0px 0px;
+    }
+
+    .tab-profile__user-info-column {
+        gap: 56px;
+        width: 50%;
+    }
+
+    .tab-profile__space-between {
+        gap: 16px;
+    }
+
+    .tab-profile__user-info-column__collab-profile {
+        flex-direction: row;
+        gap: 64px;
+    }
+
+    .tab-profile__user-info-column__socials {
+        gap: 20px 40px;
+    }
+
+    .tab-profile__collab-stats-column {
+        gap: 64px;
+        width: 35%;
+    }
+
+    .tab-profile__collab-stats-column__status {
+        gap: 20px;
+    }
+
+    .tab-profile__collab-stats-column__stats {
+        gap: 20px 0px;
+    }
+
+}

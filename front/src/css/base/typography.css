@@ -138,6 +138,15 @@
     line-height: 1.4;
 }
 
+.paragraph {
+    font-family: var(--inter);
+    font-size: var(--font-16px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-subtitle);
+    letter-spacing: -0.02em;
+    line-height: 1.6;
+}
+
 .light-paragraph {
     font-family: var(--inter);
     font-size: var(--font-16px);
@@ -146,13 +155,17 @@
     letter-spacing: -0.02em;
 }
 
+.smaller-paragraph {
+    font-family: var(--inter);
+    font-size: var(--font-14px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-subtitle);
+    line-height: 1.4;
+}
+
 .link {
     font-weight: var(--font-semibold) !important;
     color: var(--color-primary-text) !important;
-}
-
-.primary-color-text {
-    color: var(--color-primary-text);
 }
 
 .bold-text {
@@ -163,6 +176,10 @@
 .bolder-text {
     font-weight: var(--font-semibold) !important;
     color: var(--color-black) !important;
+}
+
+.primary-color-text {
+    color: var(--color-primary-text) !important;
 }
 
 /*Formulario*/
@@ -263,6 +280,14 @@ input {
     font-weight: var(--font-regular);
     color: var(--color-black-light);
     line-height: 1.4;
+    letter-spacing: -0.02em;
+}
+
+.big-number-stat-placeholder {
+    font-family: var(--inter);
+    font-size: var(--font-40px);
+    font-weight: var(--font-regular);
+    color: var(--color-gray-placeholder);
     letter-spacing: -0.02em;
 }
 
