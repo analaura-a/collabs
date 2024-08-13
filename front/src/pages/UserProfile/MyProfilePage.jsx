@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import Button from "../../components/Button/Button";
 import Tabs from '../../components/Tabs/Tabs';
+import TabProfileContent from '../../components/TabsContent/Profile/TabProfileContent';
+import TabReviewsContent from '../../components/TabsContent/Profile/TabReviewsContent';
 import EditIcon from '../../assets/svg/edit.svg?react';
 
 const MyProfilePage = () => {
@@ -29,8 +31,8 @@ const MyProfilePage = () => {
     };
 
     const tabs = [
-        { label: 'Perfil', content: <div>Contenido del Perfil</div> },
-        { label: 'Reseñas', content: <div>Contenido de Reseñas</div> },
+        { label: 'Perfil', content: <TabProfileContent /> },
+        { label: 'Reseñas', content: <TabReviewsContent /> },
     ];
 
     return (
