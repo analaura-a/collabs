@@ -41,15 +41,23 @@ const MyProfilePage = () => {
 
                     <div className="profile-page__header__profile-info">
 
-                        <div className="profile-page__header__profile-info__photo-and-name-container"> {/* Mostrar condicionalmente */}
-                            <div className="profile-page__header__profile-info__photo-container">
-                                <img src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095205-stock-illustration-businessman-profile-icon.jpg" alt="" />
-                            </div>
+                        <div className="profile-page__header__profile-info__photo-and-name-container">
+
+                            {user.profile_pic ? (
+                                <>
+                                    {/* Insertar acá foto de perfil */}
+                                </>
+                            ) : (
+                                <div className="profile-page__header__profile-info__photo-container">
+                                    <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                                </div>
+                            )}
 
                             <div className="profile-page__header__profile-info__name-container">
                                 <h1 className="title-32">{user.name} {user.last_name}</h1>
                                 <p className="profile-username">@{user.username}</p>
                             </div>
+
                         </div>
 
                         <div className="profile-page__header__profile-info__bio-container">
@@ -103,8 +111,8 @@ const MyProfilePage = () => {
 
                 <Tabs tabs={tabs} />
 
-            </div>
-        </main>
+            </div >
+        </main >
     )
 }
 
