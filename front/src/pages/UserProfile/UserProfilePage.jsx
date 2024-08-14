@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchUserProfileByUsername } from "../../services/userService";
 
 const UserProfilePage = () => {
 
     const { username } = useParams();
+    const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -25,16 +26,18 @@ const UserProfilePage = () => {
         loadUserProfile();
     }, [username]);
 
+    useEffect(() => {
+        if (!loading && !user) {
+            navigate('*');
+        }
+    }, [loading, user, navigate]);
+
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
 
     if (error) {
         return <div>Error: {error}</div>; //Error
-    }
-
-    if (!user) {
-        return <div>Usuario no encontrado</div>; //404
     }
 
     return (
