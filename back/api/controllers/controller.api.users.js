@@ -13,7 +13,7 @@ const getUsers = (req, res) => {
 
 };
 
-//Obtener un usuario en especifico
+//Obtener un usuario en especifico por ID
 const getUserById = (req, res) => {
 
     const id = req.params.id;
@@ -28,6 +28,17 @@ const getUserById = (req, res) => {
         });
 
 };
+
+//Obtener un usuario en especifico por username
+async function getUserByUsername(req, res) {
+    const { username } = req.params;
+    try {
+        const user = await service.getUserByUsername(username);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
 
 //Verificar si ya existe un usuario con el mismo username
 const checkUsernameAvailability = async (req, res) => {
@@ -78,6 +89,7 @@ const editUser = (req, res) => {
 export {
     getUsers,
     getUserById,
+    getUserByUsername,
     checkUsernameAvailability,
     getUserProfile,
     completeOnboarding,

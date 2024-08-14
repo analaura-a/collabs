@@ -9,8 +9,11 @@ const route = Router();
 //Obtener todos los usuarios
 route.get('/users', controllers.getUsers);
 
-//Obtener un usuario en especifico
+//Obtener un usuario en especifico por ID
 route.get('/users/:id', controllers.getUserById);
+
+//Obtener un usuario en especifico por username
+route.get('/users/username/:username', controllers.getUserByUsername);
 
 //Verificar si ya existe un usuario con el mismo username
 route.post('/users/check-username', controllers.checkUsernameAvailability);

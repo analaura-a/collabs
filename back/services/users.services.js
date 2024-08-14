@@ -13,7 +13,7 @@ async function getUsers() {
 
 }
 
-//Obtener un usuario en específico
+//Obtener un usuario en específico por ID
 async function getUserById(id) {
 
     // await client.connect();
@@ -25,6 +25,20 @@ async function getUserById(id) {
     }
 
     return user;
+}
+
+//Obtener un usuario en específico por username
+async function getUserByUsername(username) {
+    await client.connect();
+    try {
+        const user = await db.collection('users').findOne({ username: username });
+        if (!user) {
+            throw new Error('Usuario no encontrado');
+        }
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 }
 
 //Verificar si ya existe un usuario con el mismo username
@@ -77,6 +91,7 @@ async function editUser(id, user) {
 export {
     getUsers,
     getUserById,
+    getUserByUsername,
     isUsernameAvailable,
     completeOnboarding,
     editUser
