@@ -13,6 +13,7 @@ import OnboardingPage from '../pages/Onboarding/OnboardingPage.jsx'
 import OnboardingCompletePage from '../pages/Onboarding/OnboardingCompletePage.jsx'
 import HomePage from '../pages/HomePage/HomePage.jsx'
 import MyProfilePage from '../pages/UserProfile/MyProfilePage.jsx'
+import UserProfilePage from '../pages/UserProfile/UserProfilePage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -39,6 +40,12 @@ const AppRoutes = createBrowserRouter([
                 path: "/mi-perfil",
                 element: (<ProtectedRoute>
                     <MyProfilePage />
+                </ProtectedRoute>),
+            },
+            {
+                path: "/colaboradores/:username",
+                element: (<ProtectedRoute>
+                    <UserProfilePage />
                 </ProtectedRoute>),
             }
         ]
