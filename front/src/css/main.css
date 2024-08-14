@@ -20,5 +20,6 @@
 @import './components/stepper.css';
 @import './components/tabs.css';
 @import './components/tabsContent/Profile/tabProfileContent.css';
+@import './components/tabsContent/Reviews/tabReviewsContent.css';
 
 @import './misc/faded-pattern.css';

@@ -111,6 +111,15 @@
     line-height: 1.2;
 }
 
+.title-32-medium {
+    font-family: var(--inter);
+    font-size: var(--font-32px);
+    font-weight: var(--font-medium);
+    color: var(--color-black);
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+}
+
 .title-18 {
     font-family: var(--inter);
     font-size: var(--font-18px);
@@ -123,6 +132,15 @@
 .big-subtitle {
     font-family: var(--inter);
     font-size: var(--font-20px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-light);
+    letter-spacing: -0.03em;
+    line-height: 1.4;
+}
+
+.subtitle-18 {
+    font-family: var(--inter);
+    font-size: var(--font-18px);
     font-weight: var(--font-regular);
     color: var(--color-black-light);
     letter-spacing: -0.03em;
