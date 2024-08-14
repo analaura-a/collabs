@@ -18,7 +18,7 @@ route.get('/users/username/:username', controllers.getUserByUsername);
 //Verificar si ya existe un usuario con el mismo username
 route.post('/users/check-username', controllers.checkUsernameAvailability);
 
-//Obtener el perfil del usuario que inició sesión
+//Obtener el perfil del usuario que inició sesión (SIN USAR)
 route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile)
 
 //Completar y agregar todos los datos del onboarding al perfil del usuario

@@ -25,6 +25,19 @@ export const fetchUserProfile = async () => {
     return await response.json();
 };
 
+export const fetchUserProfileByUsername = async (username) => {
+    try {
+        const response = await fetch(`${API_URL}/users/username/${username}`);
+        if (!response.ok) {
+            throw new Error('Ocurrió un error al intentar encontrar al usuario');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
 export const checkUsernameAvailability = async (username) => {
 
     const response = await fetch(`${API_URL}/users/check-username`, {
