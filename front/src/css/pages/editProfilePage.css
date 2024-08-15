@@ -8,6 +8,14 @@
     gap: 24px;
 }
 
+.edit-profile-page__content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+
+
 @media (min-width: 1024px) {
 
     .edit-profile-page {
@@ -16,6 +24,20 @@
 
     .edit-profile-page .container {
         gap: 48px;
+    }
+
+    .edit-profile-page__content-container {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .edit-profile-page__content-container nav {
+        width: 25%;
+    }
+
+    .edit-profile-page__content-container__form {
+        width: 60%;
     }
 
 }

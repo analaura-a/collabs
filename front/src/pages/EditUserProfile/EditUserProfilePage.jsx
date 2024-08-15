@@ -11,7 +11,7 @@ const EditUserProfilePage = () => {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
 
-    const [selectedSection, setSelectedSection] = useState('account'); 
+    const [selectedSection, setSelectedSection] = useState('account');
 
     const renderForm = () => {
         switch (selectedSection) {
@@ -40,13 +40,13 @@ const EditUserProfilePage = () => {
 
                 <h1 className="title-40">Editar mi perfil</h1>
 
-                <div>
+                <div className="edit-profile-page__content-container">
                     <EditUserProfileMenu
                         onSelect={setSelectedSection}
                         selectedSection={selectedSection}
                     />
 
-                    <div className="form-container">
+                    <div className="edit-profile-page__content-container__form">
                         {renderForm()}
                     </div>
                 </div>
