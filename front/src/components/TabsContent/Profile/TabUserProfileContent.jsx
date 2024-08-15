@@ -1,10 +1,31 @@
-import { useContext } from 'react';
-import AuthContext from '../../../context/AuthContext';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchUserProfileByUsername } from "../../../services/userService";
 
-const TabProfileContent = () => {
+const TabUserProfileContent = () => {
 
-    const { authState } = useContext(AuthContext);
-    const { user } = authState;
+    const { username } = useParams();
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const loadUserProfile = async () => {
+        try {
+            const userData = await fetchUserProfileByUsername(username);
+            setUser(userData);
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadUserProfile();
+    }, [username]);
+
+    if (loading) {
+        return <div>Cargando...</div>; //Reemplazar por componente de carga
+    }
 
     return (
         <section className="tab-profile-container">
@@ -19,7 +40,7 @@ const TabProfileContent = () => {
                             <p className="paragraph">{user.bio}</p>
                         </>
                     ) : (
-                        <p className="paragraph">Aún no agregaste información sobre ti.</p>
+                        <p className="paragraph">{user.name} aún no agregó su biografía.</p>
                     )}
 
                 </div>
@@ -75,13 +96,12 @@ const TabProfileContent = () => {
 
             <div className="tab-profile__collab-stats-column">
 
-                <div className="tab-profile__space-between">
+                <div className="tab-profile__space-between"> {/* Mostrar dinámicamente */}
                     <h2 className="title-18">Estado</h2>
                     {user.collaborating_status ? (
-                        // Mostrar dinámicamente
                         <div className="tab-profile__collab-stats-column__status">
                             <div></div>
-                            <p className="paragraph">Actualmente estás colaborando en 1 proyecto.</p>
+                            <p className="paragraph">{user.name} está colaborando en 1 proyecto.</p>
                         </div>
                     ) : (
                         <div className="tab-profile__collab-stats-column__status">
@@ -89,7 +109,7 @@ const TabProfileContent = () => {
                                 <img src="../../assets/svg/purple-dot-status.svg" alt="Estatus" />
                                 <p className="paragraph bold-text primary-color-text">Sin colaborar</p>
                             </div>
-                            <p className="paragraph">Aún no estás colaborando en ningún proyecto.</p>
+                            <p className="paragraph">{user.name} no está colaborando en ningún proyecto.</p>
                         </div>
                     )}
                 </div>
@@ -99,19 +119,19 @@ const TabProfileContent = () => {
                     <ul className="tab-profile__collab-stats-column__stats">
                         <li>
                             <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos en los que colaboraste</p>
+                            <p className="smaller-paragraph">Proyectos en los que colaboró</p>
                         </li>
                         <li>
                             <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos que finalizaste</p>
+                            <p className="smaller-paragraph">Proyectos que finalizó</p>
                         </li>
                         <li>
                             <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos que organizaste</p>
+                            <p className="smaller-paragraph">Proyectos que organizó</p>
                         </li>
                         <li>
                             <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos que abandonaste</p>
+                            <p className="smaller-paragraph">Proyectos que abandonó</p>
                         </li>
                     </ul>
                 </div>
@@ -122,4 +142,4 @@ const TabProfileContent = () => {
     );
 };
 
-export default TabProfileContent;
+export default TabUserProfileContent;

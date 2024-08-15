@@ -115,8 +115,7 @@
     background-color: transparent;
 }
 
-.tab-profile__collab-stats-column,
-.tab-reviews__rating-column {
+.tab-profile__collab-stats-column {
     display: flex;
     flex-direction: column;
     gap: 64px;
@@ -187,8 +186,7 @@
         gap: 20px 40px;
     }
 
-    .tab-profile__collab-stats-column,
-    .tab-reviews__rating-column {
+    .tab-profile__collab-stats-column {
         gap: 64px;
         width: 35%;
     }

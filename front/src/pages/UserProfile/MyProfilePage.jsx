@@ -83,7 +83,7 @@ const MyProfilePage = () => {
 
                     <div className="profile-page__header__actions">
 
-                        <Button color="secondary" width="btn-full-then-fit" size="large">Editar perfil</Button>
+                        <Button color="secondary" width="full-then-fit" size="large">Editar perfil</Button>
 
                         <div className="profile-page__header__actions__portfolio-container">
 
