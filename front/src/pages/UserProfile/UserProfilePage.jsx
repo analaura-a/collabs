@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 import { fetchUserProfileByUsername } from "../../services/userService";
 
 const UserProfilePage = () => {
+
+    const { authState } = useContext(AuthContext);
 
     const { username } = useParams();
     const navigate = useNavigate();
@@ -10,6 +13,12 @@ const UserProfilePage = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (authState.user && username === authState.user.username) {
+            navigate('/mi-perfil');
+        }
+    }, [username, authState.user, navigate]);
 
     const loadUserProfile = async () => {
         try {
