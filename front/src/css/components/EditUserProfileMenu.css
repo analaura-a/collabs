@@ -1,0 +1,80 @@
+/* Estilos generales para el menú */
+.edit-profile-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* Estilos para desktop */
+.edit-profile-menu__desktop {
+    display: block;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    /* Ajusta según el diseño */
+}
+
+.edit-profile-menu__desktop__option {
+    padding: 24px 0;
+    cursor: pointer;
+}
+
+.edit-profile-menu__desktop__option-border {
+    border-bottom: 0.5px solid var(--color-gray-line);
+}
+
+
+
+/* Estilos para mobile */
+.edit-profile-menu__mobile {
+    display: none;
+    position: relative;
+}
+
+.edit-profile-menu__mobile__selected {
+    padding: 15px;
+    cursor: pointer;
+    border: 1px solid var(--color-gray-line);
+    border-radius: 12px;
+}
+
+.edit-profile-menu__mobile__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: var(--color-white-background);
+    border: 1px solid var(--color-gray-line);
+    border-radius: 12px;
+}
+
+.edit-profile-menu__mobile__option {
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--color-gray-line);
+}
+
+.edit-profile-menu__mobile__option:last-child {
+    border-bottom: none;
+}
+
+
+
+/* Estilos específicos para pantallas pequeñas */
+@media (max-width: 768px) {
+
+    .edit-profile-menu__desktop {
+        display: none;
+    }
+
+    .edit-profile-menu__mobile {
+        display: block;
+    }
+
+    .form-container {
+        padding-top: 20px;
+    }
+
+}

@@ -13,6 +13,7 @@
 @import './pages/resetPasswordPages.css';
 @import './pages/onboardingPages.css';
 @import './pages/profilePage.css';
+@import './pages/editProfilePage.css';
 
 @import './components/button.css';
 @import './components/input.css';
@@ -21,5 +22,6 @@
 @import './components/tabs.css';
 @import './components/tabsContent/Profile/tabProfileContent.css';
 @import './components/tabsContent/Reviews/tabReviewsContent.css';
+@import './components/EditUserProfileMenu.css';
 
 @import './misc/faded-pattern.css';

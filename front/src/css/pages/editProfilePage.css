@@ -1,0 +1,21 @@
+.edit-profile-page {
+    padding: 56px 0;
+}
+
+.edit-profile-page .container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+@media (min-width: 1024px) {
+
+    .edit-profile-page {
+        padding: 120px 0;
+    }
+
+    .edit-profile-page .container {
+        gap: 48px;
+    }
+
+}

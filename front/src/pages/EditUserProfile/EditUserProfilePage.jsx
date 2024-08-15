@@ -1,5 +1,6 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
+import EditUserProfileMenu from '../../components/Menu/EditUserProfileMenu';
 
 const EditUserProfilePage = () => {
 
@@ -10,8 +11,48 @@ const EditUserProfilePage = () => {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
 
+    const [selectedSection, setSelectedSection] = useState('account'); 
+
+    const renderForm = () => {
+        switch (selectedSection) {
+            case 'account':
+                return <p>Editar cuenta</p>;
+            case 'password':
+                return <p>Editar contraseña</p>;
+            case 'personal-profile':
+                return <p>Editar perfil personal</p>;
+            case 'proffesional-profile':
+                return <p>Editar perfil profesional</p>;
+            case 'preferences':
+                return <p>Editar preferencias</p>;
+            case 'contact':
+                return <p>Editar contactos</p>;
+            case 'delete-account':
+                return <p>Borrar cuenta</p>;
+            default:
+                return <p>Editar cuenta</p>;
+        }
+    };
+
     return (
-        <main>Editar perfil</main>
+        <main className="edit-profile-page">
+            <div className="container">
+
+                <h1 className="title-40">Editar mi perfil</h1>
+
+                <div>
+                    <EditUserProfileMenu
+                        onSelect={setSelectedSection}
+                        selectedSection={selectedSection}
+                    />
+
+                    <div className="form-container">
+                        {renderForm()}
+                    </div>
+                </div>
+
+            </div>
+        </main>
     )
 }
 

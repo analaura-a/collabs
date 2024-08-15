@@ -138,6 +138,15 @@
     line-height: 1.4;
 }
 
+.subtitle-light {
+    font-family: var(--inter);
+    font-size: var(--font-18px);
+    font-weight: var(--font-medium);
+    color: var(--color-black-light);
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+}
+
 .subtitle-18 {
     font-family: var(--inter);
     font-size: var(--font-18px);
@@ -194,6 +203,14 @@
 .bolder-text {
     font-weight: var(--font-semibold) !important;
     color: var(--color-black) !important;
+}
+
+.black-color-text {
+    color: var(--color-black) !important;
+}
+
+.red-color-text {
+    color: var(--color-red-text) !important;
 }
 
 .primary-color-text {
