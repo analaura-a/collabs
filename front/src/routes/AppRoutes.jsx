@@ -14,6 +14,7 @@ import OnboardingCompletePage from '../pages/Onboarding/OnboardingCompletePage.j
 import HomePage from '../pages/HomePage/HomePage.jsx'
 import MyProfilePage from '../pages/UserProfile/MyProfilePage.jsx'
 import UserProfilePage from '../pages/UserProfile/UserProfilePage.jsx'
+import EditUserProfilePage from '../pages/EditUserProfile/EditUserProfilePage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -47,7 +48,13 @@ const AppRoutes = createBrowserRouter([
                 element: (<ProtectedRoute>
                     <UserProfilePage />
                 </ProtectedRoute>),
-            }
+            },
+            {
+                path: "/editar-perfil",
+                element: (<ProtectedRoute>
+                    <EditUserProfilePage />
+                </ProtectedRoute>),
+            },
         ]
     },
     {
