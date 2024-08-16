@@ -28,6 +28,12 @@
     width: 100%;
 }
 
+.edit-profile-page__form-container__title-with-subtitle {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 
 
 @media (min-width: 1024px) {
@@ -57,9 +63,8 @@
     .edit-profile-page__form-container {
         gap: 32px;
         align-items: end;
-    
     }
-    
+
     .edit-profile-page__form-container__space-between-inputs {
         gap: 32px;
     }

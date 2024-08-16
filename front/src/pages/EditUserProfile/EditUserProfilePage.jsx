@@ -3,8 +3,9 @@ import AuthContext from '../../context/AuthContext';
 import EditUserProfileMenu from '../../components/Menu/EditUserProfileMenu';
 import EditAccountForm from '../../components/Form/EditUserProfile/EditAccountForm';
 import EditPasswordForm from '../../components/Form/EditUserProfile/EditPasswordForm';
-import EditContactForm from '../../components/Form/EditUserProfile/EditContactForm';
 import EditPersonalProfileForm from '../../components/Form/EditUserProfile/EditPersonalProfileForm';
+import EditPreferencesForm from '../../components/Form/EditUserProfile/EditPreferencesForm';
+import EditContactForm from '../../components/Form/EditUserProfile/EditContactForm';
 
 const EditUserProfilePage = () => {
 
@@ -28,11 +29,11 @@ const EditUserProfilePage = () => {
             case 'proffesional-profile':
                 return <p>Editar perfil profesional</p>;
             case 'preferences':
-                return <p>Editar preferencias</p>;
+                return <EditPreferencesForm />;
             case 'contact':
                 return <EditContactForm />;
             case 'delete-account':
-                return <p>Borrar cuenta</p>;
+                return <></>;
             default:
                 return <p>Editar cuenta</p>;
         }
