@@ -57,6 +57,15 @@ const isUsernameAvailable = async (username) => {
     }
 };
 
+//Verificar si ya existe un usuario con el mismo email
+const checkIfEmailExists = async (newEmail) => {
+    await client.connect();
+    const emailExists = await db.collection("users").findOne({ email: newEmail });
+    if (emailExists) {
+        throw new Error("El email ya está en uso.");
+    }
+}
+
 //Completar y agregar todos los datos del onboarding al perfil del usuario
 const completeOnboarding = async (userId, onboardingData) => {
     try {
@@ -85,10 +94,40 @@ const completeOnboarding = async (userId, onboardingData) => {
     }
 };
 
-//Editar un usuario en especifico
-async function editUser(id, user) {
-    const editedUser = await db.collection("users").updateOne({ _id: new ObjectId(id) }, { $set: user });
-    return editedUser;
+//Editar un usuario en especifico (SIN USAR)
+// async function editUser(id, user) {
+//     const editedUser = await db.collection("users").updateOne({ _id: new ObjectId(id) }, { $set: user });
+//     return editedUser;
+// }
+
+//Editar los datos de la cuenta
+async function updateUserAccountData(userId, newEmail, newUsername) {
+
+    await client.connect();
+
+    const updateFields = {};
+    if (newEmail) {
+        updateFields.email = newEmail;
+    }
+    if (newUsername) {
+        updateFields.username = newUsername;
+    }
+
+    // Actualizar la colección accounts
+    if (newEmail) {
+        await db.collection("accounts").updateOne(
+            { _id: new ObjectId(userId) },
+            { $set: { email: newEmail } }
+        );
+    }
+
+    // Actualizar la colección users
+    if (Object.keys(updateFields).length > 0) {
+        await db.collection("users").updateOne(
+            { _id: new ObjectId(userId) },
+            { $set: updateFields }
+        );
+    }
 }
 
 export {
@@ -96,6 +135,8 @@ export {
     getUserById,
     getUserByUsername,
     isUsernameAvailable,
+    checkIfEmailExists,
     completeOnboarding,
-    editUser
+    // editUser,
+    updateUserAccountData
 }

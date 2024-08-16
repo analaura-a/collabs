@@ -70,20 +70,43 @@ const completeOnboarding = async (req, res) => {
     }
 };
 
-//Editar un usuario en especifico
-const editUser = (req, res) => {
+//Editar un usuario en especifico (SIN USAR)
+// const editUser = (req, res) => {
 
-    const id = req.params.id;
+//     const id = req.params.id;
 
-    service.editUser(id, req.body)
-        .then((editedUser) => {
-            if (editedUser) {
-                res.status(200).json(editedUser);
-            } else {
-                res.status(404).json();
-            }
-        });
+//     service.editUser(id, req.body)
+//         .then((editedUser) => {
+//             if (editedUser) {
+//                 res.status(200).json(editedUser);
+//             } else {
+//                 res.status(404).json();
+//             }
+//         });
 
+// }
+
+//Editar los datos de la cuenta
+async function updateUserAccountData(req, res) {
+
+    const { userId, newEmail, newUsername } = req.body;
+
+    try {
+
+        if (newEmail) {
+            await service.checkIfEmailExists(newEmail);
+        }
+
+        if (newUsername) {
+            await service.isUsernameAvailable(newUsername);
+        }
+
+        await service.updateUserAccountData(userId, newEmail, newUsername);
+
+        res.status(200).json({ message: 'Datos de la cuenta actualizados con éxito.' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 }
 
 export {
@@ -93,5 +116,6 @@ export {
     checkUsernameAvailability,
     getUserProfile,
     completeOnboarding,
-    editUser
+    // editUser,
+    updateUserAccountData
 }

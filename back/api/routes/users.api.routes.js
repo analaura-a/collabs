@@ -24,7 +24,10 @@ route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile
 //Completar y agregar todos los datos del onboarding al perfil del usuario
 route.post('/users/complete-onboarding', [validateTokenMiddleware, validateOnboarding], controllers.completeOnboarding);
 
-//Editar un usuario en especifico
-route.patch('/users/:id', [validateUserPatch], controllers.editUser);
+//Editar un usuario en especifico (SIN USAR)
+// route.patch('/users/:id', [validateUserPatch], controllers.editUser);
+
+//Editar los datos de la cuenta
+route.patch('/users/account', controllers.updateUserAccountData);
 
 export default route;
