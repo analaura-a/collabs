@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.users.js';
 import { validateUserCreate, validateUserPatch, validateOnboarding } from '../../middleware/users.validate.middleware.js'
-import { validateTokenMiddleware } from "../../middleware/token.validate.middleware.js"
+import { validateTokenMiddleware, verifyUserOwnership } from "../../middleware/token.validate.middleware.js"
 
 const route = Router();
 
@@ -28,6 +28,6 @@ route.post('/users/complete-onboarding', [validateTokenMiddleware, validateOnboa
 // route.patch('/users/:id', [validateUserPatch], controllers.editUser);
 
 //Editar los datos de la cuenta
-route.patch('/users/account', controllers.updateUserAccountData);
+route.patch('/users/account', [verifyUserOwnership], controllers.updateUserAccountData);
 
 export default route;
