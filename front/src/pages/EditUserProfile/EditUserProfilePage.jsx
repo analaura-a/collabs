@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import EditUserProfileMenu from '../../components/Menu/EditUserProfileMenu';
+import EditAccountForm from '../../components/Form/EditUserProfile/EditAccountForm';
 
 const EditUserProfilePage = () => {
 
@@ -16,7 +17,7 @@ const EditUserProfilePage = () => {
     const renderForm = () => {
         switch (selectedSection) {
             case 'account':
-                return <p>Editar cuenta</p>;
+                return <EditAccountForm />;
             case 'password':
                 return <p>Editar contraseña</p>;
             case 'personal-profile':

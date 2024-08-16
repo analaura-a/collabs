@@ -11,7 +11,20 @@
 .edit-profile-page__content-container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 48px;
+}
+
+.edit-profile-page__form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+}
+
+.edit-profile-page__form-container__space-between-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 
@@ -33,11 +46,21 @@
     }
 
     .edit-profile-page__content-container nav {
-        width: 25%;
+        width: 28%;
     }
 
     .edit-profile-page__content-container__form {
-        width: 60%;
+        width: 45%;
+    }
+
+    .edit-profile-page__form-container {
+        gap: 32px;
+        align-items: end;
+    
+    }
+    
+    .edit-profile-page__form-container__space-between-inputs {
+        gap: 32px;
     }
 
 }

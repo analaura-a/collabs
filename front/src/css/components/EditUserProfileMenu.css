@@ -63,7 +63,7 @@
 
 
 /* Estilos específicos para pantallas pequeñas */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
     .edit-profile-menu__desktop {
         display: none;
