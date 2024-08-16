@@ -50,9 +50,43 @@ const EditAccountForm = () => {
 
         e.preventDefault();
 
-        const isValid = await validateForm();
-        if (!isValid) {
-            return;
+        try {
+
+            const isValid = await validateForm();
+            if (!isValid) {
+                return;
+            }
+
+            setIsSubmitting(true);
+
+            // Solo incluir los campos que cambiaron
+            const fieldsToUpdate = {};
+
+            if (email !== authState.user.email) {
+                fieldsToUpdate.newEmail = email;
+            }
+            if (username !== authState.user.username) {
+                fieldsToUpdate.newUsername = username;
+            }
+
+            if (Object.keys(fieldsToUpdate).length === 0) {
+                console.log("No hay cambios para guardar."); //Mostrar al usuario
+                setIsSubmitting(false);
+                return;
+            }
+
+            // Actualizar datos en la database
+            const data = await updateUserAccountData(authState.user._id, fieldsToUpdate);
+
+            // Actualizar el contexto con la nueva información
+            updateUser({ ...authState.user, email, username });
+
+            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+
+        } catch (error) {
+            console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message);
+        } finally {
+            setIsSubmitting(false);
         }
 
     };
