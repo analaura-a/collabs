@@ -227,7 +227,8 @@
     letter-spacing: -0.01em;
 }
 
-input {
+input,
+textarea {
     font-family: var(--inter);
     font-size: var(--font-16px);
     font-weight: var(--font-regular);

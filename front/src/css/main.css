@@ -23,5 +23,6 @@
 @import './components/tabsContent/Profile/tabProfileContent.css';
 @import './components/tabsContent/Reviews/tabReviewsContent.css';
 @import './components/EditUserProfileMenu.css';
+@import './components/textarea.css';
 
 @import './misc/faded-pattern.css';
