@@ -21,11 +21,7 @@ const OnboardingForm1 = ({ onChange, onValidate, initialData }) => {
 
             //Validar username único en el back
             const isAvailable = await checkUsernameAvailability(username);
-
-            if (!isAvailable) {
-                setError('Ese nombre de usuario ya está en uso.');
-                setIsValid(false);
-            } else {
+            if (isAvailable) {
                 setError('');
                 setIsValid(true);
             }

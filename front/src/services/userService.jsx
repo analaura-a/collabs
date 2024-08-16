@@ -49,7 +49,8 @@ export const checkUsernameAvailability = async (username) => {
     });
 
     if (!response.ok) {
-        throw new Error('Ocurrió un error al intentar comprobar el username.');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error al intentar comprobar el username.');
     }
 
     const data = await response.json();

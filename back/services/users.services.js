@@ -46,9 +46,12 @@ const isUsernameAvailable = async (username) => {
     try {
         await client.connect();
         const user = await db.collection("users").findOne({ username });
-        return !user;
+        if (user) {
+            throw new Error('El nombre de usuario ya está en uso.');
+        }
+        return true;
     } catch (error) {
-        throw new Error('Error al comprobar la disponibilidad del username.');
+        throw new Error(error.message || 'Error al comprobar la disponibilidad del username.');
     } finally {
         await client.close();
     }
