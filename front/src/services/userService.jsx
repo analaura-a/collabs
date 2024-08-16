@@ -82,3 +82,37 @@ export const completeOnboarding = async (userId, onboardingData) => {
     return response.json();
 
 };
+
+export const updateUserAccountData = async (userId, updatedFields) => {
+
+    try {
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('No se encontró el token de autenticación');
+        }
+
+        const response = await fetch(`${API_URL}/users/account`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            },
+            body: JSON.stringify({
+                userId,
+                ...updatedFields
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Ocurrió un error al intentar actualizar los datos de la cuenta.');
+        }
+
+        return data;
+    } catch (error) {
+        throw error;
+    }
+
+};
