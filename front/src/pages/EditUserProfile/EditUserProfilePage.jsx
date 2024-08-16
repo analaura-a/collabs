@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import EditUserProfileMenu from '../../components/Menu/EditUserProfileMenu';
 import EditAccountForm from '../../components/Form/EditUserProfile/EditAccountForm';
+import EditPasswordForm from '../../components/Form/EditUserProfile/EditPasswordForm';
 
 const EditUserProfilePage = () => {
 
@@ -19,7 +20,7 @@ const EditUserProfilePage = () => {
             case 'account':
                 return <EditAccountForm />;
             case 'password':
-                return <p>Editar contraseña</p>;
+                return <EditPasswordForm />;
             case 'personal-profile':
                 return <p>Editar perfil personal</p>;
             case 'proffesional-profile':
