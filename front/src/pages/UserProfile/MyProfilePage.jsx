@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import Button from "../../components/Button/Button";
 import Tabs from '../../components/Tabs/Tabs';
@@ -10,6 +11,8 @@ const MyProfilePage = () => {
 
     const { authState } = useContext(AuthContext);
     const { user } = authState;
+
+    const navigate = useNavigate();
 
     if (!user) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
@@ -83,7 +86,7 @@ const MyProfilePage = () => {
 
                     <div className="profile-page__header__actions">
 
-                        <Button color="secondary" width="full-then-fit" size="large">Editar perfil</Button>
+                        <Button color="secondary" width="full-then-fit" size="large" onClick={() => { navigate('/editar-perfil'); }}>Editar perfil</Button>
 
                         <div className="profile-page__header__actions__portfolio-container">
 
