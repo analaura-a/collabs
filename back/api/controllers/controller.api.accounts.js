@@ -46,8 +46,22 @@ const logout = async (req, res) => {
 
 }
 
+// Cambiar la contraseña (desde editar mi perfil)
+async function changePassword(req, res) {
+
+    const { userId, currentPassword, newPassword } = req.body;
+
+    try {
+        await service.changePassword(userId, currentPassword, newPassword);
+        res.status(200).json({ message: 'Contraseña actualizada con éxito.' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 export {
     createAccount,
     login,
-    logout
+    logout,
+    changePassword
 }

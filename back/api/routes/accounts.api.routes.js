@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.accounts.js';
 import { validateAccountCreate, validateAccount } from '../../middleware/accounts.validate.middleware.js'
+import { verifyUserOwnership } from '../../middleware/token.validate.middleware.js';
 
 const route = Router();
 
@@ -13,5 +14,10 @@ route.post('/auth/login', [validateAccount], controllers.login);
 
 //Cerrar sesión
 route.delete('/auth/logout', controllers.logout);
+
+// Cambiar la contraseña (desde editar mi perfil)
+route.patch('/auth/change-password', [verifyUserOwnership], controllers.changePassword);
+
+// auth/change-forgotten-password
 
 export default route;

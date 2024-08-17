@@ -80,7 +80,35 @@ async function login(account) {
 
 }
 
+async function changePassword(userId, currentPassword, newPassword) {
+
+    await client.connect()
+
+    // Buscar usuario por ID
+    const user = await db.collection('accounts').findOne({ _id: new ObjectId(userId) });
+    if (!user) {
+        throw new Error('Usuario no encontrado.');
+    }
+
+    // Verificar contraseña actual
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+        throw new Error('La contraseña actual es incorrecta.');
+    }
+
+    // Hashear la nueva contraseña
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Actualizar la contraseña
+    await db.collection('accounts').updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { password: hashedPassword } }
+    );
+
+}
+
 export {
     createAccount,
-    login
+    login,
+    changePassword
 }
