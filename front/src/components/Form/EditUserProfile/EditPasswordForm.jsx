@@ -3,6 +3,7 @@ import AuthContext from "../../../context/AuthContext";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 import { passwordSchema } from "../../../validation/newPasswordValidation";
+import { changePassword } from "../../../services/authService";
 
 const EditPasswordForm = () => {
 
@@ -24,21 +25,20 @@ const EditPasswordForm = () => {
         try {
             await passwordSchema.validate(updatedFields, { abortEarly: false });
             setErrors({});
-            // return true;
-            return console.log("es valido")
+            return true;
         } catch (validationErrors) {
             const formattedErrors = validationErrors.inner.reduce((acc, error) => {
                 acc[error.path] = error.message;
                 return acc;
             }, {});
             setErrors(formattedErrors);
-            // return false;
-            console.log("no es valido")
+            return false;
         }
 
     };
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         try {
@@ -50,8 +50,21 @@ const EditPasswordForm = () => {
 
             setIsSubmitting(true);
 
+            // Actualizar datos en la database
+            await changePassword(authState.user._id, currentPassword, newPassword);
+
+            console.log("Contraseña actualizada con éxito.") //Mostrar al usuario
+            setCurrentPassword('');
+            setNewPassword('');
+
         } catch (error) {
-            console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message);
+
+            if (error.message === "La contraseña actual es incorrecta.") {
+                setErrors({ currentPassword: error.message })
+            } else {
+                console.log("Error del back", error.message) //Mostrárselo al usuario | setErrorMessage(error.message);
+            }
+
         } finally {
             setIsSubmitting(false);
         }
