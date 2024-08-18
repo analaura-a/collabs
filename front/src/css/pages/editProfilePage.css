@@ -14,7 +14,8 @@
     gap: 48px;
 }
 
-.edit-profile-page__form-container {
+.edit-profile-page__form-container,
+.edit-profile-page__form-container__with-title {
     display: flex;
     flex-direction: column;
     gap: 24px;

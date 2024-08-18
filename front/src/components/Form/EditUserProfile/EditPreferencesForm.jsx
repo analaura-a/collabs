@@ -24,29 +24,33 @@ const EditPreferencesForm = () => {
     const { user } = authState;
 
     return (
-        <form className="edit-profile-page__form-container" noValidate>
 
+        <div className="edit-profile-page__form-container__with-title">
             <div className="edit-profile-page__form-container__title-with-subtitle">
                 <h2 className="title-18">Tipo de proyectos que te interesan<span className="primary-color-text">*</span></h2>
                 <p className="subtitle">Vamos a ajustar nuestras recomendaciones a tus preferencias.
                     Si lo deseas, puedes seleccionar ambos.</p>
             </div>
 
-            <div className="onboarding-input-container">
-                {preferences.map((preference) => (
-                    <OnboardingCheckboxWithDescription
-                        key={preference.id}
-                        id={preference.id}
-                        svg={preference.svg}
-                        title={preference.title}
-                        description={preference.description}
-                    />
-                ))}
-            </div>
+            <form className="edit-profile-page__form-container" noValidate>
 
-            <Button type="submit" size="large" width="full-then-fit">Guardar cambios</Button>
+                <div className="onboarding-input-container">
+                    {preferences.map((preference) => (
+                        <OnboardingCheckboxWithDescription
+                            key={preference.id}
+                            id={preference.id}
+                            svg={preference.svg}
+                            title={preference.title}
+                            description={preference.description}
+                        />
+                    ))}
+                </div>
 
-        </form>
+                <Button type="submit" size="large" width="full-then-fit">Guardar cambios</Button>
+
+            </form>
+        </div>
+
     )
 }
 
