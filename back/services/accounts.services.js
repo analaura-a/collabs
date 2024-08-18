@@ -39,6 +39,15 @@ async function createAccount(account) {
             location: null,
             portfolio_link: null,
             onboardingComplete: false,
+            socials: [
+                { "name": "LinkedIn", "url": null },
+                { "name": "GitHub", "username": null },
+                { "name": "CodePen", "username": null },
+                { "name": "Behance", "url": null },
+                { "name": "Dribbble", "url": null },
+                { "name": "Twitter", "username": null },
+                { "name": "Instagram", "username": null },
+            ],
             createdAt: newAccount.createdAt
         };
         await users.insertOne(basicUserProfile);
