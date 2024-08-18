@@ -5,6 +5,7 @@ import EditAccountForm from '../../components/Form/EditUserProfile/EditAccountFo
 import EditPasswordForm from '../../components/Form/EditUserProfile/EditPasswordForm';
 import EditPersonalProfileForm from '../../components/Form/EditUserProfile/EditPersonalProfileForm';
 import EditPreferencesForm from '../../components/Form/EditUserProfile/EditPreferencesForm';
+import EditPortfolioForm from '../../components/Form/EditUserProfile/EditPortfolioForm';
 import EditContactForm from '../../components/Form/EditUserProfile/EditContactForm';
 
 const EditUserProfilePage = () => {
@@ -30,6 +31,8 @@ const EditUserProfilePage = () => {
                 return <p>Editar perfil profesional</p>;
             case 'preferences':
                 return <EditPreferencesForm />;
+            case 'portfolio':
+                return <EditPortfolioForm />;
             case 'contact':
                 return <EditContactForm />;
             case 'delete-account':

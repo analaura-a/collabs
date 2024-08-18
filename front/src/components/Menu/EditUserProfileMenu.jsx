@@ -10,6 +10,7 @@ const EditUserProfileMenu = ({ onSelect, selectedSection }) => {
         { label: 'Información personal', value: 'personal-profile' },
         { label: 'Perfil profesional', value: 'proffesional-profile' },
         { label: 'Preferencias', value: 'preferences' },
+        { label: 'Portfolio', value: 'portfolio' },
         { label: 'Contacto', value: 'contact' },
         { label: 'Eliminar cuenta', value: 'delete-account' },
     ];

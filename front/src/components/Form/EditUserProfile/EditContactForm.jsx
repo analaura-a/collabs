@@ -13,8 +13,6 @@ const EditContactForm = () => {
         <form className="edit-profile-page__form-container" noValidate>
 
             <div className="edit-profile-page__form-container__space-between-inputs">
-                <Input label="Portfolio" type="url" placeholder="www.portfolio.com" name="portfolio" helperText={"Tu portfolio se verá destacado en tu perfil, para cualquiera que quiera conocer un poco más acerca de tus trabajos."}></Input>
-
                 <Input label="LinkedIn" type="url" placeholder="www.linkedin.com/username" name="linkedin" helperText={"Link a tu perfil de LinkedIn."}></Input>
 
                 <Input label="GitHub" type="text" placeholder="Nombre de usuario" name="github" helperText={"Tu nombre de usuario de GitHub."}></Input>
