@@ -30,4 +30,7 @@ route.post('/users/complete-onboarding', [validateTokenMiddleware, validateOnboa
 //Editar los datos de la cuenta
 route.patch('/users/account', [verifyUserOwnership], controllers.updateUserAccountData);
 
+//Editar las preferencias del usuario
+route.patch('/users/preferences', [verifyUserOwnership], controllers.updateUserPreferencesData);
+
 export default route;

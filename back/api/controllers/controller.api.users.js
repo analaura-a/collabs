@@ -109,6 +109,19 @@ async function updateUserAccountData(req, res) {
     }
 }
 
+//Editar las preferencias del usuario
+async function updateUserPreferencesData(req, res) {
+
+    const { userId, preferences } = req.body;
+
+    try {
+        await service.updateUserPreferencesData(userId, preferences);
+        res.status(200).json({ message: 'Preferencias actualizadas con éxito.' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 export {
     getUsers,
     getUserById,
@@ -117,5 +130,6 @@ export {
     getUserProfile,
     completeOnboarding,
     // editUser,
-    updateUserAccountData
+    updateUserAccountData,
+    updateUserPreferencesData
 }

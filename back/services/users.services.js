@@ -130,6 +130,17 @@ async function updateUserAccountData(userId, newEmail, newUsername) {
     }
 }
 
+//Editar las preferencias del usuario
+async function updateUserPreferencesData(userId, preferences) {
+
+    await client.connect();
+
+    await db.collection('users').updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { preferences } }
+    );
+}
+
 export {
     getUsers,
     getUserById,
@@ -138,5 +149,6 @@ export {
     checkIfEmailExists,
     completeOnboarding,
     // editUser,
-    updateUserAccountData
+    updateUserAccountData,
+    updateUserPreferencesData
 }
