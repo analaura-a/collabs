@@ -116,3 +116,33 @@ export const updateUserAccountData = async (userId, updatedFields) => {
     }
 
 };
+
+export const updateUserPreferencesData = async (userId, preferences) => {
+
+    try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            throw new Error('No se encontró el token de autenticación');
+        }
+
+        const response = await fetch(`${API_URL}/users/preferences`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            },
+            body: JSON.stringify({ userId, preferences })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Ocurrió un error al intentar actualizar las preferencias.');
+        }
+
+        return data;
+    } catch (error) {
+        throw error;
+    }
+};

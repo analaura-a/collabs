@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
+import { updateUserPreferencesData } from "../../../services/userService";
 import Button from "../../Button/Button";
 import OnboardingCheckboxWithDescription from '../../Inputs/OnboardingCheckboxWithDescription';
 
@@ -39,6 +40,27 @@ const EditPreferencesForm = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+        setIsSubmitting(true);
+
+        try {
+            // Actualizar datos en la database
+            await updateUserPreferencesData(authState.user._id, preferences);
+
+            // Actualizar el contexto con las nuevas preferencias
+            updateUser({ ...authState.user, preferences });
+
+            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+        } catch (error) {
+            console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     const isSubmitDisabled = preferences.length === 0;
 
     return (
@@ -50,7 +72,7 @@ const EditPreferencesForm = () => {
                     Si lo deseas, puedes seleccionar ambos.</p>
             </div>
 
-            <form className="edit-profile-page__form-container" noValidate>
+            <form className="edit-profile-page__form-container" onSubmit={handleSubmit} noValidate>
 
                 <div className="onboarding-input-container">
                     {preferenceOptions.map((preference) => (
@@ -66,7 +88,7 @@ const EditPreferencesForm = () => {
                     ))}
                 </div>
 
-                <Button type="submit" size="large" width="full-then-fit" disabled={isSubmitDisabled}>Guardar cambios</Button>
+                <Button type="submit" size="large" width="full-then-fit" disabled={isSubmitDisabled || isSubmitting}>Guardar cambios</Button>
 
             </form>
         </div>
