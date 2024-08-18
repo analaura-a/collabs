@@ -115,6 +115,48 @@
     background-color: transparent;
 }
 
+.github-social {
+    background-image: url(../assets/svg/github.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.codepen-social {
+    background-image: url(../assets/svg/codepen.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.behance-social {
+    background-image: url(../assets/svg/behance.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.dribbble-social {
+    background-image: url(../assets/svg/dribbble.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.twitter-social {
+    background-image: url(../assets/svg/twitter.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.instagram-social {
+    background-image: url(../assets/svg/instagram.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
 .tab-profile__collab-stats-column {
     display: flex;
     flex-direction: column;

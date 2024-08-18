@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import AuthContext from '../../../context/AuthContext';
+import ContactInfo from "./ContactInfo.jsx"
 
 const TabProfileContent = () => {
 
@@ -56,20 +57,7 @@ const TabProfileContent = () => {
                     </ul>
                 </div>
 
-                {user.socials &&
-                    // Mostrar dinámicamente
-                    <div className="tab-profile__space-between">
-                        <h2 className="title-18">Datos de contacto</h2>
-                        <ul className="tab-profile__user-info-column__socials">
-                            <li>
-                                <a href="#">
-                                    <button className="small-button-with-icon linkedin-social"></button>
-                                    <p className="smaller-paragraph">Linkedin</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                }
+                {user.socials && <ContactInfo socials={user.socials} />}
 
             </div>
 
