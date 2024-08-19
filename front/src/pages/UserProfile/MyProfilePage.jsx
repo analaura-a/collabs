@@ -33,6 +33,10 @@ const MyProfilePage = () => {
         return date.toLocaleDateString('es-ES', options);
     };
 
+    const handleEditPortfolio = () => {
+        navigate('/editar-perfil', { state: { section: 'portfolio' } });
+    };
+
     const tabs = [
         { label: 'Perfil', content: <TabProfileContent /> },
         { label: 'Reseñas', content: <TabReviewsContent /> },
@@ -101,12 +105,12 @@ const MyProfilePage = () => {
                                         <p>{user.portfolio_link.replace(/^https?:\/\//, "")}</p>
                                         <img src="../assets/svg/export.svg" alt="Link externo al portfolio" />
                                     </a>
-                                    <Button width="fullwidth" size="large" icon={<EditIcon />}>Editar portfolio</Button>
+                                    <Button width="fullwidth" size="large" icon={<EditIcon />} onClick={handleEditPortfolio}>Editar portfolio</Button>
                                 </>
                             ) : (
                                 <>
                                     <p className="subtitle">Aún no agregaste tu portfolio.</p>
-                                    <Button width="fullwidth" size="large" icon={<EditIcon />}>Agregar portfolio</Button>
+                                    <Button width="fullwidth" size="large" icon={<EditIcon />} onClick={handleEditPortfolio}>Agregar portfolio</Button>
                                 </>
                             )
                             }

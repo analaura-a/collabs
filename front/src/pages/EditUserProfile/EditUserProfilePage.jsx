@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import EditUserProfileMenu from '../../components/Menu/EditUserProfileMenu';
 import EditAccountForm from '../../components/Form/EditUserProfile/EditAccountForm';
@@ -13,11 +14,19 @@ const EditUserProfilePage = () => {
     const { authState } = useContext(AuthContext);
     const { user } = authState;
 
+    const location = useLocation();
+
     if (!user) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
 
     const [selectedSection, setSelectedSection] = useState('account');
+
+    useEffect(() => {
+        if (location.state?.section) {
+            setSelectedSection(location.state.section);
+        }
+    }, [location.state]);
 
     const renderForm = () => {
         switch (selectedSection) {
