@@ -26,6 +26,35 @@ const EditPersonalProfileForm = () => {
                     />
                 </div> */}
 
+                <div className="edit-profile-page__form-container__profile-photo">
+                    <h2 className="form-label">Foto de perfil</h2>
+
+                    <div className="edit-profile-page__form-container__profile-photo-section">
+                        <div className="edit-profile-page__form-container__profile-photo-section__preview">
+                            <img src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095205-stock-illustration-businessman-profile-icon.jpg" alt="Foto de perfil" />
+                        </div>
+
+                        <div className="edit-profile-page__form-container__profile-photo-section__actions">
+
+                            <label htmlFor="profilePhotoInput">
+                                <Button>Subir una nueva foto</Button>
+                                <input
+                                    type="file"
+                                    id="profilePhotoInput"
+                                    name="profilePhoto"
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                />
+                            </label>
+
+                            <Button color="secondary" disabled={!user.profile_pic}>
+                                Eliminar foto
+                            </Button>
+
+                        </div>
+                    </div>
+                </div>
+
                 <Input label="Nombre" type="text" placeholder="Nombre" name="name" required></Input>
 
                 <Input label="Apellido" type="text" placeholder="Apellido" name="last_name" required></Input>

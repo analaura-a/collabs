@@ -32,6 +32,10 @@
     background-color: var(--color-primary-button-disabled);
 }
 
+.btn-secondary:disabled {
+    color: var(--color-gray-placeholder);
+}
+
 /*Tamaños*/
 .btn-small {
     font-size: 16px;
