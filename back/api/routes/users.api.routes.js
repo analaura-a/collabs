@@ -33,4 +33,7 @@ route.patch('/users/account', [verifyUserOwnership], controllers.updateUserAccou
 //Editar las preferencias del usuario
 route.patch('/users/preferences', [verifyUserOwnership], controllers.updateUserPreferencesData);
 
+// Editar los datos de contacto
+route.patch('/users/socials', [verifyUserOwnership], controllers.updateUserSocialsData);
+
 export default route;

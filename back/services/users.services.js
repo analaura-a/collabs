@@ -141,6 +141,17 @@ async function updateUserPreferencesData(userId, preferences) {
     );
 }
 
+// Editar los datos de contacto
+async function updateUserSocialsData(userId, socials) {
+
+    await client.connect();
+
+    await db.collection('users').updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { socials } }
+    );
+}
+
 export {
     getUsers,
     getUserById,
@@ -150,5 +161,6 @@ export {
     completeOnboarding,
     // editUser,
     updateUserAccountData,
-    updateUserPreferencesData
+    updateUserPreferencesData,
+    updateUserSocialsData
 }

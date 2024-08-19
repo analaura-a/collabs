@@ -122,6 +122,19 @@ async function updateUserPreferencesData(req, res) {
     }
 }
 
+// Editar los datos de contacto
+async function updateUserSocialsData(req, res) {
+
+    const { userId, socials } = req.body;
+
+    try {
+        await service.updateUserSocialsData(userId, socials);
+        res.status(200).json({ message: 'Datos de contacto actualizados con éxito.' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+}
+
 export {
     getUsers,
     getUserById,
@@ -131,5 +144,6 @@ export {
     completeOnboarding,
     // editUser,
     updateUserAccountData,
-    updateUserPreferencesData
+    updateUserPreferencesData,
+    updateUserSocialsData
 }
