@@ -97,7 +97,10 @@ const MyProfilePage = () => {
 
                             {user.portfolio_link ? (
                                 <>
-                                    <a href="#" className="profile-page__header__actions__portfolio-container__portfolio-link">www.salvadorreynoso.com <img src="../assets/svg/export.svg" alt="Link externo" /></a>
+                                    <a href={user.portfolio_link} target="_blank" className="profile-page__header__actions__portfolio-container__portfolio-link">
+                                        <p>{user.portfolio_link.replace(/^https?:\/\//, "")}</p>
+                                        <img src="../assets/svg/export.svg" alt="Link externo al portfolio" />
+                                    </a>
                                     <Button width="fullwidth" size="large" icon={<EditIcon />}>Editar portfolio</Button>
                                 </>
                             ) : (

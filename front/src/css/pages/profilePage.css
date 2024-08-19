@@ -98,6 +98,10 @@
     letter-spacing: -0.02em;
 }
 
+.profile-page__header__actions__portfolio-container__portfolio-link>p {
+    max-width: 90%;
+}
+
 
 
 @media only screen and (min-width: 1024px) {

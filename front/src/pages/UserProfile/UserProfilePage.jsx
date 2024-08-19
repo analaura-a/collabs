@@ -132,13 +132,12 @@ const UserProfilePage = () => {
                             </div>
 
                             {user.portfolio_link ? (
-                                <>
-                                    <a href="#" className="profile-page__header__actions__portfolio-container__portfolio-link"> {user.portfolio_link} <img src="../assets/svg/export.svg" alt="Link externo" /></a>
-                                </>
+                                <a href={user.portfolio_link} target="_blank" className="profile-page__header__actions__portfolio-container__portfolio-link">
+                                    <p>{user.portfolio_link.replace(/^https?:\/\//, "")}</p>
+                                    <img src="../assets/svg/export.svg" alt="Link externo al portfolio" />
+                                </a>
                             ) : (
-                                <>
-                                    <p className="subtitle">{user.name} aún no agregó su portfolio.</p>
-                                </>
+                                <p className="subtitle">{user.name} aún no agregó su portfolio.</p>
                             )}
 
                             <Button width="fullwidth" size="large" icon={<MessageIcon />}>Invitar a colaborar</Button>
