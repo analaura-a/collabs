@@ -122,6 +122,19 @@ async function updateUserPreferencesData(req, res) {
     }
 }
 
+// Editar el link al portfolio
+const updateUserPortfolioData = async (req, res) => {
+
+    const { userId, portfolioLink } = req.body;
+
+    try {
+        await service.updateUserPortfolioData(userId, portfolioLink);
+        res.status(200).json({ message: 'Portfolio actualizado con éxito.' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 // Editar los datos de contacto
 async function updateUserSocialsData(req, res) {
 
@@ -145,5 +158,6 @@ export {
     // editUser,
     updateUserAccountData,
     updateUserPreferencesData,
+    updateUserPortfolioData,
     updateUserSocialsData
 }

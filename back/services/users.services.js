@@ -141,6 +141,17 @@ async function updateUserPreferencesData(userId, preferences) {
     );
 }
 
+// Editar el link al portfolio
+const updateUserPortfolioData = async (userId, portfolioLink) => {
+
+    await client.connect();
+
+    await db.collection('users').updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { portfolio_link: portfolioLink } }
+    );
+};
+
 // Editar los datos de contacto
 async function updateUserSocialsData(userId, socials) {
 
@@ -162,5 +173,6 @@ export {
     // editUser,
     updateUserAccountData,
     updateUserPreferencesData,
+    updateUserPortfolioData,
     updateUserSocialsData
 }

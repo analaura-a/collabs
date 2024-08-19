@@ -33,6 +33,9 @@ route.patch('/users/account', [verifyUserOwnership], controllers.updateUserAccou
 //Editar las preferencias del usuario
 route.patch('/users/preferences', [verifyUserOwnership], controllers.updateUserPreferencesData);
 
+// Editar el link al portfolio
+route.patch('/users/portfolio', [verifyUserOwnership], controllers.updateUserPortfolioData);
+
 // Editar los datos de contacto
 route.patch('/users/socials', [verifyUserOwnership], controllers.updateUserSocialsData);
 
