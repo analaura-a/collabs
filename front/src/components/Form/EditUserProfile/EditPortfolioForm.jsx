@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
 import portfolioValidationSchema from "../../../validation/userPorfolioDataValidation";
+import { updateUserPortfolioData } from "../../../services/userService";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 
@@ -13,6 +14,12 @@ const EditPortfolioForm = () => {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        if (user && user.portfolio_link) {
+            setPortfolioLink(user.portfolio_link);
+        }
+    }, [user]);
 
     const validateForm = async () => {
 
@@ -45,6 +52,15 @@ const EditPortfolioForm = () => {
             if (!isValid) {
                 return;
             }
+
+            // Actualizar datos en la database
+            await updateUserPortfolioData(user._id, portfolioLink);
+
+            // Actualizar el contexto con la nueva información
+            updateUser({
+                ...user,
+                portfolio_link: portfolioLink
+            });
 
             setIsSubmitting(true);
 
