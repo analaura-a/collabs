@@ -163,6 +163,20 @@ async function updateUserSocialsData(userId, socials) {
     );
 }
 
+/*Editar los datos personales*/
+// Subir la foto de perfil
+const updateUserProfilePhotoData = async (userId, profilePhotoUrl) => {
+
+    await client.connect();
+
+    await db.collection('users').updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { profile_pic: profilePhotoUrl } }
+    );
+
+    return await db.collection('users').findOne({ _id: new ObjectId(userId) });
+};
+
 export {
     getUsers,
     getUserById,
@@ -174,5 +188,6 @@ export {
     updateUserAccountData,
     updateUserPreferencesData,
     updateUserPortfolioData,
-    updateUserSocialsData
+    updateUserSocialsData,
+    updateUserProfilePhotoData
 }

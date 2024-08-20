@@ -1,9 +1,22 @@
 import { Router } from 'express';
+import multer from 'multer';
 import * as controllers from '../controllers/controller.api.users.js';
 import { validateUserPatch, validateOnboarding } from '../../middleware/users.validate.middleware.js'
 import { validateTokenMiddleware, verifyUserOwnership } from "../../middleware/token.validate.middleware.js"
 
 const route = Router();
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        const ext = file.originalname.split('.').pop();
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+
+const upload = multer({ storage: storage });
 
 /* API PERFIL DE USUARIO */
 //Obtener todos los usuarios
@@ -38,5 +51,9 @@ route.patch('/users/portfolio', [verifyUserOwnership], controllers.updateUserPor
 
 // Editar los datos de contacto
 route.patch('/users/socials', [verifyUserOwnership], controllers.updateUserSocialsData);
+
+/*Editar los datos personales*/
+// Subir la foto de perfil
+route.patch('/users/profile-photo', verifyUserOwnership, upload.single('profilePhoto'), controllers.updateUserProfilePhotoData);
 
 export default route;

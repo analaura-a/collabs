@@ -148,6 +148,20 @@ async function updateUserSocialsData(req, res) {
     }
 }
 
+/*Editar los datos personales*/
+// Subir la foto de perfil
+const updateUserProfilePhotoData = async (req, res) => {
+
+    const profilePhotoUrl = `/uploads/${req.file.filename}`;
+
+    try {
+        const updatedUser = await updateUserProfilePhotoData(req.user._id, profilePhotoUrl);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({ message: 'Ocurrió un error desconocido al subir la imagen.' });
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -159,5 +173,6 @@ export {
     updateUserAccountData,
     updateUserPreferencesData,
     updateUserPortfolioData,
-    updateUserSocialsData
+    updateUserSocialsData,
+    updateUserProfilePhotoData
 }
