@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.users.js';
-import { validateUserCreate, validateUserPatch, validateOnboarding } from '../../middleware/users.validate.middleware.js'
+import { validateUserPatch, validateOnboarding } from '../../middleware/users.validate.middleware.js'
 import { validateTokenMiddleware, verifyUserOwnership } from "../../middleware/token.validate.middleware.js"
 
 const route = Router();
