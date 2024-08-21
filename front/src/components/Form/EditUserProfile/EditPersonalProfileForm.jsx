@@ -15,17 +15,6 @@ const EditPersonalProfileForm = () => {
 
             <div className="edit-profile-page__form-container__space-between-inputs">
 
-                {/* <div className="input-group">
-                    <label htmlFor="profile_pic" className="form-label">Foto de perfil</label>
-                    <input
-                        type="file"
-                        name="profile_pic"
-                        id="profile_pic"
-                    // onChange={onChange}
-                    // placeholder={placeholder}
-                    />
-                </div> */}
-
                 <div className="edit-profile-page__form-container__profile-photo">
                     <h2 className="form-label">Foto de perfil</h2>
 
@@ -41,7 +30,7 @@ const EditPersonalProfileForm = () => {
                                 <input
                                     type="file"
                                     id="profilePhotoInput"
-                                    name="profilePhoto"
+                                    name="profile_pic"
                                     accept="image/*"
                                     style={{ display: 'none' }}
                                 />
