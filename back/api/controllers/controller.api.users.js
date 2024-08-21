@@ -1,4 +1,5 @@
 import * as service from "../../services/users.services.js";
+import * as accountService from "../../services/accounts.services.js"
 
 //Obtener todos los usuarios
 const getUsers = (req, res) => {
@@ -152,15 +153,26 @@ async function updateUserSocialsData(req, res) {
 // Subir la foto de perfil
 const updateUserProfilePhotoData = async (req, res) => {
 
-    console.log("FILE:", req.file)
-    console.log("FILEname:", req.file.filename)
-
     try {
         const profilePhotoUrl = `/uploads/${req.file.filename}`;
         const updatedUser = await service.updateUserProfilePhotoData(req.account._id, profilePhotoUrl);
         res.status(200).json(updatedUser);
     } catch (error) {
         res.status(500).json({ message: 'Ocurrió un error desconocido al subir la imagen.' });
+    }
+};
+
+// Editar los datos personales
+const updateUserPersonalProfileData = async (req, res) => {
+
+    const { userId, name, last_name, location, bio } = req.body;
+
+    try {
+        await service.updateUserPersonalProfileData(userId, { name, last_name, location, bio });
+        await accountService.updatePersonalProfileData(userId, { name, last_name });
+        res.status(200).json({ message: 'Datos personales actualizados con éxito.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al actualizar el perfil' });
     }
 };
 
@@ -176,5 +188,6 @@ export {
     updateUserPreferencesData,
     updateUserPortfolioData,
     updateUserSocialsData,
-    updateUserProfilePhotoData
+    updateUserProfilePhotoData,
+    updateUserPersonalProfileData
 }

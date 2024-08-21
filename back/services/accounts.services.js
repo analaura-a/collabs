@@ -116,8 +116,19 @@ async function changePassword(userId, currentPassword, newPassword) {
 
 }
 
+const updatePersonalProfileData = async (userId, accountData) => {
+
+    await client.connect()
+
+    await db.collection('accounts').updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: accountData }
+    );
+};
+
 export {
     createAccount,
     login,
-    changePassword
+    changePassword,
+    updatePersonalProfileData
 }

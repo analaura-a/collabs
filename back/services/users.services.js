@@ -177,6 +177,18 @@ const updateUserProfilePhotoData = async (userId, profilePhotoUrl) => {
     return await db.collection('users').findOne({ _id: new ObjectId(userId) });
 };
 
+// Editar los datos personales
+const updateUserPersonalProfileData = async (userId, userProfileData) => {
+
+    await client.connect();
+
+    await db.collection('users').findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        { $set: userProfileData },
+        { returnOriginal: false } 
+    );
+};
+
 export {
     getUsers,
     getUserById,
@@ -189,5 +201,6 @@ export {
     updateUserPreferencesData,
     updateUserPortfolioData,
     updateUserSocialsData,
-    updateUserProfilePhotoData
+    updateUserProfilePhotoData,
+    updateUserPersonalProfileData
 }
