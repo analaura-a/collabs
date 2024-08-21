@@ -152,10 +152,12 @@ async function updateUserSocialsData(req, res) {
 // Subir la foto de perfil
 const updateUserProfilePhotoData = async (req, res) => {
 
-    const profilePhotoUrl = `/uploads/${req.file.filename}`;
+    console.log("FILE:", req.file)
+    console.log("FILEname:", req.file.filename)
 
     try {
-        const updatedUser = await updateUserProfilePhotoData(req.user._id, profilePhotoUrl);
+        const profilePhotoUrl = `/uploads/${req.file.filename}`;
+        const updatedUser = await service.updateUserProfilePhotoData(req.account._id, profilePhotoUrl);
         res.status(200).json(updatedUser);
     } catch (error) {
         res.status(500).json({ message: 'Ocurrió un error desconocido al subir la imagen.' });

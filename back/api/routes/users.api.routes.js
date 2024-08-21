@@ -54,6 +54,6 @@ route.patch('/users/socials', [verifyUserOwnership], controllers.updateUserSocia
 
 /*Editar los datos personales*/
 // Subir la foto de perfil
-route.patch('/users/profile-photo', verifyUserOwnership, upload.single('profilePhoto'), controllers.updateUserProfilePhotoData);
+route.patch('/users/profile-photo', [validateTokenMiddleware, upload.single('profilePhoto')], controllers.updateUserProfilePhotoData);
 
 export default route;
