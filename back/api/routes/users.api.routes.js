@@ -59,4 +59,7 @@ route.patch('/users/profile-photo', [validateTokenMiddleware, upload.single('pro
 // Editar los datos personales
 route.patch('/users/personal-profile', [verifyUserOwnership], controllers.updateUserPersonalProfileData);
 
+// Eliminar la foto de perfil
+route.delete('/users/profile-photo', [verifyUserOwnership], controllers.deleteProfilePhoto);
+
 export default route;

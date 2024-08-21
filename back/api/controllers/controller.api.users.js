@@ -1,5 +1,11 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import * as service from "../../services/users.services.js";
 import * as accountService from "../../services/accounts.services.js"
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //Obtener todos los usuarios
 const getUsers = (req, res) => {
@@ -172,7 +178,37 @@ const updateUserPersonalProfileData = async (req, res) => {
         await accountService.updatePersonalProfileData(userId, { name, last_name });
         res.status(200).json({ message: 'Datos personales actualizados con éxito.' });
     } catch (error) {
-        res.status(500).json({ message: 'Error al actualizar el perfil' });
+        res.status(500).json({ message: 'Ocurrió un error al intentar actualizar el perfil.' });
+    }
+};
+
+// Eliminar la foto de perfil
+const deleteProfilePhoto = async (req, res) => {
+
+    const { userId } = req.body;
+
+    try {
+        // 1. Eliminar la referencia de la foto en la base de datos y obtener la ruta del archivo
+        const user = await service.deleteProfilePhoto(userId);
+
+        if (!user || !user.profile_pic) {
+            return res.status(404).json({ message: 'Foto de perfil no encontrada.' });
+        }
+
+        // 2. Generar la ruta completa al archivo en el servidor
+        const profilePhotoPath = path.join(__dirname, '../..', user.profile_pic);
+
+        // 3. Eliminar el archivo del servidor
+        fs.unlink(profilePhotoPath, (err) => {
+            if (err) {
+                return res.status(500).json({ message: 'Ocurrió un error al eliminar la imagen del servidor.' });
+            }
+
+            res.status(200).json({ message: 'Foto de perfil eliminada con éxito.' });
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Ocurrió un error al eliminar la foto de perfil.' });
     }
 };
 
@@ -189,5 +225,6 @@ export {
     updateUserPortfolioData,
     updateUserSocialsData,
     updateUserProfilePhotoData,
-    updateUserPersonalProfileData
+    updateUserPersonalProfileData,
+    deleteProfilePhoto
 }

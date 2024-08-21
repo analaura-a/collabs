@@ -189,6 +189,20 @@ const updateUserPersonalProfileData = async (userId, userProfileData) => {
     );
 };
 
+// Eliminar la foto de perfil
+const deleteProfilePhoto = async (userId) => {
+
+    await client.connect();
+
+    const user = await db.collection('users').findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        { $set: { profile_pic: null } }, // Establecer profile_pic como null
+        { returnOriginal: true } // Devuelve el documento original con la foto antes de eliminarla
+    );
+
+    return user; // Devuelve el documento original que contiene la ruta de la foto
+};
+
 export {
     getUsers,
     getUserById,
@@ -202,5 +216,6 @@ export {
     updateUserPortfolioData,
     updateUserSocialsData,
     updateUserProfilePhotoData,
-    updateUserPersonalProfileData
+    updateUserPersonalProfileData,
+    deleteProfilePhoto
 }
