@@ -7,7 +7,7 @@ import Textarea from "../../Inputs/Textarea";
 
 const EditPersonalProfileForm = () => {
 
-    const { authState } = useContext(AuthContext);
+    const { authState, updateUser } = useContext(AuthContext);
     const { user } = authState;
 
     const [formData, setFormData] = useState({
@@ -73,9 +73,19 @@ const EditPersonalProfileForm = () => {
                 updatedProfilePic = response.profile_pic;
             }
 
+            // Actualizar datos en la database
+            await updateUserPersonalProfileData(user._id, { ...formData, profile_pic: updatedProfilePic });
+
+            // Actualizar el contexto con la nueva información
+            updateUser({
+                ...user,
+                ...formData,
+                profile_pic: updatedProfilePic
+            });
+
+            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
         } catch (error) {
             console.log("Ocurrió un error al intentar actualizar el perfil.", error) //Mostrárselo al usuario
-            setIsSubmitting(false);
         } finally {
             setIsSubmitting(false);
         }
