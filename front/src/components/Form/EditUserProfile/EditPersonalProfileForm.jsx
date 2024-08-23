@@ -9,9 +9,59 @@ const EditPersonalProfileForm = () => {
     const { authState } = useContext(AuthContext);
     const { user } = authState;
 
-    return (
+    const [formData, setFormData] = useState({
+        name: user.name || '',
+        last_name: user.last_name || '',
+        location: user.location || '',
+        bio: user.bio || ''
+    });
+    const [profilePic, setProfilePic] = useState(null);
 
-        <form className="edit-profile-page__form-container" noValidate>
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const validateForm = () => {
+        if (!formData.name.trim()) {
+            setErrors({ name: "El nombre es obligatorio." });
+            return false;
+        } else if (!formData.last_name.trim()) {
+            setErrors({ last_name: "El apellido es obligatorio." });
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+        try {
+            const isValid = await validateForm();
+            if (!isValid) {
+                return;
+            }
+
+            setIsSubmitting(true);
+
+        } catch (error) {
+            console.log("Ocurrió un error al intentar actualizar el perfil.", error) //Mostrárselo al usuario
+            setIsSubmitting(false);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <form className="edit-profile-page__form-container" onSubmit={handleSubmit} noValidate>
 
             <div className="edit-profile-page__form-container__space-between-inputs">
 
@@ -20,7 +70,7 @@ const EditPersonalProfileForm = () => {
 
                     <div className="edit-profile-page__form-container__profile-photo-section">
                         <div className="edit-profile-page__form-container__profile-photo-section__preview">
-                            <img src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095205-stock-illustration-businessman-profile-icon.jpg" alt="Foto de perfil" />
+                            <img src={user.profile_pic || "../assets/jpg/no-profile-picture.jpg"} alt="Foto de perfil" />
                         </div>
 
                         <div className="edit-profile-page__form-container__profile-photo-section__actions">
@@ -36,7 +86,7 @@ const EditPersonalProfileForm = () => {
                                 />
                             </label>
 
-                            <Button color="secondary" disabled={!user.profile_pic}>
+                            <Button color="secondary" disabled={!user.profile_pic || isSubmitting}>
                                 Eliminar foto
                             </Button>
 
@@ -44,19 +94,18 @@ const EditPersonalProfileForm = () => {
                     </div>
                 </div>
 
-                <Input label="Nombre" type="text" placeholder="Nombre" name="name" required></Input>
+                <Input label="Nombre" type="text" placeholder="Nombre" name="name" value={formData.name} onChange={handleInputChange} errorText={errors.name} required></Input>
 
-                <Input label="Apellido" type="text" placeholder="Apellido" name="last_name" required></Input>
+                <Input label="Apellido" type="text" placeholder="Apellido" name="last_name" value={formData.last_name} onChange={handleInputChange} errorText={errors.last_name} required></Input>
 
-                <Input label="Ubicación" type="text" placeholder="Ciudad, Provincia, País" name="location"></Input>
+                <Input label="Ubicación" type="text" placeholder="Ciudad, Provincia, País" name="location" value={formData.location} onChange={handleInputChange}></Input>
 
-                <Textarea label="Acerca de" rows={"10"} maxLength={1000} placeholder="¡Cuéntales a los demás quién eres!" name="bio" helperText={"Máximo 1000 caracteres."} />
+                <Textarea label="Acerca de" rows={"10"} maxLength={1000} placeholder="¡Cuéntales a los demás quién eres!" name="bio" helperText={"Máximo 1000 caracteres."} value={formData.bio} onChange={handleInputChange} />
             </div>
 
-            <Button type="submit" size="large" width="full-then-fit">Guardar cambios</Button>
+            <Button type="submit" size="large" width="full-then-fit" disabled={isSubmitting}>Guardar cambios</Button>
 
         </form>
-
     )
 }
 
