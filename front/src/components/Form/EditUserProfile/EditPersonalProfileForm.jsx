@@ -4,6 +4,7 @@ import { updateUserProfilePhotoData, updateUserPersonalProfileData, deleteProfil
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 import Textarea from "../../Inputs/Textarea";
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const EditPersonalProfileForm = () => {
 
@@ -101,7 +102,7 @@ const EditPersonalProfileForm = () => {
 
                     <div className="edit-profile-page__form-container__profile-photo-section">
                         <div className="edit-profile-page__form-container__profile-photo-section__preview">
-                            <img src={user.profile_pic || "../assets/jpg/no-profile-picture.jpg"} alt="Foto de perfil" />
+                            <img src={user.profile_pic ? `${SERVER_BASE_URL}${user.profile_pic}` : "../assets/jpg/no-profile-picture.jpg"} alt="Foto de perfil" />
                         </div>
 
                         <div className="edit-profile-page__form-container__profile-photo-section__actions">
