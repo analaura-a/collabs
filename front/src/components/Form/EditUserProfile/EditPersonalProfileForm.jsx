@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import AuthContext from "../../../context/AuthContext";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
@@ -20,12 +20,23 @@ const EditPersonalProfileForm = () => {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const fileInputRef = useRef(null);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevState) => ({
             ...prevState,
             [name]: value
         }));
+    };
+
+    const triggerFileInputClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleProfilePhotoChange = (e) => {
+        const file = e.target.files[0];
+        setProfilePic(file);
     };
 
     const validateForm = () => {
@@ -76,12 +87,14 @@ const EditPersonalProfileForm = () => {
                         <div className="edit-profile-page__form-container__profile-photo-section__actions">
 
                             <label htmlFor="profilePhotoInput">
-                                <Button>Subir una nueva foto</Button>
+                                <Button onClick={triggerFileInputClick}>Subir una nueva foto</Button>
                                 <input
                                     type="file"
                                     id="profilePhotoInput"
                                     name="profile_pic"
                                     accept="image/*"
+                                    ref={fileInputRef}
+                                    onChange={handleProfilePhotoChange}
                                     style={{ display: 'none' }}
                                 />
                             </label>
