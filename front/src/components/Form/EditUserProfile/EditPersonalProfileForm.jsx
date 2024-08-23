@@ -107,7 +107,7 @@ const EditPersonalProfileForm = () => {
                         <div className="edit-profile-page__form-container__profile-photo-section__actions">
 
                             <label htmlFor="profilePhotoInput">
-                                <Button onClick={triggerFileInputClick}>Subir una nueva foto</Button>
+                                <Button type="button" onClick={triggerFileInputClick}>Subir una nueva foto</Button>
                                 <input
                                     type="file"
                                     id="profilePhotoInput"
@@ -119,7 +119,7 @@ const EditPersonalProfileForm = () => {
                                 />
                             </label>
 
-                            <Button color="secondary" disabled={!user.profile_pic || isSubmitting}>
+                            <Button type="button" color="secondary" disabled={!user.profile_pic || isSubmitting}>
                                 Eliminar foto
                             </Button>
 
