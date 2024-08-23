@@ -1,5 +1,6 @@
 import { useState, useContext, useRef } from "react";
 import AuthContext from "../../../context/AuthContext";
+import { updateUserProfilePhotoData, updateUserPersonalProfileData, deleteProfilePhoto } from "../../../services/userService";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 import Textarea from "../../Inputs/Textarea";
@@ -63,6 +64,15 @@ const EditPersonalProfileForm = () => {
 
             setIsSubmitting(true);
 
+            // Subir la foto de perfil (si hay una nueva)
+            let updatedProfilePic = user.profile_pic;
+            if (profilePic) {
+                const formDataPhoto = new FormData();
+                formDataPhoto.append('profilePhoto', profilePic);
+                const response = await updateUserProfilePhotoData(formDataPhoto);
+                updatedProfilePic = response.profile_pic;
+            }
+
         } catch (error) {
             console.log("Ocurrió un error al intentar actualizar el perfil.", error) //Mostrárselo al usuario
             setIsSubmitting(false);
@@ -91,7 +101,7 @@ const EditPersonalProfileForm = () => {
                                 <input
                                     type="file"
                                     id="profilePhotoInput"
-                                    name="profile_pic"
+                                    name="profilePhoto"
                                     accept="image/*"
                                     ref={fileInputRef}
                                     onChange={handleProfilePhotoChange}
