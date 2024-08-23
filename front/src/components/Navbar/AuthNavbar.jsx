@@ -3,11 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import smallLogo from '../../assets/svg/collabs-isotipo.svg';
 import largeLogo from '../../assets/svg/collabs-logo.svg';
 import AuthContext from "../../context/AuthContext";
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const AuthNavbar = () => {
 
     const { authState, logout } = useContext(AuthContext);
-    // const { user } = authState; Para cuando mostremos dinámicamente la foto de perfil
+    const { user } = authState;
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isProfileDropdownOpen, setisProfileDropdownOpen] = useState(false);
@@ -125,8 +126,8 @@ const AuthNavbar = () => {
                         <button className="navbar-button notification"></button>
                     </li>
                     <li className="profile-button" onClick={handleProfileDropdownToggle}>
-                        <div className="navbar-profile-photo"> {/*Mostrar dinámicamente */}
-                            <img src="https://st2.depositphotos.com/1006318/5909/v/950/depositphotos_59095205-stock-illustration-businessman-profile-icon.jpg" alt="" />
+                        <div className="navbar-profile-photo">
+                            <img src={`${SERVER_BASE_URL}${user.profile_pic}`} alt={`${user.name} ${user.last_name}`} />
                         </div>
                         <ul className={`dropdown-menu ${isProfileDropdownOpen ? 'show' : ''}`}>
                             <li>

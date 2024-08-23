@@ -7,6 +7,7 @@ import Tabs from '../../components/Tabs/Tabs';
 import TabUserProfileContent from "../../components/TabsContent/Profile/TabUserProfileContent";
 import TabUserReviewsContent from "../../components/TabsContent/Profile/TabUserReviewsContent";
 import MessageIcon from '../../assets/svg/messages-2.svg?react';
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const UserProfilePage = () => {
 
@@ -85,9 +86,9 @@ const UserProfilePage = () => {
                         <div className="profile-page__header__profile-info__photo-and-name-container">
 
                             {user.profile_pic ? (
-                                <>
-                                    {/* Insertar acá foto de perfil */}
-                                </>
+                                <div className="profile-page__header__profile-info__photo-container">
+                                    <img src={`${SERVER_BASE_URL}${user.profile_pic}`} alt={`${user.name} ${user.last_name}`} />
+                                </div>
                             ) : (
                                 <div className="profile-page__header__profile-info__photo-container">
                                     <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
