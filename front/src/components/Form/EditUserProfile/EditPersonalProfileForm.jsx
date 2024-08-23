@@ -19,6 +19,7 @@ const EditPersonalProfileForm = () => {
     });
     const [profilePic, setProfilePic] = useState(null);
 
+    const [profilePicUploaded, setProfilePicUploaded] = useState(false);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,6 +40,7 @@ const EditPersonalProfileForm = () => {
     const handleProfilePhotoChange = (e) => {
         const file = e.target.files[0];
         setProfilePic(file);
+        setProfilePicUploaded(false);
     };
 
     const validateForm = () => {
@@ -67,11 +69,12 @@ const EditPersonalProfileForm = () => {
 
             // Subir la foto de perfil (si hay una nueva)
             let updatedProfilePic = user.profile_pic;
-            if (profilePic) {
+            if (profilePic && !profilePicUploaded) {
                 const formDataPhoto = new FormData();
                 formDataPhoto.append('profilePhoto', profilePic);
                 const response = await updateUserProfilePhotoData(formDataPhoto);
                 updatedProfilePic = response.profile_pic;
+                setProfilePicUploaded(true);
             }
 
             // Actualizar datos en la database
