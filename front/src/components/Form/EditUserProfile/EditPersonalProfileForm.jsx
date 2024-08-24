@@ -43,6 +43,18 @@ const EditPersonalProfileForm = () => {
         setProfilePicUploaded(false);
     };
 
+    const handleDeleteProfilePhoto = async () => {
+        try {
+            setIsSubmitting(true);
+            await deleteProfilePhoto(user._id);
+            updateUser({ ...user, profile_pic: null });
+            setIsSubmitting(false);
+        } catch (error) {
+            console.log("Ocurrió un error al intentar eliminar la foto de perfil.", error) //Mostrárselo al usuario
+            setIsSubmitting(false);
+        }
+    };
+
     const validateForm = () => {
         if (!formData.name.trim()) {
             setErrors({ name: "El nombre es obligatorio." });
@@ -123,7 +135,7 @@ const EditPersonalProfileForm = () => {
                                 />
                             </label>
 
-                            <Button type="button" color="secondary" disabled={!user.profile_pic || isSubmitting}>
+                            <Button type="button" color="secondary" disabled={!user.profile_pic || isSubmitting} onClick={handleDeleteProfilePhoto}>
                                 Eliminar foto
                             </Button>
 
