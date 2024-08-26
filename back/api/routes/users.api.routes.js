@@ -71,4 +71,7 @@ route.patch('/users/professional-profile/skills', [verifyUserOwnership], control
 // Editar el nivel de experiencia
 route.patch('/users/professional-profile/experience', [verifyUserOwnership], controllers.updateUserExperienceLevel);
 
+// Editar la disponibilidad
+route.patch('/users/professional-profile/availability', [verifyUserOwnership], controllers.updateUserAvailability);
+
 export default route;

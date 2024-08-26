@@ -251,6 +251,19 @@ const updateUserExperienceLevel = async (req, res) => {
     }
 };
 
+// Editar la disponibilidad
+const updateUserAvailability = async (req, res) => {
+
+    const { userId, availability } = req.body;
+
+    try {
+        const updatedUser = await service.updateUserAvailability(userId, availability);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -268,5 +281,6 @@ export {
     deleteProfilePhoto,
     updateUserRoles,
     updateUserSkills,
-    updateUserExperienceLevel
+    updateUserExperienceLevel,
+    updateUserAvailability
 }

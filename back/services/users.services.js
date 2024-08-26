@@ -257,6 +257,24 @@ const updateUserExperienceLevel = async (userId, experience_level) => {
     }
 };
 
+// Editar la disponibilidad
+const updateUserAvailability = async (userId, availability) => {
+    try {
+        await client.connect();
+        const updatedUser = await db.collection('users').findOneAndUpdate(
+            { _id: new ObjectId(userId) },
+            { $set: { availability } },
+            { returnDocument: 'after' }
+        );
+        if (!updatedUser) {
+            throw new Error('Usuario no encontrado');
+        }
+        return updatedUser;
+    } catch (error) {
+        throw new Error('Ocurrió un error al actualizar la disponibilidad.');
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -274,5 +292,6 @@ export {
     deleteProfilePhoto,
     updateUserRoles,
     updateUserSkills,
-    updateUserExperienceLevel
+    updateUserExperienceLevel,
+    updateUserAvailability
 }
