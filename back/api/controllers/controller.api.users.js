@@ -225,6 +225,19 @@ const updateUserRoles = async (req, res) => {
     }
 };
 
+// Editar las skills
+const updateUserSkills = async (req, res) => {
+
+    const { userId, skills } = req.body;
+
+    try {
+        const updatedUser = await service.updateUserSkills(userId, skills);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -240,5 +253,6 @@ export {
     updateUserProfilePhotoData,
     updateUserPersonalProfileData,
     deleteProfilePhoto,
-    updateUserRoles
+    updateUserRoles,
+    updateUserSkills
 }

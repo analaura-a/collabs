@@ -221,6 +221,24 @@ const updateUserRoles = async (userId, roles) => {
     }
 };
 
+// Editar las skills
+const updateUserSkills = async (userId, skills) => {
+    try {
+        await client.connect();
+        const updatedUser = await db.collection('users').findOneAndUpdate(
+            { _id: new ObjectId(userId) },
+            { $set: { skills } },
+            { returnDocument: 'after' }
+        );
+        if (!updatedUser) {
+            throw new Error('Usuario no encontrado');
+        }
+        return updatedUser;
+    } catch (error) {
+        throw new Error('Ocurrió un error al actualizar las skills.');
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -236,5 +254,6 @@ export {
     updateUserProfilePhotoData,
     updateUserPersonalProfileData,
     deleteProfilePhoto,
-    updateUserRoles
+    updateUserRoles,
+    updateUserSkills
 }

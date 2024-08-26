@@ -65,4 +65,7 @@ route.delete('/users/profile-photo', [verifyUserOwnership], controllers.deletePr
 // Editar los roles profesionales
 route.patch('/users/professional-profile/roles', [verifyUserOwnership], controllers.updateUserRoles);
 
+// Editar las skills
+route.patch('/users/professional-profile/skills', [verifyUserOwnership], controllers.updateUserSkills);
+
 export default route;
