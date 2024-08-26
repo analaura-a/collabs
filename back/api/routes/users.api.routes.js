@@ -61,7 +61,8 @@ route.patch('/users/personal-profile', [verifyUserOwnership], controllers.update
 // Eliminar la foto de perfil
 route.delete('/users/profile-photo', [verifyUserOwnership], controllers.deleteProfilePhoto);
 
-// Editar el perfil profesional
-route.patch('/users/professional-profile', [verifyUserOwnership], controllers.updateProfessionalProfile);
+/* Editar el perfil profesional */
+// Editar los roles profesionales
+route.patch('/users/professional-profile/roles', [verifyUserOwnership], controllers.updateUserRoles);
 
 export default route;

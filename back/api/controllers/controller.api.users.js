@@ -211,13 +211,14 @@ const deleteProfilePhoto = async (req, res) => {
     }
 };
 
-// Editar el perfil profesional
-const updateProfessionalProfile = async (req, res) => {
+/* Editar el perfil profesional */
+// Editar los roles profesionales
+const updateUserRoles = async (req, res) => {
 
-    const { userId, roles, skills, experience_level, availability } = req.body;
+    const { userId, roles } = req.body;
 
     try {
-        const updatedUser = await service.updateProfessionalProfile(userId, { roles, skills, experience_level, availability });
+        const updatedUser = await service.updateUserRoles(userId, roles);
         res.status(200).json(updatedUser);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -239,5 +240,5 @@ export {
     updateUserProfilePhotoData,
     updateUserPersonalProfileData,
     deleteProfilePhoto,
-    updateProfessionalProfile
+    updateUserRoles
 }

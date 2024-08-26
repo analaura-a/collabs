@@ -202,31 +202,22 @@ const deleteProfilePhoto = async (userId) => {
     return user; // Devuelve el documento original que contiene la ruta de la foto
 };
 
-// Editar el perfil profesional
-const updateProfessionalProfile = async (userId, professionalProfileData) => {
+/* Editar el perfil profesional */
+// Editar los roles profesionales
+const updateUserRoles = async (userId, roles) => {
     try {
         await client.connect();
-
         const updatedUser = await db.collection('users').findOneAndUpdate(
             { _id: new ObjectId(userId) },
-            {
-                $set: {
-                    roles: professionalProfileData.roles,
-                    skills: professionalProfileData.skills,
-                    experience_level: professionalProfileData.experience_level,
-                    availability: professionalProfileData.availability,
-                }
-            },
+            { $set: { roles } },
             { returnDocument: 'after' }
         );
-
         if (!updatedUser) {
             throw new Error('Usuario no encontrado.');
         }
-
         return updatedUser;
     } catch (error) {
-        throw new Error('Ocurrió un error al intentar actualizar el perfil profesional.');
+        throw new Error('Ocurrió un error al actualizar los roles.');
     }
 };
 
@@ -245,5 +236,5 @@ export {
     updateUserProfilePhotoData,
     updateUserPersonalProfileData,
     deleteProfilePhoto,
-    updateProfessionalProfile
+    updateUserRoles
 }
