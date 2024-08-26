@@ -1,7 +1,8 @@
 .skill-search-container {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
+    width: 100%;
 }
 
 .skill-search {
