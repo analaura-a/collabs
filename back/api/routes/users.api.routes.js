@@ -52,7 +52,6 @@ route.patch('/users/portfolio', [verifyUserOwnership], controllers.updateUserPor
 // Editar los datos de contacto
 route.patch('/users/socials', [verifyUserOwnership], controllers.updateUserSocialsData);
 
-/*Editar los datos personales*/
 // Subir la foto de perfil
 route.patch('/users/profile-photo', [validateTokenMiddleware, upload.single('profilePhoto')], controllers.updateUserProfilePhotoData);
 
@@ -61,5 +60,8 @@ route.patch('/users/personal-profile', [verifyUserOwnership], controllers.update
 
 // Eliminar la foto de perfil
 route.delete('/users/profile-photo', [verifyUserOwnership], controllers.deleteProfilePhoto);
+
+// Editar el perfil profesional
+route.patch('/users/professional-profile', [verifyUserOwnership], controllers.updateProfessionalProfile);
 
 export default route;

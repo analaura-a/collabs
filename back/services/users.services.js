@@ -163,7 +163,6 @@ async function updateUserSocialsData(userId, socials) {
     );
 }
 
-/*Editar los datos personales*/
 // Subir la foto de perfil
 const updateUserProfilePhotoData = async (userId, profilePhotoUrl) => {
 
@@ -185,7 +184,7 @@ const updateUserPersonalProfileData = async (userId, userProfileData) => {
     await db.collection('users').findOneAndUpdate(
         { _id: new ObjectId(userId) },
         { $set: userProfileData },
-        { returnOriginal: false } 
+        { returnOriginal: false }
     );
 };
 
@@ -203,6 +202,34 @@ const deleteProfilePhoto = async (userId) => {
     return user; // Devuelve el documento original que contiene la ruta de la foto
 };
 
+// Editar el perfil profesional
+const updateProfessionalProfile = async (userId, professionalProfileData) => {
+    try {
+        await client.connect();
+
+        const updatedUser = await db.collection('users').findOneAndUpdate(
+            { _id: new ObjectId(userId) },
+            {
+                $set: {
+                    roles: professionalProfileData.roles,
+                    skills: professionalProfileData.skills,
+                    experience_level: professionalProfileData.experience_level,
+                    availability: professionalProfileData.availability,
+                }
+            },
+            { returnDocument: 'after' }
+        );
+
+        if (!updatedUser) {
+            throw new Error('Usuario no encontrado.');
+        }
+
+        return updatedUser;
+    } catch (error) {
+        throw new Error('Ocurrió un error al intentar actualizar el perfil profesional.');
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -217,5 +244,6 @@ export {
     updateUserSocialsData,
     updateUserProfilePhotoData,
     updateUserPersonalProfileData,
-    deleteProfilePhoto
+    deleteProfilePhoto,
+    updateProfessionalProfile
 }
