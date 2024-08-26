@@ -239,6 +239,24 @@ const updateUserSkills = async (userId, skills) => {
     }
 };
 
+// Editar el nivel de experiencia
+const updateUserExperienceLevel = async (userId, experience_level) => {
+    try {
+        await client.connect();
+        const updatedUser = await db.collection('users').findOneAndUpdate(
+            { _id: new ObjectId(userId) },
+            { $set: { experience_level } },
+            { returnDocument: 'after' }
+        );
+        if (!updatedUser) {
+            throw new Error('Usuario no encontrado');
+        }
+        return updatedUser;
+    } catch (error) {
+        throw new Error('Ocurrió un error al actualizar el nivel de conocimiento.');
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -255,5 +273,6 @@ export {
     updateUserPersonalProfileData,
     deleteProfilePhoto,
     updateUserRoles,
-    updateUserSkills
+    updateUserSkills,
+    updateUserExperienceLevel
 }

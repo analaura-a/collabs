@@ -238,6 +238,19 @@ const updateUserSkills = async (req, res) => {
     }
 };
 
+// Editar el nivel de experiencia
+const updateUserExperienceLevel = async (req, res) => {
+
+    const { userId, experience_level } = req.body;
+
+    try {
+        const updatedUser = await service.updateUserExperienceLevel(userId, experience_level);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -254,5 +267,6 @@ export {
     updateUserPersonalProfileData,
     deleteProfilePhoto,
     updateUserRoles,
-    updateUserSkills
+    updateUserSkills,
+    updateUserExperienceLevel
 }
