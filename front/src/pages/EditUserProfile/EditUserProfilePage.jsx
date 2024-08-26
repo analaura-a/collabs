@@ -5,6 +5,7 @@ import EditUserProfileMenu from '../../components/Menu/EditUserProfileMenu';
 import EditAccountForm from '../../components/Form/EditUserProfile/EditAccountForm';
 import EditPasswordForm from '../../components/Form/EditUserProfile/EditPasswordForm';
 import EditPersonalProfileForm from '../../components/Form/EditUserProfile/EditPersonalProfileForm';
+import EditProfessionalProfileForm from '../../components/Form/EditUserProfile/EditProfessionalProfileForm';
 import EditPreferencesForm from '../../components/Form/EditUserProfile/EditPreferencesForm';
 import EditPortfolioForm from '../../components/Form/EditUserProfile/EditPortfolioForm';
 import EditContactForm from '../../components/Form/EditUserProfile/EditContactForm';
@@ -36,8 +37,8 @@ const EditUserProfilePage = () => {
                 return <EditPasswordForm />;
             case 'personal-profile':
                 return <EditPersonalProfileForm />;
-            case 'proffesional-profile':
-                return <p>Editar perfil profesional</p>;
+            case 'professional-profile':
+                return <EditProfessionalProfileForm />;
             case 'preferences':
                 return <EditPreferencesForm />;
             case 'portfolio':

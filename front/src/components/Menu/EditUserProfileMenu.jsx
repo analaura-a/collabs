@@ -8,7 +8,7 @@ const EditUserProfileMenu = ({ onSelect, selectedSection }) => {
         { label: 'Cuenta', value: 'account' },
         { label: 'Contraseña', value: 'password' },
         { label: 'Información personal', value: 'personal-profile' },
-        { label: 'Perfil profesional', value: 'proffesional-profile' },
+        { label: 'Perfil profesional', value: 'professional-profile' },
         { label: 'Preferencias', value: 'preferences' },
         { label: 'Portfolio', value: 'portfolio' },
         { label: 'Contacto', value: 'contact' },
