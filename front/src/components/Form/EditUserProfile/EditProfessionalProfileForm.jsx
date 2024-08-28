@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
-import { updateUserSkills, updateUserRoles, updateUserExperienceLevel } from "../../../services/userService";
+import { updateUserSkills, updateUserRoles, updateUserExperienceLevel, updateUserAvailability } from "../../../services/userService";
 import Button from "../../Button/Button";
 import SkillSearch from "../../Inputs/SkillSearch";
 
@@ -12,6 +12,7 @@ const EditProfessionalProfileForm = () => {
     const [roles, setRoles] = useState(user.roles || []);
     const [skills, setSkills] = useState(user.skills || []);
     const [experienceLevel, setExperienceLevel] = useState(user.experience_level || '');
+    const [availability, setAvailability] = useState(user.availability || '');
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -68,6 +69,22 @@ const EditProfessionalProfileForm = () => {
         try {
             setIsSubmitting(true);
             const updatedUser = await updateUserExperienceLevel(user._id, experienceLevel);
+            updateUser(updatedUser);
+            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+            setIsSubmitting(false);
+        } catch (error) {
+            console.error('Error al actualizar el nivel de conocimiento:', error);
+            setIsSubmitting(false);
+        }
+    };
+
+    //Disponibilidad
+    const availableAvailabilities = ['De 1 a 2 horas / día', 'De 3 a 4 horas / día', 'De 5 a 6 horas / día', '+7 horas / día'];
+
+    const handleUpdateAvailability = async () => {
+        try {
+            setIsSubmitting(true);
+            const updatedUser = await updateUserAvailability(user._id, availability);
             updateUser(updatedUser);
             console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
             setIsSubmitting(false);
@@ -160,6 +177,36 @@ const EditProfessionalProfileForm = () => {
                 <Button size="large" width="full-then-fit" disabled={isSubmitting} onClick={handleUpdateExperienceLevel}>Guardar cambios</Button>
             </div>
 
+            <div className="edit-profile-page__form-container">
+                <div className="edit-profile-page__form-container__title-with-subtitle">
+                    <h2 className="form-label">Disponibilidad<span className="primary-color-text">*</span></h2>
+                    <p className="subtitle">Selecciona la cantidad de tiempo (en horas por día) que puedes dedicarle a los proyectos.</p>
+                </div>
+
+                <form className="edit-profile-page__form-container__inputs-container">
+                    {availableAvailabilities.map(option => (
+                        <div key={option} className={`checkbox-item ${availability === option ? 'checkbox-item-checked' : ''}`} onClick={() => setAvailability(option)}>
+
+                            <input
+                                type="radio"
+                                name="availability-options"
+                                id={option}
+                                value={option}
+                                checked={availability === option}
+                                onChange={(e) => e.stopPropagation()}
+                                className="hidden-input"
+                            />
+
+                            <label htmlFor={option} onClick={() => setAvailability(option)}>
+                                {option}
+                            </label>
+
+                        </div>
+                    ))}
+                </form>
+
+                <Button size="large" width="full-then-fit" disabled={isSubmitting} onClick={handleUpdateAvailability}>Guardar cambios</Button>
+            </div>
 
         </div>
     )
