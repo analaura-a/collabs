@@ -290,6 +290,32 @@ export const deleteProfilePhoto = async (userId) => {
     }
 };
 
+export const updateUserRoles = async (userId, roles) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/users/professional-profile/roles`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        },
+        body: JSON.stringify({ userId, roles })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+    }
+
+    const updatedUser = await response.json();
+    return updatedUser;
+};
+
 export const updateUserSkills = async (userId, skills) => {
 
     const token = localStorage.getItem('token');

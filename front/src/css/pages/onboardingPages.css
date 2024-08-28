@@ -85,9 +85,9 @@
 } */
 
 .onboarding-input-checked {
-    color: var(--color-primary-text);
-    background-color: var(--color-primary-selected);
-    border: 1px solid var(--color-primary-logo);
+    color: var(--color-primary-text) !important;
+    background-color: var(--color-primary-selected) !important;
+    border: 1px solid var(--color-primary-logo) !important;
 }
 
 .checkbox-circle {
@@ -110,7 +110,8 @@
 }
 
 .onboarding-input-checked .checkbox-circle,
-.onboarding-input-box-with-description-checked .checkbox-circle {
+.onboarding-input-box-with-description-checked .checkbox-circle,
+.checkbox-item-checked .checkbox-circle {
     background-image: url(../assets/svg/check.svg);
     background-position: center;
     background-repeat: no-repeat;
