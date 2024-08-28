@@ -202,7 +202,6 @@ const deleteProfilePhoto = async (userId) => {
     return user; // Devuelve el documento original que contiene la ruta de la foto
 };
 
-/* Editar el perfil profesional */
 // Editar los roles profesionales
 const updateUserRoles = async (userId, roles) => {
     try {
@@ -275,6 +274,36 @@ const updateUserAvailability = async (userId, availability) => {
     }
 };
 
+// Eliminar la cuenta
+const deleteAccount = async (userId) => {
+    try {
+        await client.connect();
+
+        const userObjectId = new ObjectId(userId);
+
+        // Eliminar al usuario de la colección "users"
+        const userDeletionResult = await db.collection('users').deleteOne({ _id: userObjectId });
+        if (userDeletionResult.deletedCount === 0) {
+            throw new Error('No se encontró el usuario en la colección "users".');
+        }
+
+        // Eliminar al usuario de la colección "accounts"
+        const accountDeletionResult = await db.collection('accounts').deleteOne({ _id: userObjectId });
+        if (accountDeletionResult.deletedCount === 0) {
+            throw new Error('No se encontró el usuario en la colección "accounts".');
+        }
+
+        // Eliminar los tokens del usuario de la colección "tokens"
+        await db.collection('tokens').deleteMany({ account_id: userObjectId });
+
+        //Agregar otras colecciones más adelante
+
+    } catch (error) {
+        throw new Error('Ocurrió un error al eliminar la cuenta: ' + error.message);
+    }
+};
+
+
 export {
     getUsers,
     getUserById,
@@ -293,5 +322,6 @@ export {
     updateUserRoles,
     updateUserSkills,
     updateUserExperienceLevel,
-    updateUserAvailability
+    updateUserAvailability,
+    deleteAccount
 }

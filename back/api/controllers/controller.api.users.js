@@ -211,7 +211,6 @@ const deleteProfilePhoto = async (req, res) => {
     }
 };
 
-/* Editar el perfil profesional */
 // Editar los roles profesionales
 const updateUserRoles = async (req, res) => {
 
@@ -264,6 +263,19 @@ const updateUserAvailability = async (req, res) => {
     }
 };
 
+// Eliminar la cuenta
+const deleteAccount = async (req, res) => {
+
+    const { id: userId } = req.params;
+
+    try {
+        await service.deleteAccount(userId);
+        res.status(200).json({ message: 'Cuenta eliminada con éxito.' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 export {
     getUsers,
     getUserById,
@@ -282,5 +294,6 @@ export {
     updateUserRoles,
     updateUserSkills,
     updateUserExperienceLevel,
-    updateUserAvailability
+    updateUserAvailability,
+    deleteAccount
 }

@@ -48,7 +48,7 @@ const EditUserProfilePage = () => {
             case 'delete-account':
                 return <></>;
             default:
-                return <p>Editar cuenta</p>;
+                return <EditAccountForm />;
         }
     };
 

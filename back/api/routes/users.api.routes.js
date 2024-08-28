@@ -25,6 +25,9 @@ route.get('/users', controllers.getUsers);
 //Obtener un usuario en especifico por ID
 route.get('/users/:id', controllers.getUserById);
 
+// Eliminar la cuenta
+route.delete('/users/:id', [verifyUserOwnership], controllers.deleteAccount);
+
 //Obtener un usuario en especifico por username
 route.get('/users/username/:username', controllers.getUserByUsername);
 
@@ -32,7 +35,7 @@ route.get('/users/username/:username', controllers.getUserByUsername);
 route.post('/users/check-username', controllers.checkUsernameAvailability);
 
 //Obtener el perfil del usuario que inició sesión (SIN USAR)
-route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile)
+// route.get("/user/profile", [validateTokenMiddleware], controllers.getUserProfile)
 
 //Completar y agregar todos los datos del onboarding al perfil del usuario
 route.post('/users/complete-onboarding', [validateTokenMiddleware, validateOnboarding], controllers.completeOnboarding);
@@ -61,7 +64,6 @@ route.patch('/users/personal-profile', [verifyUserOwnership], controllers.update
 // Eliminar la foto de perfil
 route.delete('/users/profile-photo', [verifyUserOwnership], controllers.deleteProfilePhoto);
 
-/* Editar el perfil profesional */
 // Editar los roles profesionales
 route.patch('/users/professional-profile/roles', [verifyUserOwnership], controllers.updateUserRoles);
 
