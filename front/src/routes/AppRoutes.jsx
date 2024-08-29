@@ -15,6 +15,8 @@ import HomePage from '../pages/HomePage/HomePage.jsx'
 import MyProfilePage from '../pages/UserProfile/MyProfilePage.jsx'
 import UserProfilePage from '../pages/UserProfile/UserProfilePage.jsx'
 import EditUserProfilePage from '../pages/EditUserProfile/EditUserProfilePage.jsx'
+import ExploreProjectsPage from '../pages/ExplorePage/ExploreProjectsPage.jsx'
+import ExploreUsersPage from '../pages/ExplorePage/ExploreUsersPage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -54,6 +56,14 @@ const AppRoutes = createBrowserRouter([
                 element: (<ProtectedRoute>
                     <EditUserProfilePage />
                 </ProtectedRoute>),
+            },
+            {
+                path: "/explorar/proyectos",
+                element: <ExploreProjectsPage />,
+            },
+            {
+                path: "/explorar/colaboradores",
+                element: <ExploreUsersPage />,
             },
         ]
     },
