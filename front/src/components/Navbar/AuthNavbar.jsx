@@ -101,10 +101,10 @@ const AuthNavbar = () => {
                             </div>
                             <ul className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
                                 <li>
-                                    <Link to="/" className="navbar-text">Proyectos</Link>
+                                    <Link to="/explorar/proyectos" className="navbar-text">Proyectos</Link>
                                 </li>
                                 <li>
-                                    <Link to="/" className="navbar-text">Colaboradores</Link>
+                                    <Link to="/explorar/colaboradores" className="navbar-text">Colaboradores</Link>
                                 </li>
                             </ul>
                         </li>
