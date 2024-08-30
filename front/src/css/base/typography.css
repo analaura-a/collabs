@@ -200,6 +200,14 @@
     line-height: 1.4;
 }
 
+.smaller-paragraph-light {
+    font-family: var(--inter);
+    font-size: var(--font-14px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-light);
+    line-height: 1.4;
+}
+
 .link {
     font-weight: var(--font-semibold) !important;
     color: var(--color-primary-text) !important;
