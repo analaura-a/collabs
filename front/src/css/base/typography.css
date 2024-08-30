@@ -13,6 +13,7 @@
     --font-40px: 2.5rem;
     --font-44px: 2.75rem;
     --font-48px: 3rem;
+    --font-56px: 3.5rem;
     --font-64px: 4rem;
 
     --font-light: 300;
@@ -93,6 +94,15 @@
 }
 
 /*General*/
+.title-56 {
+    font-family: var(--inter);
+    font-size: var(--font-56px);
+    font-weight: var(--font-semibold);
+    color: var(--color-black);
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+}
+
 .title-40 {
     font-family: var(--inter);
     font-size: var(--font-40px);
