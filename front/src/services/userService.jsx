@@ -1,5 +1,22 @@
 const API_URL = 'http://localhost:3333/api';
 
+export const getUsers = async () => {
+
+    const response = await fetch(`${API_URL}/users`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error al intentar obtener a los usuarios.');
+    }
+
+    return await response.json();
+};
+
 //No se usa (todavía):
 export const fetchUserProfile = async () => {
 
@@ -281,7 +298,7 @@ export const deleteProfilePhoto = async (userId) => {
         });
 
         if (!response.ok) {
-            throw new Error('Ocurrió un error al intentar eliminar la foto de perfil.');
+            throw new Error(response.message || 'Ocurrió un error al intentar eliminar la foto de perfil.');
         }
 
         return await response.json();

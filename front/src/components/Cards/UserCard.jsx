@@ -5,10 +5,10 @@ const UserCard = ({ user }) => {
 
     const { profile_pic, name, last_name, username, bio, location, roles } = user;
 
-    const truncateBio = (text) => {
-        const maxLength = 120;
-        return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-    };
+    // const truncateBio = (text) => {
+    //     const maxLength = 120;
+    //     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    // };
 
     return (
         <article className="user-card">
@@ -30,7 +30,12 @@ const UserCard = ({ user }) => {
                         <p className="subtitle primary-color-text">@{username}</p>
                     </div>
                     <div className="user-card__about">
-                        <p className="subtitle">{bio}</p>
+                        {bio ? (
+                            <p className="subtitle">{bio}</p>
+                        ) : (
+                            <p className="subtitle">{name} {last_name} aún no agregó su biografía.</p>
+                        )}
+
                         {location && (
                             <p className="smaller-paragraph-light">{location}</p>
                         )}

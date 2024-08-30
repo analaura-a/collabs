@@ -1,6 +1,29 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import UserCard from '../../components/Cards/UserCard';
+import { getUsers } from '../../services/userService';
 
 const ExploreUsersPage = () => {
+
+    const [users, setUsers] = useState([]);
+    // const [filteredUsers, setFilteredUsers] = useState([]);
+
+    const fetchUsers = () => {
+        try {
+            getUsers()
+                .then((users) => {
+                    setUsers(users)
+                });
+
+        } catch (error) {
+            console.error('Error al obtener a los usuarios: ', error);
+        }
+    };
+
+    useEffect(() => {
+        // setFilteredCollaborators(users);
+        fetchUsers();
+    }, []);
 
     return (
         <main>
@@ -18,6 +41,14 @@ const ExploreUsersPage = () => {
 
                         {/* Componente de búsqueda */}
                     </div>
+
+                </section>
+
+                <section className="explore-page__container-user-cards">
+
+                    {users.map(user => (
+                        <UserCard key={user._id} user={user} />
+                    ))}
 
                 </section>
 

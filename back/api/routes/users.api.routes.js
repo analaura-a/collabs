@@ -26,7 +26,7 @@ route.get('/users', controllers.getUsers);
 route.get('/users/:id', controllers.getUserById);
 
 // Eliminar la cuenta
-route.delete('/users/:id', [verifyUserOwnership], controllers.deleteAccount);
+// route.delete('/users/:id', [verifyUserOwnership], controllers.deleteAccount); Cambiar ruta, se confunde con borrar foto de perfil
 
 //Obtener un usuario en especifico por username
 route.get('/users/username/:username', controllers.getUserByUsername);

@@ -15,7 +15,7 @@ const getUsers = (req, res) => {
             res.status(200).json(users)
         })
         .catch((error) => {
-            res.status(404).json();
+            res.status(404).json(error);
         });
 
 };
