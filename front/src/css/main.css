@@ -25,6 +25,7 @@
 @import './components/tabsContent/Reviews/tabReviewsContent.css';
 @import './components/EditUserProfileMenu.css';
 @import './components/textarea.css';
-@import './components/userCard.css';
+@import './components/cards/userCard.css';
+@import './components/cards/projectCard.css';
 
 @import './misc/faded-pattern.css';
