@@ -5,11 +5,6 @@ const UserCard = ({ user }) => {
 
     const { profile_pic, name, last_name, username, bio, location, roles } = user;
 
-    // const truncateBio = (text) => {
-    //     const maxLength = 120;
-    //     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-    // };
-
     return (
         <article className="user-card">
             <Link to={`/colaboradores/${username}`} className="user-card__link">
@@ -31,7 +26,7 @@ const UserCard = ({ user }) => {
                     </div>
                     <div className="user-card__about">
                         {bio ? (
-                            <p className="subtitle">{bio}</p>
+                            <p className="subtitle truncated-description-3">{bio}</p>
                         ) : (
                             <p className="subtitle">{name} {last_name} aún no agregó su biografía.</p>
                         )}

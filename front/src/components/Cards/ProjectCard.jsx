@@ -5,11 +5,6 @@ const ProjectCard = ({ project }) => {
 
     const { _id, img, name, about, founder, open_positions } = project;
 
-    // const truncateAbout = (text) => {
-    //     const maxLength = 120;
-    //     return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-    // };
-
     return (
         <article className="user-card">
             <Link to={`/proyectos/${_id}`} className="project-card__link">
@@ -22,7 +17,7 @@ const ProjectCard = ({ project }) => {
                     <div className="project-card__project-info">
                         <div className="project-card__project-info__about">
                             <h2 className="subtitle-18 bold-text">{name}</h2>
-                            <p className="light-paragraph">{about}</p>
+                            <p className="light-paragraph truncated-description-4">{about}</p>
                         </div>
 
                         <div className="project-card__project-info__created-by">
