@@ -9,31 +9,34 @@ const route = Router();
 //Obtener todos los proyectos
 route.get('/projects', controllers.getProjects);
 
-//Obtener los proyectos de tipo personal
-route.get('/projects/personal', [validateTokenMiddleware], controllers.getProjectsPersonal)
+//Obtener todos los proyectos abiertos
+route.get('/projects/open', controllers.getOpenProjects)
 
-//Obtener los proyectos de tipo open-source
-route.get('/projects/open-source', [validateTokenMiddleware], controllers.getProjectsOpenSource)
+// //Obtener los proyectos de tipo personal
+// route.get('/projects/personal', [validateTokenMiddleware], controllers.getProjectsPersonal)
 
-//Obtener todos los proyectos que creó un usuario en particular
-route.get('/user/:id/projects', [validateTokenMiddleware], controllers.getProjectsByUser);
+// //Obtener los proyectos de tipo open-source
+// route.get('/projects/open-source', [validateTokenMiddleware], controllers.getProjectsOpenSource)
 
-//Obtener un proyecto en especifico
-route.get('/projects/:id', [validateTokenMiddleware], controllers.getProjectById)
+// //Obtener todos los proyectos que creó un usuario en particular
+// route.get('/user/:id/projects', [validateTokenMiddleware], controllers.getProjectsByUser);
 
-//Agregar un nuevo proyecto personal
-route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);
+// //Obtener un proyecto en especifico
+// route.get('/projects/:id', [validateTokenMiddleware], controllers.getProjectById)
 
-//Agregar un nuevo proyecto open-source
-route.post('/projects/open-source', [validateTokenMiddleware, validateOpenSourceProjectCreate], controllers.createProject);
+// //Agregar un nuevo proyecto personal
+// route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);
 
-//Editar un proyecto personal
-route.patch('/projects/personal/:id', [validateTokenMiddleware, validatePersonalProjectPatch], controllers.editProject);
+// //Agregar un nuevo proyecto open-source
+// route.post('/projects/open-source', [validateTokenMiddleware, validateOpenSourceProjectCreate], controllers.createProject);
 
-//Editar un proyecto open-source
-route.patch('/projects/open-source/:id', [validateTokenMiddleware, validateOpenSourceProjectPatch], controllers.editProject);
+// //Editar un proyecto personal
+// route.patch('/projects/personal/:id', [validateTokenMiddleware, validatePersonalProjectPatch], controllers.editProject);
 
-//Borrar un proyecto (eliminado lógico)
-route.delete("/projects/:id", [validateTokenMiddleware], controllers.deleteProject);
+// //Editar un proyecto open-source
+// route.patch('/projects/open-source/:id', [validateTokenMiddleware, validateOpenSourceProjectPatch], controllers.editProject);
+
+// //Borrar un proyecto (eliminado lógico)
+// route.delete("/projects/:id", [validateTokenMiddleware], controllers.deleteProject);
 
 export default route;
