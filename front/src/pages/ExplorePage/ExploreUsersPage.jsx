@@ -8,6 +8,8 @@ const ExploreUsersPage = () => {
     const [users, setUsers] = useState([]);
     // const [filteredUsers, setFilteredUsers] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
     const fetchUsers = () => {
         try {
             getUsers()
@@ -15,8 +17,10 @@ const ExploreUsersPage = () => {
                     setUsers(users)
                 });
 
+            setLoading(false);
         } catch (error) {
             console.error('Error al obtener a los usuarios: ', error);
+            setLoading(false);
         }
     };
 
@@ -24,6 +28,8 @@ const ExploreUsersPage = () => {
         // setFilteredCollaborators(users);
         fetchUsers();
     }, []);
+
+    if (loading) return <div>Cargando colaboradores...</div>; //Componente de carga
 
     return (
         <main>
@@ -37,7 +43,7 @@ const ExploreUsersPage = () => {
                     </div>
 
                     <div>
-                        <h1 className="title-56">Descubre oportunidades de colaboración</h1>
+                        <h1 className="title-56">Encuentra colaboradores para tus proyectos</h1>
 
                         {/* Componente de búsqueda */}
                     </div>

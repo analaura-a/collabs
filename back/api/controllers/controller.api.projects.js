@@ -20,7 +20,7 @@ const getOpenProjects = async (req, res) => {
 
     try {
         const projects = await service.getOpenProjects();
-        res.status(200).json({ projects });
+        res.status(200).json(projects);
     } catch (error) {
         console.error('Error al obtener proyectos abiertos:', error);
         res.status(500).json({ message: 'Ocurrió un problema al intentar obtener los proyectos, inténtalo de nuevo más tarde.' });

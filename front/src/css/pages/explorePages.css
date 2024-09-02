@@ -41,6 +41,9 @@
     gap: 24px;
 }
 
+.explore-page__container-project-cards {
+    padding: 40px 0;
+}
 
 
 @media only screen and (min-width: 1024px) {
