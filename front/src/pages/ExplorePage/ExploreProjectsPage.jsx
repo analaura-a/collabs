@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom';
 import { getOpenProjects } from '../../services/projectService';
 import Tabs from '../../components/Tabs/Tabs';
 import ProjectCard from '../../components/Cards/ProjectCard';
+import SearchAndFilters from '../../components/Inputs/SearchAndFilters';
 
 const ExploreProjectsPage = () => {
 
     const [projects, setProjects] = useState([]);
     const [personalProjects, setPersonalProjects] = useState([]);
     const [openSourceProjects, setOpenSourceProjects] = useState([]);
+
+    const [filteredPersonalProjects, setFilteredPersonalProjects] = useState([]);
+    const [filteredOpenSourceProjects, setFilteredOpenSourceProjects] = useState([]);
 
     const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
@@ -23,7 +27,9 @@ const ExploreProjectsPage = () => {
             const personal = fetchedProjects.filter(project => project.type === 'Personal');
             const openSource = fetchedProjects.filter(project => project.type === 'Open-source');
             setPersonalProjects(personal);
+            setFilteredPersonalProjects(personal);
             setOpenSourceProjects(openSource);
+            setFilteredOpenSourceProjects(openSource);
 
             setLoading(false);
         } catch (error) {
@@ -37,14 +43,38 @@ const ExploreProjectsPage = () => {
         fetchProjects();
     }, []);
 
+    const handleSearch = (searchTerm) => {
+        if (searchTerm.trim() === "") {
+            setFilteredPersonalProjects(personalProjects);
+            setFilteredOpenSourceProjects(openSourceProjects);
+        } else {
+            const filteredPersonal = personalProjects.filter(project =>
+                project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                project.about.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            const filteredOpenSource = openSourceProjects.filter(project =>
+                project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                project.about.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredPersonalProjects(filteredPersonal);
+            setFilteredOpenSourceProjects(filteredOpenSource);
+        }
+    };
+
     const tabs = [
         {
             label: 'Personales',
             content: (
                 <section className="explore-page__container-user-cards explore-page__container-project-cards">
-                    {personalProjects.map((project) => (
-                        <ProjectCard key={project._id} project={project} />
-                    ))}
+                    {filteredPersonalProjects.length > 0 ? (
+                        filteredPersonalProjects.map((project) => (
+                            <ProjectCard key={project._id} project={project} />
+                        ))
+                    ) : (
+                        <div>
+                            No se encontraron proyectos personales con esos términos. {/* Maquetar */}
+                        </div>
+                    )}
                 </section>
             )
         },
@@ -52,9 +82,15 @@ const ExploreProjectsPage = () => {
             label: 'Open-source',
             content: (
                 <section className="explore-page__container-user-cards explore-page__container-project-cards">
-                    {openSourceProjects.map((project) => (
-                        <ProjectCard key={project._id} project={project} />
-                    ))}
+                    {filteredOpenSourceProjects.length > 0 ? (
+                        filteredOpenSourceProjects.map((project) => (
+                            <ProjectCard key={project._id} project={project} />
+                        ))
+                    ) : (
+                        <div>
+                            No se encontraron proyectos open-source con esos términos. {/* Maquetar */}
+                        </div>
+                    )}
                 </section>
             )
         }
@@ -75,10 +111,12 @@ const ExploreProjectsPage = () => {
                         <Link to="/explorar/colaboradores">Colaboradores</Link>
                     </div>
 
-                    <div>
+                    <div className="explore-page__header__title-and-filters">
                         <h1 className="title-56">Descubre oportunidades de colaboración</h1>
 
-                        {/* Componente de búsqueda */}
+                        <SearchAndFilters
+                            placeholder="Buscar proyectos de..."
+                            onSearch={handleSearch} />
                     </div>
 
                 </section>
