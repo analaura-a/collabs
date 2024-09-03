@@ -1,0 +1,38 @@
+.search-and-filters {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 100%;
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: auto;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+}
+
+
+
+@media only screen and (min-width: 1024px) {
+
+    .search-and-filters {
+        max-width: 60%;
+    }
+
+}
+
+
+
+@media only screen and (min-width: 1366px) {
+
+    .search-and-filters {
+        max-width: 45%;
+    }
+
+}
