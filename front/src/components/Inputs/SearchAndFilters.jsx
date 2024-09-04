@@ -20,14 +20,21 @@ const availabilities = [
     '+7 horas / día'
 ];
 
-const SearchAndFilters = ({ placeholder, onSearch }) => {
+const SearchAndFilters = ({ placeholder, onSearch, onFilterChange }) => {
 
     const [searchTerm, setSearchTerm] = useState('');
+
     const [activeFilter, setActiveFilter] = useState(null);
+    const [selectedRoles, setSelectedRoles] = useState([]);
+    const [selectedAvailabilities, setSelectedAvailabilities] = useState([]);
 
     useEffect(() => {
-        onSearch(searchTerm); // Llamamos a la función de búsqueda cada vez que el término cambia
+        onSearch(searchTerm);
     }, [searchTerm]);
+
+    useEffect(() => {
+        onFilterChange({ roles: selectedRoles, availability: selectedAvailabilities });
+    }, [selectedRoles, selectedAvailabilities]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -35,6 +42,15 @@ const SearchAndFilters = ({ placeholder, onSearch }) => {
 
     const toggleFilter = (filterName) => {
         setActiveFilter(activeFilter === filterName ? null : filterName);
+    };
+
+    const handleCheckboxChange = (event, setSelected, selected) => {
+        const value = event.target.id;
+        if (selected.includes(value)) {
+            setSelected(selected.filter((item) => item !== value));
+        } else {
+            setSelected([...selected, value]);
+        }
     };
 
     return (
@@ -68,27 +84,18 @@ const SearchAndFilters = ({ placeholder, onSearch }) => {
                             <fieldset className="search-and-filters__checkboxes-container">
                                 {roles.map((role) => (
                                     <div className="search-and-filters__checkbox" key={role}>
-                                        <input type="checkbox" name="role" value="category1" id={role} />
+                                        <input
+                                            type="checkbox"
+                                            name="role"
+                                            value={role}
+                                            id={role}
+                                            checked={selectedRoles.includes(role)}
+                                            onChange={(e) => handleCheckboxChange(e, setSelectedRoles, selectedRoles)}
+                                        />
                                         <label htmlFor={role} className="subtitle">{role}</label>
                                     </div>
                                 ))}
                             </fieldset>
-                        </div>
-                    )}
-                </li>
-
-                <li className="search-and-filters__filter">
-                    <button className={`search-and-filters__filter-toggle smaller-paragraph bold-text ${activeFilter === 'skills' ? 'search-and-filters__filter-toggle-active' : ''}`} onClick={() => toggleFilter('skills')}>
-                        Skills
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" fill="none">
-                            <path stroke="#3B3B3C" strokeLinecap="round" strokeWidth="1.5" d="m1 1 4.146 3.554a.8.8 0 0 0 1.041 0L10.333 1" />
-                        </svg>
-                    </button>
-
-                    {activeFilter === 'skills' && (
-                        <div className="search-and-filters__filter-dropdown">
-                            <h2 className="title-18">Skills</h2>
-
                         </div>
                     )}
                 </li>
@@ -108,7 +115,14 @@ const SearchAndFilters = ({ placeholder, onSearch }) => {
                             <fieldset className="search-and-filters__checkboxes-container">
                                 {availabilities.map((availability) => (
                                     <div className="search-and-filters__checkbox" key={availability}>
-                                        <input type="checkbox" name="availability" value="category1" id={availability} />
+                                        <input
+                                            type="checkbox"
+                                            name="availability"
+                                            value={availability}
+                                            id={availability}
+                                            checked={selectedAvailabilities.includes(availability)}
+                                            onChange={(e) => handleCheckboxChange(e, setSelectedAvailabilities, selectedAvailabilities)}
+                                        />
                                         <label htmlFor={availability} className="subtitle">{availability}</label>
                                     </div>
                                 ))}
