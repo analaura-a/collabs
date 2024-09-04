@@ -1,6 +1,25 @@
 import { useState, useEffect } from 'react';
 // const SearchAndFilters = ({ onSearch, onFilterChange, filters }) => {
 
+const roles = [
+    'UX/UI Designer',
+    'Web Designer',
+    'Frontend Developer',
+    'Backend Developer',
+    'Fullstack Developer',
+    'Mobile Developer',
+    'No-code Developer',
+    'Project Manager',
+    'QA Tester'
+];
+
+const availabilities = [
+    'De 1 a 2 horas / día',
+    'De 3 a 4 horas / día',
+    'De 5 a 6 horas / día',
+    '+7 horas / día'
+];
+
 const SearchAndFilters = ({ placeholder, onSearch }) => {
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -47,13 +66,12 @@ const SearchAndFilters = ({ placeholder, onSearch }) => {
                             <h2 className="title-18">Rol</h2>
 
                             <fieldset className="search-and-filters__checkboxes-container">
-
-                                <div className="search-and-filters__checkbox">
-                                    <input type="checkbox" name="role" value="category1" id='alo' />
-                                    <label htmlFor="alo" className="subtitle">UX/UI Designer</label>
-                                </div>
-
-
+                                {roles.map((role) => (
+                                    <div className="search-and-filters__checkbox" key={role}>
+                                        <input type="checkbox" name="role" value="category1" id={role} />
+                                        <label htmlFor={role} className="subtitle">{role}</label>
+                                    </div>
+                                ))}
                             </fieldset>
                         </div>
                     )}
@@ -88,13 +106,12 @@ const SearchAndFilters = ({ placeholder, onSearch }) => {
                             <h2 className="title-18">Disponibilidad</h2>
 
                             <fieldset className="search-and-filters__checkboxes-container">
-
-                                <div className="search-and-filters__checkbox">
-                                    <input type="checkbox" name="availability" value="category1" id='alo2' />
-                                    <label htmlFor="alo2" className="subtitle">Media (3-4 horas/día)</label>
-                                </div>
-
-
+                                {availabilities.map((availability) => (
+                                    <div className="search-and-filters__checkbox" key={availability}>
+                                        <input type="checkbox" name="availability" value="category1" id={availability} />
+                                        <label htmlFor={availability} className="subtitle">{availability}</label>
+                                    </div>
+                                ))}
                             </fieldset>
                         </div>
                     )}
