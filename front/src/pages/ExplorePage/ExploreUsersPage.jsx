@@ -9,6 +9,9 @@ const ExploreUsersPage = () => {
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
 
+    const [filters, setFilters] = useState({ roles: [], availability: [] });
+    const [searchTerm, setSearchTerm] = useState('');
+
     const [loading, setLoading] = useState(true);
 
     const fetchUsers = async () => {
@@ -27,18 +30,41 @@ const ExploreUsersPage = () => {
         fetchUsers();
     }, []);
 
-    // Buscar usuarios por `name`, `last_name`, o `username`
-    const handleSearch = (searchTerm) => {
-        if (searchTerm.trim() === "") {
-            setFilteredUsers(users);
-        } else {
-            const matchedUsers = users.filter(user =>
-                user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    const filterAndSearchUsers = (term, activeFilters) => {
+
+        // Buscar por 'name', 'last_name', o 'username'
+        let filteredBySearchTerm = users.filter(user =>
+            user.name.toLowerCase().includes(term.toLowerCase()) ||
+            user.last_name.toLowerCase().includes(term.toLowerCase()) ||
+            user.username.toLowerCase().includes(term.toLowerCase())
+        );
+
+        // Filtros
+        if (activeFilters.roles.length > 0) {
+            filteredBySearchTerm = filteredBySearchTerm.filter(user =>
+                activeFilters.roles.some(role => user.roles.includes(role))
             );
-            setFilteredUsers(matchedUsers);
         }
+
+        if (activeFilters.availability.length > 0) {
+            filteredBySearchTerm = filteredBySearchTerm.filter(user =>
+                activeFilters.availability.includes(user.availability)
+            );
+        }
+
+        setFilteredUsers(filteredBySearchTerm);
+    };
+
+    // Manejar la búsqueda por palabras clave
+    const handleSearch = (term) => {
+        setSearchTerm(term);
+        filterAndSearchUsers(term, filters);
+    };
+
+    // Manejar los cambios en los filtros
+    const handleFilterChange = (newFilters) => {
+        setFilters(newFilters);
+        filterAndSearchUsers(searchTerm, newFilters);
     };
 
     if (loading) return <div>Cargando colaboradores...</div>; //Componente de carga
@@ -59,7 +85,8 @@ const ExploreUsersPage = () => {
 
                         <SearchAndFilters
                             placeholder="Buscar personas..."
-                            onSearch={handleSearch} />
+                            onSearch={handleSearch}
+                            onFilterChange={handleFilterChange} />
                     </div>
 
                 </section>
