@@ -1,7 +1,7 @@
 .explore-page-container {
     display: flex;
     flex-direction: column;
-    gap: 80px;
+    gap: 64px;
 
     padding: 64px 24px;
 }
@@ -42,7 +42,7 @@
 .explore-page__header__title-and-filters{
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 32px;
 }
 
 .explore-page__container-user-cards {
