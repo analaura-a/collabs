@@ -32,7 +32,7 @@ const ExploreUsersPage = () => {
 
     const filterAndSearchUsers = (term, activeFilters) => {
 
-        // Buscar por 'name', 'last_name', o 'username'
+        // Buscar por 'name', 'last_name' o 'username'
         let filteredBySearchTerm = users.filter(user =>
             user.name.toLowerCase().includes(term.toLowerCase()) ||
             user.last_name.toLowerCase().includes(term.toLowerCase()) ||

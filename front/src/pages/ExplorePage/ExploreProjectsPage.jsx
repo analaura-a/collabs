@@ -14,6 +14,9 @@ const ExploreProjectsPage = () => {
     const [filteredPersonalProjects, setFilteredPersonalProjects] = useState([]);
     const [filteredOpenSourceProjects, setFilteredOpenSourceProjects] = useState([]);
 
+    const [filters, setFilters] = useState({ roles: [], availability: [] });
+    const [searchTerm, setSearchTerm] = useState('');
+
     const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
 
@@ -43,22 +46,50 @@ const ExploreProjectsPage = () => {
         fetchProjects();
     }, []);
 
-    const handleSearch = (searchTerm) => {
-        if (searchTerm.trim() === "") {
-            setFilteredPersonalProjects(personalProjects);
-            setFilteredOpenSourceProjects(openSourceProjects);
-        } else {
-            const filteredPersonal = personalProjects.filter(project =>
-                project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                project.about.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            const filteredOpenSource = openSourceProjects.filter(project =>
-                project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                project.about.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            setFilteredPersonalProjects(filteredPersonal);
-            setFilteredOpenSourceProjects(filteredOpenSource);
-        }
+    const filterAndSearchProjects = (term, activeFilters) => {
+
+        const applyFilters = (projectArray) => {
+
+            let filtered = projectArray;
+
+            // Buscar por 'name' o 'about'
+            if (term.trim() !== "") {
+                filtered = filtered.filter(project =>
+                    project.name.toLowerCase().includes(term.toLowerCase()) ||
+                    project.about.toLowerCase().includes(term.toLowerCase())
+                );
+            }
+
+            // Filtros
+            if (activeFilters.roles.length > 0) {
+                filtered = filtered.filter(project =>
+                    project.open_positions.some(position =>
+                        activeFilters.roles.includes(position.profile)
+                    )
+                );
+            }
+
+            if (activeFilters.availability.length > 0) {
+                filtered = filtered.filter(project =>
+                    activeFilters.availability.includes(project.required_availability)
+                );
+            }
+
+            return filtered;
+        };
+
+        setFilteredPersonalProjects(applyFilters(personalProjects));
+        setFilteredOpenSourceProjects(applyFilters(openSourceProjects));
+    };
+
+    const handleSearch = (term) => {
+        setSearchTerm(term);
+        filterAndSearchProjects(term, filters);
+    };
+
+    const handleFilterChange = (newFilters) => {
+        setFilters(newFilters);
+        filterAndSearchProjects(searchTerm, newFilters);
     };
 
     const tabs = [
@@ -116,7 +147,8 @@ const ExploreProjectsPage = () => {
 
                         <SearchAndFilters
                             placeholder="Buscar proyectos de..."
-                            onSearch={handleSearch} />
+                            onSearch={handleSearch}
+                            onFilterChange={handleFilterChange} />
                     </div>
 
                 </section>
