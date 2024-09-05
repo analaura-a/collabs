@@ -51,6 +51,13 @@
     border: 1px solid var(--color-primary-button);
 }
 
+.search-and-filters__filter-toggle__name {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
 .search-and-filters__filter-dropdown {
     display: flex;
     flex-direction: column;

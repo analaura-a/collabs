@@ -345,6 +345,17 @@ textarea {
     letter-spacing: -0.02em;
 }
 
+/*Explorar*/
+.filter-count-indicator {
+    font-size: 0.75rem;
+    color: var(--color-white-background);
+
+    padding: 1px 9px 0px 9px;
+
+    background-color: var(--color-primary-text);
+    border-radius: 0.9375rem;
+}
+
 /*Misc*/
 .title-with-icon {
     display: flex;

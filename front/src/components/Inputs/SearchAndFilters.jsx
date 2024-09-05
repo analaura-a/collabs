@@ -71,7 +71,14 @@ const SearchAndFilters = ({ placeholder, onSearch, onFilterChange }) => {
 
                 <li className="search-and-filters__filter">
                     <button className={`search-and-filters__filter-toggle smaller-paragraph bold-text ${activeFilter === 'role' ? 'search-and-filters__filter-toggle-active' : ''}`} onClick={() => toggleFilter('role')}>
-                        Rol
+                        <div className="search-and-filters__filter-toggle__name">
+                            Rol
+
+                            {selectedRoles.length > 0 && (
+                                <span className="filter-count-indicator">{selectedRoles.length}</span>
+                            )}
+                        </div>
+
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" fill="none">
                             <path stroke="#3B3B3C" strokeLinecap="round" strokeWidth="1.5" d="m1 1 4.146 3.554a.8.8 0 0 0 1.041 0L10.333 1" />
                         </svg>
@@ -102,7 +109,14 @@ const SearchAndFilters = ({ placeholder, onSearch, onFilterChange }) => {
 
                 <li className="search-and-filters__filter">
                     <button className={`search-and-filters__filter-toggle smaller-paragraph bold-text ${activeFilter === 'availability' ? 'search-and-filters__filter-toggle-active' : ''}`} onClick={() => toggleFilter('availability')}>
-                        Disponibilidad
+                        <div className="search-and-filters__filter-toggle__name">
+                            Disponibilidad
+
+                            {selectedAvailabilities.length > 0 && (
+                                <span className="filter-count-indicator">{selectedAvailabilities.length}</span>
+                            )}
+                        </div>
+
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" fill="none">
                             <path stroke="#3B3B3C" strokeLinecap="round" strokeWidth="1.5" d="m1 1 4.146 3.554a.8.8 0 0 0 1.041 0L10.333 1" />
                         </svg>

@@ -29,7 +29,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
 }
 
 .profile-page__header__profile-info__photo-container>.img {
