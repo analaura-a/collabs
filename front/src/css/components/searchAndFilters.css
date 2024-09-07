@@ -111,6 +111,11 @@ input[type='checkbox'] {
         min-width: 300px;
     }
 
+    .search-and-filters__filter-dropdown-skills {
+        width: auto;
+        min-width: 400px;
+    }
+
 }
 
 

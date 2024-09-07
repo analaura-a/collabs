@@ -105,5 +105,4 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
 
 };
 
-
 export default SkillSearch;

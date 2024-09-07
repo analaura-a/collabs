@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// const SearchAndFilters = ({ onSearch, onFilterChange, filters }) => {
+import SkillSearch from './SkillSearch';
 
 const roles = [
     'UX/UI Designer',
@@ -35,6 +35,7 @@ const SearchAndFilters = ({ placeholder, onSearch, onFilterChange, showExperienc
 
     const [activeFilter, setActiveFilter] = useState(null);
     const [selectedRoles, setSelectedRoles] = useState([]);
+    const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedAvailabilities, setSelectedAvailabilities] = useState([]);
     const [selectedExperienceLevel, setSelectedExperienceLevel] = useState([]);
 
@@ -43,8 +44,13 @@ const SearchAndFilters = ({ placeholder, onSearch, onFilterChange, showExperienc
     }, [searchTerm]);
 
     useEffect(() => {
-        onFilterChange({ roles: selectedRoles, availability: selectedAvailabilities, experienceLevel: selectedExperienceLevel });
-    }, [selectedRoles, selectedAvailabilities, selectedExperienceLevel]);
+        onFilterChange({
+            roles: selectedRoles,
+            availability: selectedAvailabilities,
+            experienceLevel: selectedExperienceLevel,
+            skills: selectedSkills
+        });
+    }, [selectedRoles, selectedAvailabilities, selectedExperienceLevel, selectedSkills]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -61,6 +67,17 @@ const SearchAndFilters = ({ placeholder, onSearch, onFilterChange, showExperienc
         } else {
             setSelected([...selected, value]);
         }
+    };
+
+    // Funciones para manejar la selección de skills en el filtro
+    const handleSkillAdd = (skill) => {
+        const newSelectedSkills = [...selectedSkills, skill];
+        setSelectedSkills(newSelectedSkills);
+    };
+
+    const handleSkillRemove = (skill) => {
+        const newSelectedSkills = selectedSkills.filter(s => s !== skill);
+        setSelectedSkills(newSelectedSkills);
     };
 
     return (
@@ -113,6 +130,32 @@ const SearchAndFilters = ({ placeholder, onSearch, onFilterChange, showExperienc
                                     </div>
                                 ))}
                             </fieldset>
+                        </div>
+                    )}
+                </li>
+
+                <li className="search-and-filters__filter">
+                    <button className={`search-and-filters__filter-toggle smaller-paragraph bold-text ${activeFilter === 'skills' ? 'search-and-filters__filter-toggle-active' : ''}`} onClick={() => toggleFilter('skills')}>
+                        <div className="search-and-filters__filter-toggle__name">
+                            Skills
+
+                            {selectedSkills.length > 0 && (
+                                <span className="filter-count-indicator">{selectedSkills.length}
+                                </span>)}
+                        </div>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" fill="none"> <path stroke="#3B3B3C" strokeLinecap="round" strokeWidth="1.5" d="m1 1 4.146 3.554a.8.8 0 0 0 1.041 0L10.333 1" />
+                        </svg>
+                    </button>
+
+                    {activeFilter === 'skills' && (
+                        <div className="search-and-filters__filter-dropdown search-and-filters__filter-dropdown-skills">
+                            <h2 className="title-18">Skills</h2>
+                            <SkillSearch
+                                selectedSkills={selectedSkills}
+                                onSkillAdd={handleSkillAdd}
+                                onSkillRemove={handleSkillRemove}
+                            />
                         </div>
                     )}
                 </li>
