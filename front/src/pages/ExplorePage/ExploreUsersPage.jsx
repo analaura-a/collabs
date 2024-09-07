@@ -9,7 +9,12 @@ const ExploreUsersPage = () => {
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
 
-    const [filters, setFilters] = useState({ roles: [], availability: [], experienceLevel: [] });
+    const [filters, setFilters] = useState({
+        roles: [],
+        availability: [],
+        experienceLevel: [],
+        skills: []
+    });
     const [searchTerm, setSearchTerm] = useState('');
 
     const [loading, setLoading] = useState(true);
@@ -55,6 +60,12 @@ const ExploreUsersPage = () => {
         if (activeFilters.experienceLevel.length > 0) {
             filteredBySearchTerm = filteredBySearchTerm.filter(user =>
                 activeFilters.experienceLevel.includes(user.experience_level)
+            );
+        }
+
+        if (activeFilters.skills.length > 0) {
+            filteredBySearchTerm = filteredBySearchTerm.filter(user =>
+                activeFilters.skills.every(skill => user.skills.includes(skill))
             );
         }
 
