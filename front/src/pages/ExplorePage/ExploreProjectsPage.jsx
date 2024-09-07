@@ -14,7 +14,11 @@ const ExploreProjectsPage = () => {
     const [filteredPersonalProjects, setFilteredPersonalProjects] = useState([]);
     const [filteredOpenSourceProjects, setFilteredOpenSourceProjects] = useState([]);
 
-    const [filters, setFilters] = useState({ roles: [], availability: [] });
+    const [filters, setFilters] = useState({
+        roles: [],
+        availability: [],
+        skills: []
+    });
     const [searchTerm, setSearchTerm] = useState('');
 
     const [loading, setLoading] = useState(true);
@@ -72,6 +76,19 @@ const ExploreProjectsPage = () => {
             if (activeFilters.availability.length > 0) {
                 filtered = filtered.filter(project =>
                     activeFilters.availability.includes(project.required_availability)
+                );
+            }
+
+            if (activeFilters.skills.length > 0) {
+                filtered = filtered.filter(project =>
+                    project.open_positions.some(position =>
+                        position.required_skills.some(skill =>
+                            activeFilters.skills.includes(skill)
+                        ) ||
+                        position.desired_skills.some(skill =>
+                            activeFilters.skills.includes(skill)
+                        )
+                    )
                 );
             }
 
