@@ -20,21 +20,31 @@ const availabilities = [
     '+7 horas / día'
 ];
 
-const SearchAndFilters = ({ placeholder, onSearch, onFilterChange }) => {
+const experienceLevels = [
+    'Novato (0 a 3 meses)',
+    'Principiante (4 a 6 meses)',
+    'Aprendiz (7 a 12 meses)',
+    'Competente (de 1 a 2 años)',
+    'Eficiente (más de 2 años)',
+    'Avanzado (más de 5 años)'
+];
+
+const SearchAndFilters = ({ placeholder, onSearch, onFilterChange, showExperienceLevelFilter }) => {
 
     const [searchTerm, setSearchTerm] = useState('');
 
     const [activeFilter, setActiveFilter] = useState(null);
     const [selectedRoles, setSelectedRoles] = useState([]);
     const [selectedAvailabilities, setSelectedAvailabilities] = useState([]);
+    const [selectedExperienceLevel, setSelectedExperienceLevel] = useState([]);
 
     useEffect(() => {
         onSearch(searchTerm);
     }, [searchTerm]);
 
     useEffect(() => {
-        onFilterChange({ roles: selectedRoles, availability: selectedAvailabilities });
-    }, [selectedRoles, selectedAvailabilities]);
+        onFilterChange({ roles: selectedRoles, availability: selectedAvailabilities, experienceLevel: selectedExperienceLevel });
+    }, [selectedRoles, selectedAvailabilities, selectedExperienceLevel]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -144,6 +154,45 @@ const SearchAndFilters = ({ placeholder, onSearch, onFilterChange }) => {
                         </div>
                     )}
                 </li>
+
+                {showExperienceLevelFilter && (
+                    <li className="search-and-filters__filter">
+                        <button className={`search-and-filters__filter-toggle smaller-paragraph bold-text ${activeFilter === 'experienceLevel' ? 'search-and-filters__filter-toggle-active' : ''}`} onClick={() => toggleFilter('experienceLevel')}>
+                            <div className="search-and-filters__filter-toggle__name">
+                                Nivel
+
+                                {selectedExperienceLevel.length > 0 && (
+                                    <span className="filter-count-indicator">{selectedExperienceLevel.length}</span>
+                                )}
+                            </div>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" fill="none">
+                                <path stroke="#3B3B3C" strokeLinecap="round" strokeWidth="1.5" d="m1 1 4.146 3.554a.8.8 0 0 0 1.041 0L10.333 1" />
+                            </svg>
+                        </button>
+
+                        {activeFilter === 'experienceLevel' && (
+                            <div className="search-and-filters__filter-dropdown">
+                                <h2 className="title-18">Nivel de conocimiento</h2>
+
+                                <fieldset className="search-and-filters__checkboxes-container">
+                                    {experienceLevels.map((level) => (
+                                        <div className="search-and-filters__checkbox" key={level}>
+                                            <input
+                                                type="checkbox"
+                                                name="experienceLevel"
+                                                id={level}
+                                                checked={selectedExperienceLevel.includes(level)}
+                                                onChange={(e) => handleCheckboxChange(e, setSelectedExperienceLevel, selectedExperienceLevel)}
+                                            />
+                                            <label htmlFor={level} className="subtitle">{level}</label>
+                                        </div>
+                                    ))}
+                                </fieldset>
+                            </div>
+                        )}
+                    </li>
+                )}
 
             </ul>
 

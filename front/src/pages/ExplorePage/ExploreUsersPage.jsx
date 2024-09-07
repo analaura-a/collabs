@@ -9,7 +9,7 @@ const ExploreUsersPage = () => {
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
 
-    const [filters, setFilters] = useState({ roles: [], availability: [] });
+    const [filters, setFilters] = useState({ roles: [], availability: [], experienceLevel: [] });
     const [searchTerm, setSearchTerm] = useState('');
 
     const [loading, setLoading] = useState(true);
@@ -52,6 +52,12 @@ const ExploreUsersPage = () => {
             );
         }
 
+        if (activeFilters.experienceLevel.length > 0) {
+            filteredBySearchTerm = filteredBySearchTerm.filter(user =>
+                activeFilters.experienceLevel.includes(user.experience_level)
+            );
+        }
+
         setFilteredUsers(filteredBySearchTerm);
     };
 
@@ -86,7 +92,8 @@ const ExploreUsersPage = () => {
                         <SearchAndFilters
                             placeholder="Buscar personas..."
                             onSearch={handleSearch}
-                            onFilterChange={handleFilterChange} />
+                            onFilterChange={handleFilterChange}
+                            showExperienceLevelFilter={true} />
                     </div>
 
                 </section>
