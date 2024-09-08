@@ -103,6 +103,15 @@
     line-height: 1.2;
 }
 
+.title-48 {
+    font-family: var(--inter);
+    font-size: var(--font-48px);
+    font-weight: var(--font-semibold);
+    color: var(--color-black);
+    letter-spacing: -0.04em;
+    line-height: 1.2;
+}
+
 .title-40 {
     font-family: var(--inter);
     font-size: var(--font-40px);
@@ -127,6 +136,15 @@
     font-weight: var(--font-medium);
     color: var(--color-black);
     letter-spacing: -0.04em;
+    line-height: 1.2;
+}
+
+.title-20 {
+    font-family: var(--inter);
+    font-size: var(--font-24px);
+    font-weight: var(--font-medium);
+    color: var(--color-black);
+    letter-spacing: -0.03em;
     line-height: 1.2;
 }
 
@@ -164,6 +182,15 @@
     color: var(--color-black-light);
     letter-spacing: -0.02em;
     line-height: 1.4;
+}
+
+.paragraph-18 {
+    font-family: var(--inter);
+    font-size: var(--font-18px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-subtitle);
+    letter-spacing: -0.02em;
+    line-height: 1.6;
 }
 
 .subtitle {

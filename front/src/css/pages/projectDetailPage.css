@@ -1,0 +1,266 @@
+.project-detail-page {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 56px 24px;
+}
+
+.arrow-left {
+    background-image: url(../assets/svg/arrow-left.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.project-detail-page__columns {
+    display: flex;
+    flex-direction: column;
+
+    gap: 100px;
+}
+
+.project-detail-page__about-column {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
+.project-detail-page__about-column__header {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.project-detail-page__about-column__title {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.project-detail-page__about-column__dates {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-detail-page__about-column__dates>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.project-detail-page__about-column__img {
+    width: 100%;
+    height: 400px;
+    border-radius: 32px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-detail-page__about-column__img>img,
+.project-detail-page__join-column__profile__img>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-detail-page__about-column__project-info-about {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project-detail-page__about-column__project-info-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-detail-page__about-column__project-info-details__pills {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-detail-page__about-column__project-info-details__pills>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 10px 12px;
+
+    border: 1px solid var(--color-gray-line);
+    border-radius: 16px;
+}
+
+.project-detail-page__icon-container {
+    display: block;
+    width: 44px;
+    height: 44px;
+    aspect-ratio: 1;
+
+    background-color: var(--color-primary-light);
+    border-radius: 10px;
+    border: 1px solid var(--color-primary-logo);
+}
+
+.types-icon {
+    background-image: url(../assets/svg/types.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+.project-detail-page__join-column {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.project-detail-page__join-column__blocks {
+    border: 1px solid var(--color-gray-line);
+    border-radius: 24px;
+
+    padding: 28px;
+}
+
+.project-detail-page__status,
+.project-detail-page__join-column__hosts,
+.project-detail-page__join-column__call-to-action {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.project-detail-page__status {
+    padding-bottom: 44px;
+    border-bottom: 1px solid var(--color-gray-line);
+}
+
+.project-detail-page__status__cta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+
+}
+
+.project-detail-page__status__cta>p {
+    padding: 12px 16px;
+    border-radius: 12px;
+}
+
+.status-green {
+    background-color: var(--color-green-background) !important;
+    color: var(--color-green-text) !important;
+}
+
+.status-yellow {
+    background-color: var(--color-yellow-background) !important;
+    color: var(--color-yellow-text) !important;
+}
+
+.status-red {
+    background-color: var(--color-red-background) !important;
+    color: var(--color-red-text) !important;
+}
+
+.link-icon {
+    background-image: url(../assets/svg/link.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.project-detail-page__positions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    padding-top: 44px;
+}
+
+.project-detail-page__positions__open-source {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.project-detail-page__positions__open-source>li {
+    padding: 0.75rem 1.25rem;
+    background-color: var(--color-white-background);
+    border: 1px solid var(--color-gray-line);
+    border-radius: 0.75rem;
+}
+
+.project-detail-page__join-column__profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+.project-detail-page__join-column__profile__img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-detail-page__join-column__call-to-action>div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+
+
+@media only screen and (min-width: 1200px) {
+
+    .project-detail-page {
+        gap: 48px;
+        padding: 80px 0;
+    }
+
+    .project-detail-page__columns {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .project-detail-page__about-column {
+        width: 55%;
+    }
+
+    .project-detail-page__join-column {
+        width: 35%;
+    }
+
+    .project-detail-page__about-column__dates {
+        display: flex;
+        flex-direction: row;
+
+        gap: 40px;
+    }
+
+    .project-detail-page__about-column__project-info-details__pills {
+        flex-direction: row;
+        gap: 32px;
+    }
+
+    .project-detail-page__join-column__blocks {
+        padding: 44px;
+    }
+
+}
