@@ -109,19 +109,19 @@ const ExploreUsersPage = () => {
 
                 </section>
 
-                <section className="explore-page__container-user-cards">
+                {filteredUsers.length > 0 ? (
+                    <section className="explore-page__container-user-cards">
 
-                    {filteredUsers.length > 0 ? (
-                        filteredUsers.map(user => (
+                        {filteredUsers.map(user => (
                             <UserCard key={user._id} user={user} />
-                        ))
-                    ) : (
-                        <div>
-                            No se encontraron colaboradores con esos términos. {/* Maquetar */}
-                        </div>
-                    )}
+                        ))}
 
-                </section>
+                    </section>
+                ) : (
+                    <section className="explore-page__empty-state-container">
+                        <h2 className="title-18">No se encontraron colaboradores con esa búsqueda.</h2>
+                    </section>
+                )}
 
             </div>
         </main>
