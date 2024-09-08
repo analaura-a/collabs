@@ -113,33 +113,37 @@ const ExploreProjectsPage = () => {
         {
             label: 'Personales',
             content: (
-                <section className="explore-page__container-user-cards explore-page__container-project-cards">
+                <>
                     {filteredPersonalProjects.length > 0 ? (
-                        filteredPersonalProjects.map((project) => (
-                            <ProjectCard key={project._id} project={project} />
-                        ))
+                        <section className="explore-page__container-user-cards explore-page__container-project-cards">
+                            {filteredPersonalProjects.map((project) => (
+                                <ProjectCard key={project._id} project={project} />
+                            ))}
+                        </section>
                     ) : (
-                        <div>
-                            No se encontraron proyectos personales con esos términos. {/* Maquetar */}
-                        </div>
+                        <section className="explore-page__empty-state-container-projects">
+                            <h2 className="title-18">No se encontraron proyectos personales que coincidan con esa búsqueda.</h2>
+                        </section>
                     )}
-                </section>
+                </>
             )
         },
         {
             label: 'Open-source',
             content: (
-                <section className="explore-page__container-user-cards explore-page__container-project-cards">
+                <>
                     {filteredOpenSourceProjects.length > 0 ? (
-                        filteredOpenSourceProjects.map((project) => (
-                            <ProjectCard key={project._id} project={project} />
-                        ))
+                        <section className="explore-page__container-user-cards explore-page__container-project-cards">
+                            {filteredOpenSourceProjects.map((project) => (
+                                <ProjectCard key={project._id} project={project} />
+                            ))}
+                        </section>
                     ) : (
-                        <div>
-                            No se encontraron proyectos open-source con esos términos. {/* Maquetar */}
-                        </div>
+                        <section className="explore-page__empty-state-container-projects">
+                            <h2 className="title-18">No se encontraron proyectos open-source que coincidan con esa búsqueda.</h2>
+                        </section>
                     )}
-                </section>
+                </>
             )
         }
     ];

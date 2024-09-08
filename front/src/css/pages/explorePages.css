@@ -60,6 +60,11 @@
     text-align: center;
 }
 
+.explore-page__empty-state-container-projects{
+    padding: 104px 0 40px 0;
+    text-align: center;
+}
+
 
 
 @media only screen and (min-width: 1024px) {
@@ -75,6 +80,10 @@
 
     .explore-page__empty-state-container {
         padding: 64px 0 40px 0;
+    }
+
+    .explore-page__empty-state-container-projects{
+        padding: 120px 0 0 0;
     }
 
 }
