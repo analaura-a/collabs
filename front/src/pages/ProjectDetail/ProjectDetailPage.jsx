@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
+import PositionAccordion from "../../components/Accordion/PositionAccordion";
 
 const ProjectDetailPage = () => {
 
@@ -71,7 +72,19 @@ const ProjectDetailPage = () => {
                             <h2 className="title-20">Colaboradores buscados</h2>
 
                             <div className="project-detail-page__about-column__project-info-positions__accordion-container">
-                                {/* Componente acordeón */}
+
+                                <PositionAccordion
+                                    positionTitle="Frontend Developer"
+                                    requiredSkills={["HTML", "CSS", "JavaScript", "React.js", "Vue.js", "Angular"]}
+                                    desiredSkills={["Vite", "GSAP"]}
+                                />
+
+                                <PositionAccordion
+                                    positionTitle="Backend Developer"
+                                    requiredSkills={["HTML", "CSS", "JavaScript", "React.js", "Vue.js", "Angular"]}
+                                    desiredSkills={["Vite", "GSAP"]}
+                                />
+
                             </div>
                         </div>
 

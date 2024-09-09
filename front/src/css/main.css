@@ -28,5 +28,6 @@
 @import './components/cards/userCard.css';
 @import './components/cards/projectCard.css';
 @import './components/searchAndFilters.css';
+@import './components/accordion/positionAccordion.css';
 
 @import './misc/faded-pattern.css';

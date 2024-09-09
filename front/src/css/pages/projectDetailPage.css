@@ -115,6 +115,18 @@
     background-repeat: no-repeat;
 }
 
+.project-detail-page__about-column__project-info-positions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.project-detail-page__about-column__project-info-positions__accordion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 
 
 .project-detail-page__join-column {
@@ -229,7 +241,7 @@
 
     .project-detail-page {
         gap: 48px;
-        padding: 80px 0;
+        padding: 80px 0 100px 0;
     }
 
     .project-detail-page__columns {

@@ -1,0 +1,77 @@
+.accordion {
+    width: 100%;
+
+    border: 1px solid var(--color-gray-line);
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+.accordion__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: 20px;
+
+    background-color: var(--color-white-background);
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.accordion-icon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.accordion-icon.accordion-open {
+    transform: rotate(180deg);
+}
+
+.accordion__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    max-height: 0;
+    padding: 0 20px;
+
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.accordion__content.accordion-open {
+    max-height: fit-content;
+    padding: 20px;
+}
+
+.accordion__section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.accordion__section__skills {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.accordion__section__skills>li {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+}
+
+.accordion__required-skills {
+    color: var(--color-white-background);
+    background-color: var(--color-primary-text);
+}
+
+.accordion__desired-skills {
+    color: var(--color-black);
+    background-color: var(--color-primary-light);
+}
