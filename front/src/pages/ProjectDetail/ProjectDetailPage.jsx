@@ -95,13 +95,65 @@ const ProjectDetailPage = () => {
                             <div className="project-detail-page__positions">
                                 <h2 className="title-20">Quiero colaborar como...</h2>
 
-                                <ul className="project-detail-page__positions__open-source">
+                                {/* <ul className="project-detail-page__positions__open-source">
                                     <li className="subtitle">UX/UI Designer</li>
                                     <li className="subtitle">UX/UI Designer</li>
                                     <li className="subtitle">UX/UI Designer</li>
                                 </ul>
 
-                                <Button width="fullwidth" size="large">Quiero contribuir</Button>
+                                <Button width="fullwidth" size="large">Quiero contribuir</Button> */}
+
+                                <form className="edit-profile-page__form-container__inputs-container">
+
+                                    <div className="checkbox-item">
+
+                                        <input
+                                            type="radio"
+                                            name="experience_level"
+                                            id="1"
+                                            className="hidden-input"
+                                        />
+
+                                        <label htmlFor="1">
+                                            UX/UI Designer
+                                        </label>
+
+                                    </div>
+
+                                    <div className="checkbox-item">
+
+                                        <input
+                                            type="radio"
+                                            name="experience_level"
+                                            id="1"
+                                            className="hidden-input"
+                                        />
+
+                                        <label htmlFor="1">
+                                            Frontend Developer
+                                        </label>
+
+                                    </div>
+
+                                    <div className="checkbox-item checkbox-item-checked">
+
+                                        <input
+                                            type="radio"
+                                            name="experience_level"
+                                            id="1"
+                                            className="hidden-input"
+                                        />
+
+                                        <label htmlFor="1">
+                                            Backend developer
+                                        </label>
+
+                                    </div>
+
+                                </form>
+
+                                <Button width="fullwidth" size="large">Postularme</Button>
+
                             </div>
 
 
