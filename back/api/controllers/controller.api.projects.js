@@ -1,19 +1,19 @@
 import * as service from "../../services/projects.services.js";
 
-//Traer todos los proyectos
-const getProjects = (req, res) => {
+// //Traer todos los proyectos
+// const getProjects = (req, res) => {
 
-    const filter = req.query;
+//     const filter = req.query;
 
-    service.getProjects(filter)
-        .then((projects) => {
-            res.status(200).json(projects);
-        })
-        .catch((error) => {
-            res.status(404).json();
-        });
+//     service.getProjects(filter)
+//         .then((projects) => {
+//             res.status(200).json(projects);
+//         })
+//         .catch((error) => {
+//             res.status(404).json();
+//         });
 
-};
+// };
 
 //Obtener todos los proyectos abiertos
 const getOpenProjects = async (req, res) => {
@@ -70,17 +70,23 @@ const getOpenProjects = async (req, res) => {
 
 // };
 
-// //Traer un proyecto en particular
-// const getProjectById = (req, res) => {
-//     const id = req.params.id;
-//     service.getProjectById(id).then((project) => {
-//         if (project) {
-//             res.status(200).json(project);
-//         } else {
-//             res.status(404).json();
-//         }
-//     });
-// };
+//Obtener un proyecto en particular por ID
+const getProjectById = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const project = await service.getProjectById(id);
+
+        if (!project) {
+            return res.status(404).json({ message: 'Proyecto no encontrado.' });
+        }
+
+        res.status(200).json(project);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener el proyecto.', error });
+    }
+
+};
 
 // //Crear un nuevo proyecto
 // const createProject = (req, res) => {
@@ -127,12 +133,11 @@ const getOpenProjects = async (req, res) => {
 // };
 
 export {
-    getProjects,
-    getOpenProjects
+    getOpenProjects,
     // getProjectsPersonal,
     // getProjectsOpenSource,
     // getProjectsByUser,
-    // getProjectById,
+    getProjectById,
     // createProject,
     // editProject,
     // deleteProject

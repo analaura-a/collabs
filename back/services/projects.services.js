@@ -4,20 +4,20 @@ const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.m
 const db = client.db("AH20232CP1");
 
 
-//Obtener todos los proyectos
-async function getProjects(filter = {}) {
+// //Obtener todos los proyectos
+// async function getProjects(filter = {}) {
 
-    const filterMongo = { deleted: { $ne: true } }
+//     const filterMongo = { deleted: { $ne: true } }
 
-    if (filter.name) {
-        filterMongo.$text = { $search: filter.name }
-    }
+//     if (filter.name) {
+//         filterMongo.$text = { $search: filter.name }
+//     }
 
-    return db
-        .collection("projects")
-        .find(filterMongo)
-        .toArray();
-}
+//     return db
+//         .collection("projects")
+//         .find(filterMongo)
+//         .toArray();
+// }
 
 //Obtener todos los proyectos abiertos
 const getOpenProjects = async () => {
@@ -68,14 +68,24 @@ const getOpenProjects = async () => {
 // // async function getProjectsByUser(id) {
 // //     return db.collection("projects").find({ "founder._id": new ObjectId(id) }).toArray();
 // // }
+
 // async function getProjectsByUser(id) {
 //     return db.collection("projects").find({ "founder_id": id }).toArray();
 // }
 
-// //Obtener un proyecto en específico
-// async function getProjectById(id) {
-//     return db.collection("projects").findOne({ _id: new ObjectId(id) });
-// }
+//Obtener un proyecto en particular por ID
+async function getProjectById(id) {
+
+    try {
+        await client.connect();
+        const project = await db.collection('projects').findOne({ _id: new ObjectId(id) });
+
+        return project;
+    } catch (error) {
+        throw new Error('Error al buscar el proyecto en la base de datos.');
+    }
+
+}
 
 // //Crear un nuevo proyecto
 // async function createProject(project) {
@@ -99,12 +109,12 @@ const getOpenProjects = async () => {
 
 
 export {
-    getProjects,
-    getOpenProjects
+    // getProjects,
+    getOpenProjects,
     // getProjectsPersonal,
     // getProjectsOpenSource,
     // getProjectsByUser,
-    // getProjectById,
+    getProjectById,
     // createProject,
     // editProject,
     // deleteProject

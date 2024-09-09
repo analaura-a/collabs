@@ -6,8 +6,8 @@ import { validateTokenMiddleware } from '../../middleware/token.validate.middlew
 const route = Router();
 
 /* API PROYECTOS */
-//Obtener todos los proyectos
-route.get('/projects', controllers.getProjects);
+// //Obtener todos los proyectos
+// route.get('/projects', controllers.getProjects);
 
 //Obtener todos los proyectos abiertos
 route.get('/projects/open', controllers.getOpenProjects)
@@ -21,8 +21,8 @@ route.get('/projects/open', controllers.getOpenProjects)
 // //Obtener todos los proyectos que creó un usuario en particular
 // route.get('/user/:id/projects', [validateTokenMiddleware], controllers.getProjectsByUser);
 
-// //Obtener un proyecto en especifico
-// route.get('/projects/:id', [validateTokenMiddleware], controllers.getProjectById)
+//Obtener un proyecto en particular por ID
+route.get('/projects/:id', [validateTokenMiddleware], controllers.getProjectById)
 
 // //Agregar un nuevo proyecto personal
 // route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);
