@@ -27,7 +27,9 @@ const ProjectDetailPage = () => {
         fetchProject();
     }, [id]);
 
-    if (loading) return <div>Cargando detalles del proyecto...</div>;
+    if (loading) {
+        return <div>Cargando...</div>; //Reemplazar por componente de carga
+    }
 
     return (
         <main>
@@ -63,7 +65,7 @@ const ProjectDetailPage = () => {
                         <div className="project-detail-page__about-column__project-info-about">
                             <h2 className="title-20">Acerca del proyecto</h2>
                             <div>
-                                <p className="paragraph-18">La Cuentoneta es un proyecto que busca generar un espacio comunitario para difundir escritos en literatura breve. Esta iniciativa fue gestada originalmente por un grupo de amigas y amigos residentes de la ciudad de Santa Fe, Argentina durante los últimos días de diciembre de 2021. La misión de La Cuentoneta es construir colectivamente una plataforma accesible, amigable y gamificada que sea útil para fomentar, compartir y disfrutar la lectura digital. Buscamos lograrlo a través de la publicación de escritos breves en storylists temáticas, emulando las playlists que utilizan plataformas de audio como Spotify y de video como YouTube; intentando resignificar el formato de antología de relatos breves.</p>
+                                <p className="paragraph-18">{project.about}</p>
                                 <p className="paragraph bolder-text primary-color-text">Leer más</p>
                             </div>
                         </div>
@@ -75,19 +77,29 @@ const ProjectDetailPage = () => {
 
                                 <div>
                                     <div className="project-detail-page__icon-container types-icon"></div>
-                                    <div>
-                                        <p className="smaller-paragraph-light">Tipo</p>
-                                        <p className="paragraph-18">Personal</p>
-                                    </div>
+
+                                    {project.type == "Personal" ? (
+                                        <div>
+                                            <p className="smaller-paragraph-light">Tipo</p>
+                                            <p className="paragraph-18">Personal</p>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <p className="smaller-paragraph-light">Tipo</p>
+                                            <p className="paragraph-18">Open source</p>
+                                        </div>
+                                    )}
                                 </div>
 
-                                <div>
-                                    <div className="project-detail-page__icon-container availability-icon"></div>
+                                {project.required_availability &&
                                     <div>
-                                        <p className="smaller-paragraph-light">Disponibilidad requerida</p>
-                                        <p className="paragraph-18">De 1 a 2 horas / día</p>
+                                        <div className="project-detail-page__icon-container availability-icon"></div>
+                                        <div>
+                                            <p className="smaller-paragraph-light">Disponibilidad requerida</p>
+                                            <p className="paragraph-18">{project.required_availability}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                }
 
                             </div>
                         </div>
@@ -96,19 +108,14 @@ const ProjectDetailPage = () => {
                             <h2 className="title-20">Colaboradores buscados</h2>
 
                             <div className="project-detail-page__about-column__project-info-positions__accordion-container">
-
-                                <PositionAccordion
-                                    positionTitle="Frontend Developer"
-                                    requiredSkills={["HTML", "CSS", "JavaScript", "React.js", "Vue.js", "Angular"]}
-                                    desiredSkills={["Vite", "GSAP"]}
-                                />
-
-                                <PositionAccordion
-                                    positionTitle="Backend Developer"
-                                    requiredSkills={["HTML", "CSS", "JavaScript", "React.js", "Vue.js", "Angular"]}
-                                    desiredSkills={["Vite", "GSAP"]}
-                                />
-
+                                {project.open_positions.map((position, index) => (
+                                    <PositionAccordion
+                                        key={index}
+                                        positionTitle={position.profile}
+                                        requiredSkills={position.required_skills}
+                                        desiredSkills={position.desired_skills}
+                                    />
+                                ))}
                             </div>
                         </div>
 
@@ -123,6 +130,7 @@ const ProjectDetailPage = () => {
                             <div className="project-detail-page__status">
                                 <h2 className="title-20">Estado</h2>
 
+                                {/* Mostrar dinámicamente */}
                                 <div className="project-detail-page__status__cta">
                                     <p className="subtitle bold-text status-green">Buscando colaboradores</p>
                                     <button className="small-button-with-icon link-icon"></button>
@@ -130,66 +138,48 @@ const ProjectDetailPage = () => {
                             </div>
 
                             <div className="project-detail-page__positions">
-                                <h2 className="title-20">Quiero colaborar como...</h2>
 
-                                {/* <ul className="project-detail-page__positions__open-source">
-                                    <li className="subtitle">UX/UI Designer</li>
-                                    <li className="subtitle">UX/UI Designer</li>
-                                    <li className="subtitle">UX/UI Designer</li>
-                                </ul>
+                                {project.type == "Personal" ? (
+                                    <>
+                                        <h2 className="title-20">Quiero colaborar como...</h2>
 
-                                <Button width="fullwidth" size="large">Quiero contribuir</Button> */}
+                                        <form className="edit-profile-page__form-container__inputs-container">
 
-                                <form className="edit-profile-page__form-container__inputs-container">
+                                            {project.open_positions.map((position, index) => (
+                                                <div key={index} className="checkbox-item">
 
-                                    <div className="checkbox-item">
+                                                    <input
+                                                        type="radio"
+                                                        name="open_position"
+                                                        id={index}
+                                                        value={position.profile}
+                                                        className="hidden-input"
+                                                    />
 
-                                        <input
-                                            type="radio"
-                                            name="experience_level"
-                                            id="1"
-                                            className="hidden-input"
-                                        />
+                                                    <label htmlFor={index} className="subtitle bold-text">
+                                                        {position.profile}
+                                                    </label>
 
-                                        <label htmlFor="1">
-                                            UX/UI Designer
-                                        </label>
+                                                </div>
+                                            ))}
 
-                                    </div>
+                                        </form>
 
-                                    <div className="checkbox-item">
+                                        <Button width="fullwidth" size="large">Postularme</Button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h2 className="title-20">Colaboradores buscados</h2>
 
-                                        <input
-                                            type="radio"
-                                            name="experience_level"
-                                            id="1"
-                                            className="hidden-input"
-                                        />
+                                        <ul className="project-detail-page__positions__open-source">
+                                            {project.open_positions.map((position, index) => (
+                                                <li key={index} className="subtitle">{position.profile}</li>
+                                            ))}
+                                        </ul>
 
-                                        <label htmlFor="1">
-                                            Frontend Developer
-                                        </label>
-
-                                    </div>
-
-                                    <div className="checkbox-item checkbox-item-checked">
-
-                                        <input
-                                            type="radio"
-                                            name="experience_level"
-                                            id="1"
-                                            className="hidden-input"
-                                        />
-
-                                        <label htmlFor="1">
-                                            Backend developer
-                                        </label>
-
-                                    </div>
-
-                                </form>
-
-                                <Button width="fullwidth" size="large">Postularme</Button>
+                                        <Button width="fullwidth" size="large">Quiero contribuir</Button>
+                                    </>
+                                )}
 
                             </div>
 
@@ -211,11 +201,25 @@ const ProjectDetailPage = () => {
                         </div>
 
                         <div className="project-detail-page__join-column__blocks project-detail-page__join-column__call-to-action">
-                            <div>
-                                <h2 className="title-20">¿Buscando colaboradores para tu próximo proyecto personal?</h2>
-                                <p className="light-paragraph">Publica una nueva convocatoria, selecciona candidatos y forma un equipo para tu proyecto.</p>
-                            </div>
-                            <Button width="fullwidth" size="large">Crear convocatoria</Button>
+
+                            {project.type == "Personal" ? (
+                                <>
+                                    <div>
+                                        <h2 className="title-20">¿Buscando colaboradores para tu próximo proyecto?</h2>
+                                        <p className="light-paragraph">Publica una nueva convocatoria, selecciona candidatos y forma un equipo para tu proyecto.</p>
+                                    </div>
+                                    <Button width="fullwidth" size="large">Crear convocatoria</Button>
+                                </>
+                            ) : (
+                                <>
+                                    <div>
+                                        <h2 className="title-20">¿Buscando colaboradores para tu próximo proyecto?</h2>
+                                        <p className="light-paragraph">Publica una nueva convocatoria y conduce a las personas interesadas en contribuir a tu repositorio.</p>
+                                    </div>
+                                    <Button width="fullwidth" size="large">Crear convocatoria</Button>
+                                </>
+                            )}
+                            
                         </div>
 
                     </section>
