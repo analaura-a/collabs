@@ -14,9 +14,9 @@ const PositionAccordion = ({ positionTitle, requiredSkills, desiredSkills }) => 
             <button className="accordion__header" onClick={toggleAccordion}>
                 <h2 className="title-18">{positionTitle}</h2>
 
-                <span className={`accordion-icon ${isOpen ? 'accordion-open' : ''}`}>
-                    {isOpen ? '▲' : '▼'}
-                </span>
+                <svg width="16" height="8" fill="none" xmlns="http://www.w3.org/2000/svg" className={`accordion-icon ${isOpen ? 'accordion-open' : ''}`}>
+                    <path d="M1 1s5.5 6 7 6 7-6 7-6" stroke="#3B3B3C" strokeWidth="2" strokeLinecap="round" />
+                </svg>
             </button>
 
             <div className={`accordion__content ${isOpen ? 'accordion-open' : ''}`}>
