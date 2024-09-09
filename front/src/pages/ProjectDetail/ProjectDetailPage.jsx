@@ -1,9 +1,33 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext"; //Para que, si es un proyecto creado por el usuario, redirigirlo al dashboard
+import { getProjectById } from "../../services/projectService";
 import Button from "../../components/Button/Button";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
 
 const ProjectDetailPage = () => {
+
+    const { id } = useParams();
+
+    const [project, setProject] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const fetchProject = async () => {
+        try {
+            const projectData = await getProjectById(id);
+            setProject(projectData);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error al obtener el proyecto:', error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchProject();
+    }, [id]);
+
+    if (loading) return <div>Cargando detalles del proyecto...</div>;
 
     return (
         <main>
@@ -16,7 +40,7 @@ const ProjectDetailPage = () => {
 
                         <div className="project-detail-page__about-column__header">
                             <div className="project-detail-page__about-column__title">
-                                <h1 className="title-48">Web para adoptar mascotas</h1>
+                                <h1 className="title-48">{project.name}</h1>
 
                                 <div className="project-detail-page__about-column__dates">
                                     <div>
