@@ -4,7 +4,18 @@ const ProjectApplicationsPage = () => {
         <main>
             <div className="container">
 
-            </div>
+                <section className="applications-page">
+
+                    <div className="applications-page__header">
+                        <h1 className="title-48">Mis postulaciones</h1>
+                        <p className="subtitle-18">Sigue el estado de los proyectos a los que apliques para unirte a colaborar.</p>
+                    </div>
+
+                    {/* Tabla */}
+
+                </section>
+
+            </div >
         </main >
     )
 }
