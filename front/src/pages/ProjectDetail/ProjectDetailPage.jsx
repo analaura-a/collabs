@@ -27,6 +27,17 @@ const ProjectDetailPage = () => {
         fetchProject();
     }, [id]);
 
+    const handleCopyLink = () => {
+        const projectUrl = window.location.href;
+        navigator.clipboard.writeText(projectUrl)
+            .then(() => {
+                console.log("Copiado con éxito") // Mostrar al usuario
+            })
+            .catch(err => {
+                console.error('Error al copiar el enlace: ', err); // Mostrar al usuario
+            });
+    };
+
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
@@ -133,7 +144,7 @@ const ProjectDetailPage = () => {
                                 {/* Mostrar dinámicamente */}
                                 <div className="project-detail-page__status__cta">
                                     <p className="subtitle bold-text status-green">Buscando colaboradores</p>
-                                    <button className="small-button-with-icon link-icon"></button>
+                                    <button className="small-button-with-icon link-icon" onClick={handleCopyLink}></button>
                                 </div>
                             </div>
 
@@ -219,7 +230,7 @@ const ProjectDetailPage = () => {
                                     <Button width="fullwidth" size="large">Crear convocatoria</Button>
                                 </>
                             )}
-                            
+
                         </div>
 
                     </section>
