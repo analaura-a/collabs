@@ -31,5 +31,6 @@
 @import './components/cards/projectCard.css';
 @import './components/searchAndFilters.css';
 @import './components/accordion/positionAccordion.css';
+@import './components/applicationsTable.css';
 
 @import './misc/faded-pattern.css';

@@ -1,3 +1,5 @@
+import ApplicationsTable from "../../components/Table/ApplicationsTable";
+
 const ProjectApplicationsPage = () => {
 
     return (
@@ -12,6 +14,7 @@ const ProjectApplicationsPage = () => {
                     </div>
 
                     {/* Tabla */}
+                    <ApplicationsTable />
 
                 </section>
 

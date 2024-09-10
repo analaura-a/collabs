@@ -240,6 +240,10 @@
     color: var(--color-primary-text) !important;
 }
 
+.medium-text {
+    font-weight: var(--font-medium) !important;
+}
+
 .bold-text {
     font-weight: var(--font-medium) !important;
     color: var(--color-black) !important;
