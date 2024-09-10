@@ -12,6 +12,9 @@ const ProjectDetailPage = () => {
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [isExpanded, setIsExpanded] = useState(false);
+    const maxLength = 500;
+
     const fetchProject = async () => {
         try {
             const projectData = await getProjectById(id);
@@ -36,6 +39,10 @@ const ProjectDetailPage = () => {
             .catch(err => {
                 console.error('Error al copiar el enlace: ', err); // Mostrar al usuario
             });
+    };
+
+    const toggleReadMore = () => {
+        setIsExpanded(!isExpanded);
     };
 
     if (loading) {
@@ -76,8 +83,15 @@ const ProjectDetailPage = () => {
                         <div className="project-detail-page__about-column__project-info-about">
                             <h2 className="title-20">Acerca del proyecto</h2>
                             <div>
-                                <p className="paragraph-18">{project.about}</p>
-                                <p className="paragraph bolder-text primary-color-text">Leer más</p>
+                                <p className="paragraph-18">
+                                    {project.about.length > maxLength && !isExpanded ? `${project.about.slice(0, maxLength)}...` : project.about}
+                                </p>
+
+                                {project.about.length > maxLength && (
+                                    <button className="paragraph bolder-text primary-color-text read-more" onClick={toggleReadMore}>
+                                        {isExpanded ? 'Leer menos' : 'Leer más'}
+                                    </button>
+                                )}
                             </div>
                         </div>
 
@@ -131,8 +145,6 @@ const ProjectDetailPage = () => {
                         </div>
 
                     </section>
-
-
 
                     <section className="project-detail-page__join-column">
 
@@ -193,7 +205,6 @@ const ProjectDetailPage = () => {
                                 )}
 
                             </div>
-
 
                         </div>
 
