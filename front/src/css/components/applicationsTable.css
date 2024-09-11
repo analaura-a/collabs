@@ -1,5 +1,7 @@
 /*Tabla*/
 .applications-table {
+    display: none;
+
     width: 100%;
 
     border-spacing: 0;
@@ -131,22 +133,39 @@
 
 
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 700px) {
+
+    /*Cards*/
+    .applications-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+
+}
+
+
+
+@media only screen and (min-width: 1120px) {
 
     /*Cards*/
     .applications-cards {
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 32px;
     }
 
-    .application-card {
-        padding: 88px 28px 28px 28px;
+}
+
+
+
+@media only screen and (min-width: 1360px) {
+
+    /*Cards*/
+    .applications-cards {
+        display: none;
     }
 
-    .application-card__button {
-        position: absolute;
-        top: 28px;
-        right: 28px;
+    /*Tabla*/
+    .applications-table {
+        display: table;
     }
 
 }

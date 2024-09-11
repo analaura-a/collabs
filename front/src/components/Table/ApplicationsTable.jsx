@@ -52,7 +52,7 @@ const ApplicationsTable = () => {
             </table>
 
             {/* Cards (mobile) */}
-            {/* <div className="applications-cards">
+            <div className="applications-cards">
 
                 <article className="application-card">
                     <ul>
@@ -91,7 +91,7 @@ const ApplicationsTable = () => {
                     <button className="small-button-with-icon link-icon application-card__button"></button>
                 </article>
 
-            </div> */}
+            </div>
 
         </>
     );
