@@ -90,7 +90,7 @@ const AuthNavbar = () => {
                 <nav>
                     <ul ref={primaryNavigation} id="primary-navigation" className="primary-navigation" data-visible="false">
                         <li>
-                            <Link to="#que-es" className="navbar-text">Inicio</Link>
+                            <Link to="/inicio" className="navbar-text">Inicio</Link>
                         </li>
                         <li>
                             <div className="nav-link-with-icon" onClick={handleDropdownToggle}>
@@ -112,7 +112,7 @@ const AuthNavbar = () => {
                             <Link to="#como-funciona" className="navbar-text">Mis proyectos</Link>
                         </li>
                         <li>
-                            <Link to="/iniciar-sesion" className="navbar-text">Mis postulaciones</Link>
+                            <Link to="/postulaciones" className="navbar-text">Mis postulaciones</Link>
                         </li>
 
                     </ul>
