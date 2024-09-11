@@ -1,3 +1,49 @@
+/*Tabla*/
+.applications-table {
+    width: 100%;
+
+    border-spacing: 0;
+}
+
+.applications-table thead {
+    background-color: var(--color-gray);
+}
+
+.applications-table th {
+    text-align: left;
+    padding: 12px 0;
+
+    border-top: 1px solid var(--color-gray-line);
+    border-bottom: 1px solid var(--color-gray-line);
+}
+
+
+.applications-table th:first-child {
+    padding: 12px 0 12px 12px;
+
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+    border-left: 1px solid var(--color-gray-line);
+}
+
+.applications-table th:last-child {
+    border-radius: 0 10px 10px 0;
+    overflow: hidden;
+    border-right: 1px solid var(--color-gray-line);
+}
+
+.applications-table td {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-gray-line);
+}
+
+.applications-table__button {
+    margin: 0 0 0 auto;
+}
+
+
+
+/*Cards*/
 .applications-cards {
     display: grid;
     grid-template-columns: 1fr;
@@ -67,7 +113,7 @@
     transition: all 240ms ease-out;
 }
 
-.application-card__host-name:hover {
+.application-card__host:hover .application-card__host-name {
     border-bottom: 1px solid var(--color-primary-button);
 }
 
@@ -87,6 +133,7 @@
 
 @media only screen and (min-width: 1024px) {
 
+    /*Cards*/
     .applications-cards {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 32px;
