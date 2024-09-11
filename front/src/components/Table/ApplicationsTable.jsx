@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
+import DropdownButton from '../Button/DropdownButton';
 
 const ApplicationsTable = () => {
+
+    //Agregarles funcionalidad
+    const dropdownOptions = [
+        { title: 'Ver convocatoria', onClick: () => console.log('Opción 1 seleccionada') },
+        { title: 'Cancelar postulación', onClick: () => console.log('Opción 2 seleccionada') }
+    ];
 
     return (
         <>
@@ -43,7 +50,7 @@ const ApplicationsTable = () => {
                         </td>
 
                         <td>
-                            <button className="applications-table__button small-button-with-icon link-icon"></button>
+                            <DropdownButton options={dropdownOptions} className="applications-table__button" />
                         </td>
                     </tr>
 
@@ -55,6 +62,8 @@ const ApplicationsTable = () => {
             <div className="applications-cards">
 
                 <article className="application-card">
+                    <DropdownButton options={dropdownOptions} className="application-card__button" />
+
                     <ul>
                         <li className="application-card__title-and-value">
                             <h2 className="light-paragraph medium-text">Proyecto</h2>
@@ -88,7 +97,6 @@ const ApplicationsTable = () => {
                         </li>
                     </ul>
 
-                    <button className="small-button-with-icon link-icon application-card__button"></button>
                 </article>
 
             </div>
