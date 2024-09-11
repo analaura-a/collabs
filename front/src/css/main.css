@@ -32,5 +32,6 @@
 @import './components/searchAndFilters.css';
 @import './components/accordion/positionAccordion.css';
 @import './components/applicationsTable.css';
+@import './components/dropdownButton.css';
 
 @import './misc/faded-pattern.css';
