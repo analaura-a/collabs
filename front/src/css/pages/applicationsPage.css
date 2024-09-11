@@ -12,6 +12,27 @@
     gap: 12px;
 }
 
+.applications-page__empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    max-width: 70ch;
+    margin: 0 auto;
+    padding: 40px 0 24px 0;
+
+    text-align: center;
+}
+
+.applications-page__empty-state>div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
 
 @media only screen and (min-width: 1024px) {
 
@@ -19,6 +40,10 @@
         gap: 56px;
 
         padding: 96px 0;
+    }
+
+    .applications-page__empty-state {
+        padding: 80px 0 40px 0;
     }
 
 }
