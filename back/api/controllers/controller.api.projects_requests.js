@@ -15,20 +15,23 @@ import * as service from "../../services/projects_requests.services.js";
 
 // }
 
-// //Obtener las postulaciones enviadas por un usuario en particular
-// const getRequestsByUserId = (req, res) => {
+//Obtener las postulaciones de un usuario por id
+const getRequestsByUserId = async (req, res) => {
 
-//     const id = req.params.id;
+    const { userId } = req.params;
 
-//     service.getRequestsByUserId(id).then((requests) => {
-//         if (requests) {
-//             res.status(200).json(requests);
-//         } else {
-//             res.status(404).json();
-//         }
-//     });
+    try {
+        const requests = await service.getRequestsByUserId(userId);
 
-// }
+        if (!requests || requests.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron postulaciones para este usuario.' });
+        }
+
+        res.status(200).json(requests);
+    } catch (error) {
+        res.status(500).json({ message: error.message || 'Error al obtener las postulaciones del usuario.' });
+    }
+};
 
 //Agregar una nueva postulación
 const createRequest = async (req, res) => {
@@ -82,7 +85,7 @@ const createRequest = async (req, res) => {
 
 export {
     // getRequestsByProjectId,
-    // getRequestsByUserId,
+    getRequestsByUserId,
     createRequest,
     // editRequest,
     // deleteRequest

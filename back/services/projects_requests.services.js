@@ -8,10 +8,20 @@ const db = client.db("AH20232CP1");
 //     return db.collection("projects_requests").find({ project_id: id, status: 'Pending' }).toArray();
 // }
 
-// //Obtener las postulaciones enviadas por un usuario en particular
-// async function getRequestsByUserId(id) {
-//     return db.collection("projects_requests").find({ "candidate._id": id }).toArray();
-// }
+//Obtener las postulaciones de un usuario por id
+const getRequestsByUserId = async (userId) => {
+
+    try {
+        const requests = await db.collection('projects_requests')
+            .find({ user_id: new ObjectId(userId) })
+            .sort({ createdAt: -1 })
+            .toArray();
+
+        return requests;
+    } catch (error) {
+        throw new Error('Error al obtener las postulaciones del usuario: ' + error.message);
+    }
+};
 
 //Agregar una nueva postulación
 const createRequest = async ({ userId, projectId, appliedRole, openPositionId }) => {
@@ -60,7 +70,7 @@ const createRequest = async ({ userId, projectId, appliedRole, openPositionId })
 
 export {
     // getRequestsByProjectId,
-    // getRequestsByUserId,
+    getRequestsByUserId,
     createRequest,
     // editRequest,
     // deleteRequest
