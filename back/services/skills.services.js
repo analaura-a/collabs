@@ -13,8 +13,6 @@ const getSkills = async () => {
     } catch (error) {
         console.error('Error al obtener las skills:', error);
         throw error;
-    } finally {
-        await client.close();
     }
 };
 
@@ -35,8 +33,6 @@ const addSkill = async (name) => {
     } catch (error) {
         console.error('Error al agregar la skill:', error);
         throw error;
-    } finally {
-        await client.close();
     }
 };
 
