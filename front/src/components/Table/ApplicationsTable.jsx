@@ -1,15 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DropdownButton from '../Button/DropdownButton';
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const ApplicationsTable = ({ applications }) => {
 
-    //Agregarles funcionalidad
-    const dropdownOptions = [
-        { title: 'Ver convocatoria', onClick: () => console.log('Opción 1 seleccionada') },
-        { title: 'Cancelar postulación', onClick: () => console.log('Opción 2 seleccionada') }
-    ];
+    const navigate = useNavigate();
 
     return (
         <>
@@ -60,7 +56,16 @@ const ApplicationsTable = ({ applications }) => {
                             </td>
 
                             <td>
-                                <DropdownButton options={dropdownOptions} className="applications-table__button" />
+                                <DropdownButton className="applications-table__button" options={[
+                                    {
+                                        title: 'Ver convocatoria',
+                                        onClick: () => navigate(`/proyectos/${application.project_id}`)
+                                    },
+                                    {
+                                        title: 'Cancelar postulación',
+                                        onClick: () => console.log('Cancelar postulación')
+                                    }
+                                ]} />
                             </td>
                         </tr>
 
@@ -76,7 +81,17 @@ const ApplicationsTable = ({ applications }) => {
                 {applications.map((application) => (
 
                     <article key={application._id} className="application-card">
-                        <DropdownButton options={dropdownOptions} className="application-card__button" />
+
+                        <DropdownButton className="application-card__button" options={[
+                            {
+                                title: 'Ver convocatoria',
+                                onClick: () => navigate(`/proyectos/${application.project_id}`)
+                            },
+                            {
+                                title: 'Cancelar postulación',
+                                onClick: () => console.log('Cancelar postulación')
+                            }
+                        ]} />
 
                         <ul>
                             <li className="application-card__title-and-value">
