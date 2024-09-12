@@ -16,7 +16,7 @@ async function getUsers() {
 //Obtener un usuario en específico por ID
 async function getUserById(id) {
 
-    // await client.connect();
+    await client.connect();
 
     const user = await db.collection("users").findOne({ _id: new ObjectId(id) });
 

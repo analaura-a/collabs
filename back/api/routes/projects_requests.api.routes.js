@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects_requests.js';
 // import { validateRequestCreate, validateRequestEdit } from '../../middleware/projects_requests.validate.middleware.js'
-import { verifyUserOwnership } from '../../middleware/token.validate.middleware.js';
+import { verifyUserOwnership, validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
 
 const route = Router();
 
@@ -21,7 +21,7 @@ const route = Router();
 // route.get('/projects/:id/requests', controllers.getRequestsByProjectId);
 
 //Obtener las postulaciones de un usuario por id
-route.get('/users/:userId/requests', [verifyUserOwnership], controllers.getRequestsByUserId);
+route.get('/users/:userId/requests', [validateTokenMiddleware], controllers.getRequestsByUserId);
 
 //Agregar una nueva postulación
 route.post('/project_requests', [verifyUserOwnership], controllers.createRequest);

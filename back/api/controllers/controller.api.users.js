@@ -30,7 +30,7 @@ const getUserById = (req, res) => {
             if (user) {
                 res.status(200).json(user);
             } else {
-                res.status(404).json();
+                res.status(404).json({ message: error.message });
             }
         });
 
