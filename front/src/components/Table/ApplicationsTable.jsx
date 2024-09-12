@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import DropdownButton from '../Button/DropdownButton';
 
-const ApplicationsTable = () => {
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+
+const ApplicationsTable = ({ applications }) => {
 
     //Agregarles funcionalidad
     const dropdownOptions = [
@@ -28,31 +30,41 @@ const ApplicationsTable = () => {
 
                 <tbody>
 
-                    <tr>
-                        <td className="subtitle-18 black-color-text">Web para adoptar mascotas</td>
+                    {applications.map((application) => (
 
-                        <td>
-                            <Link to={`/perfil`} className="application-card__host">
-                                <div className="application-card__host-photo">
-                                    <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
-                                </div>
+                        <tr key={application._id}>
+                            <td className="subtitle-18 black-color-text">{application.project_name}</td>
 
-                                <p className="subtitle black-color-text application-card__host-name">Julián Rossi</p>
-                            </Link>
-                        </td>
+                            <td>
+                                <Link to={`/colaboradores/${application.organizer_username}`} className="application-card__host">
+                                    {application.organizer_photo ? (
+                                        <div className="application-card__host-photo">
+                                            <img src={`${SERVER_BASE_URL}${application.organizer_photo}`} alt={`Foto de perfil de ${application.organizer_name}}`} />
+                                        </div>
+                                    ) : (
+                                        <div className="application-card__host-photo">
+                                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                                        </div>
+                                    )}
 
-                        <td className="subtitle-18 black-color-text">UX/UI Designer</td>
+                                    <p className="subtitle black-color-text application-card__host-name">{application.organizer_name}</p>
+                                </Link>
+                            </td>
 
-                        <td className="subtitle-18 black-color-text">8/11/2023</td>
+                            <td className="subtitle-18 black-color-text">{application.applied_role}</td>
 
-                        <td>
-                            <p className="smaller-paragraph medium-text application-card__status status-green">Aprobada</p>
-                        </td>
+                            <td className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString()}</td>
 
-                        <td>
-                            <DropdownButton options={dropdownOptions} className="applications-table__button" />
-                        </td>
-                    </tr>
+                            <td>
+                                <p className={`smaller-paragraph medium-text application-card__status ${application.status === 'Pendiente' ? 'status-yellow' : application.status === 'Aprobada' ? 'status-green' : 'status-red'}`}>{application.status}</p>
+                            </td>
+
+                            <td>
+                                <DropdownButton options={dropdownOptions} className="applications-table__button" />
+                            </td>
+                        </tr>
+
+                    ))}
 
                 </tbody>
 
@@ -61,43 +73,54 @@ const ApplicationsTable = () => {
             {/* Cards (mobile) */}
             <div className="applications-cards">
 
-                <article className="application-card">
-                    <DropdownButton options={dropdownOptions} className="application-card__button" />
+                {applications.map((application) => (
 
-                    <ul>
-                        <li className="application-card__title-and-value">
-                            <h2 className="light-paragraph medium-text">Proyecto</h2>
-                            <p className="subtitle-18 black-color-text">Web para adoptar mascotas</p>
-                        </li>
+                    <article key={application._id} className="application-card">
+                        <DropdownButton options={dropdownOptions} className="application-card__button" />
 
-                        <li className="application-card__title-and-value-bigger">
-                            <h2 className="light-paragraph medium-text">Organizador</h2>
-                            <Link to={`/perfil`} className="application-card__host">
-                                <div className="application-card__host-photo">
-                                    <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
-                                </div>
+                        <ul>
+                            <li className="application-card__title-and-value">
+                                <h2 className="light-paragraph medium-text">Proyecto</h2>
+                                <p className="subtitle-18 black-color-text">{application.project_name}</p>
+                            </li>
 
-                                <p className="subtitle black-color-text application-card__host-name">Julián Rossi</p>
-                            </Link>
-                        </li>
+                            <li className="application-card__title-and-value-bigger">
+                                <h2 className="light-paragraph medium-text">Organizador</h2>
+                                <Link to={`/colaboradores/${application.organizer_username}`} className="application-card__host">
 
-                        <li className="application-card__title-and-value">
-                            <h2 className="light-paragraph medium-text">Rol</h2>
-                            <p className="subtitle-18 black-color-text">UX/UI Designer</p>
-                        </li>
+                                    {application.organizer_photo ? (
+                                        <div className="application-card__host-photo">
+                                            <img src={`${SERVER_BASE_URL}${application.organizer_photo}`} alt={`Foto de perfil de ${application.organizer_name}}`} />
+                                        </div>
+                                    ) : (
+                                        <div className="application-card__host-photo">
+                                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                                        </div>
+                                    )}
 
-                        <li className="application-card__title-and-value">
-                            <h2 className="light-paragraph medium-text">Fecha de postulación</h2>
-                            <p className="subtitle-18 black-color-text">8/11/2023</p>
-                        </li>
+                                    <p className="subtitle black-color-text application-card__host-name">{application.organizer_name}</p>
+                                </Link>
+                            </li>
 
-                        <li className="application-card__title-and-value-bigger">
-                            <h2 className="light-paragraph medium-text">Estado</h2>
-                            <p className="smaller-paragraph medium-text application-card__status status-green">Aprobada</p>
-                        </li>
-                    </ul>
+                            <li className="application-card__title-and-value">
+                                <h2 className="light-paragraph medium-text">Rol</h2>
+                                <p className="subtitle-18 black-color-text">{application.applied_role}</p>
+                            </li>
 
-                </article>
+                            <li className="application-card__title-and-value">
+                                <h2 className="light-paragraph medium-text">Fecha de postulación</h2>
+                                <p className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString()}</p>
+                            </li>
+
+                            <li className="application-card__title-and-value-bigger">
+                                <h2 className="light-paragraph medium-text">Estado</h2>
+                                <p className={`smaller-paragraph medium-text application-card__status ${application.status === 'Pendiente' ? 'status-yellow' : application.status === 'Aprobada' ? 'status-green' : 'status-red'}`}>{application.status}</p>
+                            </li>
+                        </ul>
+
+                    </article>
+
+                ))}
 
             </div>
 

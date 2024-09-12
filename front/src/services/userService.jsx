@@ -55,6 +55,22 @@ export const fetchUserProfileByUsername = async (username) => {
     }
 }
 
+export const getUserById = async (userId) => {
+
+    const response = await fetch(`${API_URL}/users/${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al obtener detalles del usuario.');
+    }
+
+    return await response.json();
+};
+
 export const checkUsernameAvailability = async (username) => {
 
     const response = await fetch(`${API_URL}/users/check-username`, {

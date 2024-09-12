@@ -1,10 +1,63 @@
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
+import { getRequestsByUserId } from '../../services/requestService';
+import { getProjectById } from '../../services/projectService';
+import { getUserById } from '../../services/userService';
 import ApplicationsTable from "../../components/Table/ApplicationsTable";
 import Button from "../../components/Button/Button";
 
 const ProjectApplicationsPage = () => {
 
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
+
     const navigate = useNavigate();
+
+    const [applications, setApplications] = useState([]);
+    const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState(null);
+
+    const fetchApplications = async () => {
+        try {
+            const userRequests = await getRequestsByUserId(user._id);
+
+            // Para cada postulación, hacemos peticiones adicionales para obtener los datos del proyecto y organizador
+            const enrichedRequests = await Promise.all(userRequests.map(async (application) => {
+
+                const projectDetails = await getProjectById(application.project_id);
+                const organizerDetails = await getUserById(application.user_id);
+
+                return {
+                    ...application,
+                    project_name: projectDetails.name,
+                    organizer_name: organizerDetails.name + " " + organizerDetails.last_name,
+                    organizer_username: organizerDetails.username,
+                    organizer_photo: organizerDetails.profile_pic
+                };
+            }));
+
+            setApplications(enrichedRequests);
+            setLoading(false);
+        } catch (error) {
+            // setError('Ocurrió un error al cargar las postulaciones.');
+            console.log(error);
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchApplications();
+    }, [user._id]);
+
+
+    if (loading) {
+        return <div>Cargando...</div>; //Reemplazar por componente de carga
+    }
+
+    // if (error) {
+    //     return <div>Error: {error}</div>; //Error
+    // }
 
     return (
         <main>
@@ -17,7 +70,7 @@ const ProjectApplicationsPage = () => {
                         <p className="subtitle-18">Sigue el estado de los proyectos a los que apliques para unirte a colaborar.</p>
                     </div>
 
-                    <ApplicationsTable />
+                    <ApplicationsTable applications={applications} />
 
                     {/* Empty state */}
                     {/* <div className="applications-page__empty-state">
