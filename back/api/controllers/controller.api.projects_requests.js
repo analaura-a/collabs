@@ -69,24 +69,36 @@ const createRequest = async (req, res) => {
 
 // }
 
-// //Eliminar una postulación
-// const deleteRequest = (req, res) => {
+//Eliminar una postulación
+const deleteRequest = async (req, res) => {
 
-//     const id = req.params.id;
+    const { id } = req.params; // ID de la postulación
+    const { userId } = req.body; // ID del usuario, necesario para el middleware
 
-//     service
-//         .deleteRequest(id)
-//         .then(() => {
-//             res.status(204).json();
-//         })
-//         .catch((error) => res.status(500).json());
+    try {
+        // Verificar que el estado de la postulación sea "Pendiente"
+        const request = await service.getRequestById(id);
 
-// }
+        if (!request) {
+            return res.status(404).json({ message: 'Postulación no encontrada.' });
+        }
+
+        if (request.status !== 'Pendiente') {
+            return res.status(400).json({ message: 'Solo puedes cancelar postulaciones pendientes.' });
+        }
+
+        // Eliminar la postulación
+        await service.deleteRequest(id);
+        res.status(200).json({ message: 'Postulación cancelada con éxito.' });
+    } catch (error) {
+        res.status(500).json({ message: error.message || 'Ocurrió un error al cancelar la postulación.' });
+    }
+};
 
 export {
     // getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
     // editRequest,
-    // deleteRequest
+    deleteRequest
 }

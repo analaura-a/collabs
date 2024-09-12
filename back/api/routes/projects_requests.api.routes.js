@@ -29,7 +29,7 @@ route.post('/project_requests', [verifyUserOwnership], controllers.createRequest
 // //Editar una postulación
 // route.patch('/project_requests/:id', [validateRequestEdit], controllers.editRequest);
 
-// //Eliminar una postulación
-// route.delete('/project_requests/:id', controllers.deleteRequest);
+//Eliminar una postulación
+route.delete('/project_requests/:id', [verifyUserOwnership], controllers.deleteRequest);
 
 export default route;

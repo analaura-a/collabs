@@ -3,6 +3,11 @@ import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
 
+// Obtener una postulación por id
+const getRequestById = async (id) => {
+    return await db.collection('projects_requests').findOne({ _id: new ObjectId(id) });
+};
+
 // //Obtener las postulaciones de un proyecto en particular
 // async function getRequestsByProjectId(id) {
 //     return db.collection("projects_requests").find({ project_id: id, status: 'Pending' }).toArray();
@@ -62,16 +67,16 @@ const createRequest = async ({ userId, projectId, appliedRole, openPositionId })
 //     return editedRequest;
 // }
 
-// //Eliminar una postulación
-// async function deleteRequest(id) {
-//     const deletedRequest = await db.collection("projects_requests").deleteOne({ _id: new ObjectId(id) })
-//     return deletedRequest;
-// }
+//Eliminar una postulación
+const deleteRequest = async (id) => {
+    return await db.collection('projects_requests').deleteOne({ _id: new ObjectId(id) });
+};
 
 export {
+    getRequestById,
     // getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
     // editRequest,
-    // deleteRequest
+    deleteRequest
 }
