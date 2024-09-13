@@ -19,6 +19,7 @@ import ExploreProjectsPage from '../pages/ExplorePage/ExploreProjectsPage.jsx'
 import ExploreUsersPage from '../pages/ExplorePage/ExploreUsersPage.jsx'
 import ProjectDetailPage from '../pages/ProjectDetail/ProjectDetailPage.jsx'
 import ProjectApplicationsPage from '../pages/ProjectRequests/ProjectApplicationsPage.jsx'
+import MyProjectsPage from '../pages/MyProjects/MyProjectsPage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -77,6 +78,12 @@ const AppRoutes = createBrowserRouter([
                 path: "/postulaciones",
                 element: (<ProtectedRoute>
                     <ProjectApplicationsPage />
+                </ProtectedRoute>),
+            },
+            {
+                path: "/mis-proyectos",
+                element: (<ProtectedRoute>
+                    <MyProjectsPage />
                 </ProtectedRoute>),
             },
         ]
