@@ -46,6 +46,11 @@ const createRequest = async (req, res) => {
             request
         });
     } catch (error) {
+        if (error.message.includes('Ya te has postulado')) {
+            return res.status(409).json({
+                message: error.message
+            });
+        }
         return res.status(400).json({
             message: 'Error al crear la postulación.',
             error: error.message

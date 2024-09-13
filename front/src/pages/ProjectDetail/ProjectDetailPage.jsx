@@ -54,20 +54,29 @@ const ProjectDetailPage = () => {
             return;
         }
 
-        // try {
-        //     const openPositionId = project.open_positions.find(
-        //         (position) => position.profile === selectedPosition
-        //     )._id; // Obtener el openPositionId (y el applied_role) desde el array de open_positions
+        // // Buscar el "profile" de la posición seleccionada
+        // const selectedPositionObj = project.open_positions.find(
+        //     (position) => position._id === selectedPosition
+        // );
 
+        // if (!selectedPositionObj) {
+        //     console.log('Posición seleccionada no encontrada.');
+        //     return;
+        // }
+
+        // const appliedRole = selectedPositionObj.profile;
+
+        // try {
         //     await createRequest({
         //         userId: user._id,
         //         projectId: project._id,
-        //         openPositionId,
+        //         appliedRole,
+        //         openPositionId: selectedPosition,  // selectedPosition ahora contiene el openPositionId
         //     });
 
         //     console.log('¡Te has postulado con éxito!');
         // } catch (error) {
-        //     if (error.response && error.response.error === "Ya te has postulado para este rol en este proyecto") {
+        //     if (error.response && error.response.status === 409) {
         //         console.log('Ya te has postulado para esta posición.');
         //     } else {
         //         console.log('Ocurrió un error al enviar la postulación. Inténtalo de nuevo más tarde.');
