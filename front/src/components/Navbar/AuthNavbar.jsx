@@ -109,7 +109,7 @@ const AuthNavbar = () => {
                             </ul>
                         </li>
                         <li>
-                            <Link to="#como-funciona" className="navbar-text">Mis proyectos</Link>
+                            <Link to="/mis-proyectos" className="navbar-text">Mis proyectos</Link>
                         </li>
                         <li>
                             <Link to="/postulaciones" className="navbar-text">Mis postulaciones</Link>
