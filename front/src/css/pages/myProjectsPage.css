@@ -6,10 +6,43 @@
     padding: 56px 0;
 }
 
-.my-projects-page__header{
+.my-projects-page__header {
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+
+.my-projects-page__empty-state {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    padding: 40px 0;
+}
+
+.my-projects-page__empty-state__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    max-width: 70ch;
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.my-projects-page__empty-state__title>div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.my-projects-page__empty-state__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 
@@ -22,11 +55,19 @@
         padding: 96px 0;
     }
 
-    .my-projects-page__header{
+    .my-projects-page__header {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         gap: 0;
+    }
+
+    .my-projects-page__empty-state__actions {
+        flex-direction: row;
+        gap: 20px;
+
+        width: fit-content;
+        margin: 0 auto;
     }
 
 }
