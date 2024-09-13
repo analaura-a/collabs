@@ -41,14 +41,14 @@ const ProjectApplicationsPage = () => {
             setLoading(false);
         } catch (error) {
             // setError('Ocurrió un error al cargar las postulaciones.');
-            console.log(error);
+            console.log(error); //¿Hacer un if?
             setLoading(false);
         }
     }
 
     useEffect(() => {
         fetchApplications();
-    }, [user._id]);
+    }, [user]);
 
 
     if (loading) {
@@ -70,19 +70,22 @@ const ProjectApplicationsPage = () => {
                         <p className="subtitle-18">Sigue el estado de los proyectos a los que apliques para unirte a colaborar.</p>
                     </div>
 
-                    <ApplicationsTable applications={applications} />
+                    {applications.length > 0 ? (
 
-                    {/* Empty state */}
-                    {/* <div className="applications-page__empty-state">
-                        <img src="../../assets/svg/requests-empty-state.svg" alt="Sin postulaciones" />
+                        <ApplicationsTable applications={applications} setApplications={setApplications} />
 
-                        <div>
-                            <h2 className="title-32-medium">Aún no te has postulado a colaborar en ningún proyecto</h2>
-                            <p className="subtitle-18">Cuando hayas solicitado unirte a colaborar en algún proyecto, podrás seguir el estado de tu postulación aquí.</p>
+                    ) : (
+                        <div className="applications-page__empty-state">
+                            <img src="../../assets/svg/requests-empty-state.svg" alt="Sin postulaciones" />
+
+                            <div>
+                                <h2 className="title-32-medium">Aún no te has postulado a colaborar en ningún proyecto</h2>
+                                <p className="subtitle-18">Cuando hayas solicitado unirte a colaborar en algún proyecto, podrás seguir el estado de tu postulación aquí.</p>
+                            </div>
+
+                            <Button size="large" width="full-then-fit" onClick={() => navigate('/explorar/proyectos')}>Explorar proyectos</Button>
                         </div>
-
-                        <Button size="large" width="full-then-fit" onClick={() => navigate('/explorar/proyectos')}>Explorar proyectos</Button>
-                    </div> */}
+                    )}
 
                 </section>
 

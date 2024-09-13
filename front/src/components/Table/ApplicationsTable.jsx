@@ -1,11 +1,31 @@
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
+import { deleteRequest } from '../../services/requestService';
 import DropdownButton from '../Button/DropdownButton';
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
-const ApplicationsTable = ({ applications }) => {
+const ApplicationsTable = ({ applications, setApplications }) => {
+
+    const { authState } = useContext(AuthContext);
+
+    const { user } = authState;
 
     const navigate = useNavigate();
+
+    const handleCancelApplication = async (applicationId) => {
+        try {
+            await deleteRequest(applicationId, user._id);
+
+            setApplications(prevApplications => prevApplications.filter(app => app._id !== applicationId));
+
+            alert('Postulación cancelada exitosamente.');
+
+        } catch (error) {
+            console.log('Ocurrió un error al cancelar la postulación. Inténtalo nuevamente.', error);
+        }
+    };
 
     return (
         <>
@@ -63,7 +83,7 @@ const ApplicationsTable = ({ applications }) => {
                                     },
                                     {
                                         title: 'Cancelar postulación',
-                                        onClick: () => console.log('Cancelar postulación')
+                                        onClick: () => handleCancelApplication(application._id)
                                     }
                                 ]} />
                             </td>
@@ -89,7 +109,7 @@ const ApplicationsTable = ({ applications }) => {
                             },
                             {
                                 title: 'Cancelar postulación',
-                                onClick: () => console.log('Cancelar postulación')
+                                onClick: () => handleCancelApplication(application._id)
                             }
                         ]} />
 
