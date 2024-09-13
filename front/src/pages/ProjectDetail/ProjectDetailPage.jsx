@@ -43,6 +43,11 @@ const ProjectDetailPage = () => {
             });
     };
 
+    const handleExternalRedirect = (url) => {
+        const externalUrl = url.startsWith('https://') ? url : `https://${url}`;
+        window.open(externalUrl, '_blank');
+    };
+
     const toggleReadMore = () => {
         setIsExpanded(!isExpanded);
     };
@@ -246,7 +251,7 @@ const ProjectDetailPage = () => {
 
                                         </ul>
 
-                                        <Button width="fullwidth" size="large">Quiero contribuir</Button>
+                                        <Button width="fullwidth" size="large" onClick={() => handleExternalRedirect(project.url)}>Quiero contribuir</Button>
                                     </>
                                 )}
 
