@@ -24,6 +24,31 @@ export const getRequestsByUserId = async (userId) => {
     return await response.json();
 };
 
+export const createRequest = async (requestData, userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/project_requests`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        },
+        body: JSON.stringify(requestData, userId)
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error al intentar enviar la postulación.');
+    }
+
+    return await response.json();
+};
+
 export const deleteRequest = async (requestId, userId) => {
 
     try {

@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext"; //Para que, si es un proyecto creado por el usuario, redirigirlo al dashboard
 import { getProjectById } from "../../services/projectService";
+import { createRequest } from "../../services/requestService";
 import Button from "../../components/Button/Button";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
 
@@ -10,8 +11,9 @@ const ProjectDetailPage = () => {
     const { id } = useParams();
 
     const [project, setProject] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [selectedPosition, setSelectedPosition] = useState(null);
 
+    const [loading, setLoading] = useState(true);
     const [isExpanded, setIsExpanded] = useState(false);
     const maxLength = 500;
 
@@ -44,6 +46,35 @@ const ProjectDetailPage = () => {
     const toggleReadMore = () => {
         setIsExpanded(!isExpanded);
     };
+
+    const handleApplicationSubmit = async () => {
+
+        if (!selectedPosition) {
+            console.log('Por favor selecciona un rol para postularte.');
+            return;
+        }
+
+        // try {
+        //     const openPositionId = project.open_positions.find(
+        //         (position) => position.profile === selectedPosition
+        //     )._id; // Obtener el openPositionId (y el applied_role) desde el array de open_positions
+
+        //     await createRequest({
+        //         userId: user._id,
+        //         projectId: project._id,
+        //         openPositionId,
+        //     });
+
+        //     console.log('¡Te has postulado con éxito!');
+        // } catch (error) {
+        //     if (error.response && error.response.error === "Ya te has postulado para este rol en este proyecto") {
+        //         console.log('Ya te has postulado para esta posición.');
+        //     } else {
+        //         console.log('Ocurrió un error al enviar la postulación. Inténtalo de nuevo más tarde.');
+        //     }
+        // }
+    };
+
 
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
@@ -168,14 +199,17 @@ const ProjectDetailPage = () => {
 
                                         <form className="edit-profile-page__form-container__inputs-container">
 
+                                            {/* Cambiar index por position.open_position_id */}
                                             {project.open_positions.map((position, index) => (
-                                                <div key={index} className="checkbox-item">
+                                                <div key={index} className={`checkbox-item ${selectedPosition === position ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position)}>
 
                                                     <input
                                                         type="radio"
                                                         name="open_position"
                                                         id={index}
                                                         value={position.profile}
+                                                        checked={selectedPosition === position.profile}
+                                                        onChange={(e) => e.stopPropagation()}
                                                         className="hidden-input"
                                                     />
 
@@ -188,16 +222,19 @@ const ProjectDetailPage = () => {
 
                                         </form>
 
-                                        <Button width="fullwidth" size="large">Postularme</Button>
+                                        <Button width="fullwidth" size="large" onClick={handleApplicationSubmit}>Postularme</Button>
                                     </>
                                 ) : (
                                     <>
                                         <h2 className="title-20">Colaboradores buscados</h2>
 
                                         <ul className="project-detail-page__positions__open-source">
+
+                                            {/* Cambiar index por position.open_position_id */}
                                             {project.open_positions.map((position, index) => (
                                                 <li key={index} className="subtitle">{position.profile}</li>
                                             ))}
+
                                         </ul>
 
                                         <Button width="fullwidth" size="large">Quiero contribuir</Button>
