@@ -19,7 +19,7 @@ const getRequestsByUserId = async (userId) => {
     try {
         const requests = await db.collection('projects_requests')
             .find({ user_id: new ObjectId(userId) })
-            .sort({ createdAt: -1 })
+            .sort({ created_at: -1 })
             .toArray();
 
         return requests;
