@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
+import MyProjectCard from '../../components/Cards/MyProjectCard';
 
 const MyProjectsPage = () => {
 
@@ -15,6 +16,10 @@ const MyProjectsPage = () => {
                     <div className="my-projects-page__header">
                         <h1 className="title-48">Mis proyectos</h1>
                         <Button size="large" width="full-then-fit">Crear nueva convocatoria</Button>
+                    </div>
+
+                    <div className="my-projects-page__cards">
+                        <MyProjectCard />
                     </div>
 
                 </section>

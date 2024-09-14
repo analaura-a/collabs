@@ -126,7 +126,7 @@ const ProjectDetailPage = () => {
                         </div>
 
                         <div className="project-detail-page__about-column__project-info-about">
-                            <h2 className="title-20">Acerca del proyecto</h2>
+                            <h2 className="title-24">Acerca del proyecto</h2>
                             <div>
                                 <p className="paragraph-18">
                                     {project.about.length > maxLength && !isExpanded ? `${project.about.slice(0, maxLength)}...` : project.about}
@@ -141,7 +141,7 @@ const ProjectDetailPage = () => {
                         </div>
 
                         <div className="project-detail-page__about-column__project-info-details">
-                            <h2 className="title-20">Detalles del proyecto</h2>
+                            <h2 className="title-24">Detalles del proyecto</h2>
 
                             <div className="project-detail-page__about-column__project-info-details__pills">
 
@@ -175,7 +175,7 @@ const ProjectDetailPage = () => {
                         </div>
 
                         <div className="project-detail-page__about-column__project-info-positions">
-                            <h2 className="title-20">Colaboradores buscados</h2>
+                            <h2 className="title-24">Colaboradores buscados</h2>
 
                             <div className="project-detail-page__about-column__project-info-positions__accordion-container">
                                 {project.open_positions.map((position, index) => (
@@ -196,7 +196,7 @@ const ProjectDetailPage = () => {
                         <div className="project-detail-page__join-column__blocks project-detail-page__join-column__status-and-positions">
 
                             <div className="project-detail-page__status">
-                                <h2 className="title-20">Estado</h2>
+                                <h2 className="title-24">Estado</h2>
 
                                 {/* Mostrar dinámicamente */}
                                 <div className="project-detail-page__status__cta">
@@ -209,7 +209,7 @@ const ProjectDetailPage = () => {
 
                                 {project.type == "Personal" ? (
                                     <>
-                                        <h2 className="title-20">Quiero colaborar como...</h2>
+                                        <h2 className="title-24">Quiero colaborar como...</h2>
 
                                         <form className="edit-profile-page__form-container__inputs-container">
 
@@ -240,7 +240,7 @@ const ProjectDetailPage = () => {
                                     </>
                                 ) : (
                                     <>
-                                        <h2 className="title-20">Colaboradores buscados</h2>
+                                        <h2 className="title-24">Colaboradores buscados</h2>
 
                                         <ul className="project-detail-page__positions__open-source">
 
@@ -260,7 +260,7 @@ const ProjectDetailPage = () => {
                         </div>
 
                         <div className="project-detail-page__join-column__blocks project-detail-page__join-column__hosts">
-                            <h2 className="title-20">Organizado por</h2>
+                            <h2 className="title-24">Organizado por</h2>
 
                             <Link to={"/explorar/proyectos"} className="project-detail-page__join-column__profile">
                                 <div className="project-detail-page__join-column__profile__img">
@@ -278,7 +278,7 @@ const ProjectDetailPage = () => {
                             {project.type == "Personal" ? (
                                 <>
                                     <div>
-                                        <h2 className="title-20">¿Buscando colaboradores para tu próximo proyecto?</h2>
+                                        <h2 className="title-24">¿Buscando colaboradores para tu próximo proyecto?</h2>
                                         <p className="light-paragraph">Publica una nueva convocatoria, selecciona candidatos y forma un equipo para tu proyecto.</p>
                                     </div>
                                     <Button width="fullwidth" size="large">Crear convocatoria</Button>
@@ -286,7 +286,7 @@ const ProjectDetailPage = () => {
                             ) : (
                                 <>
                                     <div>
-                                        <h2 className="title-20">¿Buscando colaboradores para tu próximo proyecto?</h2>
+                                        <h2 className="title-24">¿Buscando colaboradores para tu próximo proyecto?</h2>
                                         <p className="light-paragraph">Publica una nueva convocatoria y conduce a las personas interesadas en contribuir a tu repositorio.</p>
                                     </div>
                                     <Button width="fullwidth" size="large">Crear convocatoria</Button>

@@ -45,6 +45,26 @@
     gap: 16px;
 }
 
+.my-projects-page__cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    width: 100%;
+}
+
+
+
+@media only screen and (min-width: 700px) {
+
+    /*Cards*/
+    .my-projects-page__cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+
+}
+
 
 
 @media only screen and (min-width: 1024px) {
@@ -68,6 +88,16 @@
 
         width: fit-content;
         margin: 0 auto;
+    }
+
+}
+
+
+
+@media only screen and (min-width: 1200px) {
+
+    .my-projects-page__cards {
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
 }
