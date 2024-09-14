@@ -1,11 +1,23 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
+import Tabs from '../../components/Tabs/Tabs';
 import MyProjectCard from '../../components/Cards/MyProjectCard';
 
 const MyProjectsPage = () => {
 
     const navigate = useNavigate();
+
+    const tabs = [
+        { label: 'Abiertos',
+          content:
+                <div className="my-projects-page__cards">
+                    <MyProjectCard />
+                </div>
+        },
+        { label: 'En curso', content: <div>En curso</div> },
+        { label: 'Finalizados', content: <div>Finalizados</div> },
+    ];
 
     return (
         <main>
@@ -18,9 +30,7 @@ const MyProjectsPage = () => {
                         <Button size="large" width="full-then-fit">Crear nueva convocatoria</Button>
                     </div>
 
-                    <div className="my-projects-page__cards">
-                        <MyProjectCard />
-                    </div>
+                    <Tabs tabs={tabs} />
 
                 </section>
 
