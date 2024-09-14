@@ -27,7 +27,7 @@ const MyProjectsPage = () => {
 
                     <div className="my-projects-page__header">
                         <h1 className="title-48">Mis proyectos</h1>
-                        <Button size="large" width="full-then-fit">Crear nueva convocatoria</Button>
+                        <Button size="large" width="full-then-fit" onClick={() => navigate('/nueva-convocatoria')}>Crear nueva convocatoria</Button>
                     </div>
 
                     <Tabs tabs={tabs} />
