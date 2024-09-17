@@ -71,7 +71,7 @@
 .create-project__form-with-inputs{
     display: flex;
     flex-direction: column;
-    gap: 32px; 
+    gap: 36px; 
 }
 
 
