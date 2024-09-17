@@ -21,6 +21,8 @@ import ProjectDetailPage from '../pages/ProjectDetail/ProjectDetailPage.jsx'
 import ProjectApplicationsPage from '../pages/ProjectRequests/ProjectApplicationsPage.jsx'
 import MyProjectsPage from '../pages/MyProjects/MyProjectsPage.jsx'
 import NewProjectPage from '../pages/CreateProject/NewProjectPage.jsx'
+import CreatePersonalProjectPage from '../pages/CreateProject/CreatePersonalProjectPage.jsx'
+import CreatOpenSourceProjectPage from '../pages/CreateProject/CreatOpenSourceProjectPage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -91,6 +93,18 @@ const AppRoutes = createBrowserRouter([
                 path: "/nueva-convocatoria",
                 element: (<ProtectedRoute>
                     <NewProjectPage />
+                </ProtectedRoute>),
+            },
+            {
+                path: "/nueva-convocatoria/personal",
+                element: (<ProtectedRoute>
+                    <CreatePersonalProjectPage />
+                </ProtectedRoute>),
+            },
+            {
+                path: "/nueva-convocatoria/open-source",
+                element: (<ProtectedRoute>
+                    <CreatOpenSourceProjectPage />
                 </ProtectedRoute>),
             },
         ]
