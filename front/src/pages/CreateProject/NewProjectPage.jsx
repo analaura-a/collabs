@@ -1,6 +1,40 @@
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import OnboardingCheckboxWithDescription from "../../components/Inputs/OnboardingCheckboxWithDescription";
 import Button from "../../components/Button/Button";
 
 const NewProjectPage = () => {
+
+    const [projectType, setProjectType] = useState(null);
+
+    const navigate = useNavigate();
+
+    const typeOptions = [
+        {
+            id: 'type-1',
+            svg: '../../assets/svg/personal-project.svg',
+            title: 'Personal',
+            description: 'Los proyectos personales (“cerrados”) son aquellos en los que solo el equipo de personas trabajando en él puede acceder y colaborar activamente en su realización.'
+        },
+        {
+            id: 'type-2',
+            svg: '../../assets/svg/open-source-project.svg',
+            title: 'Open-source',
+            description: 'Los proyectos open-source son aquellos en los que su diseño y desarrollo son compartidos públicamente, por lo que cualquier persona puede unirse a contribuir en cualquier momento.'
+        }
+    ];
+
+    const handleNext = (e) => {
+        e.preventDefault();
+
+        if (projectType === "Personal") {
+            navigate('/nueva-convocatoria/personal');
+        } else if (projectType === "Open-source") {
+            navigate('/nueva-convocatoria/open-source');
+        } else {
+            console.log("Selecciona un tipo para continuar") //Mostrárselo al usuario
+        }
+    }
 
     return (
         <main>
@@ -17,54 +51,22 @@ const NewProjectPage = () => {
                             </div>
 
                             <div className="onboarding-input-container">
-
-                                {/* Reemplazar por los componentes OnboardingCheckboxWithDescription */}
-
-                                <div className="onboarding-input-box-with-description">
-                                    <input
-                                        type="checkbox"
-                                        id="type-1"
-                                        name="select-type"
-                                        value="Personal"
-                                        className="hidden-input"
+                                {typeOptions.map((type) => (
+                                    <OnboardingCheckboxWithDescription
+                                        key={type.id}
+                                        id={type.id}
+                                        svg={type.svg}
+                                        title={type.title}
+                                        description={type.description}
+                                        isChecked={projectType === type.title}
+                                        onChange={() => setProjectType(type.title)}
                                     />
-
-                                    <img src="../../assets/svg/personal-project.svg" alt="Personal" />
-
-                                    <div className="onboarding-input-box__text-container">
-                                        <label htmlFor="type-1">
-                                            Personal
-                                        </label>
-
-                                        <p>Los proyectos personales (“cerrados”) son aquellos en los que solo el equipo de personas trabajando en él puede acceder y colaborar activamente en su realización.</p>
-                                    </div>
-                                </div>
-
-                                <div className="onboarding-input-box-with-description">
-                                    <input
-                                        type="checkbox"
-                                        id="type-2"
-                                        name="select-type"
-                                        value="Open-source"
-                                        className="hidden-input"
-                                    />
-
-                                    <img src="../../assets/svg/open-source-project.svg" alt="Open-source" />
-
-                                    <div className="onboarding-input-box__text-container">
-                                        <label htmlFor="type-1">
-                                            Open-source
-                                        </label>
-
-                                        <p>Los proyectos open-source son aquellos en los que su diseño y desarrollo son compartidos públicamente, por lo que cualquier persona puede unirse a contribuir en cualquier momento.</p>
-                                    </div>
-                                </div>
-
+                                ))}
                             </div>
                         </div>
 
                         <div className="new-project-page__actions">
-                            <Button size="large" width="full-then-fit">Siguiente</Button>
+                            <Button size="large" width="full-then-fit" onClick={handleNext}>Siguiente</Button>
                         </div>
                     </form>
 
