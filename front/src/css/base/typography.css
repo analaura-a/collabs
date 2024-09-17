@@ -267,6 +267,10 @@
     color: var(--color-gray-placeholder) !important;
 }
 
+.black-light-color-text {
+    color: var(--color-black-light) !important;
+}
+
 .black-color-text {
     color: var(--color-black) !important;
 }
