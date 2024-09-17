@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects.js';
 import { validatePersonalProjectCreate, validateOpenSourceProjectCreate, validatePersonalProjectPatch, validateOpenSourceProjectPatch } from '../../middleware/projects.validate.middleware.js'
-import { validateTokenMiddleware } from '../../middleware/token.validate.middleware.js'
+import { validateTokenMiddleware, verifyUserOwnership } from '../../middleware/token.validate.middleware.js'
 
 const route = Router();
 
@@ -23,6 +23,9 @@ route.get('/projects/open', controllers.getOpenProjects)
 
 //Obtener un proyecto en particular por ID
 route.get('/projects/:id', [validateTokenMiddleware], controllers.getProjectById)
+
+// Crear un nuevo proyecto
+route.post('/projects', [verifyUserOwnership], controllers.createProject);
 
 // //Agregar un nuevo proyecto personal
 // route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);

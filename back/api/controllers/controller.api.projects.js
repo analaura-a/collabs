@@ -88,19 +88,19 @@ const getProjectById = async (req, res) => {
 
 };
 
-// //Crear un nuevo proyecto
-// const createProject = (req, res) => {
+//Crear un nuevo proyecto
+const createProject = async (req, res) => {
 
-//     service
-//         .createProject(req.body)
-//         .then((newProject) => {
-//             res.status(201).json(newProject);
-//         })
-//         .catch((error) => {
-//             res.status(500).json();
-//         });
-// };
+    const { userId, projectData, type } = req.body;
 
+    try {
+        const project = await service.createProject(userId, projectData, type);
+
+        return res.status(201).json({ message: `Proyecto ${type} creado con éxito`, project });
+    } catch (error) {
+        return res.status(400).json({ message: `Error al crear el proyecto ${type}`, error: error.message });
+    }
+};
 
 // //Editar un proyecto
 // const editProject = async (req, res) => {
@@ -138,7 +138,7 @@ export {
     // getProjectsOpenSource,
     // getProjectsByUser,
     getProjectById,
-    // createProject,
+    createProject,
     // editProject,
     // deleteProject
 }

@@ -87,13 +87,26 @@ async function getProjectById(id) {
 
 }
 
-// //Crear un nuevo proyecto
-// async function createProject(project) {
-//     const projects = await db.collection("projects").insertOne(project);
-//     project._id = projects.insertedId;
+//Crear un nuevo proyecto
+const createProject = async (userId, projectData, type) => {
 
-//     return project;
-// }
+    try {
+        await client.connect();
+
+        const newProject = {
+            ...projectData,
+            founder_id: new ObjectId(userId),
+            type,
+            status: "Abierto",
+            created_at: new Date(),
+        };
+
+        const result = await db.collection('projects').insertOne(newProject);
+        return result;
+    } catch (error) {
+        throw new Error(`Error al crear el proyecto ${type}: ` + error.message);
+    }
+};
 
 // //Editar un proyecto
 // async function editProject(id, project) {
@@ -115,7 +128,7 @@ export {
     // getProjectsOpenSource,
     // getProjectsByUser,
     getProjectById,
-    // createProject,
+    createProject,
     // editProject,
     // deleteProject
 }
