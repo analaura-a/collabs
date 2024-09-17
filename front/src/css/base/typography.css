@@ -263,6 +263,10 @@
     color: var(--color-black) !important;
 }
 
+.placeholder-color-text {
+    color: var(--color-gray-placeholder) !important;
+}
+
 .black-color-text {
     color: var(--color-black) !important;
 }
@@ -286,7 +290,8 @@
 }
 
 input,
-textarea {
+textarea,
+select {
     font-family: var(--inter);
     font-size: var(--font-16px);
     font-weight: var(--font-regular);

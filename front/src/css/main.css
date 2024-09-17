@@ -35,5 +35,6 @@
 @import './components/applicationsTable.css';
 @import './components/dropdownButton.css';
 @import './components/cards/myProjectCard.css';
+@import './components/select.css';
 
 @import './misc/faded-pattern.css';
