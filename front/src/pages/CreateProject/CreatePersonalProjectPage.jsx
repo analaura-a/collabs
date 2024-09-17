@@ -53,6 +53,19 @@ const CreatePersonalProjectPage = () => {
         setIsStepValid(isValid);
     };
 
+    const flattenFormData = (formData) => {
+        return Object.values(formData).reduce((acc, data) => ({ ...acc, ...data }), {});
+    };
+
+    const handleComplete = async () => {
+        const flattenedData = flattenFormData(formData);
+        try {
+            console.log('Proyecto creado con éxito:', flattenedData);
+        } catch (error) {
+            console.error('Error al crear el proyecto:', error);
+        }
+    };
+
     return (
         <main>
             <div className="container">
@@ -70,6 +83,7 @@ const CreatePersonalProjectPage = () => {
                         nextStep={nextStep}
                         prevStep={prevStep}
                         isNextDisabled={!isStepValid}
+                        handleComplete={handleComplete}
                     />
                 </section>
 
