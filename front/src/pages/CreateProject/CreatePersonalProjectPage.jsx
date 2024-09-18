@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/Personal/CreateProjectForm1';
+import CreateProjectForm2 from '../../components/Form/CreateProject/Personal/CreateProjectForm2';
 
 const steps = [
     {
@@ -15,7 +16,7 @@ const steps = [
         step: "2",
         title: "Tu rol en el proyecto",
         subtitle: "Selecciona el perfil profesional que más se adecúe al rol que ocuparás dentro de este proyecto.",
-        form: CreateProjectForm1,
+        form: CreateProjectForm2,
     },
 ];
 
@@ -59,6 +60,7 @@ const CreatePersonalProjectPage = () => {
 
     const handleComplete = async () => {
         const flattenedData = flattenFormData(formData);
+        //Al momento de crear el proyecto, excluir founder_role de flattenedData (eso ponerlo en project_team)
         try {
             console.log('Proyecto creado con éxito:', flattenedData);
         } catch (error) {
