@@ -4,6 +4,7 @@ import AuthContext from '../../context/AuthContext';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/Personal/CreateProjectForm1';
 import CreateProjectForm2 from '../../components/Form/CreateProject/Personal/CreateProjectForm2';
+import CreateProjectForm3 from '../../components/Form/CreateProject/Personal/CreateProjectForm3';
 
 const steps = [
     {
@@ -17,6 +18,12 @@ const steps = [
         title: "Tu rol en el proyecto",
         subtitle: "Selecciona el perfil profesional que más se adecúe al rol que ocuparás dentro de este proyecto.",
         form: CreateProjectForm2,
+    },
+    {
+        step: "3",
+        title: "Colaboradores buscados",
+        subtitle: "Añade todos los perfiles que estás buscando y las habilidades que necesitan para contribuir al proyecto.",
+        form: CreateProjectForm3,
     },
 ];
 

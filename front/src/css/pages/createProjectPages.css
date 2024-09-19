@@ -43,7 +43,7 @@
     padding: 64px 0;
 }
 
-.create-project__step{
+.create-project__step {
     display: flex;
     flex-direction: column;
     gap: 48px;
@@ -68,10 +68,22 @@
     background-color: var(--color-primary-light);
 }
 
-.create-project__form-with-inputs{
+.create-project__form-with-inputs {
     display: flex;
     flex-direction: column;
-    gap: 36px; 
+    gap: 36px;
+}
+
+.create-project__positions {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.create-project__accordions {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 
