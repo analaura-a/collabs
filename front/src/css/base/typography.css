@@ -320,7 +320,8 @@ select {
     line-height: 1.5;
 }
 
-.skill-search-options>li {
+.skill-search-options>li,
+.skill-search-options-2>li {
     font-family: var(--inter);
     font-size: var(--font-16px);
     font-weight: var(--font-regular);
