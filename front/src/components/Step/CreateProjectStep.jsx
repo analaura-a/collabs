@@ -23,7 +23,7 @@ const CreateProjectStep = ({ step, title, subtitle, form, currentStep, totalStep
             <div className="onboarding-page-buttons">
                 {currentStep > 0 && <Button size="large" color="secondary" width="full-then-fit" onClick={prevStep}>Atrás</Button>}
                 {currentStep < totalSteps - 1 && <Button size="large" width="full-then-fit" onClick={nextStep} disabled={isNextDisabled}>Siguiente</Button>}
-                {currentStep === totalSteps - 1 && <Button size="large" width="full-then-fit" onClick={handleComplete} disabled={isNextDisabled}>Finalizar</Button>}
+                {currentStep === totalSteps - 1 && <Button size="large" width="full-then-fit" onClick={handleComplete} disabled={isNextDisabled}>Publicar</Button>}
             </div>
         </>
     )

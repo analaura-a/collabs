@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/OpenSource/CreateProjectForm1';
-import CreateProjectForm2 from '../../components/Form/CreateProject/Personal/CreateProjectForm2';
+import CreateProjectForm2 from '../../components/Form/CreateProject/OpenSource/CreateProjectForm2';
 
 const steps = [
     {
@@ -14,8 +14,8 @@ const steps = [
     },
     {
         step: "2",
-        title: "Tu rol en el proyecto",
-        subtitle: "Selecciona el perfil profesional que más se adecúe al rol que ocuparás dentro de este proyecto.",
+        title: "Colaboradores buscados",
+        subtitle: "Añade todos los perfiles que estás buscando y las habilidades que necesitan para contribuir al proyecto.",
         form: CreateProjectForm2,
     },
 ];
