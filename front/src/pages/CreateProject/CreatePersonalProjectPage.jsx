@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import { createProject } from '../../services/projectService';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/Personal/CreateProjectForm1';
 import CreateProjectForm2 from '../../components/Form/CreateProject/Personal/CreateProjectForm2';
@@ -30,9 +31,13 @@ const steps = [
 
 const CreatePersonalProjectPage = () => {
 
+    const { authState } = useContext(AuthContext);
+
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
     const [isStepValid, setIsStepValid] = useState(false);
+
+    const navigate = useNavigate();
 
     const CurrentForm = steps[currentStep].form;
 
@@ -66,10 +71,24 @@ const CreatePersonalProjectPage = () => {
     };
 
     const handleComplete = async () => {
+
         const flattenedData = flattenFormData(formData);
-        //Al momento de crear el proyecto, excluir founder_role de flattenedData (eso ponerlo en project_team)
+
+        // Excluir founder_role de los datos del proyecto
+        const { founder_role, ...projectDataWithoutRole } = flattenedData;
+
         try {
-            console.log('Proyecto creado con éxito:', flattenedData);
+            const userId = authState.user._id;
+            const type = 'Personal';
+
+            // Crear el proyecto
+            const projectResponse = await createProject(userId, projectDataWithoutRole, type);
+
+            console.log(founder_role); // Agregar al fundador al equipo del proyecto
+
+            console.log("Proyecto creado con éxito"); //Notificar al usuario
+
+            navigate('/mis-proyectos'); // Redirigir al dashboard del proyecto
         } catch (error) {
             console.error('Error al crear el proyecto:', error);
         }
