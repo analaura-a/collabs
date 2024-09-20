@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import { createProject } from '../../services/projectService';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/OpenSource/CreateProjectForm1';
 import CreateProjectForm2 from '../../components/Form/CreateProject/OpenSource/CreateProjectForm2';
@@ -23,9 +24,13 @@ const steps = [
 
 const CreatOpenSourceProjectPage = () => {
 
+    const { authState } = useContext(AuthContext);
+
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
     const [isStepValid, setIsStepValid] = useState(false);
+
+    const navigate = useNavigate();
 
     const CurrentForm = steps[currentStep].form;
 
@@ -59,9 +64,20 @@ const CreatOpenSourceProjectPage = () => {
     };
 
     const handleComplete = async () => {
+
         const flattenedData = flattenFormData(formData);
+
         try {
-            console.log('Proyecto creado con éxito:', flattenedData);
+            const userId = authState.user._id;
+            const type = 'Open-source';
+
+            // Agregar el proyecto a la database
+            await createProject(userId, flattenedData, type);
+
+            console.log("Proyecto creado con éxito"); //Notificar al usuario
+
+            navigate('/mis-proyectos'); // Redirigir al dashboard del proyecto
+
         } catch (error) {
             console.error('Error al crear el proyecto:', error);
         }

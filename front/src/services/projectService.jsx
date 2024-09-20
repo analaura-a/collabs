@@ -44,3 +44,36 @@ export const getProjectById = async (projectId) => {
         throw new Error(error.message);
     }
 }
+
+export const createProject = async (userId, projectData, type) => {
+
+    try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            throw new Error('No se encontró el token de autenticación');
+        }
+
+        const response = await fetch(`${API_URL}/projects`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            },
+            body: JSON.stringify({
+                userId,
+                projectData,
+                type
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Ocurrió un error al intentar crear el proyecto.');
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error(error.message || 'Ocurrió un error al intentar crear el proyecto.');
+    }
+};
