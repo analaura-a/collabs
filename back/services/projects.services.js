@@ -93,8 +93,16 @@ const createProject = async (userId, projectData, type) => {
     try {
         await client.connect();
 
+        //Generar un _id para cada open_position
+        const openPositionsWithIds = projectData.open_positions.map(position => ({
+            ...position,
+            _id: new ObjectId(),
+        }));
+
+        //Crear el nuevo proyecto
         const newProject = {
             ...projectData,
+            open_positions: openPositionsWithIds,
             founder_id: new ObjectId(userId),
             type,
             status: "Abierto",
