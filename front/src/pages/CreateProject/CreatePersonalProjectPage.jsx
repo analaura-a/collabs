@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { createProject } from '../../services/projectService';
+import { addMemberToProjectTeam } from '../../services/teamService';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/Personal/CreateProjectForm1';
 import CreateProjectForm2 from '../../components/Form/CreateProject/Personal/CreateProjectForm2';
@@ -72,25 +73,27 @@ const CreatePersonalProjectPage = () => {
 
     const handleComplete = async () => {
 
-        const flattenedData = flattenFormData(formData);
-
         // Excluir founder_role de los datos del proyecto
-        const { founder_role, ...projectDataWithoutRole } = flattenedData;
+        const flattenedData = flattenFormData(formData);
+        const { founder_role, ...projectData } = flattenedData;
 
         try {
-            const userId = authState.user._id;
-            const type = 'Personal';
+            // Paso 1: Crear el proyecto
+            const createdProject = await createProject(authState.user._id, projectData, 'Personal');
 
-            // Crear el proyecto
-            const projectResponse = await createProject(userId, projectDataWithoutRole, type);
-
-            console.log(founder_role); // Agregar al fundador al equipo del proyecto
+            // Paso 2: Agregar al organizador al equipo del proyecto
+            await addMemberToProjectTeam(
+                createdProject.project._id,
+                authState.user._id,
+                'Organizador',
+                founder_role
+            );
 
             console.log("Proyecto creado con éxito"); //Notificar al usuario
 
             navigate('/mis-proyectos'); // Redirigir al dashboard del proyecto
         } catch (error) {
-            console.error('Error al crear el proyecto:', error);
+            console.error('Error al completar la creación del proyecto:', error);
         }
     };
 
