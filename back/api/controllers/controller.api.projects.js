@@ -1,3 +1,4 @@
+import fs from 'fs';
 import * as service from "../../services/projects.services.js";
 
 // //Traer todos los proyectos
@@ -102,6 +103,35 @@ const createProject = async (req, res) => {
     }
 };
 
+//Subir imagen del proyecto
+const uploadProjectImage = async (req, res) => {
+
+    const projectId = req.params.id;
+
+    // Verificamos si se envió el archivo
+    if (!req.file) {
+        return res.status(400).json({ message: 'No se envió ninguna imagen.' });
+    }
+
+    const imagePath = `/uploads/projects/${req.file.filename}`;
+
+    try {
+        // Actualizamos la URL de la imagen del proyecto en la database
+        await service.updateProjectImage(projectId, imagePath);
+
+        res.status(200).json({
+            message: 'Imagen del proyecto subida con éxito.',
+            imageUrl: imagePath
+        });
+    } catch (error) {
+        console.error('Error al subir la imagen del proyecto:', error);
+
+        // En caso de error, eliminamos la imagen subida
+        fs.unlinkSync(req.file.path);
+        res.status(500).json({ message: 'Error al subir la imagen del proyecto.' });
+    }
+};
+
 // //Editar un proyecto
 // const editProject = async (req, res) => {
 
@@ -139,6 +169,7 @@ export {
     // getProjectsByUser,
     getProjectById,
     createProject,
+    uploadProjectImage
     // editProject,
     // deleteProject
 }

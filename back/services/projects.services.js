@@ -116,6 +116,22 @@ const createProject = async (userId, projectData, type) => {
     }
 };
 
+//Subir imagen del proyecto
+const updateProjectImage = async (projectId, imagePath) => {
+
+    try {
+        // Actualizamos la imagen en el documento del proyecto
+        await db.collection('projects').updateOne(
+            { _id: new ObjectId(projectId) },
+            { $set: { cover: imagePath } }
+        );
+
+        return;
+    } catch (error) {
+        throw new Error(`Error al actualizar la imagen del proyecto: ${error.message}`);
+    }
+};
+
 // //Editar un proyecto
 // async function editProject(id, project) {
 //     const editedProject = await db.collection("projects").updateOne({ _id: new ObjectId(id) }, { $set: project });
@@ -137,6 +153,7 @@ export {
     // getProjectsByUser,
     getProjectById,
     createProject,
+    updateProjectImage
     // editProject,
     // deleteProject
 }
