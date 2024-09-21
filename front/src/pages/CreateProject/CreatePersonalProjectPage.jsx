@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
-import { createProject } from '../../services/projectService';
+import { createProject, uploadProjectImage } from '../../services/projectService';
 import { addMemberToProjectTeam } from '../../services/teamService';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/Personal/CreateProjectForm1';
@@ -75,15 +75,22 @@ const CreatePersonalProjectPage = () => {
 
         // Excluir founder_role de los datos del proyecto
         const flattenedData = flattenFormData(formData);
-        const { founder_role, ...projectData } = flattenedData;
+        const { cover: cover, founder_role: founder_role, ...projectData } = flattenedData;
 
         try {
             // Paso 1: Crear el proyecto
             const createdProject = await createProject(authState.user._id, projectData, 'Personal');
+            const projectId = createdProject.project.insertedId;
 
-            // Paso 2: Agregar al organizador al equipo del proyecto
+            // Paso 2: Subir la imagen del proyecto (si el usuario seleccionó una)
+            if (cover) {
+                const uploadedImage = await uploadProjectImage(projectId, cover);
+                console.log('Imagen subida con éxito:', uploadedImage.imageUrl);
+            }
+
+            // Paso 3: Agregar al organizador al equipo del proyecto
             await addMemberToProjectTeam(
-                createdProject.project._id,
+                projectId,
                 authState.user._id,
                 'Organizador',
                 founder_role
