@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
-import { createProject } from '../../services/projectService';
+import { createProject, uploadProjectImage } from '../../services/projectService';
 import { addMemberToProjectTeam } from '../../services/teamService';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/OpenSource/CreateProjectForm1';
@@ -68,13 +68,23 @@ const CreatOpenSourceProjectPage = () => {
 
         const flattenedData = flattenFormData(formData);
 
+        const projectImage = flattenedData.cover;
+        delete flattenedData.cover;
+
         try {
             // Paso 1: Crear el proyecto open-source
             const createdProject = await createProject(authState.user._id, flattenedData, 'Open-source');
+            const projectId = createdProject.project.insertedId;
 
-            // Paso 2: Agregar al organizador al equipo del proyecto
+            // Paso 2: Subir la imagen del proyecto (si el usuario seleccionó una)
+            if (projectImage) {
+                const uploadedImage = await uploadProjectImage(projectId, projectImage);
+                console.log('Imagen subida con éxito:', uploadedImage.imageUrl);
+            }
+
+            // Paso 3: Agregar al organizador al equipo del proyecto
             await addMemberToProjectTeam(
-                createdProject.project._id,
+                projectId,
                 authState.user._id,
                 'Organizador',
                 null

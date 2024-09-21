@@ -77,3 +77,21 @@ export const createProject = async (userId, projectData, type) => {
         throw new Error(error.message || 'Ocurrió un error al intentar crear el proyecto.');
     }
 };
+
+export const uploadProjectImage = async (projectId, projectImage) => {
+
+    const formData = new FormData();
+    formData.append('projectImage', projectImage);
+
+    const response = await fetch(`${API_URL}/projects/${projectId}/image`, {
+        method: 'POST',
+        body: formData,
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al subir la imagen del proyecto.');
+    }
+
+    return await response.json(); // Devolver la URL de la imagen subida
+};
