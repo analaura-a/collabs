@@ -3,7 +3,7 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const ProjectCard = ({ project }) => {
 
-    const { _id, cover, name, about, founder, open_positions } = project;
+    const { _id, cover, name, about, organizer_name, organizer_photo, open_positions } = project;
 
     return (
         <article className="user-card">
@@ -22,10 +22,10 @@ const ProjectCard = ({ project }) => {
 
                         <div className="project-card__project-info__created-by">
                             <div className="project-card__project-info__created-by-img">
-                                <img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil de {name}" />
+                                <img src={organizer_photo ? `${SERVER_BASE_URL}${organizer_photo}` : "../assets/jpg/no-profile-picture.jpg"} alt={`Foto de perfil de ${organizer_name}`} />
                             </div>
 
-                            <p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">Ana Laura Almirón</span></p>
+                            <p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">{organizer_name}</span></p>
                         </div>
                     </div>
 

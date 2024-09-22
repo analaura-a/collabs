@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getOpenProjects } from '../../services/projectService';
+import { getUserById } from '../../services/userService';
 import Tabs from '../../components/Tabs/Tabs';
 import ProjectCard from '../../components/Cards/ProjectCard';
 import SearchAndFilters from '../../components/Inputs/SearchAndFilters';
@@ -26,13 +27,25 @@ const ExploreProjectsPage = () => {
 
     const fetchProjects = async () => {
         try {
-            //Obtener todos los proyectos
+            // Obtener todos los proyectos
             const fetchedProjects = await getOpenProjects();
-            setProjects(fetchedProjects);
+
+            // Para cada proyecto, hacemos una petición adicional para obtener los datos del organizador
+            const enrichedProjects = await Promise.all(fetchedProjects.map(async (project) => {
+                const organizerDetails = await getUserById(project.founder_id);
+
+                return {
+                    ...project,
+                    organizer_name: organizerDetails.name + " " + organizerDetails.last_name,
+                    organizer_photo: organizerDetails.profile_pic
+                };
+            }));
+
+            setProjects(enrichedProjects);
 
             // Filtrar por tipo
-            const personal = fetchedProjects.filter(project => project.type === 'Personal');
-            const openSource = fetchedProjects.filter(project => project.type === 'Open-source');
+            const personal = enrichedProjects.filter(project => project.type === 'Personal');
+            const openSource = enrichedProjects.filter(project => project.type === 'Open-source');
             setPersonalProjects(personal);
             setFilteredPersonalProjects(personal);
             setOpenSourceProjects(openSource);
