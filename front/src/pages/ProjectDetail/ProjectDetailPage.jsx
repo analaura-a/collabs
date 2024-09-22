@@ -17,6 +17,8 @@ const ProjectDetailPage = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const maxLength = 500;
 
+    const navigate = useNavigate();
+
     const fetchProject = async () => {
         try {
             const projectData = await getProjectById(id);
@@ -279,7 +281,7 @@ const ProjectDetailPage = () => {
                                         <h2 className="title-24">¿Buscando colaboradores para tu próximo proyecto?</h2>
                                         <p className="light-paragraph">Publica una nueva convocatoria, selecciona candidatos y forma un equipo para tu proyecto.</p>
                                     </div>
-                                    <Button width="fullwidth" size="large">Crear convocatoria</Button>
+                                    <Button width="fullwidth" size="large" onClick={() => navigate('/nueva-convocatoria')}>Crear convocatoria</Button>
                                 </>
                             ) : (
                                 <>
@@ -287,7 +289,7 @@ const ProjectDetailPage = () => {
                                         <h2 className="title-24">¿Buscando colaboradores para tu próximo proyecto?</h2>
                                         <p className="light-paragraph">Publica una nueva convocatoria y conduce a las personas interesadas en contribuir a tu repositorio.</p>
                                     </div>
-                                    <Button width="fullwidth" size="large">Crear convocatoria</Button>
+                                    <Button width="fullwidth" size="large" onClick={() => navigate('/nueva-convocatoria')}>Crear convocatoria</Button>
                                 </>
                             )}
 
