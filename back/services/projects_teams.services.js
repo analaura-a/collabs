@@ -31,11 +31,33 @@ const getProjectOrganizers = async (projectId) => {
     try {
         await client.connect();
 
+        // Obtener organizadores del proyecto
         const organizers = await db.collection('projects_teams')
             .find({ project_id: new ObjectId(projectId), role: 'Organizador' })
             .toArray();
 
-        return organizers;
+        const organizerIds = organizers.map(org => org.user_id);
+
+        // Realizar consulta en la colección 'users' para obtener los datos de los organizadores
+        const organizerDetails = await db.collection('users')
+            .find({ _id: { $in: organizerIds } })
+            .toArray();
+
+        // Combinar los datos de ambas colecciones
+        const enrichedOrganizers = organizers.map(org => {
+            const userDetail = organizerDetails.find(user => user._id.equals(org.user_id));
+            return {
+                ...org,
+                name: userDetail?.name,
+                last_name: userDetail?.last_name,
+                username: userDetail?.username,
+                bio: userDetail?.bio,
+                location: userDetail?.location,
+                profile_pic: userDetail?.profile_pic,
+            };
+        });
+
+        return enrichedOrganizers;
     } catch (error) {
         throw new Error(`Error al obtener los organizadores del proyecto: ${error.message}`);
     }
