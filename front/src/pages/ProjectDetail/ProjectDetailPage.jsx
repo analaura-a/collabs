@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthContext"; //Para que, si es un proyecto creado por el usuario, redirigirlo al dashboard
+import AuthContext from "../../context/AuthContext"; //Para verificar que, si el usuario ya está en el equipo del proyecto, este no pueda postularse
 import { getProjectById } from "../../services/projectService";
 import { createRequest } from "../../services/requestService";
 import Button from "../../components/Button/Button";
@@ -178,9 +178,9 @@ const ProjectDetailPage = () => {
                             <h2 className="title-24">Colaboradores buscados</h2>
 
                             <div className="project-detail-page__about-column__project-info-positions__accordion-container">
-                                {project.open_positions.map((position, index) => (
+                                {project.open_positions.map((position) => (
                                     <PositionAccordion
-                                        key={index}
+                                        key={position._id}
                                         positionTitle={position.profile}
                                         requiredSkills={position.required_skills}
                                         desiredSkills={position.desired_skills}
@@ -213,21 +213,20 @@ const ProjectDetailPage = () => {
 
                                         <form className="edit-profile-page__form-container__inputs-container">
 
-                                            {/* Cambiar index por position.open_position_id */}
-                                            {project.open_positions.map((position, index) => (
-                                                <div key={index} className={`checkbox-item ${selectedPosition === position ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position)}>
+                                            {project.open_positions.map((position) => (
+                                                <div key={position._id} className={`checkbox-item ${selectedPosition === position ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position)}>
 
                                                     <input
                                                         type="radio"
                                                         name="open_position"
-                                                        id={index}
-                                                        value={position.profile}
-                                                        checked={selectedPosition === position.profile}
+                                                        id={position._id}
+                                                        value={position._id}
+                                                        checked={selectedPosition === position._id}
                                                         onChange={(e) => e.stopPropagation()}
                                                         className="hidden-input"
                                                     />
 
-                                                    <label htmlFor={index} className="subtitle bold-text">
+                                                    <label htmlFor={position._id} className="subtitle bold-text">
                                                         {position.profile}
                                                     </label>
 
@@ -244,9 +243,8 @@ const ProjectDetailPage = () => {
 
                                         <ul className="project-detail-page__positions__open-source">
 
-                                            {/* Cambiar index por position.open_position_id */}
-                                            {project.open_positions.map((position, index) => (
-                                                <li key={index} className="subtitle">{position.profile}</li>
+                                            {project.open_positions.map((position) => (
+                                                <li key={position._id} className="subtitle">{position.profile}</li>
                                             ))}
 
                                         </ul>
