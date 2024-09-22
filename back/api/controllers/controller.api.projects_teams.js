@@ -25,6 +25,19 @@ const addMemberToProjectTeam = async (req, res) => {
     }
 };
 
+// Obtener a los organizadores de un proyecto
+const getProjectOrganizers = async (req, res) => {
+
+    const { projectId } = req.params;
+
+    try {
+        const organizers = await service.getProjectOrganizers(projectId);
+        return res.status(200).json(organizers);
+    } catch (error) {
+        return res.status(400).json({ message: `Error al obtener los organizadores del proyecto: ${error.message}` });
+    }
+};
+
 // //Obtener el equipo de un proyecto en particular
 // const getTeamByProjectId = (req, res) => {
 
@@ -109,7 +122,8 @@ const addMemberToProjectTeam = async (req, res) => {
 
 
 export {
-    addMemberToProjectTeam
+    addMemberToProjectTeam,
+    getProjectOrganizers
     // getTeamByProjectId,
     // createTeam,
     // editTeam,

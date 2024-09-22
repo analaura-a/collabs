@@ -25,6 +25,21 @@ const addMemberToProjectTeam = async ({ projectId, userId, role, profile }) => {
     }
 };
 
+// Obtener a los organizadores de un proyecto
+const getProjectOrganizers = async (projectId) => {
+
+    try {
+        await client.connect();
+
+        const organizers = await db.collection('projects_teams')
+            .find({ project_id: new ObjectId(projectId), role: 'Organizador' })
+            .toArray();
+
+        return organizers;
+    } catch (error) {
+        throw new Error(`Error al obtener los organizadores del proyecto: ${error.message}`);
+    }
+};
 
 // //Obtener el equipo de un proyecto en particular
 // async function getTeamByProjectId(id) {
@@ -77,7 +92,8 @@ const addMemberToProjectTeam = async ({ projectId, userId, role, profile }) => {
 // }
 
 export {
-    addMemberToProjectTeam
+    addMemberToProjectTeam,
+    getProjectOrganizers
     // getTeamByProjectId,
     // createTeam,
     // editTeam,

@@ -1,14 +1,17 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects_teams.js';
-import { verifyUserOwnership } from '../../middleware/token.validate.middleware.js';
+import { verifyUserOwnership, validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
 // import { validateTeamCreate, validateTeamPatch, validateTeamMemberPatch } from '../../middleware/projects_teams.validate.middleware.js'
 // import { validateTokenMiddleware } from '../../middleware/token.validate.middleware.js'
 
 const route = Router();
 
-/* API EQUIPOS DE PROYECTOS */
+/* API MIEMBROS DE PROYECTOS */
 // Agregar miembro al equipo de un proyecto
 route.post('/project_teams', [verifyUserOwnership], controllers.addMemberToProjectTeam);
+
+// Obtener a los organizadores de un proyecto
+route.get('/projects/:projectId/organizers', [validateTokenMiddleware], controllers.getProjectOrganizers);
 
 // //Obtener el equipo de un proyecto en particular
 // route.get('/projects/:id/team', [validateTokenMiddleware], controllers.getTeamByProjectId);
