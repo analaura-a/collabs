@@ -5,6 +5,7 @@ import { getProjectById } from "../../services/projectService";
 import { createRequest } from "../../services/requestService";
 import Button from "../../components/Button/Button";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const ProjectDetailPage = () => {
 
@@ -123,7 +124,7 @@ const ProjectDetailPage = () => {
                             </div>
 
                             <div className="project-detail-page__about-column__img">
-                                <img src="https://images.pexels.com/photos/25568845/pexels-photo-25568845/free-photo-of-hombre-pareja-mujer-en-pie.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Imagen de portada del proyecto" />
+                                <img src={project.cover ? `${SERVER_BASE_URL}${project.cover}` : "../assets/jpg/no-project-picture.jpg"} alt={`Portada del proyecto ${project.name}`} />
                             </div>
                         </div>
 

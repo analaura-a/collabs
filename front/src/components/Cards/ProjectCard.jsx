@@ -3,14 +3,14 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const ProjectCard = ({ project }) => {
 
-    const { _id, img, name, about, founder, open_positions } = project;
+    const { _id, cover, name, about, founder, open_positions } = project;
 
     return (
         <article className="user-card">
             <Link to={`/proyectos/${_id}`} className="project-card__link">
 
                 <div className="project-card__photo">
-                    <img src={img} alt={`Portada del proyecto ${name}.`} />
+                    <img src={cover ? `${SERVER_BASE_URL}${cover}` : "../assets/jpg/no-project-picture.jpg"} alt={`Portada del proyecto ${name}`} />
                 </div>
 
                 <div className="project-card__content">
