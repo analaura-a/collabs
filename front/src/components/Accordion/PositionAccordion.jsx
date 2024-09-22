@@ -30,15 +30,18 @@ const PositionAccordion = ({ positionTitle, requiredSkills, desiredSkills }) => 
                     </ul>
                 </div>
 
-                <div className="accordion__section">
-                    <h3 className="subtitle bold-text">Skills deseables:</h3>
+                {desiredSkills > 0 &&
+                    <div className="accordion__section">
+                        <h3 className="subtitle bold-text">Skills deseables:</h3>
 
-                    <ul className="accordion__section__skills">
-                        {desiredSkills.map((skill, index) => (
-                            <li key={index} className="smaller-paragraph accordion__desired-skills">{skill}</li>
-                        ))}
-                    </ul>
-                </div>
+                        <ul className="accordion__section__skills">
+                            {desiredSkills.map((skill, index) => (
+                                <li key={index} className="smaller-paragraph accordion__desired-skills">{skill}</li>
+                            ))}
+                        </ul>
+                    </div>
+                }
+
             </div>
 
         </div>
