@@ -91,6 +91,12 @@ const AppRoutes = createBrowserRouter([
                 </ProtectedRoute>),
             },
             {
+                path: "/mis-proyectos/:id",
+                element: (<ProtectedRoute>
+                    <ProjectDashboard />
+                </ProtectedRoute>),
+            },
+            {
                 path: "/nueva-convocatoria",
                 element: (<ProtectedRoute>
                     <NewProjectPage />
@@ -107,13 +113,7 @@ const AppRoutes = createBrowserRouter([
                 element: (<ProtectedRoute>
                     <CreatOpenSourceProjectPage />
                 </ProtectedRoute>),
-            },
-            {
-                path: "/dashboard-proyecto/:id",
-                element: (<ProtectedRoute>
-                    <ProjectDashboard />
-                </ProtectedRoute>),
-            },
+            }
         ]
     },
     {

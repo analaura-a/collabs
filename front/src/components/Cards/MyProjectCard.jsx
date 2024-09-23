@@ -4,7 +4,7 @@ const MyProjectCard = ({ project }) => {
 
     return (
         <article className="my-project-card">
-            <Link to={`/proyectos/`} className="my-project-card__link"> {/* Link dinámico */}
+            <Link to={`/mis-proyectos/${project._id}`} className="my-project-card__link"> {/* Link dinámico */}
 
                 <p className="my-project-card__tag subtitle medium-text primary-color-text">{project.type}</p>
 
