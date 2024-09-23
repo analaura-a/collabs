@@ -1,27 +1,32 @@
 import { Link } from 'react-router-dom';
 
-const MyProjectCard = () => {
+const MyProjectCard = ({ project }) => {
 
     return (
         <article className="my-project-card">
-            <Link to={`/proyectos/`} className="my-project-card__link">
+            <Link to={`/proyectos/`} className="my-project-card__link"> {/* Link dinámico */}
 
-                <p className="my-project-card__tag subtitle medium-text primary-color-text">Personal</p>
+                <p className="my-project-card__tag subtitle medium-text primary-color-text">{project.type}</p>
 
                 <div className="my-project-card__info">
-                    <h2 className="title-20 medium-text">Web para adoptar mascotas rescatadas de la calle</h2>
+                    <h2 className="title-20 medium-text">{project.name}</h2>
 
-                    <p className="paragraph">La idea es crear una web desde 0 para que mascotas sin hogar puedan ser adoptadas por personas buscando ul...</p>
+                    <p className="paragraph truncated-description-3">{project.about}</p>
 
                     <div className="my-project-card__info__date">
                         <img src="../assets/svg/clock.svg" alt="Reloj" />
-                        <p className="smaller-paragraph-light">Creado el 19/10/2023</p>
+                        <p className="smaller-paragraph-light">Creado el {new Date(project.created_at).toLocaleDateString()}</p>
                     </div>
                 </div>
 
                 <div className="my-project-card__team">
-                    <h3 className="title-18">Colaboradores</h3>
+                    {project.type === "Personal" ? (
+                        <h3 className="title-18">Colaboradores</h3>
+                    ) : (
+                        <h3 className="title-18">Organizadores</h3>
+                    )}
 
+                    {/* Mostrar dinámicamente: */}
                     <div className="my-project-card__team__photos">
                         <div className="my-project-card__team__profile-pic">
                             <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
