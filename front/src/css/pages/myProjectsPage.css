@@ -54,6 +54,10 @@
     padding: 24px 0 0 0;
 }
 
+.my-projects-page__empty-state-tabs {
+    padding: 72px 0 16px 0;
+}
+
 
 
 @media only screen and (min-width: 700px) {
@@ -90,6 +94,10 @@
 
         width: fit-content;
         margin: 0 auto;
+    }
+
+    .my-projects-page__empty-state-tabs {
+        padding: 96px 0 0 0;
     }
 
 }

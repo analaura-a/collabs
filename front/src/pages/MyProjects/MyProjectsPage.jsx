@@ -47,7 +47,16 @@ const MyProjectsPage = () => {
                     ))}
                 </div>
             ) : (
-                <div className="empty-state">No tienes proyectos abiertos.</div>
+                <div className="my-projects-page__empty-state-tabs">
+                    <div className="my-projects-page__empty-state__title">
+                        <img src="../../assets/svg/projects-empty-state.svg" alt="Sin postulaciones" />
+
+                        <div>
+                            <h2 className="title-32-medium">No tienes proyectos abiertos</h2>
+                            <p className="subtitle-18">Cuando un proyecto tenga su convocatoria abierta, aparecerá aquí.</p>
+                        </div>
+                    </div>
+                </div>
             )
         },
         {
@@ -59,7 +68,16 @@ const MyProjectsPage = () => {
                     ))}
                 </div>
             ) : (
-                <div className="empty-state">No tienes proyectos en curso.</div>
+                <div className="my-projects-page__empty-state-tabs">
+                    <div className="my-projects-page__empty-state__title">
+                        <img src="../../assets/svg/projects-empty-state.svg" alt="Sin postulaciones" />
+
+                        <div>
+                            <h2 className="title-32-medium">No tienes proyectos en curso</h2>
+                            <p className="subtitle-18">Una vez que finalicen las convocatorias y el proyecto tenga un equipo de personas conformado, su estado podrá ser cambiado a “en curso” y podrás empezar a trabajar en él.</p>
+                        </div>
+                    </div>
+                </div>
             )
         },
         {
@@ -71,7 +89,16 @@ const MyProjectsPage = () => {
                     ))}
                 </div>
             ) : (
-                <div className="empty-state">No tienes proyectos finalizados.</div>
+                <div className="my-projects-page__empty-state-tabs">
+                    <div className="my-projects-page__empty-state__title">
+                        <img src="../../assets/svg/projects-empty-state.svg" alt="Sin postulaciones" />
+
+                        <div>
+                            <h2 className="title-32-medium">No tienes proyectos finalizados</h2>
+                            <p className="subtitle-18">Una vez que tu equipo y tú terminen de trabajar en algún proyecto en particular, podrán cambiar su estado a “finalizado”.</p>
+                        </div>
+                    </div>
+                </div>
             )
         }
     ];
