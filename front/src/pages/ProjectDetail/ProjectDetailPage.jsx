@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext"; //Para verificar que, si el usuario ya está en el equipo del proyecto, este no pueda postularse
 import { getProjectById } from "../../services/projectService";
+import { getProjectOrganizers } from "../../services/teamService";
 import { createRequest } from "../../services/requestService";
 import Button from "../../components/Button/Button";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
@@ -12,6 +13,8 @@ const ProjectDetailPage = () => {
     const { id } = useParams();
 
     const [project, setProject] = useState(null);
+    const [organizers, setOrganizers] = useState([]);
+
     const [selectedPosition, setSelectedPosition] = useState(null);
 
     const [loading, setLoading] = useState(true);
@@ -22,8 +25,14 @@ const ProjectDetailPage = () => {
 
     const fetchProject = async () => {
         try {
+            // Obtener los detalles del proyecto
             const projectData = await getProjectById(id);
             setProject(projectData);
+
+            // Obtener los organizadores del proyecto
+            const projectOrganizers = await getProjectOrganizers(id);
+            setOrganizers(projectOrganizers);
+
             setLoading(false);
         } catch (error) {
             console.error('Error al obtener el proyecto:', error);
@@ -260,19 +269,23 @@ const ProjectDetailPage = () => {
 
                         </div>
 
-                        <div className="project-detail-page__join-column__blocks project-detail-page__join-column__hosts">
-                            <h2 className="title-24">Organizado por</h2>
+                        {organizers.length > 0 &&
+                            <div className="project-detail-page__join-column__blocks project-detail-page__join-column__hosts">
+                                <h2 className="title-24">Organizado por</h2>
 
-                            <Link to={"/explorar/proyectos"} className="project-detail-page__join-column__profile">
-                                <div className="project-detail-page__join-column__profile__img">
-                                    <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt="" />
-                                </div>
-                                <div>
-                                    <h3 className="subtitle bold-text black-color-text">Manuel Pérez</h3>
-                                    <p className="smaller-paragraph-light">Buenos Aires, Argentina</p>
-                                </div>
-                            </Link>
-                        </div>
+                                {organizers.map((organizer) => (
+                                    <Link to={`/colaboradores/${organizer.username}`} key={organizer.user_id} className="project-detail-page__join-column__profile">
+                                        <div className="project-detail-page__join-column__profile__img">
+                                            <img src={organizer.profile_pic ? `${SERVER_BASE_URL}${organizer.profile_pic}` : "../assets/jpg/no-profile-picture.jpg"} alt={`Foto de perfil de ${organizer.name}`} />
+                                        </div>
+                                        <div>
+                                            <h3 className="subtitle bold-text black-color-text">{organizer.name} {organizer.last_name}</h3>
+                                            {organizer.location && <p className="smaller-paragraph-light">Buenos Aires, Argentina</p>}
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        }
 
                         <div className="project-detail-page__join-column__blocks project-detail-page__join-column__call-to-action">
 

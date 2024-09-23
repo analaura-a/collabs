@@ -34,3 +34,30 @@ export const addMemberToProjectTeam = async (projectId, userId, role, profile) =
         throw error;
     }
 };
+
+export const getProjectOrganizers = async (projectId) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            throw new Error('No se encontró el token de autenticación');
+        }
+
+        const response = await fetch(`${API_URL}/projects/${projectId}/organizers`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Ocurrió un error al intentar obtener los organizadores del proyecto');
+        }
+        const organizers = await response.json();
+        return organizers;
+    } catch (error) {
+        console.error('Error al obtener los organizadores:', error);
+        throw error;
+    }
+};
