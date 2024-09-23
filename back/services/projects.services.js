@@ -107,6 +107,7 @@ const getUserProjects = async (userId) => {
         // 2. Obtener los datos de los proyectos a partir de los projectIds
         const projects = await db.collection('projects')
             .find({ _id: { $in: projectIds } })
+            .sort({ created_at: -1 })
             .toArray();
 
         // 3. Clasificar los proyectos por su estado
