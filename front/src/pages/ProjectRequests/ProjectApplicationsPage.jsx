@@ -26,7 +26,7 @@ const ProjectApplicationsPage = () => {
             const enrichedRequests = await Promise.all(userRequests.map(async (application) => {
 
                 const projectDetails = await getProjectById(application.project_id);
-                const organizerDetails = await getUserById(application.user_id);
+                const organizerDetails = await getUserById(projectDetails.founder_id);
 
                 return {
                     ...application,
