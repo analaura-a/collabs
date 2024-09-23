@@ -23,6 +23,7 @@ import MyProjectsPage from '../pages/MyProjects/MyProjectsPage.jsx'
 import NewProjectPage from '../pages/CreateProject/NewProjectPage.jsx'
 import CreatePersonalProjectPage from '../pages/CreateProject/CreatePersonalProjectPage.jsx'
 import CreatOpenSourceProjectPage from '../pages/CreateProject/CreatOpenSourceProjectPage.jsx'
+import ProjectDashboard from '../pages/ProjectDashboard/ProjectDashboard.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -105,6 +106,12 @@ const AppRoutes = createBrowserRouter([
                 path: "/nueva-convocatoria/open-source",
                 element: (<ProtectedRoute>
                     <CreatOpenSourceProjectPage />
+                </ProtectedRoute>),
+            },
+            {
+                path: "/dashboard-proyecto/:id",
+                element: (<ProtectedRoute>
+                    <ProjectDashboard />
                 </ProtectedRoute>),
             },
         ]
