@@ -36,6 +36,9 @@ route.get('/projects/open', controllers.getOpenProjects)
 //Obtener un proyecto en particular por ID
 route.get('/projects/:id', [validateTokenMiddleware], controllers.getProjectById)
 
+//Obtener todos los proyectos de los que un usuario es parte
+route.get('/users/:userId/projects', [validateTokenMiddleware], controllers.getUserProjects);
+
 // Crear un nuevo proyecto
 route.post('/projects', [verifyUserOwnership], controllers.createProject);
 

@@ -89,6 +89,24 @@ const getProjectById = async (req, res) => {
 
 };
 
+//Obtener todos los proyectos de los que un usuario es parte
+const getUserProjects = async (req, res) => {
+
+    const { userId } = req.params;
+
+    try {
+        const projects = await service.getUserProjects(userId);
+
+        return res.status(200).json({
+            openProjects: projects.open,
+            inProgressProjects: projects.inProgress,
+            completedProjects: projects.completed
+        });
+    } catch (error) {
+        return res.status(500).json({ message: 'Error al obtener los proyectos del usuario.', error: error.message });
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (req, res) => {
 
@@ -168,6 +186,7 @@ export {
     // getProjectsOpenSource,
     // getProjectsByUser,
     getProjectById,
+    getUserProjects,
     createProject,
     uploadProjectImage
     // editProject,

@@ -87,6 +87,44 @@ async function getProjectById(id) {
 
 }
 
+//Obtener todos los proyectos de los que un usuario es parte
+const getUserProjects = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Buscar todos los proyectos en los que el usuario es parte
+        const projectMemberships = await db.collection('projects_teams')
+            .find({ user_id: new ObjectId(userId) })
+            .toArray();
+
+        const projectIds = projectMemberships.map(membership => membership.project_id);
+
+        if (projectIds.length === 0) {
+            return { open: [], inProgress: [], completed: [] };
+        }
+
+        // 2. Obtener los datos de los proyectos a partir de los projectIds
+        const projects = await db.collection('projects')
+            .find({ _id: { $in: projectIds } })
+            .toArray();
+
+        // 3. Clasificar los proyectos por su estado
+        const openProjects = projects.filter(project => project.status === 'Abierto');
+        const inProgressProjects = projects.filter(project => project.status === 'En curso');
+        const completedProjects = projects.filter(project => project.status === 'Finalizado');
+
+        return {
+            open: openProjects,
+            inProgress: inProgressProjects,
+            completed: completedProjects
+        };
+
+    } catch (error) {
+        throw new Error('Error al obtener los proyectos del usuario: ' + error.message);
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (userId, projectData, type) => {
 
@@ -152,6 +190,7 @@ export {
     // getProjectsOpenSource,
     // getProjectsByUser,
     getProjectById,
+    getUserProjects,
     createProject,
     updateProjectImage
     // editProject,
