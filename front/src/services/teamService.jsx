@@ -61,3 +61,27 @@ export const getProjectOrganizers = async (projectId) => {
         throw error;
     }
 };
+
+export const checkUserInProjectTeam = async (projectId, userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/projects/${projectId}/team/check-user/${userId}`, {
+        method: 'GET',
+        headers: {
+            'auth-token': token,
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error al verificar si el usuario está en el equipo.');
+    }
+
+    const data = await response.json();
+    return data.isMember;
+};

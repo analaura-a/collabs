@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext"; //Para verificar que, si el usuario ya está en el equipo del proyecto, este no pueda postularse
 import { getProjectById } from "../../services/projectService";
-import { getProjectOrganizers } from "../../services/teamService";
+import { getProjectOrganizers, checkUserInProjectTeam } from "../../services/teamService";
 import { createRequest } from "../../services/requestService";
 import Button from "../../components/Button/Button";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
@@ -19,6 +19,7 @@ const ProjectDetailPage = () => {
     const [organizers, setOrganizers] = useState([]);
 
     const [selectedPosition, setSelectedPosition] = useState(null);
+    const [isUserInTeam, setIsUserInTeam] = useState(false);
 
     const [loading, setLoading] = useState(true);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -35,6 +36,10 @@ const ProjectDetailPage = () => {
             // Obtener los organizadores del proyecto
             const projectOrganizers = await getProjectOrganizers(id);
             setOrganizers(projectOrganizers);
+
+            // Verificar si el usuario ya está en el equipo del proyecto
+            const userInTeam = await checkUserInProjectTeam(id, user._id);
+            setIsUserInTeam(userInTeam);
 
             setLoading(false);
         } catch (error) {
@@ -222,53 +227,53 @@ const ProjectDetailPage = () => {
                             </div>
 
                             <div className="project-detail-page__positions">
+                                {
+                                    project.type == "Personal" ? (
+                                        <>
+                                            <h2 className="title-24">Quiero colaborar como...</h2>
 
-                                {project.type == "Personal" ? (
-                                    <>
-                                        <h2 className="title-24">Quiero colaborar como...</h2>
+                                            <form className="edit-profile-page__form-container__inputs-container">
+                                                {project.open_positions.map((position) => (
+                                                    <div key={position._id} className={`checkbox-item ${selectedPosition === position._id ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position._id)}>
 
-                                        <form className="edit-profile-page__form-container__inputs-container">
+                                                        <input
+                                                            type="radio"
+                                                            name="open_position"
+                                                            id={position._id}
+                                                            value={position._id}
+                                                            checked={selectedPosition === position._id}
+                                                            onChange={(e) => e.stopPropagation()}
+                                                            className="hidden-input"
+                                                        />
 
-                                            {project.open_positions.map((position) => (
-                                                <div key={position._id} className={`checkbox-item ${selectedPosition === position._id ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position._id)}>
+                                                        <label htmlFor={position._id} className="subtitle bold-text">
+                                                            {position.profile}
+                                                        </label>
 
-                                                    <input
-                                                        type="radio"
-                                                        name="open_position"
-                                                        id={position._id}
-                                                        value={position._id}
-                                                        checked={selectedPosition === position._id}
-                                                        onChange={(e) => e.stopPropagation()}
-                                                        className="hidden-input"
-                                                    />
+                                                    </div>
+                                                ))}
+                                            </form>
 
-                                                    <label htmlFor={position._id} className="subtitle bold-text">
-                                                        {position.profile}
-                                                    </label>
+                                            {!isUserInTeam ? (
+                                                <Button width="fullwidth" size="large" onClick={handleApplicationSubmit}>Postularme</Button>
+                                            ) : (
+                                                <Button width="fullwidth" size="large" onClick={() => { console.log("Ya eres parte de este proyecto") }}>Postularme</Button>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h2 className="title-24">Colaboradores buscados</h2>
 
-                                                </div>
-                                            ))}
+                                            <ul className="project-detail-page__positions__open-source">
+                                                {project.open_positions.map((position) => (
+                                                    <li key={position._id} className="subtitle">{position.profile}</li>
+                                                ))}
+                                            </ul>
 
-                                        </form>
-
-                                        <Button width="fullwidth" size="large" onClick={handleApplicationSubmit}>Postularme</Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <h2 className="title-24">Colaboradores buscados</h2>
-
-                                        <ul className="project-detail-page__positions__open-source">
-
-                                            {project.open_positions.map((position) => (
-                                                <li key={position._id} className="subtitle">{position.profile}</li>
-                                            ))}
-
-                                        </ul>
-
-                                        <Button width="fullwidth" size="large" onClick={() => handleExternalRedirect(project.url)}>Quiero contribuir</Button>
-                                    </>
-                                )}
-
+                                            <Button width="fullwidth" size="large" onClick={() => handleExternalRedirect(project.url)}>Quiero contribuir</Button>
+                                        </>
+                                    )
+                                }
                             </div>
 
                         </div>
