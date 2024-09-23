@@ -13,6 +13,9 @@ route.post('/project_teams', [verifyUserOwnership], controllers.addMemberToProje
 // Obtener a los organizadores de un proyecto
 route.get('/projects/:projectId/organizers', [validateTokenMiddleware], controllers.getProjectOrganizers);
 
+// Verificar si un usuario ya está en el equipo de un proyecto
+route.get('/projects/:projectId/team/check-user/:userId', [validateTokenMiddleware], controllers.isUserInTeam);
+
 // //Obtener el equipo de un proyecto en particular
 // route.get('/projects/:id/team', [validateTokenMiddleware], controllers.getTeamByProjectId);
 

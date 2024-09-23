@@ -63,6 +63,21 @@ const getProjectOrganizers = async (projectId) => {
     }
 };
 
+// Verificar si un usuario ya está en el equipo de un proyecto
+const isUserInTeam = async (projectId, userId) => {
+
+    try {
+        const member = await db.collection('projects_teams').findOne({
+            project_id: new ObjectId(projectId),
+            user_id: new ObjectId(userId),
+        });
+
+        return !!member; // Retorna `true` si es miembro, `false` si no lo es
+    } catch (error) {
+        throw new Error('Error al verificar si el usuario está en el equipo: ' + error.message);
+    }
+};
+
 // //Obtener el equipo de un proyecto en particular
 // async function getTeamByProjectId(id) {
 //     return db.collection("projects_teams").findOne({ project_id: id });
@@ -115,7 +130,8 @@ const getProjectOrganizers = async (projectId) => {
 
 export {
     addMemberToProjectTeam,
-    getProjectOrganizers
+    getProjectOrganizers,
+    isUserInTeam
     // getTeamByProjectId,
     // createTeam,
     // editTeam,

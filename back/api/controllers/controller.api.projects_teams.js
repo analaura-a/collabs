@@ -38,6 +38,25 @@ const getProjectOrganizers = async (req, res) => {
     }
 };
 
+// Verificar si un usuario ya está en el equipo de un proyecto
+const isUserInTeam = async (req, res) => {
+
+    const { projectId, userId } = req.params;
+
+    try {
+        const isMember = await service.isUserInTeam(projectId, userId);
+
+        if (isMember) {
+            return res.status(200).json({ isMember: true });
+        } else {
+            return res.status(200).json({ isMember: false });
+        }
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Error al verificar si el usuario está en el equipo', error: error.message });
+    }
+};
+
 // //Obtener el equipo de un proyecto en particular
 // const getTeamByProjectId = (req, res) => {
 
@@ -123,7 +142,8 @@ const getProjectOrganizers = async (req, res) => {
 
 export {
     addMemberToProjectTeam,
-    getProjectOrganizers
+    getProjectOrganizers,
+    isUserInTeam
     // getTeamByProjectId,
     // createTeam,
     // editTeam,
