@@ -12,6 +12,9 @@ const ProjectDetailPage = () => {
 
     const { id } = useParams();
 
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
+
     const [project, setProject] = useState(null);
     const [organizers, setOrganizers] = useState([]);
 
@@ -66,41 +69,42 @@ const ProjectDetailPage = () => {
 
     const handleApplicationSubmit = async () => {
 
+        // Verificar si hay una posición seleccionada
         if (!selectedPosition) {
-            console.log('Por favor selecciona un rol para postularte.');
+            console.log('Por favor selecciona un rol para postularte.'); //Mostrar al usuario
             return;
         }
 
-        // // Buscar el "profile" de la posición seleccionada
-        // const selectedPositionObj = project.open_positions.find(
-        //     (position) => position._id === selectedPosition
-        // );
+        // Buscar el "profile" de la posición seleccionada
+        const selectedPositionObj = project.open_positions.find(
+            (position) => position._id === selectedPosition
+        );
 
-        // if (!selectedPositionObj) {
-        //     console.log('Posición seleccionada no encontrada.');
-        //     return;
-        // }
+        if (!selectedPositionObj) {
+            console.error('Posición seleccionada no encontrada.');
+            return;
+        }
 
-        // const appliedRole = selectedPositionObj.profile;
+        const appliedRole = selectedPositionObj.profile;
 
-        // try {
-        //     await createRequest({
-        //         userId: user._id,
-        //         projectId: project._id,
-        //         appliedRole,
-        //         openPositionId: selectedPosition,  // selectedPosition ahora contiene el openPositionId
-        //     });
+        // Crear la postulación
+        try {
+            await createRequest({
+                userId: user._id,
+                projectId: project._id,
+                appliedRole,
+                openPositionId: selectedPosition,
+            });
 
-        //     console.log('¡Te has postulado con éxito!');
-        // } catch (error) {
-        //     if (error.response && error.response.status === 409) {
-        //         console.log('Ya te has postulado para esta posición.');
-        //     } else {
-        //         console.log('Ocurrió un error al enviar la postulación. Inténtalo de nuevo más tarde.');
-        //     }
-        // }
+            console.log('¡Te has postulado con éxito!'); //Mostrar al usuario
+        } catch (error) {
+            if (error.message === '409') {
+                console.log('Ya te has postulado para esta posición.'); //Mostrar al usuario
+            } else {
+                console.log('Ocurrió un error al enviar la postulación. Inténtalo de nuevo más tarde.'); //Mostrar al usuario
+            }
+        }
     };
-
 
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
@@ -226,7 +230,7 @@ const ProjectDetailPage = () => {
                                         <form className="edit-profile-page__form-container__inputs-container">
 
                                             {project.open_positions.map((position) => (
-                                                <div key={position._id} className={`checkbox-item ${selectedPosition === position ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position)}>
+                                                <div key={position._id} className={`checkbox-item ${selectedPosition === position._id ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position._id)}>
 
                                                     <input
                                                         type="radio"

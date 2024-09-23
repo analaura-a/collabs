@@ -24,7 +24,7 @@ export const getRequestsByUserId = async (userId) => {
     return await response.json();
 };
 
-export const createRequest = async (requestData, userId) => {
+export const createRequest = async (userId, requestData) => {
 
     const token = localStorage.getItem('token');
 
@@ -38,11 +38,16 @@ export const createRequest = async (requestData, userId) => {
             'Content-Type': 'application/json',
             'auth-token': token
         },
-        body: JSON.stringify(requestData, userId)
+        body: JSON.stringify(userId, requestData)
     });
 
     if (!response.ok) {
         const errorData = await response.json();
+
+        if (response.status === 409) {
+            throw new Error('409');
+        }
+
         throw new Error(errorData.message || 'Ocurrió un error al intentar enviar la postulación.');
     }
 
