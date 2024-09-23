@@ -30,7 +30,7 @@ const PositionAccordion = ({ positionTitle, requiredSkills, desiredSkills }) => 
                     </ul>
                 </div>
 
-                {desiredSkills > 0 &&
+                {desiredSkills.length > 0 &&
                     <div className="accordion__section">
                         <h3 className="subtitle bold-text">Skills deseables:</h3>
 
