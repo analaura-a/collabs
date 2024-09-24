@@ -98,7 +98,7 @@ const CreatePersonalProjectPage = () => {
 
             console.log("Proyecto creado con éxito"); //Notificar al usuario
 
-            navigate('/mis-proyectos'); // Redirigir al dashboard del proyecto
+            navigate(`/mis-proyectos/${projectId}`);
         } catch (error) {
             console.error('Error al completar la creación del proyecto:', error);
         }
