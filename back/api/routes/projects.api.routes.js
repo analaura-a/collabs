@@ -48,6 +48,9 @@ route.post('/projects/:id/image', [upload.single('projectImage')], controllers.u
 // Editar los detalles de un proyecto
 route.patch('/projects/:id', [validateTokenMiddleware], controllers.updateProjectDetails)
 
+// Editar la convocatoria de un proyecto
+route.patch('/projects/:id/open-positions', [validateTokenMiddleware], controllers.updateProjectOpenPositions)
+
 // //Agregar un nuevo proyecto personal
 // route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);
 

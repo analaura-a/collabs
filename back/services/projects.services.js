@@ -193,6 +193,46 @@ const updateProjectDetails = async (projectId, projectDetails) => {
     }
 };
 
+// Editar la convocatoria de un proyecto
+const updateProjectOpenPositions = async (projectId, openPositions) => {
+
+    try {
+        await client.connect();
+
+        // Actualizar la convocatoria del proyecto
+        const updateResult = await db.collection('projects').updateOne(
+            { _id: new ObjectId(projectId) },
+            { $set: { open_positions: openPositions } }
+        );
+
+        // Comprobar si se actualizó
+        if (updateResult.matchedCount === 0) {
+            throw new Error('Proyecto no encontrado.');
+        }
+
+        // Obtener el proyecto actualizado
+        const updatedProject = await db.collection('projects').findOne({ _id: new ObjectId(projectId) });
+
+        return updatedProject;
+    } catch (error) {
+        throw new Error('Error al actualizar la convocatoria: ' + error.message);
+    }
+};
+
+//Eliminar una posición de la convocatoria de un proyecto
+const removeOpenPositionsByIds = async (projectId, positionIds) => {
+
+    try {
+        const result = await db.collection('projects').updateOne(
+            { _id: new ObjectId(projectId) },
+            { $pull: { open_positions: { _id: { $in: positionIds.map(id => new ObjectId(id)) } } } }
+        );
+        return result;
+    } catch (error) {
+        throw new Error('Error al eliminar las posiciones: ' + error.message);
+    }
+};
+
 // //Editar un proyecto
 // async function editProject(id, project) {
 //     const editedProject = await db.collection("projects").updateOne({ _id: new ObjectId(id) }, { $set: project });
@@ -216,7 +256,9 @@ export {
     getUserProjects,
     createProject,
     updateProjectImage,
-    updateProjectDetails
+    updateProjectDetails,
+    updateProjectOpenPositions,
+    removeOpenPositionsByIds
     // editProject,
     // deleteProject
 }

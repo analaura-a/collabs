@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { ObjectId } from "mongodb";
 import * as service from "../../services/projects.services.js";
 
 // //Traer todos los proyectos
@@ -173,6 +174,64 @@ const updateProjectDetails = async (req, res) => {
     }
 };
 
+// Editar la convocatoria de un proyecto
+const updateProjectOpenPositions = async (req, res) => {
+
+    const { id } = req.params;
+    const { open_positions } = req.body;
+
+    try {
+        // Obtener el proyecto actual para comparar las open_positions
+        const project = await service.getProjectById(id);
+        if (!project) {
+            return res.status(404).json({ message: 'Proyecto no encontrado.' });
+        }
+        const existingPositions = project.open_positions;
+
+        // Actualizar, agregar o eliminar las posiciones según corresponda:
+        const updatedPositions = [];
+
+        open_positions.forEach((position) => {
+            if (position._id) {
+                // Si tiene un _id, es una posición existente -> la actualizamos
+                const existingPosition = existingPositions.find(p => p._id.toString() === position._id);
+                if (existingPosition) {
+                    updatedPositions.push({ ...existingPosition, ...position });
+                }
+            } else {
+                // Si no tiene _id, es una nueva posición -> le asignamos un nuevo _id
+                updatedPositions.push({
+                    ...position,
+                    _id: new ObjectId(),
+                });
+            }
+        });
+
+        // Eliminar posiciones que ya no están en la lista
+        const positionsToDelete = existingPositions.filter(
+            (position) => !open_positions.some(p => p._id && p._id === position._id.toString())
+        );
+
+        if (positionsToDelete.length > 0) {
+            await service.removeOpenPositionsByIds(id, positionsToDelete.map(p => p._id));
+        }
+
+        // Actualizamos las open_positions del proyecto
+        const updatedProject = await service.updateProjectOpenPositions(id, updatedPositions);
+
+        return res.status(200).json({
+            message: 'Convocatoria actualizada con éxito.',
+            project: updatedProject,
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error al actualizar la convocatoria.',
+            error: error.message,
+        });
+    }
+};
+
 // //Editar un proyecto
 // const editProject = async (req, res) => {
 
@@ -212,7 +271,8 @@ export {
     getUserProjects,
     createProject,
     uploadProjectImage,
-    updateProjectDetails
+    updateProjectDetails,
+    updateProjectOpenPositions
     // editProject,
     // deleteProject
 }
