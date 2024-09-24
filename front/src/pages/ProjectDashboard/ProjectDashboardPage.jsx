@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getProjectById } from '../../services/projectService';
+import { getUserRoleInProject } from '../../services/teamService';
 import Button from "../../components/Button/Button";
 import DropdownButton from "../../components/Button/DropdownButton";
 import Tabs from "../../components/Tabs/Tabs";
@@ -14,12 +15,24 @@ const ProjectDashboardPage = () => {
     const { user } = authState;
 
     const [project, setProject] = useState(null);
+    const [projectType, setProjectType] = useState('');
+    const [projectStatus, setProjectStatus] = useState('');
+    const [userRole, setUserRole] = useState(null);
+
     const [loading, setLoading] = useState(true);
 
-    const fetchProject = async () => {
+    const fetchProjectData = async () => {
         try {
+            // Obtener los detalles del proyecto
             const projectData = await getProjectById(id);
             setProject(projectData);
+            setProjectType(projectData.type);
+            setProjectStatus(projectData.status);
+
+            // Verificar el rol del usuario en el proyecto
+            const roleData = await getUserRoleInProject(id, user._id);
+            setUserRole(roleData.role);
+
             setLoading(false);
         } catch (error) {
             console.error('Error al cargar el proyecto:', error);
@@ -28,7 +41,7 @@ const ProjectDashboardPage = () => {
     };
 
     useEffect(() => {
-        fetchProject();
+        fetchProjectData();
     }, [id]);
 
     if (loading) {
