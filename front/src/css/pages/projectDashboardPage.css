@@ -1,0 +1,110 @@
+.project-dashboard-page {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    padding: 56px 24px;
+}
+
+.project-dashboard__header {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.project-dashboard__header__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-dashboard__header__top__type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+    padding: 12px;
+
+    background-color: var(--color-primary-light);
+    border-radius: 12px;
+}
+
+.project-dashboard__info-and-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.project-dashboard__header__info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.project-dashboard__header__info__title {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-dashboard__header__info__title__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 32px;
+}
+
+.project-dashboard__header__info__title__list>li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.project-dashboard__header__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 24px;
+
+    border: 1px solid var(--color-gray-line);
+    border-radius: 24px;
+}
+
+.project-dashboard__header__actions__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+
+@media only screen and (min-width: 1200px) {
+
+    .project-dashboard-page {
+        gap: 24px;
+        padding: 80px 0;
+    }
+
+    .project-dashboard__info-and-actions {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .project-dashboard__header__info {
+        max-width: 55%;
+    }
+
+    .project-dashboard__header__actions {
+        width: 33%;
+        padding: 40px;
+    }
+
+}
