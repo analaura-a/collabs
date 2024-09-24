@@ -16,6 +16,9 @@ route.get('/projects/:projectId/organizers', [validateTokenMiddleware], controll
 // Verificar si un usuario ya está en el equipo de un proyecto
 route.get('/projects/:projectId/team/check-user/:userId', [validateTokenMiddleware], controllers.isUserInTeam);
 
+// Verificar el rol de un usuario en un proyecto
+route.get('/projects/:projectId/user/:userId/role', [validateTokenMiddleware], controllers.getUserRoleInProject);
+
 // //Obtener el equipo de un proyecto en particular
 // route.get('/projects/:id/team', [validateTokenMiddleware], controllers.getTeamByProjectId);
 

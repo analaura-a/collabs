@@ -57,6 +57,30 @@ const isUserInTeam = async (req, res) => {
     }
 };
 
+// Verificar si un usuario ya está en el equipo de un proyecto
+const getUserRoleInProject = async (req, res) => {
+
+    const { projectId, userId } = req.params;
+
+    try {
+        const member = await service.getUserRoleInProject(projectId, userId);
+
+        if (!member) {
+            return res.status(404).json({ message: 'El usuario no se encuentra en el equipo de ese proyecto.' });
+        }
+
+        return res.status(200).json({
+            role: member.role
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error al obtener el rol del usuario en el proyecto.',
+            error: error.message
+        });
+    }
+};
+
 // //Obtener el equipo de un proyecto en particular
 // const getTeamByProjectId = (req, res) => {
 
@@ -143,7 +167,8 @@ const isUserInTeam = async (req, res) => {
 export {
     addMemberToProjectTeam,
     getProjectOrganizers,
-    isUserInTeam
+    isUserInTeam,
+    getUserRoleInProject
     // getTeamByProjectId,
     // createTeam,
     // editTeam,

@@ -78,6 +78,23 @@ const isUserInTeam = async (projectId, userId) => {
     }
 };
 
+// Verificar si un usuario ya está en el equipo de un proyecto
+const getUserRoleInProject = async (projectId, userId) => {
+
+    try {
+        await client.connect();
+
+        const member = await db.collection('projects_teams').findOne({
+            project_id: new ObjectId(projectId),
+            user_id: new ObjectId(userId)
+        });
+
+        return member;
+    } catch (error) {
+        throw new Error(`Error al obtener el rol del usuario: ${error.message}`);
+    }
+};
+
 // //Obtener el equipo de un proyecto en particular
 // async function getTeamByProjectId(id) {
 //     return db.collection("projects_teams").findOne({ project_id: id });
@@ -131,7 +148,8 @@ const isUserInTeam = async (projectId, userId) => {
 export {
     addMemberToProjectTeam,
     getProjectOrganizers,
-    isUserInTeam
+    isUserInTeam,
+    getUserRoleInProject
     // getTeamByProjectId,
     // createTeam,
     // editTeam,
