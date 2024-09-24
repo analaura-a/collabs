@@ -44,6 +44,39 @@ const ProjectDashboardPage = () => {
         fetchProjectData();
     }, [id]);
 
+    const renderDescription = () => {
+        if (projectType === "Personal") {
+
+            if (userRole == "Organizador") {
+                switch (projectStatus) {
+                    case 'Abierto':
+                        return <p className="paragraph-18">El proyecto está <span className="medium-text">buscando colaboradores</span>, revisa las postulaciones de las personas interesadas en él y define tu equipo ideal.</p>;
+                    case 'En curso':
+                        return <p className="paragraph-18">El proyecto está <span className="medium-text">en curso</span>, coordina con el resto de tus compañeros de equipo para llevar adelante el proyecto de la manera más efectiva posible.</p>;
+                    case 'Finalizado':
+                        return <p className="paragraph-18">El proyecto está <span className="medium-text">archivado</span>, porque ha finalizado. Si quieres volver a trabajar en él, deberás reabrirlo. También es un buen momento para dejarles una reseña a tus compañeros de equipo.</p>;
+                }
+            } else if (userRole == "Colaborador") {
+                switch (projectStatus) {
+                    case 'Abierto':
+                        return <p className="paragraph-18">El proyecto está <span className="medium-text">buscando colaboradores</span>, el organizador revisará las postulaciones de las personas interesadas en unirse y definirá el equipo para comenzar a trabajar en el proyecto.</p>;
+                    case 'En curso':
+                        return <p className="paragraph-18">El proyecto está <span className="medium-text">en curso</span>, coordina con el resto de tus compañeros de equipo para llevar adelante el proyecto de la manera más efectiva posible.</p>;
+                    case 'Finalizado':
+                        return <p className="paragraph-18">El proyecto está <span className="medium-text">archivado</span>, porque ha finalizado. Para volver a trabajar en él, el organizador deberá reabrirlo. Es un buen momento para dejarles una reseña a tus compañeros de equipo.</p>;
+                }
+            }
+
+        } else if (projectType === "Open-source") {
+            switch (projectStatus) {
+                case 'Abierto':
+                    return <p className="paragraph-18">El proyecto está <span className="medium-text">buscando colaboradores</span>, guía a las personas interesadas en contribuir hacia el repositorio del proyecto.</p>;
+                case 'Finalizado':
+                    return <p className="paragraph-18">El proyecto está <span className="medium-text">archivado</span>, porque ha finalizado. Si quieres reabrir la convocatoria, deberás reabrir el proyecto. También es un buen momento para dejarle una reseña al resto del equipo.</p>;
+            }
+        }
+    };
+
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
@@ -87,7 +120,7 @@ const ProjectDashboardPage = () => {
                                 </ul>
                             </div>
 
-                            <p className="paragraph-18">El proyecto está <span className="medium-text">buscando colaboradores</span>, guía a las personas interesadas en contribuir hacia el repositorio del proyecto.</p>
+                            {renderDescription()}
 
                         </div>
 
