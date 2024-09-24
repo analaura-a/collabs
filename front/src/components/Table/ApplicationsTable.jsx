@@ -144,7 +144,7 @@ const ApplicationsTable = ({ applications, setApplications }) => {
 
                             <li className="application-card__title-and-value">
                                 <h2 className="light-paragraph medium-text">Fecha de postulación</h2>
-                                <p className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString()}</p>
+                                <p className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString('en-GB')}</p>
                             </li>
 
                             <li className="application-card__title-and-value-bigger">

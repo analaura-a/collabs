@@ -15,7 +15,7 @@ const MyProjectCard = ({ project }) => {
 
                     <div className="my-project-card__info__date">
                         <img src="../assets/svg/clock.svg" alt="Reloj" />
-                        <p className="smaller-paragraph-light">Creado el {new Date(project.created_at).toLocaleDateString()}</p>
+                        <p className="smaller-paragraph-light">Creado el {new Date(project.created_at).toLocaleDateString('en-GB')}</p>
                     </div>
                 </div>
 
