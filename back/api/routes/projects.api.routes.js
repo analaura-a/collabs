@@ -45,6 +45,9 @@ route.post('/projects', [verifyUserOwnership], controllers.createProject);
 //Subir imagen del proyecto
 route.post('/projects/:id/image', [upload.single('projectImage')], controllers.uploadProjectImage);
 
+// Editar los detalles de un proyecto
+route.patch('/projects/:id', [validateTokenMiddleware], controllers.updateProjectDetails)
+
 // //Agregar un nuevo proyecto personal
 // route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);
 

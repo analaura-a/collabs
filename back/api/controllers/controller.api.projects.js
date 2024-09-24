@@ -150,6 +150,29 @@ const uploadProjectImage = async (req, res) => {
     }
 };
 
+// Editar los detalles de un proyecto
+const updateProjectDetails = async (req, res) => {
+
+    const { id } = req.params;
+    const projectDetails = req.body;
+
+    //Falta actualizar la imagen (si hay)
+
+    try {
+        const updatedProject = await service.updateProjectDetails(id, projectDetails);
+
+        return res.status(200).json({
+            message: 'Proyecto actualizado con éxito.',
+            project: updatedProject,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message: 'Error al actualizar el proyecto.',
+            error: error.message,
+        });
+    }
+};
+
 // //Editar un proyecto
 // const editProject = async (req, res) => {
 
@@ -188,7 +211,8 @@ export {
     getProjectById,
     getUserProjects,
     createProject,
-    uploadProjectImage
+    uploadProjectImage,
+    updateProjectDetails
     // editProject,
     // deleteProject
 }

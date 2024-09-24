@@ -171,6 +171,28 @@ const updateProjectImage = async (projectId, imagePath) => {
     }
 };
 
+// Editar los detalles de un proyecto
+const updateProjectDetails = async (projectId, projectDetails) => {
+
+    try {
+        await client.connect();
+
+        const updatedProject = await db.collection('projects').findOneAndUpdate(
+            { _id: new ObjectId(projectId) },
+            { $set: projectDetails },
+            { returnDocument: 'after' }
+        );
+
+        if (!updatedProject) {
+            throw new Error('Proyecto no encontrado.');
+        }
+
+        return updatedProject;
+    } catch (error) {
+        throw new Error('Error al actualizar el proyecto: ' + error.message);
+    }
+};
+
 // //Editar un proyecto
 // async function editProject(id, project) {
 //     const editedProject = await db.collection("projects").updateOne({ _id: new ObjectId(id) }, { $set: project });
@@ -193,7 +215,8 @@ export {
     getProjectById,
     getUserProjects,
     createProject,
-    updateProjectImage
+    updateProjectImage,
+    updateProjectDetails
     // editProject,
     // deleteProject
 }
