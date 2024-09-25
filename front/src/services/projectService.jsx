@@ -119,3 +119,27 @@ export const uploadProjectImage = async (projectId, projectImage) => {
 
     return await response.json(); // Devolver la URL de la imagen subida
 };
+
+export const updateProjectDetails = async (projectId, projectData) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/projects/${projectId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        },
+        body: JSON.stringify(projectData),
+    });
+
+    if (!response.ok) {
+        throw new Error('Ocurrió un error al intentar actualizar los detalles del proyecto.');
+    }
+
+    return await response.json();
+};
