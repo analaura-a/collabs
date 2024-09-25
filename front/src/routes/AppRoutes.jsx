@@ -29,6 +29,7 @@ import EditProjectDetailsPage from '../pages/ProjectDashboard/EditProjectDetails
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
 import AuthRoute from '../components/Route/AuthRoute.jsx'
+import OrganizerRoute from '../components/Route/OrganizerRoute.jsx'
 
 const AppRoutes = createBrowserRouter([
 
@@ -99,9 +100,9 @@ const AppRoutes = createBrowserRouter([
             },
             {
                 path: "/mis-proyectos/:id/editar-detalles",
-                element: (<ProtectedRoute>
+                element: (<OrganizerRoute>
                     <EditProjectDetailsPage />
-                </ProtectedRoute>),
+                </OrganizerRoute>),
             },
             {
                 path: "/nueva-convocatoria",
