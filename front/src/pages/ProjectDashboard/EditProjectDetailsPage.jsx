@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { getProjectById, updateProjectDetails } from "../../services/projectService";
+import { editPersonalProjectSchema, editOpenSourceProjectSchema } from "../../validation/editProjectDetailsValidation";
 import Input from "../../components/Inputs/Input";
 import Textarea from "../../components/Inputs/Textarea";
 import Select from "../../components/Inputs/Select";
@@ -24,8 +25,9 @@ const EditProjectDetailsPage = () => {
     const [description, setDescription] = useState('');
     const [availability, setAvailability] = useState('');
     const [repositoryUrl, setRepositoryUrl] = useState('');
-    const [urlError, setUrlError] = useState('');
     const [projectImage, setProjectImage] = useState(null);
+
+    const [errors, setErrors] = useState({});
 
     const [loading, setLoading] = useState(true);
 
@@ -52,20 +54,49 @@ const EditProjectDetailsPage = () => {
         e.preventDefault();
 
         try {
-            // Actualizar detalles del proyecto
-            const projectData = {
-                name: projectName,
-                about: description,
-                required_availability: availability,
-                url: repositoryUrl
-            };
+            if (project.type == "Personal") {
+                const personalProjectData = {
+                    name: projectName,
+                    about: description,
+                    required_availability: availability,
+                };
 
-            await updateProjectDetails(id, projectData);
+                // Validar datos con yup
+                await editPersonalProjectSchema.validate(personalProjectData, { abortEarly: false });
+
+                // Actualizar los datos del proyecto
+                await updateProjectDetails(id, personalProjectData);
+            } else {
+                const openSourceProjectData = {
+                    name: projectName,
+                    about: description,
+                    url: repositoryUrl
+                };
+
+                // Validar datos con yup
+                await editOpenSourceProjectSchema.validate(openSourceProjectData, { abortEarly: false });
+
+                // Actualizar los datos del proyecto
+                await updateProjectDetails(id, openSourceProjectData);
+            }
+
+            // Resetear los errores
+            setErrors({});
+
+            // Recargar la página con los nuevos datos
+            fetchProjectDetails();
 
             console.log("Proyecto actualizado con éxito."); //Mostrar al usuario
 
         } catch (error) {
-            console.error('Error al actualizar el proyecto:', error);
+            if (error.name === 'ValidationError') {
+                const errorMessages = error.inner.reduce((acc, err) => {
+                    return { ...acc, [err.path]: err.message };
+                }, {});
+                setErrors(errorMessages);
+            } else {
+                console.error('Error al actualizar el proyecto:', error);
+            }
         }
     };
 
@@ -88,7 +119,7 @@ const EditProjectDetailsPage = () => {
                     </div>
 
                     <div className="edit-project-page__form">
-                        <form className="create-project__form-with-inputs" onSubmit={handleSubmit}>
+                        <form className="create-project__form-with-inputs" onSubmit={handleSubmit} noValidate>
                             <Input
                                 label="Nombre del proyecto"
                                 id="name"
@@ -97,6 +128,7 @@ const EditProjectDetailsPage = () => {
                                 onChange={(e) => setProjectName(e.target.value)}
                                 placeholder="Proyecto de..."
                                 helperText={'Si el proyecto aún no tiene nombre, intenta usar un nombre descriptivo (por ejemplo: “web para adoptar mascotas”).'}
+                                errorText={errors.name}
                                 required>
                             </Input>
 
@@ -108,6 +140,7 @@ const EditProjectDetailsPage = () => {
                                 onChange={(e) => setDescription(e.target.value)}
                                 rows={"10"}
                                 placeholder="El proyecto consistiría en... y estoy buscando personas que quieran sumarse a colaborar haciendo tareas como..."
+                                errorText={errors.about}
                                 required />
 
                             {project.type == "Personal" ? (
@@ -119,6 +152,7 @@ const EditProjectDetailsPage = () => {
                                     defaultText="Selecciona la disponibilidad"
                                     options={availabilities}
                                     onChange={(e) => setAvailability(e.target.value)}
+                                    errorText={errors.required_availability}
                                     required />
                             ) : (
                                 <Input
@@ -130,7 +164,7 @@ const EditProjectDetailsPage = () => {
                                     onChange={(e) => setRepositoryUrl(e.target.value)}
                                     placeholder="Ej: github.com/user/repo"
                                     helperText={'Las personas interesadas en contribuir serán redirigidas a este link.'}
-                                    errorText={repositoryUrl && urlError ? urlError : ''}
+                                    errorText={errors.url}
                                     required>
                                 </Input>
                             )}

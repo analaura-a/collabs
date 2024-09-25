@@ -43,7 +43,8 @@
         text-align: center;
     }
 
-    .edit-project-page__form{
+    .edit-project-page__form {
+        width: 100%;
         max-width: 620px;
         margin: 0 auto;
     }
