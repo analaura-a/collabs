@@ -19,6 +19,7 @@
 @import './pages/myProjectsPage.css';
 @import './pages/createProjectPages.css';
 @import './pages/projectDashboardPage.css';
+@import './pages/editProjectPages.css';
 
 @import './components/button.css';
 @import './components/input.css';
