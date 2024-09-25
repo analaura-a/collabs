@@ -130,7 +130,7 @@ const AuthNavbar = () => {
                             {user.profile_pic ? (
                                 <img src={`${SERVER_BASE_URL}${user.profile_pic}`} alt={`${user.name} ${user.last_name}`} />
                             ) : (
-                                <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                                <img src="/../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
                             )}
                         </div>
                         <ul className={`dropdown-menu ${isProfileDropdownOpen ? 'show' : ''}`}>
