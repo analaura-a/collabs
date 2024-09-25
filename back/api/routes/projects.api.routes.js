@@ -46,10 +46,10 @@ route.post('/projects', [verifyUserOwnership], controllers.createProject);
 route.post('/projects/:id/image', [upload.single('projectImage')], controllers.uploadProjectImage);
 
 // Editar los detalles de un proyecto
-route.patch('/projects/:id', [validateTokenMiddleware], controllers.updateProjectDetails)
+route.patch('/projects/:id', [validateTokenMiddleware], controllers.updateProjectDetails) //agregar middleware para validar que es un organizador del proyecto
 
 // Editar la convocatoria de un proyecto
-route.patch('/projects/:id/open-positions', [validateTokenMiddleware], controllers.updateProjectOpenPositions)
+route.patch('/projects/:id/open-positions', [validateTokenMiddleware], controllers.updateProjectOpenPositions) //agregar middleware para validar que es un organizador del proyecto
 
 // //Agregar un nuevo proyecto personal
 // route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);
