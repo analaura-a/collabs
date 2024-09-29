@@ -25,6 +25,7 @@ import CreatePersonalProjectPage from '../pages/CreateProject/CreatePersonalProj
 import CreatOpenSourceProjectPage from '../pages/CreateProject/CreatOpenSourceProjectPage.jsx'
 import ProjectDashboardPage from '../pages/ProjectDashboard/ProjectDashboardPage.jsx'
 import EditProjectDetailsPage from '../pages/ProjectDashboard/EditProjectDetailsPage.jsx'
+import EditOpenPositionsPage from '../pages/ProjectDashboard/EditOpenPositionsPage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -102,6 +103,12 @@ const AppRoutes = createBrowserRouter([
                 path: "/mis-proyectos/:id/editar-detalles",
                 element: (<OrganizerRoute>
                     <EditProjectDetailsPage />
+                </OrganizerRoute>),
+            },
+            {
+                path: "/mis-proyectos/:id/editar-convocatoria",
+                element: (<OrganizerRoute>
+                    <EditOpenPositionsPage />
                 </OrganizerRoute>),
             },
             {
