@@ -1,9 +1,32 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { getProjectById } from "../../services/projectService";
 
 const EditOpenPositionsPage = () => {
 
     const { id } = useParams();
+
+    const [project, setProject] = useState({});
+
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    const fetchProjectDetails = async () => {
+        try {
+            const projectData = await getProjectById(id);
+            setProject(projectData)
+            setLoading(false);
+        } catch (error) {
+            console.error('Error al cargar los detalles del proyecto:', error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchProjectDetails();
+    }, [id]);
+
+    if (loading) return <div>Cargando...</div>; // Componente de carga
 
     return (
         <main>
@@ -16,9 +39,9 @@ const EditOpenPositionsPage = () => {
                     <div className="edit-project-page__title">
                         <div className="project-dashboard__header__top__type">
                             <img src="../../assets/svg/purple-dot-status.svg" alt="Estatus del proyecto" />
-                            <p className="subtitle medium-text primary-color-text">Personal</p>
+                            <p className="subtitle medium-text primary-color-text">Proyecto {project.type.toLowerCase()}</p>
                         </div>
-                        <h1 className="title-40">Editar convocatoria para <span className="primary-color-text">Juguetear</span></h1>
+                        <h1 className="title-40">Editar convocatoria para <span className="primary-color-text">{project.name}</span></h1>
                     </div>
 
                     <div className="edit-project-page__form">
