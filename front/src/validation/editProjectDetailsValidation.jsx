@@ -5,7 +5,7 @@ export const editPersonalProjectSchema = Yup.object().shape({
     about: Yup.string().required('La descripción del proyecto es requerida.'),
     required_availability: Yup.string()
         .required('La disponibilidad del proyecto es requerida.')
-        .min(1, 'Por favor, selecciona una disponibilidad válida.')
+        .min(1, 'Selecciona una disponibilidad válida.')
 });
 
 export const editOpenSourceProjectSchema = Yup.object().shape({
@@ -13,5 +13,5 @@ export const editOpenSourceProjectSchema = Yup.object().shape({
     about: Yup.string().required('La descripción del proyecto es requerida.'),
     url: Yup.string()
         .required('El link al repositorio es requerido.')
-        .url('Por favor ingresa una URL válida.'),
+        .url('Ingresa una URL válida.'),
 });

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { getProjectById, updateProjectDetails } from "../../services/projectService";
+import { Link, useParams } from "react-router-dom";
+import { getProjectById, updateProjectDetails, uploadProjectImage } from "../../services/projectService";
 import { editPersonalProjectSchema, editOpenSourceProjectSchema } from "../../validation/editProjectDetailsValidation";
 import Input from "../../components/Inputs/Input";
 import Textarea from "../../components/Inputs/Textarea";
@@ -18,7 +18,6 @@ const availabilities = [
 const EditProjectDetailsPage = () => {
 
     const { id } = useParams();
-    const navigate = useNavigate();
 
     const [project, setProject] = useState('');
     const [projectName, setProjectName] = useState('');
@@ -26,10 +25,14 @@ const EditProjectDetailsPage = () => {
     const [availability, setAvailability] = useState('');
     const [repositoryUrl, setRepositoryUrl] = useState('');
     const [projectImage, setProjectImage] = useState(null);
+    const [imageButtonText, setImageButtonText] = useState('Selecciona un archivo');
 
     const [errors, setErrors] = useState({});
-
     const [loading, setLoading] = useState(true);
+
+    const extractImageFileName = (path) => {
+        return path.replace('uploads/projects/', '');
+    };
 
     const fetchProjectDetails = async () => {
         try {
@@ -39,6 +42,11 @@ const EditProjectDetailsPage = () => {
             setDescription(projectData.about);
             setAvailability(projectData.required_availability);
             setRepositoryUrl(projectData.url);
+
+            if (projectData.cover) {
+                setImageButtonText(extractImageFileName(projectData.cover));
+            }
+
             setLoading(false);
         } catch (error) {
             console.error('Error al cargar los detalles del proyecto:', error);
@@ -49,6 +57,11 @@ const EditProjectDetailsPage = () => {
     useEffect(() => {
         fetchProjectDetails();
     }, [id]);
+
+    const handleFileChange = (file) => {
+        setProjectImage(file);
+        setImageButtonText(file.name);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -78,6 +91,11 @@ const EditProjectDetailsPage = () => {
 
                 // Actualizar los datos del proyecto
                 await updateProjectDetails(id, openSourceProjectData);
+            }
+
+            // Subir nueva imagen del proyecto (si el usuario seleccionó una)
+            if (projectImage) {
+                await uploadProjectImage(id, projectImage);
             }
 
             // Resetear los errores
@@ -175,6 +193,8 @@ const EditProjectDetailsPage = () => {
                                 id="cover"
                                 helperText="Esta es la imagen que se mostrará en los resultados de búsqueda."
                                 accept="image/*"
+                                onFileSelect={handleFileChange}
+                                buttonText={imageButtonText}
 
                             />
 
