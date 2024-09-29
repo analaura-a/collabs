@@ -1,6 +1,11 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { ObjectId } from "mongodb";
 import * as service from "../../services/projects.services.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // //Traer todos los proyectos
 // const getProjects = (req, res) => {
@@ -135,6 +140,30 @@ const uploadProjectImage = async (req, res) => {
     const imagePath = `/uploads/projects/${req.file.filename}`;
 
     try {
+        // Obtener el proyecto actual para verificar si ya tiene una imagen
+        const currentProject = await service.getProjectById(projectId);
+
+        if (!currentProject) {
+            return res.status(404).json({ message: 'Proyecto no encontrado.' });
+        }
+
+        // Si el proyecto ya tiene una imagen, la eliminamos
+        if (currentProject.cover) {
+
+            // Construye la ruta completa a la carpeta "uploads"
+            const uploadsDir = path.resolve(__dirname, '..', '..', 'uploads', 'projects');
+            const existingImagePath = path.join(uploadsDir, path.basename(currentProject.cover));
+
+            // Verifica si el archivo existe antes de eliminarlo
+            if (fs.existsSync(existingImagePath)) {
+                try {
+                    fs.unlinkSync(existingImagePath);
+                } catch (unlinkError) {
+                    console.error('Error al eliminar la imagen antigua:', unlinkError);
+                }
+            }
+        }
+
         // Actualizamos la URL de la imagen del proyecto en la database
         await service.updateProjectImage(projectId, imagePath);
 
@@ -145,8 +174,11 @@ const uploadProjectImage = async (req, res) => {
     } catch (error) {
         console.error('Error al subir la imagen del proyecto:', error);
 
-        // En caso de error, eliminamos la imagen subida
-        fs.unlinkSync(req.file.path);
+        // En caso de error, eliminamos la imagen recién subida
+        if (req.file && req.file.path) {
+            fs.unlinkSync(req.file.path);
+        }
+
         res.status(500).json({ message: 'Error al subir la imagen del proyecto.' });
     }
 };
@@ -156,8 +188,6 @@ const updateProjectDetails = async (req, res) => {
 
     const { id } = req.params;
     const projectDetails = req.body;
-
-    //Falta actualizar la imagen (si hay)
 
     try {
         const updatedProject = await service.updateProjectDetails(id, projectDetails);
