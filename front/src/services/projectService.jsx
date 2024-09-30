@@ -143,3 +143,27 @@ export const updateProjectDetails = async (projectId, projectData) => {
 
     return await response.json();
 };
+
+export const updateProjectOpenPositions = async (projectId, openPositions) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+    const response = await fetch(`${API_URL}/projects/${projectId}/open-positions`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        },
+        body: JSON.stringify({ open_positions: openPositions })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar actualizar la convocatoria del proyecto.');
+    }
+
+    return await response.json();
+};

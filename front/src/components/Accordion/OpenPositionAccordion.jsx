@@ -12,7 +12,7 @@ const OpenPositionAccordion = ({ title, children, onDelete }) => {
     return (
         <div className="accordion">
 
-            <button className="accordion__header" onClick={toggleAccordion}>
+            <button type="button" className="accordion__header" onClick={toggleAccordion}>
                 <h2 className="title-18">{title}</h2>
 
                 <svg width="16" height="8" fill="none" xmlns="http://www.w3.org/2000/svg" className={`accordion-icon ${isOpen ? 'accordion-open' : ''}`}>
@@ -24,7 +24,7 @@ const OpenPositionAccordion = ({ title, children, onDelete }) => {
 
                 {children}
 
-                <Button size="small" color="secondary" onClick={onDelete}>
+                <Button type="button" size="small" color="secondary" onClick={onDelete}>
                     Eliminar
                 </Button>
             </div>
