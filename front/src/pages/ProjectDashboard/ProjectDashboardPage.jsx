@@ -77,14 +77,63 @@ const ProjectDashboardPage = () => {
         }
     };
 
+    const renderTabs = () => {
+        let tabs = [];
+
+        //Proyectos personales
+        if (projectType === 'Personal') {
+
+            if (projectStatus === 'Abierto') {
+
+                if (userRole === 'Organizador') {
+                    tabs = [
+                        { label: 'Postulaciones', content: <div>Revisar postulaciones aquí...</div> },
+                        { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                    ];
+                } else if (userRole === 'Colaborador') {
+                    tabs = [
+                        { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                    ];
+                }
+
+            } else if (projectStatus === 'En curso') {
+                tabs = [
+                    { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                ];
+            } else if (projectStatus === 'Finalizado') {
+                tabs = [
+                    { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                ];
+            }
+
+            //Proyectos open-source
+        } else if (projectType === 'Open-source') {
+
+            if (projectStatus === 'Abierto') {
+
+                tabs = [
+                    { label: 'Personas interesadas', content: <div>Lista de interesados aquí...</div> },
+                    { label: 'Organizadores', content: <div>Organizadores aquí...</div> }
+                ];
+
+            } else if (projectStatus === 'En curso') {
+                tabs = [
+                    { label: 'Organizadores', content: <div>Organizadores aquí...</div> }
+                ];
+            } else if (projectStatus === 'Finalizado') {
+                tabs = [
+                    { label: 'Organizadores', content: <div>Organizadores aquí...</div> }
+                ];
+            }
+
+        }
+
+        return <Tabs tabs={tabs} />;
+    };
+
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
-
-    const tabs = [
-        { label: 'Postulaciones', content: <></> },
-        { label: 'Equipo', content: <></> },
-    ]
 
     return (
         <main>
@@ -138,7 +187,7 @@ const ProjectDashboardPage = () => {
                     </div>
                 </section>
 
-                <Tabs tabs={tabs} />
+                {renderTabs()}
 
             </div>
         </main>
