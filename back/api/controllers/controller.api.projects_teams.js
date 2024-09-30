@@ -25,6 +25,26 @@ const addMemberToProjectTeam = async (req, res) => {
     }
 };
 
+// Obtener a los miembros activos de un proyecto
+const getActiveProjectMembers = async (req, res) => {
+
+    const { projectId } = req.params;
+
+    try {
+        const activeMembers = await service.getActiveProjectMembers(projectId);
+
+        if (!activeMembers || activeMembers.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron miembros activos para este proyecto.' });
+        }
+
+        return res.status(200).json(activeMembers);
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al obtener los miembros activos del proyecto: ${error.message}`
+        });
+    }
+};
+
 // Obtener a los organizadores de un proyecto
 const getProjectOrganizers = async (req, res) => {
 
@@ -166,6 +186,7 @@ const getUserRoleInProject = async (req, res) => {
 
 export {
     addMemberToProjectTeam,
+    getActiveProjectMembers,
     getProjectOrganizers,
     isUserInTeam,
     getUserRoleInProject

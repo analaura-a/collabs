@@ -25,6 +25,22 @@ const addMemberToProjectTeam = async ({ projectId, userId, role, profile }) => {
     }
 };
 
+// Obtener a los miembros activos de un proyecto
+const getActiveProjectMembers = async (projectId) => {
+
+    try {
+        await client.connect();
+
+        const activeMembers = await db.collection('projects_teams')
+            .find({ project_id: new ObjectId(projectId), status: 'Activo' })
+            .toArray();
+
+        return activeMembers;
+    } catch (error) {
+        throw new Error('Error al obtener los miembros activos: ' + error.message);
+    }
+};
+
 // Obtener a los organizadores de un proyecto
 const getProjectOrganizers = async (projectId) => {
 
@@ -147,6 +163,7 @@ const getUserRoleInProject = async (projectId, userId) => {
 
 export {
     addMemberToProjectTeam,
+    getActiveProjectMembers,
     getProjectOrganizers,
     isUserInTeam,
     getUserRoleInProject

@@ -10,6 +10,9 @@ const route = Router();
 // Agregar miembro al equipo de un proyecto
 route.post('/project_teams', [verifyUserOwnership], controllers.addMemberToProjectTeam);
 
+// Obtener a los miembros activos de un proyecto
+route.get('/projects/:projectId/active-members', [validateTokenMiddleware], controllers.getActiveProjectMembers);
+
 // Obtener a los organizadores de un proyecto
 route.get('/projects/:projectId/organizers', [validateTokenMiddleware], controllers.getProjectOrganizers);
 
