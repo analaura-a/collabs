@@ -21,7 +21,7 @@
 .user-card__profile-picture {
     width: 64px;
     height: 64px;
-    border-radius: 10px;
+    border-radius: 50%;
     overflow: hidden;
     display: flex;
     align-items: center;
