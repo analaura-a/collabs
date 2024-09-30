@@ -6,6 +6,7 @@ import { getUserRoleInProject } from '../../services/teamService';
 import Button from "../../components/Button/Button";
 import DropdownButton from "../../components/Button/DropdownButton";
 import Tabs from "../../components/Tabs/Tabs";
+import TabTeamMembers from '../../components/TabsContent/Dashboard/TabTeamMembers';
 
 const ProjectDashboardPage = () => {
 
@@ -88,11 +89,11 @@ const ProjectDashboardPage = () => {
                 if (userRole === 'Organizador') {
                     tabs = [
                         { label: 'Postulaciones', content: <div>Revisar postulaciones aquí...</div> },
-                        { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                        { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                     ];
                 } else if (userRole === 'Colaborador') {
                     tabs = [
-                        { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                        { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                     ];
                 }
 
@@ -106,14 +107,14 @@ const ProjectDashboardPage = () => {
                 ];
             }
 
-            //Proyectos open-source
+        //Proyectos open-source
         } else if (projectType === 'Open-source') {
 
             if (projectStatus === 'Abierto') {
 
                 tabs = [
                     { label: 'Personas interesadas', content: <div>Lista de interesados aquí...</div> },
-                    { label: 'Organizadores', content: <div>Organizadores aquí...</div> }
+                    { label: 'Organizadores', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                 ];
 
             } else if (projectStatus === 'En curso') {
