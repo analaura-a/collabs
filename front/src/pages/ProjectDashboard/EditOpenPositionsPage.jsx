@@ -1,20 +1,25 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { getProjectById } from "../../services/projectService";
 
 const EditOpenPositionsPage = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [project, setProject] = useState({});
 
-    const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(true);
 
     const fetchProjectDetails = async () => {
         try {
             const projectData = await getProjectById(id);
-            setProject(projectData)
+            setProject(projectData);
+
+            if (projectData.status !== 'Abierto') {
+                navigate(`/mis-proyectos/${id}`);
+            }
+
             setLoading(false);
         } catch (error) {
             console.error('Error al cargar los detalles del proyecto:', error);
