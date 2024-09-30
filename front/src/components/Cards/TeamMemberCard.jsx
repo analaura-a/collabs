@@ -1,11 +1,16 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 import DropdownButton from '../Button/DropdownButton';
 
 const TeamMemberCard = ({ member, projectType, projectStatus, userRole }) => {
 
     const { profile_pic, name, last_name, username, bio, location, role, profile } = member;
 
-    //Que no se muestre DropdownButton si es la card del usuario
+    const { authState } = useContext(AuthContext);
+    const loggedInUser = authState.user;
+
+    const isCurrentUser = loggedInUser?.username === username;
 
     return (
         <article className="user-card user-card__link">
@@ -21,7 +26,7 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole }) => {
                     </Link>
                 )}
 
-                {userRole === "Organizador" &&
+                {userRole === "Organizador" && !isCurrentUser &&
                     <DropdownButton options={[
                         {
                             title: 'Echar del proyecto',
