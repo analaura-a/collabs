@@ -35,7 +35,28 @@ const getActiveProjectMembers = async (projectId) => {
             .find({ project_id: new ObjectId(projectId), status: 'Activo' })
             .toArray();
 
-        return activeMembers;
+        const memberIds = activeMembers.map(org => org.user_id);
+
+        // Realizar consulta en la colección 'users' para obtener los datos de los miembros
+        const memberDetails = await db.collection('users')
+            .find({ _id: { $in: memberIds } })
+            .toArray();
+
+        // Combinar los datos de ambas colecciones
+        const enrichedMembers = activeMembers.map(org => {
+            const userDetail = memberDetails.find(user => user._id.equals(org.user_id));
+            return {
+                ...org,
+                name: userDetail?.name,
+                last_name: userDetail?.last_name,
+                username: userDetail?.username,
+                bio: userDetail?.bio,
+                location: userDetail?.location,
+                profile_pic: userDetail?.profile_pic,
+            };
+        });
+
+        return enrichedMembers;
     } catch (error) {
         throw new Error('Error al obtener los miembros activos: ' + error.message);
     }
