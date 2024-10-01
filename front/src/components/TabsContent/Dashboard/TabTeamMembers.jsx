@@ -32,7 +32,7 @@ const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => 
 
             <div className="title-with-icon-and-paragraph">
                 <div className="title-with-icon">
-                    <img src="../assets/svg/magic-wand.svg" alt="Destacado" />
+                    <img src="../assets/svg/team.svg" alt="Equipo del proyecto" />
                     {projectType === "Personal" ? (
                         <h2 className="title-20 medium-text">Equipo</h2>
                     ) : (

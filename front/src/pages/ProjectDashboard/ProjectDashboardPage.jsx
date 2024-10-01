@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getProjectById } from '../../services/projectService';
 import { getUserRoleInProject } from '../../services/teamService';
-import Button from "../../components/Button/Button";
 import DropdownButton from "../../components/Button/DropdownButton";
+import DashboardActionButtons from '../../components/Button/DashboardActionButtons';
 import Tabs from "../../components/Tabs/Tabs";
 import TabTeamMembers from '../../components/TabsContent/Dashboard/TabTeamMembers';
 
@@ -174,17 +174,11 @@ const ProjectDashboardPage = () => {
 
                         </div>
 
-                        <div className="project-dashboard__header__actions"> {/* Componetizar */}
-                            <div className="title-with-icon">
-                                <img src="../assets/svg/magic-wand.svg" alt="Destacado" />
-                                <h2 className="title-20 medium-text">Acciones importantes</h2>
-                            </div>
-
-                            <div className="project-dashboard__header__actions__buttons">
-                                <Button size="large" width="fullwidth">Dar inicio al proyecto</Button>
-                                <Button size="large" color="secondary" width="fullwidth">Editar convocatoria</Button>
-                            </div>
-                        </div>
+                        <DashboardActionButtons
+                            projectId={project._id}
+                            projectType={projectType}
+                            projectStatus={projectStatus}
+                            userRole={userRole} />
                     </div>
                 </section>
 
