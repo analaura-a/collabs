@@ -7,6 +7,7 @@ import DropdownButton from "../../components/Button/DropdownButton";
 import DashboardActionButtons from '../../components/Button/DashboardActionButtons';
 import Tabs from "../../components/Tabs/Tabs";
 import TabTeamMembers from '../../components/TabsContent/Dashboard/TabTeamMembers';
+import TabProjectApplications from '../../components/TabsContent/Dashboard/TabProjectApplications';
 
 const ProjectDashboardPage = () => {
 
@@ -199,7 +200,7 @@ const ProjectDashboardPage = () => {
 
                 if (userRole === 'Organizador') {
                     tabs = [
-                        { label: 'Postulaciones', content: <div>Revisar postulaciones aquí...</div> },
+                        { label: 'Postulaciones', content: <TabProjectApplications projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> },
                         { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                     ];
                 } else if (userRole === 'Colaborador') {
@@ -218,7 +219,7 @@ const ProjectDashboardPage = () => {
                 ];
             }
 
-            //Proyectos open-source
+        //Proyectos open-source
         } else if (projectType === 'Open-source') {
 
             if (projectStatus === 'Abierto') {
