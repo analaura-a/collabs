@@ -63,21 +63,28 @@ const createRequest = async (req, res) => {
     }
 };
 
-// //Editar una postulación
-// const editRequest = async (req, res) => {
+//Declinar una postulación
+const declineProjectRequest = async (req, res) => {
 
-//     const id = req.params.id;
+    const { id } = req.params;
 
-//     service.editRequest(id, req.body)
-//         .then((editedRequest) => {
-//             if (editedRequest) {
-//                 res.status(200).json(editedRequest);
-//             } else {
-//                 res.status(404).json();
-//             }
-//         });
+    try {
+        const updatedRequest = await service.declineProjectRequest(id);
 
-// }
+        if (!updatedRequest) {
+            return res.status(404).json({ message: 'Postulación no encontrada.' });
+        }
+
+        return res.status(200).json({
+            message: 'Postulación declinada con éxito.',
+            updatedRequest
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al declinar la postulación: ${error.message}`
+        });
+    }
+};
 
 //Eliminar una postulación
 const deleteRequest = async (req, res) => {
@@ -109,6 +116,6 @@ export {
     getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
-    // editRequest,
+    declineProjectRequest,
     deleteRequest
 }

@@ -105,10 +105,23 @@ const createRequest = async ({ userId, projectId, appliedRole, openPositionId })
     }
 };
 
-// async function editRequest(id, request) {
-//     const editedRequest = await db.collection("projects_requests").updateOne({ _id: new ObjectId(id) }, { $set: request });
-//     return editedRequest;
-// }
+//Declinar una postulación
+const declineProjectRequest = async (requestId) => {
+
+    try {
+        await client.connect();
+
+        const updatedRequest = await db.collection('projects_requests').findOneAndUpdate(
+            { _id: new ObjectId(requestId) },
+            { $set: { status: 'Declinada' } },
+            { returnDocument: 'after' }
+        );
+
+        return updatedRequest;
+    } catch (error) {
+        throw new Error('Error al declinar la postulación: ' + error.message);
+    }
+};
 
 //Eliminar una postulación
 const deleteRequest = async (id) => {
@@ -120,6 +133,6 @@ export {
     getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
-    // editRequest,
+    declineProjectRequest,
     deleteRequest
 }

@@ -16,8 +16,8 @@ route.get('/users/:userId/requests', [validateTokenMiddleware], controllers.getR
 //Agregar una nueva postulación
 route.post('/project_requests', [verifyUserOwnership], controllers.createRequest);
 
-// //Editar una postulación
-// route.patch('/project_requests/:id', [validateRequestEdit], controllers.editRequest);
+//Declinar una postulación
+route.patch('/project_requests/:id/decline', [validateTokenMiddleware], controllers.declineProjectRequest);
 
 //Eliminar una postulación
 route.delete('/project_requests/:id', [verifyUserOwnership], controllers.deleteRequest);
