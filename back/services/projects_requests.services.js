@@ -19,6 +19,7 @@ const getRequestsByProjectId = async (projectId) => {
                 project_id: new ObjectId(projectId),
                 status: 'Pendiente'
             })
+            .sort({ created_at: -1 })
             .toArray();
 
         // Si no hay postulaciones, devolver un array vacío
