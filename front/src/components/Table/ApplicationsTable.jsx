@@ -69,7 +69,7 @@ const ApplicationsTable = ({ applications, setApplications }) => {
 
                             <td className="subtitle-18 black-color-text">{application.applied_role}</td>
 
-                            <td className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString()}</td>
+                            <td className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString('en-GB')}</td>
 
                             <td>
                                 <p className={`smaller-paragraph medium-text application-card__status ${application.status === 'Pendiente' ? 'status-yellow' : application.status === 'Aprobada' ? 'status-green' : 'status-red'}`}>{application.status}</p>

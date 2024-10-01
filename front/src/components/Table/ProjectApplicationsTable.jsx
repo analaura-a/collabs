@@ -29,34 +29,42 @@ const ProjectApplicationsTable = ({ applications }) => {
 
                 <tbody>
 
-                    <tr>
-                        <td>
-                            <Link to={`/colaboradores/1`} className="application-card__host">
-                                <div className="application-card__host-photo">
-                                    <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                    {applications.map(application => (
+                        <tr key={application._id}>
+                            <td>
+                                <Link to={`/colaboradores/${application.user.username}`} className="application-card__host">
+                                    {application.user.profile_pic ? (
+                                        <div className="application-card__host-photo">
+                                            <img src={`${SERVER_BASE_URL}${application.user.profile_pic}`} alt={`Foto de perfil de ${application.user.name}}`} />
+                                        </div>
+                                    ) : (
+                                        <div className="application-card__host-photo">
+                                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                                        </div>
+                                    )}
+
+                                    <p className="subtitle black-color-text application-card__host-name">{application.user.name} {application.user.last_name}</p>
+                                </Link>
+                            </td>
+
+                            <td className="subtitle-18 black-color-text">{application.applied_role}</td>
+
+                            <td className="subtitle-18 black-color-text">{application.user.availability}</td>
+
+                            <td className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString('en-GB')}</td>
+
+                            <td>
+                                <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
+                            </td>
+
+                            <td>
+                                <div className="table-buttons">
+                                    <Button size="small" icon={<CheckIcon />}>Aceptar</Button>
+                                    <Button size="small" color="secondary" icon={<CrossIcon />}>Rechazar</Button>
                                 </div>
-
-                                <p className="subtitle black-color-text application-card__host-name">Julián Rossi</p>
-                            </Link>
-                        </td>
-
-                        <td className="subtitle-18 black-color-text">UX/UI Designer</td>
-
-                        <td className="subtitle-18 black-color-text">Baja (1-2 horas/día)</td>
-
-                        <td className="subtitle-18 black-color-text">9/23/2024</td>
-
-                        <td>
-                            <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
-                        </td>
-
-                        <td>
-                            <div className="table-buttons">
-                                <Button size="small" icon={<CheckIcon />}>Aceptar</Button>
-                                <Button size="small" color="secondary" icon={<CrossIcon />}>Rechazar</Button>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    ))}
 
                 </tbody>
 
@@ -65,50 +73,58 @@ const ProjectApplicationsTable = ({ applications }) => {
             {/* Cards (mobile) */}
             <div className="applications-cards project-applications-cards">
 
-                <article className="application-card">
+                {applications.map(application => (
+                    <article key={application._id} className="application-card">
 
-                    <ul>
-                        <li className="application-card__title-and-value">
-                            <h2 className="light-paragraph medium-text">Colaborador</h2>
-                            <Link to={`/colaboradores/1`} className="application-card__host">
-                                <div className="application-card__host-photo">
-                                    <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                        <ul>
+                            <li className="application-card__title-and-value">
+                                <h2 className="light-paragraph medium-text">Colaborador</h2>
+                                <Link to={`/colaboradores/${application.user.username}`} className="application-card__host">
+                                    {application.user.profile_pic ? (
+                                        <div className="application-card__host-photo">
+                                            <img src={`${SERVER_BASE_URL}${application.user.profile_pic}`} alt={`Foto de perfil de ${application.user.name}}`} />
+                                        </div>
+                                    ) : (
+                                        <div className="application-card__host-photo">
+                                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                                        </div>
+                                    )}
+
+                                    <p className="subtitle black-color-text application-card__host-name">{application.user.name} {application.user.last_name}</p>
+                                </Link>
+                            </li>
+
+                            <li className="application-card__title-and-value">
+                                <h2 className="light-paragraph medium-text">Rol</h2>
+                                <p className="subtitle-18 black-color-text">{application.applied_role}</p>
+                            </li>
+
+                            <li className="application-card__title-and-value">
+                                <h2 className="light-paragraph medium-text">Disponibilidad</h2>
+                                <p className="subtitle-18 black-color-text">{application.user.availability}</p>
+                            </li>
+
+                            <li className="application-card__title-and-value">
+                                <h2 className="light-paragraph medium-text">Fecha de postulación</h2>
+                                <p className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString('en-GB')}</p>
+                            </li>
+
+                            <li className="application-card__title-and-value-bigger">
+                                <h2 className="light-paragraph medium-text">Mensaje</h2>
+                                <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
+                            </li>
+
+                            <li className="application-card__title-and-value-bigger">
+                                <h2 className="light-paragraph medium-text">Unir al proyecto</h2>
+                                <div className="table-buttons">
+                                    <Button size="small" icon={<CheckIcon />}>Aceptar</Button>
+                                    <Button size="small" color="secondary" icon={<CrossIcon />}>Rechazar</Button>
                                 </div>
+                            </li>
+                        </ul>
 
-                                <p className="subtitle black-color-text application-card__host-name">Julián Rossi</p>
-                            </Link>
-                        </li>
-
-                        <li className="application-card__title-and-value">
-                            <h2 className="light-paragraph medium-text">Rol</h2>
-                            <p className="subtitle-18 black-color-text">UX/UI Designer</p>
-                        </li>
-
-                        <li className="application-card__title-and-value">
-                            <h2 className="light-paragraph medium-text">Disponibilidad</h2>
-                            <p className="subtitle-18 black-color-text">Baja (1-2 horas/día)</p>
-                        </li>
-
-                        <li className="application-card__title-and-value">
-                            <h2 className="light-paragraph medium-text">Fecha de postulación</h2>
-                            <p className="subtitle-18 black-color-text">9/23/2024</p>
-                        </li>
-
-                        <li className="application-card__title-and-value-bigger">
-                            <h2 className="light-paragraph medium-text">Mensaje</h2>
-                            <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
-                        </li>
-
-                        <li className="application-card__title-and-value-bigger">
-                            <h2 className="light-paragraph medium-text">Unir al proyecto</h2>
-                            <div className="table-buttons">
-                                <Button size="small" icon={<CheckIcon />}>Aceptar</Button>
-                                <Button size="small" color="secondary" icon={<CrossIcon />}>Rechazar</Button>
-                            </div>
-                        </li>
-                    </ul>
-
-                </article>
+                    </article>
+                ))}
 
             </div>
 
