@@ -105,6 +105,24 @@ const createRequest = async ({ userId, projectId, appliedRole, openPositionId })
     }
 };
 
+//Aceptar una postulación
+const acceptProjectRequest = async (requestId) => {
+
+    try {
+        await client.connect();
+
+        const updatedRequest = await db.collection('projects_requests').findOneAndUpdate(
+            { _id: new ObjectId(requestId) },
+            { $set: { status: 'Aprobada' } },
+            { returnDocument: 'after' }
+        );
+
+        return updatedRequest;
+    } catch (error) {
+        throw new Error('Error al aceptar la postulación: ' + error.message);
+    }
+};
+
 //Declinar una postulación
 const declineProjectRequest = async (requestId) => {
 
@@ -133,6 +151,7 @@ export {
     getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
+    acceptProjectRequest,
     declineProjectRequest,
     deleteRequest
 }

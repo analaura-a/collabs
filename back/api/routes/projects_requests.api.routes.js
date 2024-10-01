@@ -16,6 +16,9 @@ route.get('/users/:userId/requests', [validateTokenMiddleware], controllers.getR
 //Agregar una nueva postulación
 route.post('/project_requests', [verifyUserOwnership], controllers.createRequest);
 
+//Aceptar una postulación
+route.patch('/project_requests/:id/accept', [validateTokenMiddleware], controllers.acceptProjectRequest);
+
 //Declinar una postulación
 route.patch('/project_requests/:id/decline', [validateTokenMiddleware], controllers.declineProjectRequest);
 

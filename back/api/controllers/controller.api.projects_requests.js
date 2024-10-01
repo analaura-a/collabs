@@ -1,4 +1,5 @@
 import * as service from "../../services/projects_requests.services.js";
+import * as teamService from "../../services/projects_teams.services.js"
 
 //Obtener las postulaciones de un proyecto en particular
 const getRequestsByProjectId = async (req, res) => {
@@ -63,6 +64,39 @@ const createRequest = async (req, res) => {
     }
 };
 
+//Aceptar una postulación
+const acceptProjectRequest = async (req, res) => {
+
+    const { id } = req.params;
+    const { projectId, userId, appliedRole } = req.body;
+
+    try {
+        // Cambiar el estado de la postulación 
+        const updatedRequest = await service.acceptProjectRequest(id);
+
+        if (!updatedRequest) {
+            return res.status(404).json({ message: 'Postulación no encontrada.' });
+        }
+
+        // Agregar al usuario al equipo del proyecto
+        await teamService.addMemberToProjectTeam({
+            projectId,
+            userId,
+            role: 'Colaborador',
+            profile: appliedRole
+        });
+
+        return res.status(200).json({
+            message: 'Postulación aceptada y usuario agregado al equipo del proyecto.',
+            updatedRequest
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al aceptar la postulación: ${error.message}`
+        });
+    }
+};
+
 //Declinar una postulación
 const declineProjectRequest = async (req, res) => {
 
@@ -116,6 +150,7 @@ export {
     getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
+    acceptProjectRequest,
     declineProjectRequest,
     deleteRequest
 }
