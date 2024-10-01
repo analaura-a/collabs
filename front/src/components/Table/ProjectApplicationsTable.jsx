@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { acceptApplication, declineApplication } from '../../services/requestService';
 import Button from '../Button/Button';
 import MessageIcon from '../../assets/svg/message-purple.svg?react';
 import CheckIcon from '../../assets/svg/check.svg?react';
@@ -7,9 +7,34 @@ import CrossIcon from '../../assets/svg/x.svg?react';
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
-const ProjectApplicationsTable = ({ applications }) => {
+const ProjectApplicationsTable = ({ applications, projectId, reloadApplications }) => {
 
-    const navigate = useNavigate();
+    const handleAccept = async (application) => {
+
+        const { _id, user_id, applied_role } = application;
+
+        try {
+            await acceptApplication(_id, projectId, user_id, applied_role);
+
+            console.log('Postulación aceptada con éxito.'); //Mostrar al usuario
+
+            reloadApplications();
+        } catch (error) {
+            console.error('Error al aceptar la postulación:', error);
+        }
+    };
+
+    const handleDecline = async (applicationId) => {
+        try {
+            await declineApplication(applicationId);
+
+            console.log('Postulación rechazada con éxito.'); //Mostrar al usuario
+
+            reloadApplications();
+        } catch (error) {
+            console.error('Error al rechazar la postulación:', error);
+        }
+    };
 
     return (
         <>
@@ -59,8 +84,8 @@ const ProjectApplicationsTable = ({ applications }) => {
 
                             <td>
                                 <div className="table-buttons">
-                                    <Button size="small" icon={<CheckIcon />}>Aceptar</Button>
-                                    <Button size="small" color="secondary" icon={<CrossIcon />}>Rechazar</Button>
+                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleAccept(application)}>Aceptar</Button>
+                                    <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleDecline(application._id)}>Rechazar</Button>
                                 </div>
                             </td>
                         </tr>
@@ -117,8 +142,8 @@ const ProjectApplicationsTable = ({ applications }) => {
                             <li className="application-card__title-and-value-bigger">
                                 <h2 className="light-paragraph medium-text">Unir al proyecto</h2>
                                 <div className="table-buttons">
-                                    <Button size="small" icon={<CheckIcon />}>Aceptar</Button>
-                                    <Button size="small" color="secondary" icon={<CrossIcon />}>Rechazar</Button>
+                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleAccept(application)}>Aceptar</Button>
+                                    <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleDecline(application._id)}>Rechazar</Button>
                                 </div>
                             </li>
                         </ul>

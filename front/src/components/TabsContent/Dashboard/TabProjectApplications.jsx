@@ -41,7 +41,7 @@ const TabProjectApplications = ({ projectId }) => {
             </div>
 
             {applications.length > 0 ? (
-                <ProjectApplicationsTable applications={applications} />
+                <ProjectApplicationsTable applications={applications} projectId={projectId} reloadApplications={fetchApplications} />
             ) : (
                 <div className="my-projects-page__empty-state">
                     <div className="my-projects-page__empty-state__title">

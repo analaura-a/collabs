@@ -24,7 +24,6 @@ export const getRequestsByProjectId = async (projectId) => {
     return await response.json();
 };
 
-
 export const getRequestsByUserId = async (userId) => {
 
     const token = localStorage.getItem('token');
@@ -74,6 +73,55 @@ export const createRequest = async (userId, requestData) => {
         }
 
         throw new Error(errorData.message || 'Ocurrió un error al intentar enviar la postulación.');
+    }
+
+    return await response.json();
+};
+
+export const acceptApplication = async (requestId, projectId, userId, appliedRole) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación.');
+    }
+
+    const response = await fetch(`${API_URL}/project_requests/${requestId}/accept`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token,
+        },
+        body: JSON.stringify({ projectId, userId, appliedRole }),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar aceptar la postulación.');
+    }
+
+    return await response.json();
+};
+
+export const declineApplication = async (requestId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación.');
+    }
+
+    const response = await fetch(`${API_URL}/project_requests/${requestId}/decline`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token,
+        },
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar declinar la postulación.');
     }
 
     return await response.json();
