@@ -40,7 +40,20 @@ const TabProjectApplications = ({ projectId }) => {
                 <p className="light-paragraph">Revisa las postulaciones de las personas interesadas en unirse a colaborar en el proyecto.</p>
             </div>
 
-            <ProjectApplicationsTable applications={applications} />
+            {applications.length > 0 ? (
+                <ProjectApplicationsTable applications={applications} />
+            ) : (
+                <div className="my-projects-page__empty-state">
+                    <div className="my-projects-page__empty-state__title">
+                        <img src="../../assets/svg/requests-empty-state.svg" alt="Sin postulaciones" />
+
+                        <div>
+                            <h3 className="title-32-medium">Aún no has recibido postulaciones</h3>
+                            <p className="subtitle-18">Ten paciencia. O también puedes compartir la convocatoria del proyecto para llegar a más personas interesadas.</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </section>
     );
