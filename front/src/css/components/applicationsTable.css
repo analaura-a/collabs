@@ -19,7 +19,6 @@
     border-bottom: 1px solid var(--color-gray-line);
 }
 
-
 .applications-table th:first-child {
     padding: 12px 0 12px 12px;
 
@@ -42,6 +41,19 @@
 .applications-table__button,
 .application-card__button {
     margin: 0 0 0 auto;
+}
+
+.project-applications-table td:last-child {
+    width: 251px;
+}
+
+.table-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 12px;
+
+    width: fit-content;
 }
 
 
@@ -128,6 +140,10 @@
     width: fit-content;
     padding: 8px 10px;
     border-radius: 8px;
+}
+
+.project-applications-cards .application-card {
+    padding: 48px 24px 24px 24px;
 }
 
 
