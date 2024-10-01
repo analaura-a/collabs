@@ -8,12 +8,54 @@ const getRequestById = async (id) => {
     return await db.collection('projects_requests').findOne({ _id: new ObjectId(id) });
 };
 
-// //Obtener las postulaciones de un proyecto en particular
-// async function getRequestsByProjectId(id) {
-//     return db.collection("projects_requests").find({ project_id: id, status: 'Pending' }).toArray();
-// }
+const getRequestsByProjectId = async (projectId) => {
 
-//Obtener las postulaciones de un usuario por id
+    try {
+        await client.connect();
+
+        // Obtener las postulaciones del proyecto
+        const requests = await db.collection('projects_requests')
+            .find({
+                project_id: new ObjectId(projectId),
+                status: 'Pendiente'
+            })
+            .toArray();
+
+        // Si no hay postulaciones, devolver un array vacío
+        if (!requests || requests.length === 0) {
+            return [];
+        }
+
+        // Obtener los IDs de los usuarios que han enviado postulaciones
+        const userIds = requests.map(request => request.user_id);
+
+        // Consultar los detalles de los usuarios desde la colección 'users'
+        const userDetails = await db.collection('users')
+            .find({ _id: { $in: userIds } })
+            .toArray();
+
+        // Enriquecer las postulaciones con los datos de los usuarios
+        const enrichedRequests = requests.map(req => {
+            const userDetail = userDetails.find(user => user._id.equals(req.user_id));
+            return {
+                ...req,
+                user: {
+                    name: userDetail?.name,
+                    last_name: userDetail?.last_name,
+                    username: userDetail?.username,
+                    profile_pic: userDetail?.profile_pic,
+                    availability: userDetail?.availability
+                },
+            };
+        });
+
+        return enrichedRequests;
+    } catch (error) {
+        throw new Error(`Error al obtener las postulaciones del proyecto: ${error.message}`);
+    }
+};
+
+//Obtener las postulaciones de un usuario en particular
 const getRequestsByUserId = async (userId) => {
 
     try {
@@ -74,7 +116,7 @@ const deleteRequest = async (id) => {
 
 export {
     getRequestById,
-    // getRequestsByProjectId,
+    getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
     // editRequest,

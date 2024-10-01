@@ -6,21 +6,11 @@ import { verifyUserOwnership, validateTokenMiddleware } from '../../middleware/t
 const route = Router();
 
 /* API POSTULACIONES DE PROYECTOS */
-// {
-//     _id: ObjectId, // ID único de la postulación
-//     project_id: ObjectId, // ID del proyecto al que se postuló
-//     user_id: ObjectId, // ID del usuario que se postuló
-//     open_position_id: ObjectId, // ID específico de la posición abierta
-//     role: String, // Rol al que se postuló (ej. "UX/UI Designer")
-//     status: String, // Estado de la postulación ("pendiente", "aprobada", "declinada")
-//     created_at: Date // Fecha en que se creó la postulación
-//   }
 
+//Obtener las postulaciones de un proyecto en particular
+route.get('/projects/:projectId/requests', [validateTokenMiddleware], controllers.getRequestsByProjectId);
 
-// //Obtener las postulaciones de un proyecto en particular
-// route.get('/projects/:id/requests', controllers.getRequestsByProjectId);
-
-//Obtener las postulaciones de un usuario por id
+//Obtener las postulaciones de un usuario en particular
 route.get('/users/:userId/requests', [validateTokenMiddleware], controllers.getRequestsByUserId);
 
 //Agregar una nueva postulación

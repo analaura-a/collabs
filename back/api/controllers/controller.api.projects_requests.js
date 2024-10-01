@@ -1,21 +1,26 @@
 import * as service from "../../services/projects_requests.services.js";
 
-// //Obtener las postulaciones de un proyecto en particular
-// const getRequestsByProjectId = (req, res) => {
+//Obtener las postulaciones de un proyecto en particular
+const getRequestsByProjectId = async (req, res) => {
 
-//     const id = req.params.id;
+    const { projectId } = req.params;
 
-//     service.getRequestsByProjectId(id).then((requests) => {
-//         if (requests) {
-//             res.status(200).json(requests);
-//         } else {
-//             res.status(404).json();
-//         }
-//     });
+    try {
+        const requests = await service.getRequestsByProjectId(projectId);
 
-// }
+        if (!requests || requests.length === 0) {
+            return res.status(404).json({ message: 'No hay postulaciones para este proyecto.' });
+        }
 
-//Obtener las postulaciones de un usuario por id
+        return res.status(200).json(requests);
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al obtener las postulaciones del proyecto: ${error.message}`,
+        });
+    }
+}
+
+//Obtener las postulaciones de un usuario en particular
 const getRequestsByUserId = async (req, res) => {
 
     const { userId } = req.params;
@@ -101,7 +106,7 @@ const deleteRequest = async (req, res) => {
 };
 
 export {
-    // getRequestsByProjectId,
+    getRequestsByProjectId,
     getRequestsByUserId,
     createRequest,
     // editRequest,
