@@ -3,6 +3,7 @@ import multer from 'multer';
 import * as controllers from '../controllers/controller.api.projects.js';
 // import { validatePersonalProjectCreate, validateOpenSourceProjectCreate, validatePersonalProjectPatch, validateOpenSourceProjectPatch } from '../../middleware/projects.validate.middleware.js'
 import { validateTokenMiddleware, verifyUserOwnership } from '../../middleware/token.validate.middleware.js'
+import { verifyOrganizerRole } from "../../middleware/projects_teams.validate.middleware.js"
 
 const route = Router();
 
@@ -18,25 +19,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /* API PROYECTOS */
-// //Obtener todos los proyectos
-// route.get('/projects', controllers.getProjects);
 
 //Obtener todos los proyectos abiertos
 route.get('/projects/open', controllers.getOpenProjects)
 
-// //Obtener los proyectos de tipo personal
-// route.get('/projects/personal', [validateTokenMiddleware], controllers.getProjectsPersonal)
-
-// //Obtener los proyectos de tipo open-source
-// route.get('/projects/open-source', [validateTokenMiddleware], controllers.getProjectsOpenSource)
-
-// //Obtener todos los proyectos que creó un usuario en particular
-// route.get('/user/:id/projects', [validateTokenMiddleware], controllers.getProjectsByUser);
-
 //Obtener un proyecto en particular por ID
 route.get('/projects/:id', [validateTokenMiddleware], controllers.getProjectById)
 
-//Obtener todos los proyectos de los que un usuario es parte
+//Obtener todos los proyectos de los que un usuario es miembro activo
 route.get('/users/:userId/projects', [validateTokenMiddleware], controllers.getUserProjects);
 
 // Crear un nuevo proyecto
@@ -51,17 +41,8 @@ route.patch('/projects/:id', [validateTokenMiddleware], controllers.updateProjec
 // Editar la convocatoria de un proyecto
 route.patch('/projects/:id/open-positions', [validateTokenMiddleware], controllers.updateProjectOpenPositions) //agregar middleware para validar que es un organizador del proyecto
 
-// //Agregar un nuevo proyecto personal
-// route.post('/projects/personal', [validateTokenMiddleware, validatePersonalProjectCreate], controllers.createProject);
-
-// //Agregar un nuevo proyecto open-source
-// route.post('/projects/open-source', [validateTokenMiddleware, validateOpenSourceProjectCreate], controllers.createProject);
-
-// //Editar un proyecto personal
-// route.patch('/projects/personal/:id', [validateTokenMiddleware, validatePersonalProjectPatch], controllers.editProject);
-
-// //Editar un proyecto open-source
-// route.patch('/projects/open-source/:id', [validateTokenMiddleware, validateOpenSourceProjectPatch], controllers.editProject);
+// Cambiar el estado de un proyecto
+route.patch('/projects/:projectId/status', [validateTokenMiddleware, verifyOrganizerRole], controllers.updateProjectStatus);
 
 // //Borrar un proyecto (eliminado lógico)
 // route.delete("/projects/:id", [validateTokenMiddleware], controllers.deleteProject);

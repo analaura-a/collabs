@@ -7,21 +7,6 @@ import * as service from "../../services/projects.services.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// //Traer todos los proyectos
-// const getProjects = (req, res) => {
-
-//     const filter = req.query;
-
-//     service.getProjects(filter)
-//         .then((projects) => {
-//             res.status(200).json(projects);
-//         })
-//         .catch((error) => {
-//             res.status(404).json();
-//         });
-
-// };
-
 //Obtener todos los proyectos abiertos
 const getOpenProjects = async (req, res) => {
 
@@ -33,49 +18,6 @@ const getOpenProjects = async (req, res) => {
         res.status(500).json({ message: 'Ocurrió un problema al intentar obtener los proyectos, inténtalo de nuevo más tarde.' });
     }
 };
-
-// //Traer todos los proyectos de tipo personal
-// const getProjectsPersonal = (req, res) => {
-
-//     service.getProjectsPersonal({ deleted: true })
-//         .then((projects) => {
-//             res.status(200).json(projects);
-//         })
-//         .catch((error) => {
-//             res.status(404).json();
-//         });
-
-
-// };
-
-// //Traer todos los proyectos de tipo open-source
-// const getProjectsOpenSource = (req, res) => {
-
-//     service.getProjectsOpenSource({ deleted: true })
-//         .then((projects) => {
-//             res.status(200).json(projects);
-//         })
-//         .catch((error) => {
-//             res.status(404).json();
-//         });
-
-// };
-
-// //Traer todos los proyectos creados por un usuario en particular
-// const getProjectsByUser = (req, res) => {
-
-//     const id = req.params.id;
-
-//     service.getProjectsByUser(id).then((projects) => {
-
-//         if (projects) {
-//             res.status(200).json(projects);
-//         } else {
-//             res.status(404).json();
-//         }
-//     });
-
-// };
 
 //Obtener un proyecto en particular por ID
 const getProjectById = async (req, res) => {
@@ -262,21 +204,40 @@ const updateProjectOpenPositions = async (req, res) => {
     }
 };
 
-// //Editar un proyecto
-// const editProject = async (req, res) => {
+// Cambiar el estado de un proyecto
+const updateProjectStatus = async (req, res) => {
 
-//     const id = req.params.id;
+    const { projectId } = req.params;
+    const { status } = req.body;
 
-//     service.editProject(id, req.body)
-//         .then((editedProject) => {
-//             if (editedProject) {
-//                 res.status(200).json(editedProject);
-//             } else {
-//                 res.status(404).json();
-//             }
-//         });
+    const validStatuses = ['Abierto', 'En curso', 'Finalizado'];
 
-// };
+    // Verificar si el estado proporcionado es válido
+    if (!validStatuses.includes(status)) {
+        return res.status(400).json({
+            message: 'El estado enviado no es válido.',
+        });
+    }
+
+    try {
+        const updatedProject = await service.updateProjectStatus(projectId, status);
+
+        if (!updatedProject) {
+            return res.status(404).json({
+                message: 'Proyecto no encontrado.',
+            });
+        }
+
+        return res.status(200).json({
+            message: `Estado del proyecto cambiado a ${status}.`,
+            project: updatedProject,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al actualizar el estado del proyecto: ${error.message}`,
+        });
+    }
+};
 
 // //Eliminar un proyecto
 // const deleteProject = (req, res) => {
@@ -294,15 +255,12 @@ const updateProjectOpenPositions = async (req, res) => {
 
 export {
     getOpenProjects,
-    // getProjectsPersonal,
-    // getProjectsOpenSource,
-    // getProjectsByUser,
     getProjectById,
     getUserProjects,
     createProject,
     uploadProjectImage,
     updateProjectDetails,
-    updateProjectOpenPositions
-    // editProject,
+    updateProjectOpenPositions,
+    updateProjectStatus
     // deleteProject
 }

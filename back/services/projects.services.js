@@ -3,22 +3,6 @@ import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
 
-
-// //Obtener todos los proyectos
-// async function getProjects(filter = {}) {
-
-//     const filterMongo = { deleted: { $ne: true } }
-
-//     if (filter.name) {
-//         filterMongo.$text = { $search: filter.name }
-//     }
-
-//     return db
-//         .collection("projects")
-//         .find(filterMongo)
-//         .toArray();
-// }
-
 //Obtener todos los proyectos abiertos
 const getOpenProjects = async () => {
 
@@ -31,47 +15,6 @@ const getOpenProjects = async () => {
 
     return openProjects;
 };
-
-//Obtener todos los proyectos de tipo personal
-// async function getProjectsPersonal(filter = {}) {
-
-//     const filterMongo = {
-//         $and: [
-//             { deleted: { $ne: true } },
-//             { type: "Personal" }
-//         ]
-//     }
-
-//     return db
-//         .collection("projects")
-//         .find(filterMongo)
-//         .toArray();
-// }
-
-// //Obtener todos los proyectos de tipo open-source
-// async function getProjectsOpenSource(filter = {}) {
-
-//     const filterMongo = {
-//         $and: [
-//             { deleted: { $ne: true } },
-//             { type: "Open-source" }
-//         ]
-//     }
-
-//     return db
-//         .collection("projects")
-//         .find(filterMongo)
-//         .toArray();
-// }
-
-// //Obtener todos los proyectos creados por un usuario en específico
-// // async function getProjectsByUser(id) {
-// //     return db.collection("projects").find({ "founder._id": new ObjectId(id) }).toArray();
-// // }
-
-// async function getProjectsByUser(id) {
-//     return db.collection("projects").find({ "founder_id": id }).toArray();
-// }
 
 //Obtener un proyecto en particular por ID
 async function getProjectById(id) {
@@ -222,6 +165,28 @@ const updateProjectOpenPositions = async (projectId, openPositions) => {
     }
 };
 
+// Cambiar el estado de un proyecto
+const updateProjectStatus = async (projectId, newStatus) => {
+
+    try {
+        await client.connect();
+
+        const updatedProject = await db.collection('projects').findOneAndUpdate(
+            { _id: new ObjectId(projectId) },
+            { $set: { status: newStatus } },
+            { returnDocument: 'after' }
+        );
+
+        if (!updatedProject) {
+            throw new Error('El proyecto no existe.');
+        }
+
+        return updatedProject;
+    } catch (error) {
+        throw new Error(`Error al cambiar el estado del proyecto: ${error.message}`);
+    }
+};
+
 //Eliminar una posición de la convocatoria de un proyecto
 const removeOpenPositionsByIds = async (projectId, positionIds) => {
 
@@ -236,12 +201,6 @@ const removeOpenPositionsByIds = async (projectId, positionIds) => {
     }
 };
 
-// //Editar un proyecto
-// async function editProject(id, project) {
-//     const editedProject = await db.collection("projects").updateOne({ _id: new ObjectId(id) }, { $set: project });
-//     return editedProject;
-// }
-
 // //Eliminar un proyecto
 // const deleteProject = async (id) => {
 //     const deletedProject = await db.collection("projects").updateOne({ _id: new ObjectId(id) }, { $set: { deleted: true } }); //Borrado lógico
@@ -250,18 +209,14 @@ const removeOpenPositionsByIds = async (projectId, positionIds) => {
 
 
 export {
-    // getProjects,
     getOpenProjects,
-    // getProjectsPersonal,
-    // getProjectsOpenSource,
-    // getProjectsByUser,
     getProjectById,
     getUserProjects,
     createProject,
     updateProjectImage,
     updateProjectDetails,
     updateProjectOpenPositions,
-    removeOpenPositionsByIds
-    // editProject,
+    updateProjectStatus,
+    removeOpenPositionsByIds,
     // deleteProject
 }
