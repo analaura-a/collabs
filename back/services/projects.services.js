@@ -95,7 +95,10 @@ const getUserProjects = async (userId) => {
 
         // 1. Buscar todos los proyectos en los que el usuario es parte
         const projectMemberships = await db.collection('projects_teams')
-            .find({ user_id: new ObjectId(userId) })
+            .find({
+                user_id: new ObjectId(userId),
+                status: 'Activo'
+            })
             .toArray();
 
         const projectIds = projectMemberships.map(membership => membership.project_id);
