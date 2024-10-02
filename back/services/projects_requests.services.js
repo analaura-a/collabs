@@ -141,6 +141,29 @@ const declineProjectRequest = async (requestId) => {
     }
 };
 
+const declineOtherRequests = async ({ projectId, userId, excludeRequestId }) => {
+
+    try {
+        await client.connect();
+
+        const filter = {
+            project_id: new ObjectId(projectId),
+            user_id: new ObjectId(userId),
+            _id: { $ne: new ObjectId(excludeRequestId) },
+            status: 'Pendiente'
+        };
+
+        const update = {
+            $set: { status: 'Declinada' }
+        };
+
+        const result = await db.collection('projects_requests').updateMany(filter, update);
+        return result;
+    } catch (error) {
+        throw new Error(`Error al declinar otras postulaciones del usuario: ${error.message}`);
+    }
+};
+
 //Eliminar una postulación
 const deleteRequest = async (id) => {
     return await db.collection('projects_requests').deleteOne({ _id: new ObjectId(id) });
@@ -153,5 +176,6 @@ export {
     createRequest,
     acceptProjectRequest,
     declineProjectRequest,
+    declineOtherRequests,
     deleteRequest
 }

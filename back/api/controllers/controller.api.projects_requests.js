@@ -86,6 +86,13 @@ const acceptProjectRequest = async (req, res) => {
             profile: appliedRole
         });
 
+        // Declinar las otras postulaciones del mismo usuario para este proyecto
+        await service.declineOtherRequests({
+            projectId,
+            userId,
+            excludeRequestId: id
+        });
+
         return res.status(200).json({
             message: 'Postulación aceptada y usuario agregado al equipo del proyecto.',
             updatedRequest
