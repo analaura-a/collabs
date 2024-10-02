@@ -14,6 +14,7 @@ const TabProjectApplications = ({ projectId }) => {
             setLoading(false);
         } catch (error) {
             console.error(error.message);
+            setApplications([]);
             setLoading(false);
         }
     };
