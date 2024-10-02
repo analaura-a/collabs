@@ -103,7 +103,7 @@ export const acceptApplication = async (requestId, projectId, userId, appliedRol
     return await response.json();
 };
 
-export const declineApplication = async (requestId) => {
+export const declineApplication = async (requestId, projectId) => {
 
     const token = localStorage.getItem('token');
 
@@ -117,6 +117,7 @@ export const declineApplication = async (requestId) => {
             'Content-Type': 'application/json',
             'auth-token': token,
         },
+        body: JSON.stringify({ projectId }),
     });
 
     if (!response.ok) {

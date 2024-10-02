@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects_requests.js';
 // import { validateRequestCreate, validateRequestEdit } from '../../middleware/projects_requests.validate.middleware.js'
 import { verifyUserOwnership, validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
+import { verifyOrganizerRole } from '../../middleware/projects_teams.validate.middleware.js';
 
 const route = Router();
 
@@ -17,10 +18,10 @@ route.get('/users/:userId/requests', [validateTokenMiddleware], controllers.getR
 route.post('/project_requests', [verifyUserOwnership], controllers.createRequest);
 
 //Aceptar una postulación
-route.patch('/project_requests/:id/accept', [validateTokenMiddleware], controllers.acceptProjectRequest);
+route.patch('/project_requests/:id/accept', [validateTokenMiddleware, verifyOrganizerRole], controllers.acceptProjectRequest);
 
 //Declinar una postulación
-route.patch('/project_requests/:id/decline', [validateTokenMiddleware], controllers.declineProjectRequest);
+route.patch('/project_requests/:id/decline', [validateTokenMiddleware, verifyOrganizerRole], controllers.declineProjectRequest);
 
 //Eliminar una postulación
 route.delete('/project_requests/:id', [verifyUserOwnership], controllers.deleteRequest);

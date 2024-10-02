@@ -132,6 +132,25 @@ const getUserRoleInProject = async (projectId, userId) => {
     }
 };
 
+// Verificar si un usuario es organizador de un proyecto
+const checkIfOrganizer = async (projectId, userId) => {
+
+    try {
+        await client.connect();
+
+        const organizer = await db.collection('projects_teams').findOne({
+            project_id: new ObjectId(projectId),
+            user_id: new ObjectId(userId),
+            role: 'Organizador',
+            status: 'Activo'
+        });
+
+        return organizer; // Devuelve null si no es organizador
+    } catch (error) {
+        throw new Error('Error al verificar el rol de organizador: ' + error.message);
+    }
+};
+
 // //Obtener el equipo de un proyecto en particular
 // async function getTeamByProjectId(id) {
 //     return db.collection("projects_teams").findOne({ project_id: id });
@@ -187,7 +206,8 @@ export {
     getActiveProjectMembers,
     getProjectOrganizers,
     isUserInTeam,
-    getUserRoleInProject
+    getUserRoleInProject,
+    checkIfOrganizer
     // getTeamByProjectId,
     // createTeam,
     // editTeam,

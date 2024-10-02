@@ -108,6 +108,7 @@ const acceptProjectRequest = async (req, res) => {
 const declineProjectRequest = async (req, res) => {
 
     const { id } = req.params;
+    const { projectId } = req.body;
 
     try {
         const updatedRequest = await service.declineProjectRequest(id);

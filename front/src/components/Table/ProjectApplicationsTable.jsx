@@ -26,7 +26,7 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
 
     const handleDecline = async (applicationId) => {
         try {
-            await declineApplication(applicationId);
+            await declineApplication(applicationId, projectId);
 
             console.log('Postulación rechazada con éxito.'); //Mostrar al usuario
 
