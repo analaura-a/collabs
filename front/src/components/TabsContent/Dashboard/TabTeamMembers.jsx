@@ -55,6 +55,8 @@ const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => 
                         projectType={projectType}
                         projectStatus={projectStatus}
                         userRole={userRole}
+                        projectId={projectId}
+                        onMemberRemoved={fetchTeamMembers}
                     />
                 ))}
             </div>

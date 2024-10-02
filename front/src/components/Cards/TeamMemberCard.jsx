@@ -1,16 +1,28 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import { removeUserFromProject } from '../../services/teamService';
 import DropdownButton from '../Button/DropdownButton';
 
-const TeamMemberCard = ({ member, projectType, projectStatus, userRole }) => {
+const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectId, onMemberRemoved }) => {
 
     const { profile_pic, name, last_name, username, bio, location, role, profile } = member;
 
     const { authState } = useContext(AuthContext);
     const loggedInUser = authState.user;
-
     const isCurrentUser = loggedInUser?.username === username;
+
+    const handleRemoveMember = async () => {
+        try {
+            await removeUserFromProject(projectId, member.user_id);
+
+            console.log(`Se eliminó a ${name} del proyecto con éxito.`); //Mostrar al usuario
+
+            onMemberRemoved();
+        } catch (error) {
+            console.error('Error al remover al miembro del proyecto:', error);
+        }
+    };
 
     return (
         <article className="user-card user-card__link">
@@ -30,7 +42,7 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole }) => {
                     <DropdownButton options={[
                         {
                             title: 'Echar del proyecto',
-                            onClick: () => console.log("echar del proyecto")
+                            onClick: handleRemoveMember
                         }
                     ]} />
                 }

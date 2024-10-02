@@ -133,3 +133,27 @@ export const getUserRoleInProject = async (projectId, userId) => {
 
     return await response.json();
 };
+
+export const removeUserFromProject = async (projectId, userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('Token de autenticación no encontrado');
+    }
+
+    const response = await fetch(`${API_URL}/projects/${projectId}/team/${userId}/remove`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token,
+        },
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar eliminar al usuario del proyecto.');
+    }
+
+    return await response.json();
+};
