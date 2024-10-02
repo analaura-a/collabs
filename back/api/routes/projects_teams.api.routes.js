@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects_teams.js';
-import { verifyUserOwnership, validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
+import { validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
+import { verifyOrganizerRole } from '../../middleware/projects_teams.validate.middleware.js';
 // import { validateTeamCreate, validateTeamPatch, validateTeamMemberPatch } from '../../middleware/projects_teams.validate.middleware.js'
 // import { validateTokenMiddleware } from '../../middleware/token.validate.middleware.js'
 
@@ -8,7 +9,7 @@ const route = Router();
 
 /* API MIEMBROS DE PROYECTOS */
 // Agregar miembro al equipo de un proyecto
-route.post('/project_teams', [verifyUserOwnership], controllers.addMemberToProjectTeam);
+route.post('/project_teams', [validateTokenMiddleware], controllers.addMemberToProjectTeam);
 
 // Obtener a los miembros activos de un proyecto
 route.get('/projects/:projectId/active-members', [validateTokenMiddleware], controllers.getActiveProjectMembers);
@@ -22,19 +23,7 @@ route.get('/projects/:projectId/team/check-user/:userId', [validateTokenMiddlewa
 // Verificar el rol de un usuario en un proyecto
 route.get('/projects/:projectId/user/:userId/role', [validateTokenMiddleware], controllers.getUserRoleInProject);
 
-// //Obtener el equipo de un proyecto en particular
-// route.get('/projects/:id/team', [validateTokenMiddleware], controllers.getTeamByProjectId);
-
-// //Agregar un nuevo equipo
-// route.post('/project_teams', [validateTokenMiddleware, validateTeamCreate], controllers.createTeam);
-
-// //Editar un equipo
-// route.patch('/project_teams/:id', [validateTeamPatch], controllers.editTeam);
-
-// //Agregar miembro a un equipo particular
-// route.patch('/projects/:id/team', [validateTeamMemberPatch], controllers.addMemberToTeam);
-
-// //Eliminar un equipo
-// route.delete("/project_teams/:id", controllers.deleteTeam);
+// Eliminar a un usuario del equipo de un proyecto
+route.patch('/projects/:projectId/team/:userId/remove', [validateTokenMiddleware, verifyOrganizerRole], controllers.removeUserFromProject);
 
 export default route;

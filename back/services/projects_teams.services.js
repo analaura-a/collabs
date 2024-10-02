@@ -151,55 +151,33 @@ const checkIfOrganizer = async (projectId, userId) => {
     }
 };
 
-// //Obtener el equipo de un proyecto en particular
-// async function getTeamByProjectId(id) {
-//     return db.collection("projects_teams").findOne({ project_id: id });
-// }
+// Eliminar a un usuario del equipo de un proyecto
+const removeUserFromProject = async (projectId, userId) => {
 
-// //Crear un nuevo equipo
-// async function createTeam(teamData) {
+    try {
+        await client.connect();
 
-//     // const user = await getUserProfile()
+        const result = await db.collection('projects_teams').findOneAndUpdate(
+            {
+                project_id: new ObjectId(projectId),
+                user_id: new ObjectId(userId),
+                status: 'Activo'
+            },
+            {
+                $set:
+                {
+                    status: 'Inactivo',
+                    left_at: new Date()
+                }
+            },
+            { returnDocument: 'after' }
+        );
 
-//     // const createdTeam = {
-//     //     ...teamData,
-//     //     members: [{
-//     //         ...user,
-//     //         project_details: {
-//     //             role: "Founder",
-//     //             profile: "UX/UI Designer",
-//     //             active: true
-//     //         }
-//     //     }]
-//     // }
-
-//     const teams = await db.collection("projects_teams").insertOne(teamData);
-//     teamData._id = teams.insertedId;
-//     return teamData;
-// }
-
-// //Editar un equipo
-// async function editTeam(id, team) {
-//     const editedTeam = await db.collection("projects_teams").updateOne({ _id: new ObjectId(id) }, { $set: team });
-//     return editedTeam;
-// }
-
-// //Agregar miembro a un equipo particular
-// async function addMemberToTeam(projectId, newMember) {
-
-//     const editedTeam = await db.collection("projects_teams").findOneAndUpdate(
-//         { project_id: projectId },
-//         { $push: { members: newMember } },
-//         { returnDocument: 'after' }
-//     );
-//     return editedTeam;
-// }
-
-// //Eliminar un equipo
-// async function deleteTeam(id) {
-//     const deletedTeam = await db.collection("projects_teams").deleteOne({ _id: new ObjectId(id) })
-//     return deletedTeam;
-// }
+        return result; // Retorna el documento actualizado
+    } catch (error) {
+        throw new Error('Error al remover al usuario del proyecto: ' + error.message);
+    }
+};
 
 export {
     addMemberToProjectTeam,
@@ -207,10 +185,6 @@ export {
     getProjectOrganizers,
     isUserInTeam,
     getUserRoleInProject,
-    checkIfOrganizer
-    // getTeamByProjectId,
-    // createTeam,
-    // editTeam,
-    // addMemberToTeam,
-    // deleteTeam
+    checkIfOrganizer,
+    removeUserFromProject
 }
