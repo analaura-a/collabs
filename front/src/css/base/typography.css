@@ -139,6 +139,15 @@
     line-height: 1.2;
 }
 
+.title-28 {
+    font-family: var(--inter);
+    font-size: var(--font-28px);
+    font-weight: var(--font-medium);
+    color: var(--color-black);
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+}
+
 .title-24 {
     font-family: var(--inter);
     font-size: var(--font-24px);

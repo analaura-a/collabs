@@ -1,59 +1,59 @@
-import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import Button from '../Button/Button';
 
 const Modal = ({
     isOpen,
     onClose,
     title,
+    subtitle,
     children,
     actions = []
 }) => {
 
-    // Evitar scroll en el fondo cuando el modal está abierto
-    // useEffect(() => {
-    //     if (isOpen) {
-    //         if (window.innerWidth > 768) {
-    //             document.body.style.overflow = 'hidden'; // Bloquea el fondo en desktop
-    //         }
-    //     } else {
-    //         document.body.style.overflow = 'auto'; // Restaura el scroll al cerrar el modal
-    //     }
-    //     return () => {
-    //         document.body.style.overflow = 'auto'; // Asegurarse de restaurar el scroll siempre
-    //     };
-    // }, [isOpen]);
-
-    // Cerrar modal al hacer clic fuera
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {
             onClose();
         }
     };
 
-    if (!isOpen) return null; // No renderizar si el modal no está abierto
+    if (!isOpen) return null;
 
     return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={handleOverlayClick}>
+
             <div className="modal">
-                <div className="modal-header">
-                    <h2 className="modal-title">{title}</h2>
-                    <button className="modal-close" onClick={onClose}>×</button>
+                <div className="modal-close">
+                    <button className="round-button-with-icon close-icon" onClick={onClose}></button>
                 </div>
-                <div className="modal-body">
-                    {children}
+
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h2 className="title-28">{title}</h2>
+                        {subtitle && <p className="subtitle-18">{subtitle}</p>}
+                    </div>
+
+                    {children &&
+                        <div className="modal-body">
+                            {children}
+                        </div>
+                    }
                 </div>
+
                 <div className="modal-footer">
                     {actions.map((action, index) => (
-                        <button
+                        <Button
                             key={index}
-                            className={`button ${action.type}`}
+                            color={action.color}
+                            size={action.size}
+                            width={action.width}
                             onClick={action.onClick}
                         >
                             {action.label}
-                        </button>
+                        </Button>
                     ))}
                 </div>
             </div>
+
         </div>,
         document.body // Renderizar el modal al final del body
     );

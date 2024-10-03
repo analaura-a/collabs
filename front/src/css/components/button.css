@@ -38,26 +38,26 @@
 
 /*Tamaños*/
 .btn-small {
-    font-size: 16px;
+    font-size: 1rem;
     letter-spacing: -0.02em;
     /* min-height: 44px; */
-    padding: 10px 13px;
+    padding: 0.625rem 0.8125rem;
     border-radius: 10px;
 }
 
 .btn-medium {
-    font-size: 16px;
+    font-size: 1rem;
     letter-spacing: -0.02em;
     min-height: 48px;
-    padding: 11px 16px;
+    padding: 0.6875rem 1rem;
     border-radius: 10px;
 }
 
 .btn-large {
-    font-size: 16px;
+    font-size: 1rem;
     letter-spacing: -0.02em;
     min-height: 56px;
-    padding: 0px 48px;
+    padding: 0rem 3rem;
     border-radius: 14px;
 }
 
