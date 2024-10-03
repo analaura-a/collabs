@@ -1,0 +1,105 @@
+/* Overlay oscuro para modal en desktop */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999999;
+}
+
+/* Modal que ocupa toda la pantalla en mobile */
+@media (max-width: 768px) {
+    .modal-overlay {
+        background: none;
+        /* Eliminar el fondo oscuro en mobile */
+        display: block;
+        overflow-y: auto;
+        /* Permitir que la capa contenedora haga scroll en mobile */
+    }
+}
+
+/* Estilo del modal */
+.modal {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Encabezado del modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+    margin-bottom: 20px;
+    max-height: 60vh;
+    /* Limitar la altura del contenido */
+    overflow-y: auto;
+    /* Hacer scroll solo en el cuerpo del modal si el contenido es demasiado grande */
+}
+
+/* Pie de página del modal con botones */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-footer .button {
+    margin-left: 10px;
+}
+
+/* Modal que ocupa toda la pantalla en mobile */
+@media (max-width: 768px) {
+    .modal {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        padding: 150px 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-header {
+        flex-shrink: 0;
+    }
+
+    .modal-body {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .modal-footer {
+        flex-shrink: 0;
+        position: sticky;
+        /* Para que los botones estén siempre visibles al hacer scroll */
+        bottom: 0;
+        background-color: white;
+        padding: 10px 0;
+    }
+}
