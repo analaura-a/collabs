@@ -8,7 +8,7 @@ const Input = ({ label, type = 'text', name, value, onChange, placeholder, helpe
             <div className="input-group">
 
                 {label && <label htmlFor={name} className="form-label">
-                    {label}{required && <span className="primary-color-text">*</span>}
+                    {label}{required && <span className="primary-color-text">*</span>}{!required && <span className="black-light-color-text"> (opcional)</span>}
                 </label>}
 
                 <input

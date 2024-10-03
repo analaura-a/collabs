@@ -95,6 +95,8 @@
 
     .modal-overlay {
         background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
 
         display: flex;
         justify-content: center;

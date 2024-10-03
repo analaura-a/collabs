@@ -6,6 +6,7 @@ import { getProjectOrganizers, checkUserInProjectTeam } from "../../services/tea
 import { createRequest } from "../../services/requestService";
 import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
+import Textarea from "../../components/Inputs/Textarea";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
@@ -17,11 +18,14 @@ const ProjectDetailPage = () => {
     const { authState } = useContext(AuthContext);
     const { user } = authState;
 
+    const [isUserInTeam, setIsUserInTeam] = useState(false);
+
     const [project, setProject] = useState(null);
     const [organizers, setOrganizers] = useState([]);
 
-    const [selectedPosition, setSelectedPosition] = useState(null);
-    const [isUserInTeam, setIsUserInTeam] = useState(false);
+    const [selectedPositionId, setSelectedPositionId] = useState(null);
+    const [selectedPositionProfile, setSelectedPositionProfile] = useState(null);
+    const [applicationMessage, setApplicationMessage] = useState('');
 
     const [loading, setLoading] = useState(true);
 
@@ -80,7 +84,7 @@ const ProjectDetailPage = () => {
     const handleOpenModal = () => {
 
         // Verificar si hay una posición seleccionada
-        if (!selectedPosition) {
+        if (!selectedPositionId) {
             console.log('Por favor selecciona un rol para postularte.'); //Mostrar al usuario
             return;
         }
@@ -92,25 +96,20 @@ const ProjectDetailPage = () => {
 
     const handleApplicationSubmit = async () => {
 
-        // Buscar el "profile" de la posición seleccionada
-        const selectedPositionObj = project.open_positions.find(
-            (position) => position._id === selectedPosition
-        );
-
-        if (!selectedPositionObj) {
-            console.error('Posición seleccionada no encontrada.');
+        if (!selectedPositionId || !selectedPositionProfile) {
+            handleCloseModal();
+            console.log('Por favor selecciona un rol para postularte.'); //Mostrar al usuario
             return;
         }
-
-        const appliedRole = selectedPositionObj.profile;
 
         // Crear la postulación
         try {
             await createRequest({
                 userId: user._id,
                 projectId: project._id,
-                appliedRole,
-                openPositionId: selectedPosition,
+                appliedRole: selectedPositionProfile,
+                openPositionId: selectedPositionId,
+                message: applicationMessage
             });
 
             console.log('¡Te has postulado con éxito!'); //Mostrar al usuario
@@ -248,14 +247,14 @@ const ProjectDetailPage = () => {
 
                                             <form className="edit-profile-page__form-container__inputs-container">
                                                 {project.open_positions.map((position) => (
-                                                    <div key={position._id} className={`checkbox-item ${selectedPosition === position._id ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedPosition(position._id)}>
+                                                    <div key={position._id} className={`checkbox-item ${selectedPositionId === position._id ? 'checkbox-item-checked' : ''}`} onClick={() => { setSelectedPositionId(position._id); setSelectedPositionProfile(position.profile) }}>
 
                                                         <input
                                                             type="radio"
                                                             name="open_position"
                                                             id={position._id}
                                                             value={position._id}
-                                                            checked={selectedPosition === position._id}
+                                                            checked={selectedPositionId === position._id}
                                                             onChange={(e) => e.stopPropagation()}
                                                             className="hidden-input"
                                                         />
@@ -345,7 +344,18 @@ const ProjectDetailPage = () => {
                         { label: 'Postularme', color: 'primary', size: "large", width: "fullwidth", onClick: handleApplicationSubmit },
                     ]}
                 >
-                    <p>Contenido aquí</p>
+                    <div className="project-detail-modal__content">
+                        <div>
+                            <h3 className="form-label">Mi rol en el proyecto sería...</h3>
+                            <p className="input">{selectedPositionProfile}</p>
+                        </div>
+
+                        <div>
+                            <Textarea label="¿Por qué deberían elegirme a mí?" rows={"8"} maxLength={1000} placeholder="Cuéntale al organizador por qué serías un buen fit para este proyecto en particular." name="message" value={applicationMessage} onChange={(e) => setApplicationMessage(e.target.value)} helperText={"Máximo 1000 caracteres."} />
+                        </div>
+
+                    </div>
+
                 </Modal>
 
             </div>

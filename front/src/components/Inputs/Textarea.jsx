@@ -7,7 +7,7 @@ const Textarea = ({ label, name, value, rows, cols, maxlength, onChange, placeho
             <div className="input-group">
 
                 {label && <label htmlFor={name} className="form-label">
-                    {label}{required && <span className="primary-color-text">*</span>}
+                    {label}{required && <span className="primary-color-text">*</span>}{!required && <span className="black-light-color-text"> (opcional)</span>}
                 </label>}
 
                 <textarea

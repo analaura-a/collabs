@@ -21,7 +21,7 @@ const Modal = ({
     return ReactDOM.createPortal(
         <div className="modal-overlay" onClick={handleOverlayClick}>
 
-            <div className="modal">
+            <section className="modal">
                 <div className="modal-close">
                     <button className="round-button-with-icon close-icon" onClick={onClose}></button>
                 </div>
@@ -52,7 +52,7 @@ const Modal = ({
                         </Button>
                     ))}
                 </div>
-            </div>
+            </section>
 
         </div>,
         document.body // Renderizar el modal al final del body
