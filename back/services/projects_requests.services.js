@@ -72,7 +72,7 @@ const getRequestsByUserId = async (userId) => {
 };
 
 //Agregar una nueva postulación
-const createRequest = async ({ userId, projectId, appliedRole, openPositionId }) => {
+const createRequest = async ({ userId, projectId, appliedRole, openPositionId, message }) => {
 
     try {
         await client.connect();
@@ -94,6 +94,7 @@ const createRequest = async ({ userId, projectId, appliedRole, openPositionId })
             project_id: new ObjectId(projectId),
             applied_role: appliedRole,
             open_position_id: new ObjectId(openPositionId),
+            message,
             status: 'Pendiente',
             created_at: new Date()
         };

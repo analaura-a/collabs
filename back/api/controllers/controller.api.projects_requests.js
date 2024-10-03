@@ -42,10 +42,10 @@ const getRequestsByUserId = async (req, res) => {
 //Agregar una nueva postulación
 const createRequest = async (req, res) => {
 
-    const { userId, projectId, appliedRole, openPositionId } = req.body;
+    const { userId, projectId, appliedRole, openPositionId, message } = req.body;
 
     try {
-        const request = await service.createRequest({ userId, projectId, appliedRole, openPositionId });
+        const request = await service.createRequest({ userId, projectId, appliedRole, openPositionId, message });
 
         return res.status(201).json({
             message: 'Postulación enviada con éxito.',
