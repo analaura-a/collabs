@@ -5,7 +5,9 @@ import { getProjectById } from "../../services/projectService";
 import { getProjectOrganizers, checkUserInProjectTeam } from "../../services/teamService";
 import { createRequest } from "../../services/requestService";
 import Button from "../../components/Button/Button";
+import Modal from "../../components/Modal/Modal";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
+
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const ProjectDetailPage = () => {
@@ -22,6 +24,9 @@ const ProjectDetailPage = () => {
     const [isUserInTeam, setIsUserInTeam] = useState(false);
 
     const [loading, setLoading] = useState(true);
+
+    const [isModalOpen, setModalOpen] = useState(false);
+
     const [isExpanded, setIsExpanded] = useState(false);
     const maxLength = 500;
 
@@ -72,13 +77,20 @@ const ProjectDetailPage = () => {
         setIsExpanded(!isExpanded);
     };
 
-    const handleApplicationSubmit = async () => {
+    const handleOpenModal = () => {
 
         // Verificar si hay una posición seleccionada
         if (!selectedPosition) {
             console.log('Por favor selecciona un rol para postularte.'); //Mostrar al usuario
             return;
         }
+
+        setModalOpen(true)
+    }
+
+    const handleCloseModal = () => setModalOpen(false);
+
+    const handleApplicationSubmit = async () => {
 
         // Buscar el "profile" de la posición seleccionada
         const selectedPositionObj = project.open_positions.find(
@@ -109,6 +121,8 @@ const ProjectDetailPage = () => {
                 console.log('Ocurrió un error al enviar la postulación. Inténtalo de nuevo más tarde.'); //Mostrar al usuario
             }
         }
+
+        handleCloseModal();
     };
 
     if (loading) {
@@ -255,7 +269,7 @@ const ProjectDetailPage = () => {
                                             </form>
 
                                             {!isUserInTeam ? (
-                                                <Button width="fullwidth" size="large" onClick={handleApplicationSubmit}>Postularme</Button>
+                                                <Button width="fullwidth" size="large" onClick={handleOpenModal}>Postularme</Button>
                                             ) : (
                                                 <Button width="fullwidth" size="large" onClick={() => { console.log("Ya eres parte de este proyecto") }}>Postularme</Button>
                                             )}
@@ -320,6 +334,19 @@ const ProjectDetailPage = () => {
 
                     </section>
                 </div>
+
+                <Modal
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    title="¿Quieres postularte a colaborar en el proyecto Web de cuentos?"
+                    subtitle="Puedes cancelar tu postulación en cualquier momento."
+                    actions={[
+                        { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseModal },
+                        { label: 'Postularme', color: 'primary', size: "large", width: "fullwidth", onClick: handleApplicationSubmit },
+                    ]}
+                >
+                    <p>Contenido aquí</p>
+                </Modal>
 
             </div>
         </main>
