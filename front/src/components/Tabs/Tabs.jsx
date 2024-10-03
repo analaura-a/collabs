@@ -1,12 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Tabs = ({ tabs }) => {
 
-    const [activeTab, setActiveTab] = useState(tabs[0].label);
+    const [activeTab, setActiveTab] = useState(tabs?.[0]?.label || '');
+
+    useEffect(() => {
+        if (tabs?.length > 0) {
+            setActiveTab(tabs[0].label);
+        }
+    }, [tabs]);
 
     const handleTabClick = (label) => {
         setActiveTab(label);
     };
+
+    // Verificar si el array de tabs tiene contenido antes de intentar renderizarlos
+    if (!tabs || tabs.length === 0) {
+        return <div>Cargando...</div>; //Reemplazar por componente de carga
+    }
 
     return (
         <div className="tabs-container">
@@ -24,7 +35,7 @@ const Tabs = ({ tabs }) => {
             </div>
 
             <div className="tab-content">
-                {tabs.find((tab) => tab.label === activeTab).content}
+                {tabs.find((tab) => tab.label === activeTab)?.content || 'Contenido no disponible'}
             </div>
 
         </div>

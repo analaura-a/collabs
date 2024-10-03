@@ -1,9 +1,22 @@
 import { useNavigate } from 'react-router-dom';
+import { updateProjectStatus } from '../../services/projectService';
 import Button from "./Button";
 
-const DashboardActionButtons = ({ projectId, projectType, projectStatus, userRole }) => {
+const DashboardActionButtons = ({ projectId, projectType, projectStatus, userRole, onStatusChange }) => {
 
     const navigate = useNavigate();
+
+    const handleStartProject = async () => {
+        try {
+            const updatedProject = await updateProjectStatus(projectId, 'En curso');
+
+            console.log("Proyecto iniciado con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('En curso');
+        } catch (error) {
+            console.error("Error al iniciar el proyecto:", error);
+        }
+    };
 
     const renderActionButtons = () => {
         //Proyectos personales
@@ -14,7 +27,7 @@ const DashboardActionButtons = ({ projectId, projectType, projectStatus, userRol
                 if (userRole === 'Organizador') {
                     return (
                         <>
-                            <Button size="large" width="fullwidth">Dar inicio al proyecto</Button>
+                            <Button size="large" width="fullwidth" onClick={handleStartProject}>Dar inicio al proyecto</Button>
                             <Button size="large" color="secondary" width="fullwidth" onClick={() => { navigate(`/mis-proyectos/${projectId}/editar-convocatoria`); }}>Editar convocatoria</Button>
                         </>
                     );

@@ -43,6 +43,15 @@ const ProjectDashboardPage = () => {
         }
     };
 
+    const handleStatusChange = (newStatus) => {
+        setProject(prevProject => ({
+            ...prevProject,
+            status: newStatus
+        }));
+
+        setProjectStatus(newStatus);
+    };
+
     useEffect(() => {
         fetchProjectData();
     }, [id]);
@@ -193,6 +202,10 @@ const ProjectDashboardPage = () => {
     const renderTabs = () => {
         let tabs = [];
 
+        if (!project || !projectType || !projectStatus || !userRole) {
+            return <div>Cargando...</div>; //Reemplazar por componente de carga
+        }
+
         //Proyectos personales
         if (projectType === 'Personal') {
 
@@ -241,7 +254,9 @@ const ProjectDashboardPage = () => {
 
         }
 
-        return <Tabs tabs={tabs} />;
+        if (tabs.length > 0) {
+            return <Tabs tabs={tabs} />;
+        }
     };
 
     if (loading) {
@@ -290,7 +305,9 @@ const ProjectDashboardPage = () => {
                             projectId={project._id}
                             projectType={projectType}
                             projectStatus={projectStatus}
-                            userRole={userRole} />
+                            userRole={userRole}
+                            onStatusChange={handleStatusChange}
+                        />
                     </div>
                 </section>
 
