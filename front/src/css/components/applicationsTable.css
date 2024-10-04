@@ -152,6 +152,16 @@
     padding: 48px 24px 24px 24px;
 }
 
+.applications-table__card-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 10px;
+}
+
+
+
+/*Modal*/
 .applications-table-modal__content {
     display: flex;
     flex-direction: column;

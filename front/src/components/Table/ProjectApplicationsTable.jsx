@@ -112,7 +112,7 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
 
                             <td>
                                 {application.message ? (
-                                    <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
+                                    <Button size="small" color="secondary" icon={<MessageIcon />} onClick={() => handleOpenAcceptModal(application)}>Leer</Button>
                                 ) : (
                                     <p className="subtitle-18 black-color-text">Sin mensaje</p>
                                 )}
@@ -172,14 +172,18 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
 
                             <li className="application-card__title-and-value-bigger">
                                 <h2 className="light-paragraph medium-text">Mensaje</h2>
-                                <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
+                                {application.message ? (
+                                    <Button size="small" width="fullwidth" color="secondary" icon={<MessageIcon />} onClick={() => handleOpenAcceptModal(application)}>Leer</Button>
+                                ) : (
+                                    <p className="subtitle-18 black-color-text">Sin mensaje</p>
+                                )}
                             </li>
 
                             <li className="application-card__title-and-value-bigger">
                                 <h2 className="light-paragraph medium-text">Unir al proyecto</h2>
-                                <div className="table-buttons">
-                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleOpenAcceptModal(application)}>Aceptar</Button>
-                                    <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleOpenDeclineModal(application)}>Rechazar</Button>
+                                <div className="applications-table__card-buttons">
+                                    <Button size="small" width="fullwidth" icon={<CheckIcon />} onClick={() => handleOpenAcceptModal(application)}>Aceptar</Button>
+                                    <Button size="small" width="fullwidth" color="secondary" icon={<CrossIcon />} onClick={() => handleOpenDeclineModal(application)}>Rechazar</Button>
                                 </div>
                             </li>
                         </ul>
