@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getProjectById } from '../../services/projectService';
 import { getUserRoleInProject } from '../../services/teamService';
-import DropdownButton from "../../components/Button/DropdownButton";
+import DashboardDropdownButtons from '../../components/Button/DashboardDropdownButtons';
 import DashboardActionButtons from '../../components/Button/DashboardActionButtons';
 import Tabs from "../../components/Tabs/Tabs";
 import TabTeamMembers from '../../components/TabsContent/Dashboard/TabTeamMembers';
@@ -55,116 +55,6 @@ const ProjectDashboardPage = () => {
     useEffect(() => {
         fetchProjectData();
     }, [id]);
-
-    const renderDropdownOptions = () => {
-
-        let options = [];
-
-        //Proyectos personales
-        if (projectType === 'Personal') {
-
-            if (projectStatus === 'Abierto') {
-
-                if (userRole === 'Organizador') {
-                    options = [
-                        {
-                            title: 'Ver convocatoria',
-                            onClick: () => navigate(`/proyectos/${project._id}`)
-                        },
-                        {
-                            title: 'Editar convocatoria',
-                            onClick: () => navigate(`/mis-proyectos/${project._id}/editar-convocatoria`)
-                        },
-                        {
-                            title: 'Editar detalles del proyecto',
-                            onClick: () => navigate(`/mis-proyectos/${project._id}/editar-detalles`)
-                        },
-                        {
-                            title: 'Dar inicio al proyecto',
-                            onClick: () => console.log("Funcionalidad")
-                        },
-                        {
-                            title: 'Cancelar proyecto',
-                            onClick: () => console.log("Funcionalidad")
-                        }
-                    ];
-                } else if (userRole === 'Colaborador') {
-                    options = [
-                        {
-                            title: 'Ver convocatoria',
-                            onClick: () => navigate(`/proyectos/${project._id}`)
-                        },
-                        {
-                            title: 'Abandonar proyecto',
-                            onClick: () => console.log("Funcionalidad")
-                        },
-                    ];
-                }
-
-            } else if (projectStatus === 'En curso') {
-                options = [
-                    {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ]
-            } else if (projectStatus === 'Finalizado') {
-                options = [
-                    {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ];
-            }
-
-        //Proyectos open-source
-        } else if (projectType === 'Open-source') {
-
-            if (projectStatus === 'Abierto') {
-
-                options = [
-                    {
-                        title: 'Ver convocatoria',
-                        onClick: () => navigate(`/proyectos/${project._id}`)
-                    },
-                    {
-                        title: 'Editar convocatoria',
-                        onClick: () => navigate(`/mis-proyectos/${project._id}/editar-convocatoria`)
-                    },
-                    {
-                        title: 'Editar detalles del proyecto',
-                        onClick: () => navigate(`/mis-proyectos/${project._id}/editar-detalles`)
-                    },
-                    {
-                        title: 'Finalizar proyecto',
-                        onClick: () => console.log("Funcionalidad")
-                    },
-                    {
-                        title: 'Cancelar proyecto',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ];
-
-            } else if (projectStatus === 'En curso') {
-                options = [
-                    {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ];
-            } else if (projectStatus === 'Finalizado') {
-                options = [
-                    {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ];
-            }
-
-        }
-
-        return <DropdownButton options={options} />;
-    };
 
     const renderDescription = () => {
         if (projectType === "Personal") {
@@ -274,7 +164,13 @@ const ProjectDashboardPage = () => {
                             <p className="subtitle medium-text primary-color-text">Proyecto {project.status.toLowerCase()}</p>
                         </div>
 
-                        {renderDropdownOptions()}
+                        <DashboardDropdownButtons
+                            project={project}
+                            projectType={projectType}
+                            projectStatus={projectStatus}
+                            userRole={userRole}
+                            onStatusChange={handleStatusChange}
+                        />
                     </div>
 
                     <div className="project-dashboard__info-and-actions">
