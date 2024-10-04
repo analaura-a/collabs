@@ -12,16 +12,26 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 const ProjectApplicationsTable = ({ applications, projectId, reloadApplications }) => {
 
     const [selectedApplication, setSelectedApplication] = useState(null);
-    const [isModalOpen, setModalOpen] = useState(false);
 
-    const handleOpenModal = (application) => {
+    const [isAcceptModalOpen, setAcceptModalOpen] = useState(false);
+    const [isDeclineModalOpen, setDeclineModalOpen] = useState(false);
+
+    const handleOpenAcceptModal = (application) => {
         setSelectedApplication(application)
-        setModalOpen(true);
+        setAcceptModalOpen(true);
+    }
+    const handleCloseAcceptModal = () => {
+        setSelectedApplication(null);
+        setAcceptModalOpen(false);
     }
 
-    const handleCloseModal = () => {
+    const handleOpenDeclineModal = (application) => {
+        setSelectedApplication(application)
+        setDeclineModalOpen(true);
+    }
+    const handleCloseDeclineModal = () => {
         setSelectedApplication(null);
-        setModalOpen(false);
+        setDeclineModalOpen(false);
     }
 
     const handleAccept = async () => {
@@ -35,19 +45,24 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
 
             reloadApplications();
 
-            handleCloseModal();
+            handleCloseAcceptModal();
         } catch (error) {
             console.error('Error al aceptar la postulación:', error);
         }
     };
 
-    const handleDecline = async (applicationId) => {
+    const handleDecline = async () => {
+
+        const { _id } = selectedApplication;
+
         try {
-            await declineApplication(applicationId, projectId);
+            await declineApplication(_id, projectId);
 
             console.log('Postulación rechazada con éxito.'); //Mostrar al usuario
 
             reloadApplications();
+
+            handleCloseDeclineModal();
         } catch (error) {
             console.error('Error al rechazar la postulación:', error);
         }
@@ -105,8 +120,8 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
 
                             <td>
                                 <div className="table-buttons">
-                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleOpenModal(application)}>Aceptar</Button>
-                                    <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleDecline(application._id)}>Rechazar</Button>
+                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleOpenAcceptModal(application)}>Aceptar</Button>
+                                    <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleOpenDeclineModal(application)}>Rechazar</Button>
                                 </div>
                             </td>
                         </tr>
@@ -163,8 +178,8 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
                             <li className="application-card__title-and-value-bigger">
                                 <h2 className="light-paragraph medium-text">Unir al proyecto</h2>
                                 <div className="table-buttons">
-                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleOpenModal(application)}>Aceptar</Button>
-                                    <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleDecline(application._id)}>Rechazar</Button>
+                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleOpenAcceptModal(application)}>Aceptar</Button>
+                                    <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleOpenDeclineModal(application)}>Rechazar</Button>
                                 </div>
                             </li>
                         </ul>
@@ -175,12 +190,53 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
             </div>
 
             <Modal
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
+                isOpen={isAcceptModalOpen}
+                onClose={handleCloseAcceptModal}
                 title={`¿Quieres añadir a ${selectedApplication?.user?.name || ''} ${selectedApplication?.user?.last_name || ''} a colaborar en el proyecto?`}
                 actions={[
-                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseModal },
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseAcceptModal },
                     { label: 'Añadir al equipo', color: 'primary', size: "large", width: "fullwidth", onClick: handleAccept },
+                ]}
+            >
+                <div className="applications-table-modal__content">
+
+                    <div className="applications-table-modal__content__user-data">
+                        {selectedApplication?.user?.profile_pic ? (
+                            <div className="application-card__host-photo application-card__host-photo-modal">
+                                <img src={`${SERVER_BASE_URL}${selectedApplication.user.profile_pic}`} alt={`Foto de perfil de ${selectedApplication.user.name}}`} />
+                            </div>
+                        ) : (
+                            <div className="application-card__host-photo application-card__host-photo-modal">
+                                <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                            </div>
+                        )}
+
+                        <div>
+                            <p className="title-20 medium-text">{selectedApplication?.user?.name || ''} {selectedApplication?.user?.last_name || ''} <span className="primary-color-text">(@{selectedApplication?.user?.username})</span></p>
+                            <p className="light-paragraph">{selectedApplication?.user?.location || 'Sin ubicación'}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="form-label">Su rol en el proyecto sería...</h3>
+                        <p className="input">{selectedApplication?.applied_role}</p>
+                    </div>
+
+                    <div>
+                        <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
+                        <p className="input">{selectedApplication?.message}</p>
+                    </div>
+
+                </div>
+            </Modal>
+
+            <Modal
+                isOpen={isDeclineModalOpen}
+                onClose={handleCloseDeclineModal}
+                title={`¿Quieres descartar la postulación de ${selectedApplication?.user?.name || ''} ${selectedApplication?.user?.last_name || ''} para colaborar en el proyecto?`}
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseDeclineModal },
+                    { label: 'Eliminar postulación', color: 'red', size: "large", width: "fullwidth", onClick: handleDecline },
                 ]}
             >
                 <div className="applications-table-modal__content">
