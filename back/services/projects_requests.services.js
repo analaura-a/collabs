@@ -45,7 +45,8 @@ const getRequestsByProjectId = async (projectId) => {
                     last_name: userDetail?.last_name,
                     username: userDetail?.username,
                     profile_pic: userDetail?.profile_pic,
-                    availability: userDetail?.availability
+                    availability: userDetail?.availability,
+                    location: userDetail?.location
                 },
             };
         });

@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link } from 'react-router-dom';
 import { acceptApplication, declineApplication } from '../../services/requestService';
 import Button from '../Button/Button';
+import Modal from '../Modal/Modal';
 import MessageIcon from '../../assets/svg/message-purple.svg?react';
 import CheckIcon from '../../assets/svg/check.svg?react';
 import CrossIcon from '../../assets/svg/x.svg?react';
@@ -9,9 +11,22 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const ProjectApplicationsTable = ({ applications, projectId, reloadApplications }) => {
 
-    const handleAccept = async (application) => {
+    const [selectedApplication, setSelectedApplication] = useState(null);
+    const [isModalOpen, setModalOpen] = useState(false);
 
-        const { _id, user_id, applied_role } = application;
+    const handleOpenModal = (application) => {
+        setSelectedApplication(application)
+        setModalOpen(true);
+    }
+
+    const handleCloseModal = () => {
+        setSelectedApplication(null);
+        setModalOpen(false);
+    }
+
+    const handleAccept = async () => {
+
+        const { _id, user_id, applied_role } = selectedApplication;
 
         try {
             await acceptApplication(_id, projectId, user_id, applied_role);
@@ -19,6 +34,8 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
             console.log('Postulación aceptada con éxito.'); //Mostrar al usuario
 
             reloadApplications();
+
+            handleCloseModal();
         } catch (error) {
             console.error('Error al aceptar la postulación:', error);
         }
@@ -79,12 +96,16 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
                             <td className="subtitle-18 black-color-text">{new Date(application.created_at).toLocaleDateString('en-GB')}</td>
 
                             <td>
-                                <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
+                                {application.message ? (
+                                    <Button size="small" color="secondary" icon={<MessageIcon />}>Leer</Button>
+                                ) : (
+                                    <p className="subtitle-18 black-color-text">Sin mensaje</p>
+                                )}
                             </td>
 
                             <td>
                                 <div className="table-buttons">
-                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleAccept(application)}>Aceptar</Button>
+                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleOpenModal(application)}>Aceptar</Button>
                                     <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleDecline(application._id)}>Rechazar</Button>
                                 </div>
                             </td>
@@ -142,7 +163,7 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
                             <li className="application-card__title-and-value-bigger">
                                 <h2 className="light-paragraph medium-text">Unir al proyecto</h2>
                                 <div className="table-buttons">
-                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleAccept(application)}>Aceptar</Button>
+                                    <Button size="small" icon={<CheckIcon />} onClick={() => handleOpenModal(application)}>Aceptar</Button>
                                     <Button size="small" color="secondary" icon={<CrossIcon />} onClick={() => handleDecline(application._id)}>Rechazar</Button>
                                 </div>
                             </li>
@@ -153,6 +174,46 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
 
             </div>
 
+            <Modal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={`¿Quieres añadir a ${selectedApplication?.user?.name || ''} ${selectedApplication?.user?.last_name || ''} a colaborar en el proyecto?`}
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseModal },
+                    { label: 'Añadir al equipo', color: 'primary', size: "large", width: "fullwidth", onClick: handleAccept },
+                ]}
+            >
+                <div className="applications-table-modal__content">
+
+                    <div className="applications-table-modal__content__user-data">
+                        {selectedApplication?.user?.profile_pic ? (
+                            <div className="application-card__host-photo application-card__host-photo-modal">
+                                <img src={`${SERVER_BASE_URL}${selectedApplication.user.profile_pic}`} alt={`Foto de perfil de ${selectedApplication.user.name}}`} />
+                            </div>
+                        ) : (
+                            <div className="application-card__host-photo application-card__host-photo-modal">
+                                <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                            </div>
+                        )}
+
+                        <div>
+                            <p className="title-20 medium-text">{selectedApplication?.user?.name || ''} {selectedApplication?.user?.last_name || ''} <span className="primary-color-text">(@{selectedApplication?.user?.username})</span></p>
+                            <p className="light-paragraph">{selectedApplication?.user?.location || 'Sin ubicación'}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="form-label">Su rol en el proyecto sería...</h3>
+                        <p className="input">{selectedApplication?.applied_role}</p>
+                    </div>
+
+                    <div>
+                        <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
+                        <p className="input">{selectedApplication?.message}</p>
+                    </div>
+
+                </div>
+            </Modal>
         </>
     );
 };
