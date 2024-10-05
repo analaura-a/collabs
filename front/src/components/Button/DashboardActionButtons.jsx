@@ -18,6 +18,10 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
     const handleOpenStartProjectModal = () => setStartProjectModalOpen(true);
     const handleCloseStartProjectModal = () => setStartProjectModalOpen(false);
 
+    const [isFinishProjectModalOpen, setFinishProjectModalOpen] = useState(false);
+    const handleOpenFinishProjectModal = () => setFinishProjectModalOpen(true);
+    const handleCloseFinishProjectModal = () => setFinishProjectModalOpen(false);
+
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
         try {
@@ -32,6 +36,22 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
             console.error("Error al iniciar el proyecto:", error);
 
             handleCloseStartProjectModal();
+        }
+    };
+
+    const handleFinishProject = async () => {
+        try {
+            const updatedProject = await updateProjectStatus(project._id, 'Finalizado');
+
+            console.log("Proyecto finalizado con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('Finalizado');
+
+            handleCloseFinishProjectModal();
+        } catch (error) {
+            console.error("Error al finalizar el proyecto:", error);
+
+            handleCloseFinishProjectModal();
         }
     };
 
@@ -75,7 +95,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                 if (userRole === 'Organizador') {
                     return (
                         <>
-                            <Button size="large" width="fullwidth">Finalizar proyecto</Button>
+                            <Button size="large" width="fullwidth" onClick={handleOpenFinishProjectModal}>Finalizar proyecto</Button>
                             <Button size="large" color="secondary" width="fullwidth">Reabrir convocatoria</Button>
                         </>
                     );
@@ -147,6 +167,17 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                 actions={[
                     { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseStartProjectModal },
                     { label: 'Comenzar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleStartProject },
+                ]}
+            />
+
+            <Modal
+                isOpen={isFinishProjectModalOpen}
+                onClose={handleCloseFinishProjectModal}
+                title={'¿Quieres dar por terminado al proyecto y cambiar su estado a "finalizado"?'}
+                subtitle="Una vez que el proyecto sea finalizado, será archivado y ni tú ni el resto del equipo podrán hacer cambios en él (a menos que decidas reabrirlo)."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseFinishProjectModal },
+                    { label: 'Finalizar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleFinishProject },
                 ]}
             />
         </div>
