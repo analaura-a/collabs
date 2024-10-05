@@ -226,7 +226,7 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
                         <p className="input">{selectedApplication?.applied_role}</p>
                     </div>
 
-                    {selectedApplication?.user?.message &&
+                    {selectedApplication?.message &&
                         <div>
                             <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
                             <p className="input">{selectedApplication?.message}</p>
@@ -269,7 +269,7 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
                         <p className="input">{selectedApplication?.applied_role}</p>
                     </div>
 
-                    {selectedApplication?.user?.message &&
+                    {selectedApplication?.message &&
                         <div>
                             <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
                             <p className="input">{selectedApplication?.message}</p>

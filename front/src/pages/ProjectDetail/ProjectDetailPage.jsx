@@ -102,6 +102,9 @@ const ProjectDetailPage = () => {
             return;
         }
 
+        // Si no hay mensaje, asignar null
+        const messageToSend = applicationMessage.trim() === "" ? null : applicationMessage;
+
         // Crear la postulación
         try {
             await createRequest({
@@ -109,7 +112,7 @@ const ProjectDetailPage = () => {
                 projectId: project._id,
                 appliedRole: selectedPositionProfile,
                 openPositionId: selectedPositionId,
-                message: applicationMessage
+                message: messageToSend
             });
 
             console.log('¡Te has postulado con éxito!'); //Mostrar al usuario
