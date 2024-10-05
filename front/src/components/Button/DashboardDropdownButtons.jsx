@@ -14,10 +14,26 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
     const handleOpenLeaveModal = () => setLeaveModalOpen(true);
     const handleCloseLeaveModal = () => setLeaveModalOpen(false);
 
+    const [isStartProjectModalOpen, setStartProjectModalOpen] = useState(false);
+    const handleOpenStartProjectModal = () => setStartProjectModalOpen(true);
+    const handleCloseStartProjectModal = () => setStartProjectModalOpen(false);
+
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
-        console.log("Proyecto iniciado con éxito")
-    }
+        try {
+            const updatedProject = await updateProjectStatus(project._id, 'En curso');
+
+            console.log("Proyecto iniciado con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('En curso');
+
+            handleCloseStartProjectModal();
+        } catch (error) {
+            console.error("Error al iniciar el proyecto:", error);
+
+            handleCloseStartProjectModal();
+        }
+    };
 
     const handleLeaveProject = async () => {
         try {
@@ -57,7 +73,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                         },
                         {
                             title: 'Dar inicio al proyecto',
-                            onClick: handleStartProject
+                            onClick: handleOpenStartProjectModal
                         },
                         {
                             title: 'Cancelar proyecto',
@@ -154,6 +170,17 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                 actions={[
                     { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseLeaveModal },
                     { label: 'Abandonar', color: 'red', size: "large", width: "fullwidth", onClick: handleLeaveProject },
+                ]}
+            />
+
+            <Modal
+                isOpen={isStartProjectModalOpen}
+                onClose={handleCloseStartProjectModal}
+                title={'¿Quieres dar inicio al proyecto y cambiar su estado a "en curso"?'}
+                subtitle="Una vez que el proyecto esté en curso, la convocatoria cerrará y no podrás añadir más colaboradores al equipo."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseStartProjectModal },
+                    { label: 'Comenzar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleStartProject },
                 ]}
             />
         </>

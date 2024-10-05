@@ -9,7 +9,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
     const navigate = useNavigate();
 
-    //Modal
+    /* Modal */
     const [isLeaveModalOpen, setLeaveModalOpen] = useState(false);
     const handleOpenLeaveModal = () => setLeaveModalOpen(true);
     const handleCloseLeaveModal = () => setLeaveModalOpen(false);
@@ -18,7 +18,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
     const handleOpenStartProjectModal = () => setStartProjectModalOpen(true);
     const handleCloseStartProjectModal = () => setStartProjectModalOpen(false);
 
-    //Funcionalidades de los botones
+    /* Funcionalidades de los botones */
     const handleStartProject = async () => {
         try {
             const updatedProject = await updateProjectStatus(project._id, 'En curso');
@@ -47,7 +47,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
         }
     };
 
-    //Botones a mostrar
+    /* Botones */
     const renderActionButtons = () => {
 
         //Proyectos personales
@@ -134,7 +134,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                 isOpen={isStartProjectModalOpen}
                 onClose={handleCloseStartProjectModal}
                 title={'¿Quieres dar inicio al proyecto y cambiar su estado a "en curso"?'}
-                subtitle="Una vez que el proyecto esté en curso, la convocatoria cerrará y no podrás añadir a más colaboradores al equipo."
+                subtitle="Una vez que el proyecto esté en curso, la convocatoria cerrará y no podrás añadir más colaboradores al equipo."
                 actions={[
                     { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseStartProjectModal },
                     { label: 'Comenzar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleStartProject },
