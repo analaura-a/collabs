@@ -71,9 +71,22 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                 }
 
             } else if (projectStatus === "En curso") {
-                return (
-                    <Button size="large" width="fullwidth">Funcionalidad aquí</Button>
-                );
+
+                if (userRole === 'Organizador') {
+                    return (
+                        <>
+                            <Button size="large" width="fullwidth">Finalizar proyecto</Button>
+                            <Button size="large" color="secondary" width="fullwidth">Reabrir convocatoria</Button>
+                        </>
+                    );
+                } else if (userRole === 'Colaborador') {
+                    return (
+                        <>
+                            <Button size="large" color="secondary" width="fullwidth" onClick={handleOpenLeaveModal}>Abandonar el proyecto</Button>
+                        </>
+                    );
+                }
+
             } else if (projectStatus === 'Finalizado') {
                 return (
                     <Button size="large" width="fullwidth">Funcionalidad aquí</Button>
@@ -93,10 +106,6 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                     </>
                 );
 
-            } else if (projectStatus === 'En curso') {
-                return (
-                    <Button size="large" width="fullwidth">Funcionalidad aquí</Button>
-                );
             } else if (projectStatus === 'Finalizado') {
                 return (
                     <Button size="large" width="fullwidth">Funcionalidad aquí</Button>
