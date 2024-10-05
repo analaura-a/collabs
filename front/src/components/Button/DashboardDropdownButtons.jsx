@@ -18,6 +18,10 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
     const handleOpenStartProjectModal = () => setStartProjectModalOpen(true);
     const handleCloseStartProjectModal = () => setStartProjectModalOpen(false);
 
+    const [isFinishProjectModalOpen, setFinishProjectModalOpen] = useState(false);
+    const handleOpenFinishProjectModal = () => setFinishProjectModalOpen(true);
+    const handleCloseFinishProjectModal = () => setFinishProjectModalOpen(false);
+
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
         try {
@@ -32,6 +36,22 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
             console.error("Error al iniciar el proyecto:", error);
 
             handleCloseStartProjectModal();
+        }
+    };
+
+    const handleFinishProject = async () => {
+        try {
+            const updatedProject = await updateProjectStatus(project._id, 'Finalizado');
+
+            console.log("Proyecto finalizado con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('Finalizado');
+
+            handleCloseFinishProjectModal();
+        } catch (error) {
+            console.error("Error al finalizar el proyecto:", error);
+
+            handleCloseFinishProjectModal();
         }
     };
 
@@ -95,7 +115,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
 
             } else if (projectStatus === 'En curso') {
 
-               if (userRole === 'Organizador') {
+                if (userRole === 'Organizador') {
                     options = [
                         {
                             title: 'Ver convocatoria',
@@ -111,7 +131,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                         },
                         {
                             title: 'Finalizar proyecto',
-                            onClick: () => console.log("Funcionalidad")
+                            onClick: handleOpenFinishProjectModal
                         },
                         {
                             title: 'Cancelar proyecto',
@@ -160,7 +180,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                     },
                     {
                         title: 'Finalizar proyecto',
-                        onClick: () => console.log("Funcionalidad")
+                        onClick: handleOpenFinishProjectModal
                     },
                     {
                         title: 'Cancelar proyecto',
@@ -205,6 +225,17 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                 actions={[
                     { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseStartProjectModal },
                     { label: 'Comenzar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleStartProject },
+                ]}
+            />
+
+            <Modal
+                isOpen={isFinishProjectModalOpen}
+                onClose={handleCloseFinishProjectModal}
+                title={'¿Quieres dar por terminado al proyecto y cambiar su estado a "finalizado"?'}
+                subtitle="Una vez que el proyecto sea finalizado, será archivado y ni tú ni el resto del equipo podrán hacer cambios en él (a menos que decidas reabrirlo)."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseFinishProjectModal },
+                    { label: 'Finalizar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleFinishProject },
                 ]}
             />
         </>

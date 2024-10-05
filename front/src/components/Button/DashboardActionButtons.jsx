@@ -121,7 +121,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
                 return (
                     <>
-                        <Button size="large" width="fullwidth">Finalizar proyecto</Button>
+                        <Button size="large" width="fullwidth" onClick={handleOpenFinishProjectModal}>Finalizar proyecto</Button>
                         <Button size="large" color="secondary" width="fullwidth" onClick={() => { navigate(`/mis-proyectos/${project._id}/editar-convocatoria`); }}>Editar convocatoria</Button>
                     </>
                 );
