@@ -18,6 +18,10 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
     const handleOpenStartProjectModal = () => setStartProjectModalOpen(true);
     const handleCloseStartProjectModal = () => setStartProjectModalOpen(false);
 
+    const [isReopenProjectModalOpen, setReopenProjectModalOpen] = useState(false);
+    const handleOpenReopenProjectModal = () => setReopenProjectModalOpen(true);
+    const handleCloseReopenProjectModal = () => setReopenProjectModalOpen(false);
+
     const [isFinishProjectModalOpen, setFinishProjectModalOpen] = useState(false);
     const handleOpenFinishProjectModal = () => setFinishProjectModalOpen(true);
     const handleCloseFinishProjectModal = () => setFinishProjectModalOpen(false);
@@ -36,6 +40,22 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
             console.error("Error al iniciar el proyecto:", error);
 
             handleCloseStartProjectModal();
+        }
+    };
+
+    const handleReopenProject = async () => {
+        try {
+            const updatedProject = await updateProjectStatus(project._id, 'Abierto');
+
+            console.log("Proyecto reabierto con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('Abierto');
+
+            handleCloseReopenProjectModal();
+        } catch (error) {
+            console.error("Error al reabrir el proyecto:", error);
+
+            handleCloseReopenProjectModal();
         }
     };
 
@@ -96,7 +116,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                     return (
                         <>
                             <Button size="large" width="fullwidth" onClick={handleOpenFinishProjectModal}>Finalizar proyecto</Button>
-                            <Button size="large" color="secondary" width="fullwidth">Reabrir convocatoria</Button>
+                            <Button size="large" color="secondary" width="fullwidth" onClick={handleOpenReopenProjectModal}>Reabrir convocatoria</Button>
                         </>
                     );
                 } else if (userRole === 'Colaborador') {
@@ -128,7 +148,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
             } else if (projectStatus === 'Finalizado') {
                 return (
-                    <Button size="large" width="fullwidth">Funcionalidad aquí</Button>
+                    <Button size="large" color="secondary" width="fullwidth" onClick={handleOpenReopenProjectModal}>Reabrir proyecto</Button>
                 );
             }
 
@@ -180,6 +200,31 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                     { label: 'Finalizar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleFinishProject },
                 ]}
             />
+
+            {projectType === 'Personal' ? (
+                <Modal
+                    isOpen={isReopenProjectModalOpen}
+                    onClose={handleCloseReopenProjectModal}
+                    title={'¿Quieres reabrir la convocatoria de este proyecto?'}
+                    subtitle='El proyecto cambiará su estado a "abierto" una vez más, y podrás añadir a nuevas personas al equipo del proyecto.'
+                    actions={[
+                        { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseReopenProjectModal },
+                        { label: 'Reabrir convocatoria', color: 'primary', size: "large", width: "fullwidth", onClick: handleReopenProject },
+                    ]}
+                />
+            ) : (
+                <Modal
+                    isOpen={isReopenProjectModalOpen}
+                    onClose={handleCloseReopenProjectModal}
+                    title={`¿Quieres reabrir el proyecto ${project.name}?`}
+                    subtitle='El proyecto cambiará su estado a "abierto", la convocatoria volverá a abrirse y tanto tú como el resto de los organizadores podrán volver a hacer cambios en él.'
+                    actions={[
+                        { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseReopenProjectModal },
+                        { label: 'Reabrir proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleReopenProject },
+                    ]}
+                />
+            )}
+
         </div>
     )
 }
