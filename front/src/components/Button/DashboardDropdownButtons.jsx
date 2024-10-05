@@ -94,12 +94,43 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                 }
 
             } else if (projectStatus === 'En curso') {
-                options = [
-                    {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ]
+
+               if (userRole === 'Organizador') {
+                    options = [
+                        {
+                            title: 'Ver convocatoria',
+                            onClick: () => navigate(`/proyectos/${project._id}`)
+                        },
+                        {
+                            title: 'Editar detalles del proyecto',
+                            onClick: () => navigate(`/mis-proyectos/${project._id}/editar-detalles`)
+                        },
+                        {
+                            title: 'Reabrir convocatoria',
+                            onClick: () => console.log("Funcionalidad")
+                        },
+                        {
+                            title: 'Finalizar proyecto',
+                            onClick: () => console.log("Funcionalidad")
+                        },
+                        {
+                            title: 'Cancelar proyecto',
+                            onClick: () => console.log("Funcionalidad")
+                        }
+                    ];
+                } else if (userRole === 'Colaborador') {
+                    options = [
+                        {
+                            title: 'Ver convocatoria',
+                            onClick: () => navigate(`/proyectos/${project._id}`)
+                        },
+                        {
+                            title: 'Abandonar proyecto',
+                            onClick: handleOpenLeaveModal
+                        },
+                    ];
+                }
+
             } else if (projectStatus === 'Finalizado') {
                 options = [
                     {
@@ -137,13 +168,6 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                     }
                 ];
 
-            } else if (projectStatus === 'En curso') {
-                options = [
-                    {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ];
             } else if (projectStatus === 'Finalizado') {
                 options = [
                     {
