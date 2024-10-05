@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getProjectById } from '../../services/projectService';
 import { getUserRoleInProject } from '../../services/teamService';
@@ -12,7 +12,6 @@ import TabProjectApplications from '../../components/TabsContent/Dashboard/TabPr
 const ProjectDashboardPage = () => {
 
     const { id } = useParams();
-    const navigate = useNavigate();
 
     const { authState } = useContext(AuthContext);
     const { user } = authState;
@@ -113,9 +112,13 @@ const ProjectDashboardPage = () => {
                 }
 
             } else if (projectStatus === 'En curso') {
+
                 tabs = [
-                    { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                    { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> },
+                    { label: 'Chat grupal', content: <div>Contenido aquí...</div> },
+                    { label: 'Atajos rápidos', content: <div>Contenido aquí...</div> }
                 ];
+
             } else if (projectStatus === 'Finalizado') {
                 tabs = [
                     { label: 'Equipo', content: <div>Equipo aquí...</div> }
@@ -132,10 +135,6 @@ const ProjectDashboardPage = () => {
                     { label: 'Organizadores', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                 ];
 
-            } else if (projectStatus === 'En curso') {
-                tabs = [
-                    { label: 'Organizadores', content: <div>Organizadores aquí...</div> }
-                ];
             } else if (projectStatus === 'Finalizado') {
                 tabs = [
                     { label: 'Organizadores', content: <div>Organizadores aquí...</div> }
