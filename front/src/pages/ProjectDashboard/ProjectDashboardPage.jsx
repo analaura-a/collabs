@@ -168,6 +168,7 @@ const ProjectDashboardPage = () => {
                             project={project}
                             projectType={projectType}
                             projectStatus={projectStatus}
+                            user={user}
                             userRole={userRole}
                             onStatusChange={handleStatusChange}
                         />
