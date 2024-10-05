@@ -226,10 +226,12 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
                         <p className="input">{selectedApplication?.applied_role}</p>
                     </div>
 
-                    <div>
-                        <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
-                        <p className="input">{selectedApplication?.message}</p>
-                    </div>
+                    {selectedApplication?.user?.message &&
+                        <div>
+                            <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
+                            <p className="input">{selectedApplication?.message}</p>
+                        </div>
+                    }
 
                 </div>
             </Modal>
@@ -267,10 +269,12 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
                         <p className="input">{selectedApplication?.applied_role}</p>
                     </div>
 
-                    <div>
-                        <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
-                        <p className="input">{selectedApplication?.message}</p>
-                    </div>
+                    {selectedApplication?.user?.message &&
+                        <div>
+                            <h3 className="form-label">Mensaje <span className="black-light-color-text">(¿Por qué deberían elegirme?)</span></h3>
+                            <p className="input">{selectedApplication?.message}</p>
+                        </div>
+                    }
 
                 </div>
             </Modal>
