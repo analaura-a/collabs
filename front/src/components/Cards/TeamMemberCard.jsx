@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { removeUserFromProject } from '../../services/teamService';
 import DropdownButton from '../Button/DropdownButton';
+import Modal from '../Modal/Modal'
 
 const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectId, onMemberRemoved }) => {
 
@@ -11,6 +12,10 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
     const { authState } = useContext(AuthContext);
     const loggedInUser = authState.user;
     const isCurrentUser = loggedInUser?.username === username;
+
+    const [isModalOpen, setModalOpen] = useState(false);
+    const handleOpenModal = () => setModalOpen(true);
+    const handleCloseModal = () => setModalOpen(false);
 
     const handleRemoveMember = async () => {
         try {
@@ -42,7 +47,7 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
                     <DropdownButton options={[
                         {
                             title: 'Echar del proyecto',
-                            onClick: handleRemoveMember
+                            onClick: handleOpenModal
                         }
                     ]} />
                 }
@@ -85,6 +90,17 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
                     </ul>
                 </div>
             }
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={`¿Quieres echar a ${name} ${last_name} del proyecto?`}
+                subtitle="Cuidado, esta acción no se puede deshacer."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseModal },
+                    { label: 'Echar del proyecto', color: 'red', size: "large", width: "fullwidth", onClick: handleRemoveMember },
+                ]}
+            />
 
         </article>
     );
