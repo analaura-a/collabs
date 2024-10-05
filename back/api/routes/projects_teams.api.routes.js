@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects_teams.js';
-import { validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
+import { validateTokenMiddleware, verifyUserOwnership } from '../../middleware/token.validate.middleware.js';
 import { verifyOrganizerRole } from '../../middleware/projects_teams.validate.middleware.js';
 // import { validateTeamCreate, validateTeamPatch, validateTeamMemberPatch } from '../../middleware/projects_teams.validate.middleware.js'
 // import { validateTokenMiddleware } from '../../middleware/token.validate.middleware.js'
@@ -25,5 +25,8 @@ route.get('/projects/:projectId/user/:userId/role', [validateTokenMiddleware], c
 
 // Eliminar a un usuario del equipo de un proyecto
 route.patch('/projects/:projectId/team/:userId/remove', [validateTokenMiddleware, verifyOrganizerRole], controllers.removeUserFromProject);
+
+// Abandonar el equipo de un proyecto
+route.patch('/projects/:projectId/team/leave', [verifyUserOwnership], controllers.leaveProject);
 
 export default route;

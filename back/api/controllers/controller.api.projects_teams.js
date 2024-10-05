@@ -124,11 +124,36 @@ const removeUserFromProject = async (req, res) => {
     }
 };
 
+// Abandonar el equipo de un proyecto
+const leaveProject = async (req, res) => {
+
+    const { projectId } = req.params;
+    const { userId } = req.body;
+
+    try {
+        const removedUser = await service.removeUserFromProject(projectId, userId);
+
+        if (!removedUser) {
+            return res.status(404).json({ message: 'No eres parte de este proyecto o ya lo has abandonado.' });
+        }
+
+        return res.status(200).json({
+            message: 'Has abandonado el proyecto con éxito.',
+            removedUser
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al abandonar el proyecto: ${error.message}`
+        });
+    }
+};
+
 export {
     addMemberToProjectTeam,
     getActiveProjectMembers,
     getProjectOrganizers,
     isUserInTeam,
     getUserRoleInProject,
-    removeUserFromProject
+    removeUserFromProject,
+    leaveProject
 }
