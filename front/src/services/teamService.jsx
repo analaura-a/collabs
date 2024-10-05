@@ -157,3 +157,28 @@ export const removeUserFromProject = async (projectId, userId) => {
 
     return await response.json();
 };
+
+export const leaveProject = async (projectId, userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/projects/${projectId}/team/leave`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        },
+        body: JSON.stringify({ userId })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar abandonar el proyecto.');
+    }
+
+    return await response.json();
+};

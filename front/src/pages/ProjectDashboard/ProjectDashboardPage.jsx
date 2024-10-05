@@ -198,9 +198,10 @@ const ProjectDashboardPage = () => {
                         </div>
 
                         <DashboardActionButtons
-                            projectId={project._id}
+                            project={project}
                             projectType={projectType}
                             projectStatus={projectStatus}
+                            user={user}
                             userRole={userRole}
                             onStatusChange={handleStatusChange}
                         />

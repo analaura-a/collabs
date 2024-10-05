@@ -1,14 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { updateProjectStatus } from '../../services/projectService';
+import { leaveProject } from '../../services/teamService';
 import Button from "./Button";
 
-const DashboardActionButtons = ({ projectId, projectType, projectStatus, userRole, onStatusChange }) => {
+const DashboardActionButtons = ({ project, projectType, projectStatus, user, userRole, onStatusChange }) => {
 
     const navigate = useNavigate();
 
+    //Funcionalidades de los botones
     const handleStartProject = async () => {
         try {
-            const updatedProject = await updateProjectStatus(projectId, 'En curso');
+            const updatedProject = await updateProjectStatus(project._id, 'En curso');
 
             console.log("Proyecto iniciado con éxito:", updatedProject); //Mostrar al usuario
 
@@ -18,7 +20,21 @@ const DashboardActionButtons = ({ projectId, projectType, projectStatus, userRol
         }
     };
 
+    const handleLeaveProject = async () => {
+        try {
+            await leaveProject(project._id, user._id);
+
+            console.log('Has abandonado el proyecto con éxito.'); //Mostrar al usuario
+
+            navigate(`/mis-proyectos`);
+        } catch (error) {
+            console.error('Error al abandonar el proyecto:', error);
+        }
+    };
+
+    //Botones a mostrar
     const renderActionButtons = () => {
+        
         //Proyectos personales
         if (projectType === "Personal") {
 
@@ -28,13 +44,13 @@ const DashboardActionButtons = ({ projectId, projectType, projectStatus, userRol
                     return (
                         <>
                             <Button size="large" width="fullwidth" onClick={handleStartProject}>Dar inicio al proyecto</Button>
-                            <Button size="large" color="secondary" width="fullwidth" onClick={() => { navigate(`/mis-proyectos/${projectId}/editar-convocatoria`); }}>Editar convocatoria</Button>
+                            <Button size="large" color="secondary" width="fullwidth" onClick={() => { navigate(`/mis-proyectos/${project._id}/editar-convocatoria`); }}>Editar convocatoria</Button>
                         </>
                     );
                 } else if (userRole === 'Colaborador') {
                     return (
                         <>
-                            <Button size="large" color="secondary" width="fullwidth">Abandonar el proyecto</Button>
+                            <Button size="large" color="secondary" width="fullwidth" onClick={handleLeaveProject}>Abandonar el proyecto</Button>
                         </>
                     );
                 }
@@ -58,7 +74,7 @@ const DashboardActionButtons = ({ projectId, projectType, projectStatus, userRol
                 return (
                     <>
                         <Button size="large" width="fullwidth">Finalizar proyecto</Button>
-                        <Button size="large" color="secondary" width="fullwidth" onClick={() => { navigate(`/mis-proyectos/${projectId}/editar-convocatoria`); }}>Editar convocatoria</Button>
+                        <Button size="large" color="secondary" width="fullwidth" onClick={() => { navigate(`/mis-proyectos/${project._id}/editar-convocatoria`); }}>Editar convocatoria</Button>
                     </>
                 );
 
