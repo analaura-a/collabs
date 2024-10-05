@@ -18,6 +18,10 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
     const handleOpenStartProjectModal = () => setStartProjectModalOpen(true);
     const handleCloseStartProjectModal = () => setStartProjectModalOpen(false);
 
+    const [isReopenProjectModalOpen, setReopenProjectModalOpen] = useState(false);
+    const handleOpenReopenProjectModal = () => setReopenProjectModalOpen(true);
+    const handleCloseReopenProjectModal = () => setReopenProjectModalOpen(false);
+
     const [isFinishProjectModalOpen, setFinishProjectModalOpen] = useState(false);
     const handleOpenFinishProjectModal = () => setFinishProjectModalOpen(true);
     const handleCloseFinishProjectModal = () => setFinishProjectModalOpen(false);
@@ -36,6 +40,22 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
             console.error("Error al iniciar el proyecto:", error);
 
             handleCloseStartProjectModal();
+        }
+    };
+
+    const handleReopenProject = async () => {
+        try {
+            const updatedProject = await updateProjectStatus(project._id, 'Abierto');
+
+            console.log("Proyecto reabierto con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('Abierto');
+
+            handleCloseReopenProjectModal();
+        } catch (error) {
+            console.error("Error al reabrir el proyecto:", error);
+
+            handleCloseReopenProjectModal();
         }
     };
 
@@ -127,7 +147,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                         },
                         {
                             title: 'Reabrir convocatoria',
-                            onClick: () => console.log("Funcionalidad")
+                            onClick: handleOpenReopenProjectModal
                         },
                         {
                             title: 'Finalizar proyecto',
@@ -191,8 +211,8 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
             } else if (projectStatus === 'Finalizado') {
                 options = [
                     {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
+                        title: 'Reabrir proyecto',
+                        onClick: handleOpenReopenProjectModal
                     }
                 ];
             }
@@ -238,6 +258,31 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                     { label: 'Finalizar proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleFinishProject },
                 ]}
             />
+
+            {projectType === 'Personal' ? (
+                <Modal
+                    isOpen={isReopenProjectModalOpen}
+                    onClose={handleCloseReopenProjectModal}
+                    title={'¿Quieres reabrir la convocatoria de este proyecto?'}
+                    subtitle='El proyecto cambiará su estado a "abierto" una vez más, y podrás añadir a nuevas personas al equipo del proyecto.'
+                    actions={[
+                        { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseReopenProjectModal },
+                        { label: 'Reabrir convocatoria', color: 'primary', size: "large", width: "fullwidth", onClick: handleReopenProject },
+                    ]}
+                />
+            ) : (
+                <Modal
+                    isOpen={isReopenProjectModalOpen}
+                    onClose={handleCloseReopenProjectModal}
+                    title={`¿Quieres reabrir el proyecto ${project.name}?`}
+                    subtitle='El proyecto cambiará su estado a "abierto", la convocatoria volverá a abrirse y tanto tú como el resto de los organizadores podrán volver a hacer cambios en él.'
+                    actions={[
+                        { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseReopenProjectModal },
+                        { label: 'Reabrir proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleReopenProject },
+                    ]}
+                />
+            )}
+
         </>
     )
 }
