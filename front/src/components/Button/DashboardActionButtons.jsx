@@ -1,11 +1,18 @@
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { updateProjectStatus } from '../../services/projectService';
 import { leaveProject } from '../../services/teamService';
 import Button from "./Button";
+import Modal from '../Modal/Modal';
 
 const DashboardActionButtons = ({ project, projectType, projectStatus, user, userRole, onStatusChange }) => {
 
     const navigate = useNavigate();
+
+    //Modal
+    const [isLeaveModalOpen, setLeaveModalOpen] = useState(false);
+    const handleOpenLeaveModal = () => setLeaveModalOpen(true);
+    const handleCloseLeaveModal = () => setLeaveModalOpen(false);
 
     //Funcionalidades de los botones
     const handleStartProject = async () => {
@@ -34,7 +41,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
     //Botones a mostrar
     const renderActionButtons = () => {
-        
+
         //Proyectos personales
         if (projectType === "Personal") {
 
@@ -50,7 +57,7 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                 } else if (userRole === 'Colaborador') {
                     return (
                         <>
-                            <Button size="large" color="secondary" width="fullwidth" onClick={handleLeaveProject}>Abandonar el proyecto</Button>
+                            <Button size="large" color="secondary" width="fullwidth" onClick={handleOpenLeaveModal}>Abandonar el proyecto</Button>
                         </>
                     );
                 }
@@ -103,6 +110,17 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
             <div className="project-dashboard__header__actions__buttons">
                 {renderActionButtons()}
             </div>
+
+            <Modal
+                isOpen={isLeaveModalOpen}
+                onClose={handleCloseLeaveModal}
+                title={`¿Quieres abandonar el proyecto ${project.name}?`}
+                subtitle="Dejarás de pertenecer al equipo de este proyecto y ya no podrás colaborar en él. Esta acción se reflejará en tu perfil."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseLeaveModal },
+                    { label: 'Abandonar', color: 'red', size: "large", width: "fullwidth", onClick: handleLeaveProject },
+                ]}
+            />
         </div>
     )
 }
