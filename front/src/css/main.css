@@ -42,5 +42,6 @@
 @import './components/accordion/openPositionAccordion.css';
 @import './components/modal.css';
 @import './components/tabsContent/Dashboard/tabProjectShortcuts.css';
+@import './components/cards/shortcutCard.css';
 
 @import './misc/faded-pattern.css';

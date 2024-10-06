@@ -21,10 +21,11 @@
 
 
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1200px) {
 
     .dashboard-tab__shortcuts-container {
         grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 
 }
