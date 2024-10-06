@@ -8,6 +8,7 @@ import DashboardActionButtons from '../../components/Button/DashboardActionButto
 import Tabs from "../../components/Tabs/Tabs";
 import TabTeamMembers from '../../components/TabsContent/Dashboard/TabTeamMembers';
 import TabProjectApplications from '../../components/TabsContent/Dashboard/TabProjectApplications';
+import TabProjectShortcuts from '../../components/TabsContent/Dashboard/TabProjectShortcuts';
 
 const ProjectDashboardPage = () => {
 
@@ -116,7 +117,7 @@ const ProjectDashboardPage = () => {
                 tabs = [
                     { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> },
                     { label: 'Chat grupal', content: <div>Contenido aquí...</div> },
-                    { label: 'Atajos rápidos', content: <div>Contenido aquí...</div> }
+                    { label: 'Atajos rápidos', content: <TabProjectShortcuts projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                 ];
 
             } else if (projectStatus === 'Finalizado') {
