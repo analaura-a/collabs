@@ -44,8 +44,23 @@ const updateProjectShortcut = async (req, res) => {
     }
 };
 
+// Eliminar un atajo
+const deleteProjectShortcut = async (req, res) => {
+
+    const { shortcutId } = req.params;
+    const { projectId, userId } = req.body;
+
+    try {
+        const deletedShortcut = await service.deleteProjectShortcut(shortcutId);
+        res.status(200).json({ message: 'Atajo eliminado con éxito.', shortcut: deletedShortcut });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export {
     getProjectShortcuts,
     createProjectShortcut,
-    updateProjectShortcut
+    updateProjectShortcut,
+    deleteProjectShortcut
 }

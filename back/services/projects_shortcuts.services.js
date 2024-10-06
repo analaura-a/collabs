@@ -59,8 +59,22 @@ const updateProjectShortcut = async (shortcutId, updatedData) => {
     }
 };
 
+// Eliminar un atajo
+const deleteProjectShortcut = async (shortcutId) => {
+
+    try {
+        await client.connect();
+
+        const result = await db.collection('projects_shortcuts').findOneAndDelete({ _id: new ObjectId(shortcutId) });
+        return result;
+    } catch (error) {
+        throw new Error(`Error al eliminar el atajo: ${error.message}`);
+    }
+};
+
 export {
     getProjectShortcuts,
     createProjectShortcut,
-    updateProjectShortcut
+    updateProjectShortcut,
+    deleteProjectShortcut
 }
