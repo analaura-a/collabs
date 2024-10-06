@@ -30,7 +30,22 @@ const createProjectShortcut = async (req, res) => {
     }
 };
 
+// Editar un atajo
+const updateProjectShortcut = async (req, res) => {
+
+    const { shortcutId } = req.params;
+    const { projectId, userId, name, url } = req.body;
+
+    try {
+        const updatedShortcut = await service.updateProjectShortcut(shortcutId, { name, url });
+        res.status(200).json({ message: 'Atajo rápido actualizado con éxito.', shortcut: updatedShortcut });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export {
     getProjectShortcuts,
-    createProjectShortcut
+    createProjectShortcut,
+    updateProjectShortcut
 }

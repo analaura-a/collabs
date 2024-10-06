@@ -10,6 +10,7 @@ const getProjectShortcuts = async (projectId) => {
         await client.connect();
         const shortcuts = await db.collection('projects_shortcuts')
             .find({ project_id: new ObjectId(projectId) })
+            .sort({ updated_at: -1 })
             .toArray();
         return shortcuts;
     } catch (error) {
@@ -28,6 +29,8 @@ const createProjectShortcut = async (projectId, shortcutData) => {
             name: shortcutData.name,
             url: shortcutData.url,
             created_by: new ObjectId(shortcutData.created_by),
+            created_at: new Date(),
+            updated_at: new Date(),
         };
 
         const result = await db.collection('projects_shortcuts').insertOne(newShortcut);
@@ -38,7 +41,26 @@ const createProjectShortcut = async (projectId, shortcutData) => {
     }
 };
 
+// Editar un atajo
+const updateProjectShortcut = async (shortcutId, updatedData) => {
+
+    try {
+        await client.connect();
+
+        const updatedShortcut = await db.collection('projects_shortcuts')
+            .findOneAndUpdate(
+                { _id: new ObjectId(shortcutId) },
+                { $set: { ...updatedData, updated_at: new Date() } },
+                { returnDocument: 'after' }
+            );
+        return updatedShortcut.value;
+    } catch (error) {
+        throw new Error(`Error al editar el atajo: ${error.message}`);
+    }
+};
+
 export {
     getProjectShortcuts,
-    createProjectShortcut
+    createProjectShortcut,
+    updateProjectShortcut
 }

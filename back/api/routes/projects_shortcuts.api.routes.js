@@ -12,4 +12,7 @@ route.get('/projects/:projectId/shortcuts', [validateTokenMiddleware, verifyTeam
 // Crear un nuevo atajo
 route.post('/project_shortcuts', [validateTokenMiddleware, verifyTeamMember], controllers.createProjectShortcut);
 
+// Editar un atajo
+route.patch('/project_shortcuts/:shortcutId', [validateTokenMiddleware, verifyTeamMember], controllers.updateProjectShortcut);
+
 export default route;
