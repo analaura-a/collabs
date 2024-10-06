@@ -9,4 +9,7 @@ const route = Router();
 // Obtener los atajos de un proyecto
 route.get('/projects/:projectId/shortcuts', [validateTokenMiddleware, verifyTeamMember], controllers.getProjectShortcuts);
 
+// Crear un nuevo atajo
+route.post('/project_shortcuts', [validateTokenMiddleware, verifyTeamMember], controllers.createProjectShortcut);
+
 export default route;
