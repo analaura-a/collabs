@@ -107,6 +107,7 @@ const isUserInTeam = async (projectId, userId) => {
         const member = await db.collection('projects_teams').findOne({
             project_id: new ObjectId(projectId),
             user_id: new ObjectId(userId),
+            status: 'Activo'
         });
 
         return !!member; // Retorna `true` si es miembro, `false` si no lo es

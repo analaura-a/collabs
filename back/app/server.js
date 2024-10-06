@@ -5,6 +5,7 @@ import ApiProjectsTeamsRoute from '../api/routes/projects_teams.api.routes.js'
 import ApiProjectsRequestsRoute from '../api/routes/projects_requests.api.routes.js'
 import ApiAuthRoute from '../api/routes/accounts.api.routes.js'
 import ApiSkillsRoute from '../api/routes/skills.api.route.js'
+import ApiProjectsShortcutsRoute from '../api/routes/projects_shortcuts.api.routes.js'
 
 import cors from 'cors'
 
@@ -24,3 +25,4 @@ app.use('/api', ApiProjectsRequestsRoute);
 app.use('/api', ApiAuthRoute);
 app.use('/api', ApiUsersRoute);
 app.use('/api', ApiSkillsRoute);
+app.use('/api', ApiProjectsShortcutsRoute);

@@ -60,9 +60,40 @@ const verifyOrganizerRole = async (req, res, next) => {
     }
 };
 
+const verifyTeamMember = async (req, res, next) => {
+
+    const { account } = req;
+
+    const projectId = req.params.projectId || req.body.projectId;
+    const userId = account._id;
+
+    if (!account || !projectId) {
+        return res.status(400).json({
+            message: 'Faltan datos para la verificación: usuario o ID del proyecto no proporcionado.'
+        });
+    }
+
+    try {
+        const teamMember = await service.isUserInTeam(projectId, userId);
+
+        if (!teamMember) {
+            return res.status(403).json({
+                message: 'No formas parte del equipo de este proyecto.'
+            });
+        }
+
+        next();
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al verificar la membresía del equipo: ${error.message}`
+        });
+    }
+};
+
 export {
     validateTeamCreate,
     validateTeamPatch,
     validateTeamMemberPatch,
-    verifyOrganizerRole
+    verifyOrganizerRole,
+    verifyTeamMember
 }
