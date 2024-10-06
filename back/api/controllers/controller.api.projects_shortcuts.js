@@ -16,7 +16,10 @@ const getProjectShortcuts = async (req, res) => {
 // Crear un nuevo atajo
 const createProjectShortcut = async (req, res) => {
 
-    const { projectId, userId, name, url } = req.body;
+    const { projectId, name, url } = req.body;
+
+    const { account } = req;
+    const userId = account._id;
 
     if (!name || !url) {
         return res.status(400).json({ message: 'Nombre y URL son obligatorios.' });
@@ -34,7 +37,7 @@ const createProjectShortcut = async (req, res) => {
 const updateProjectShortcut = async (req, res) => {
 
     const { shortcutId } = req.params;
-    const { projectId, userId, name, url } = req.body;
+    const { projectId, name, url } = req.body;
 
     try {
         const updatedShortcut = await service.updateProjectShortcut(shortcutId, { name, url });
@@ -48,7 +51,7 @@ const updateProjectShortcut = async (req, res) => {
 const deleteProjectShortcut = async (req, res) => {
 
     const { shortcutId } = req.params;
-    const { projectId, userId } = req.body;
+    const { projectId } = req.body;
 
     try {
         const deletedShortcut = await service.deleteProjectShortcut(shortcutId);
