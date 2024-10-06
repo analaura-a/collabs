@@ -41,5 +41,6 @@
 @import './components/select.css';
 @import './components/accordion/openPositionAccordion.css';
 @import './components/modal.css';
+@import './components/tabsContent/Dashboard/tabProjectShortcuts.css';
 
 @import './misc/faded-pattern.css';
