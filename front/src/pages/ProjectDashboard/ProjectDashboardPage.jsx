@@ -122,7 +122,7 @@ const ProjectDashboardPage = () => {
 
             } else if (projectStatus === 'Finalizado') {
                 tabs = [
-                    { label: 'Equipo', content: <div>Equipo aquí...</div> }
+                    { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                 ];
             }
 
@@ -138,7 +138,7 @@ const ProjectDashboardPage = () => {
 
             } else if (projectStatus === 'Finalizado') {
                 tabs = [
-                    { label: 'Organizadores', content: <div>Organizadores aquí...</div> }
+                    { label: 'Organizadores', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                 ];
             }
 

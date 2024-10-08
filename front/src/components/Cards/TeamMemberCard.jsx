@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { removeUserFromProject } from '../../services/teamService';
 import DropdownButton from '../Button/DropdownButton';
+import Button from '../Button/Button';
 import Modal from '../Modal/Modal'
+import SendIcon from '../../assets/svg/send.svg?react';
 
 const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectId, onMemberRemoved }) => {
 
@@ -43,7 +45,7 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
                     </Link>
                 )}
 
-                {userRole === "Organizador" && !isCurrentUser &&
+                {userRole === "Organizador" && !isCurrentUser && projectStatus != "Finalizado" &&
                     <DropdownButton options={[
                         {
                             title: 'Echar del proyecto',
@@ -89,6 +91,23 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
                         <li className="smaller-paragraph">{profile}</li>
                     </ul>
                 </div>
+            }
+
+            {projectStatus === "Finalizado" &&
+                <div className="user-card__professional-info">
+                    <h3 className="subtitle bold-text">¿Participó hasta el final?</h3>
+                    <ul className="user-card__roles">
+                        {member.status === "Activo" ? (
+                            <li className="smaller-paragraph">Sí</li>
+                        ) : (
+                            <li className="smaller-paragraph">No</li>
+                        )}
+                    </ul>
+                </div>
+            }
+
+            {projectStatus === "Finalizado" &&
+                <Button size="large" width="fullwidth" icon={<SendIcon />}>Dejar una reseña</Button>
             }
 
             <Modal
