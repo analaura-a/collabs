@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { getProjectShortcuts } from '../../../services/shortcutService';
 import ShortcutCard from '../../Cards/ShortcutCard';
 
-const TabProjectShortcuts = ({ projectId, userRole }) => {
+const TabProjectShortcuts = ({ project }) => {
 
     const [shortcuts, setShortcuts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchShortcuts = async () => {
         try {
-            const data = await getProjectShortcuts(projectId);
+            const data = await getProjectShortcuts(project._id);
             setShortcuts(data);
             setLoading(false);
         } catch (error) {
@@ -20,10 +20,10 @@ const TabProjectShortcuts = ({ projectId, userRole }) => {
     };
 
     useEffect(() => {
-        if (projectId) {
+        if (project._id) {
             fetchShortcuts();
         }
-    }, [projectId]);
+    }, [project._id]);
 
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
@@ -48,6 +48,8 @@ const TabProjectShortcuts = ({ projectId, userRole }) => {
                     <ShortcutCard
                         key={shortcut._id}
                         shortcut={shortcut}
+                        project={project}
+                        reloadShortcuts={fetchShortcuts}
                     />
 
                 ))}

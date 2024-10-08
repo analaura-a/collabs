@@ -117,7 +117,7 @@ const ProjectDashboardPage = () => {
                 tabs = [
                     { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> },
                     { label: 'Chat grupal', content: <div>Contenido aquí...</div> },
-                    { label: 'Atajos rápidos', content: <TabProjectShortcuts projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
+                    { label: 'Atajos rápidos', content: <TabProjectShortcuts project={project} /> }
                 ];
 
             } else if (projectStatus === 'Finalizado') {

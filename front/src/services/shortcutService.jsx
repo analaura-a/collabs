@@ -89,12 +89,11 @@ export const deleteProjectShortcut = async (shortcutId, projectId) => {
         throw new Error('No se encontró el token de autenticación');
     }
 
-    const response = await fetch(`${API_URL}/project_shortcuts/${shortcutId}`, {
+    const response = await fetch(`${API_URL}/project_shortcuts/${projectId}/${shortcutId}`, {
         method: 'DELETE',
         headers: {
             'auth-token': token
-        },
-        body: JSON.stringify(projectId)
+        }
     });
 
     if (!response.ok) {

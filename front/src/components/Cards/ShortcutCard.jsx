@@ -1,10 +1,55 @@
+import { useState } from "react";
+import { updateProjectShortcut, deleteProjectShortcut } from "../../services/shortcutService";
 import DropdownButton from "../Button/DropdownButton";
+import Modal from "../Modal/Modal";
+import Input from "../Inputs/Input";
 
-const ShortcutCard = ({ shortcut }) => {
+const ShortcutCard = ({ shortcut, project, reloadShortcuts }) => {
 
-    const { name, url } = shortcut;
+    const { _id, name, url } = shortcut;
 
     const formattedUrl = url.replace(/^https?:\/\/(www\.)?/, '');
+
+    /* Modal (editar) */
+    const [updatedName, setUpdatedName] = useState(name);
+    const [updatedUrl, setUpdatedUrl] = useState(url);
+
+    const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const handleOpenEditModal = () => setEditModalOpen(true);
+    const handleCloseEditModal = () => setEditModalOpen(false);
+
+    const handleEditShortcut = async () => {
+        try {
+            await updateProjectShortcut(_id, project._id, updatedName, updatedUrl);
+
+            console.log('Atajo actualizado con éxito'); //Mostrar al usuario
+
+            reloadShortcuts();
+
+            handleCloseEditModal();
+        } catch (error) {
+            console.error('Error al actualizar el atajo:', error);
+        }
+    };
+
+    /* Modal (eliminar) */
+    const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+    const handleOpenDeleteModal = () => setDeleteModalOpen(true);
+    const handleCloseDeleteModal = () => setDeleteModalOpen(false);
+
+    const handleDeleteShortcut = async () => {
+        try {
+            await deleteProjectShortcut(_id, project._id);
+
+            console.log('Atajo eliminado con éxito'); //Mostrar al usuario
+
+            reloadShortcuts();
+
+            handleCloseDeleteModal();
+        } catch (error) {
+            console.error('Error al eliminar el atajo:', error);
+        }
+    };
 
     return (
         <article className="shortcut-card">
@@ -21,9 +66,48 @@ const ShortcutCard = ({ shortcut }) => {
             </a>
 
             <DropdownButton options={[
-                { title: 'Editar atajo', onClick: () => { console.log('editar') } },
-                { title: 'Eliminar atajo', onClick: () => { console.log('eliminar') } }
+                { title: 'Editar atajo', onClick: handleOpenEditModal },
+                { title: 'Eliminar atajo', onClick: handleOpenDeleteModal }
             ]} />
+
+            <Modal
+                isOpen={isEditModalOpen}
+                onClose={handleCloseEditModal}
+                title="Editar atajo rápido"
+                actions={[
+                    { label: 'Actualizar', color: 'primary', size: "large", width: "fullwidth", onClick: handleEditShortcut },
+                ]}
+            >
+                <form className="shortcut-card-modal__content">
+                    <Input
+                        label="Nombre del atajo"
+                        placeholder="Ej: servidor de Discord"
+                        name="name"
+                        value={updatedName}
+                        onChange={(e) => setUpdatedName(e.target.value)}
+                        required
+                    />
+                    <Input
+                        label="URL del atajo"
+                        placeholder="https://www.link.com"
+                        name="url"
+                        value={updatedUrl}
+                        onChange={(e) => setUpdatedUrl(e.target.value)}
+                        required
+                    />
+                </form>
+            </Modal>
+
+            <Modal
+                isOpen={isDeleteModalOpen}
+                onClose={handleCloseDeleteModal}
+                title="¿Eliminar atajo rápido?"
+                subtitle="Cuidado, esta acción no se puede deshacer."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseDeleteModal },
+                    { label: 'Eliminar', color: 'red', size: "large", width: "fullwidth", onClick: handleDeleteShortcut },
+                ]}
+            />
 
         </article>
     );

@@ -9,6 +9,12 @@
     grid-row: 1;
 }
 
+.shortcut-card-modal__content{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 
 
 @media only screen and (min-width: 700px) {
