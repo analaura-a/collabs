@@ -50,8 +50,7 @@ const updateProjectShortcut = async (req, res) => {
 // Eliminar un atajo
 const deleteProjectShortcut = async (req, res) => {
 
-    const { shortcutId } = req.params;
-    const { projectId } = req.body;
+    const { projectId, shortcutId } = req.params;
 
     try {
         const deletedShortcut = await service.deleteProjectShortcut(shortcutId);

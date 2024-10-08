@@ -16,6 +16,6 @@ route.post('/project_shortcuts', [validateTokenMiddleware, verifyTeamMember], co
 route.patch('/project_shortcuts/:shortcutId', [validateTokenMiddleware, verifyTeamMember], controllers.updateProjectShortcut);
 
 // Eliminar un atajo
-route.delete('/project_shortcuts/:shortcutId', [validateTokenMiddleware, verifyTeamMember], controllers.deleteProjectShortcut);
+route.delete('/project_shortcuts/:projectId/:shortcutId', [validateTokenMiddleware, verifyTeamMember], controllers.deleteProjectShortcut);
 
 export default route;

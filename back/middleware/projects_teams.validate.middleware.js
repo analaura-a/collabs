@@ -67,9 +67,15 @@ const verifyTeamMember = async (req, res, next) => {
     const projectId = req.params.projectId || req.body.projectId;
     const userId = account._id;
 
-    if (!account || !projectId) {
+    if (!account) {
         return res.status(400).json({
-            message: 'Faltan datos para la verificación: usuario o ID del proyecto no proporcionado.'
+            message: 'Faltan datos para la verificación: usuario no proporcionado.'
+        });
+    }
+
+    if (!projectId) {
+        return res.status(400).json({
+            message: 'Faltan datos para la verificación: ID del proyecto no proporcionado.'
         });
     }
 
