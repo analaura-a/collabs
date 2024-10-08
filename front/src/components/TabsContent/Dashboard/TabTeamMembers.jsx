@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
-import { getActiveProjectMembers } from '../../../services/teamService';
+import { getActiveProjectMembers, getAllProjectMembers } from '../../../services/teamService';
 import TeamMemberCard from '../../Cards/TeamMemberCard';
 
 const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => {
 
-    const [teamMembers, setTeamMembers] = useState([]);
+    const [activeTeamMembers, setActiveTeamMembers] = useState([]);
+    const [allTeamMembers, setAllTeamMembers] = useState([]);
 
     const [loading, setLoading] = useState(true);
 
     const fetchTeamMembers = async () => {
         try {
-            const members = await getActiveProjectMembers(projectId);
-            setTeamMembers(members);
+            const activeMembers = await getActiveProjectMembers(projectId);
+            setActiveTeamMembers(activeMembers);
+
+            const allMembers = await getAllProjectMembers(projectId);
+            setAllTeamMembers(allMembers);
+
             setLoading(false);
         } catch (err) {
             console.error('Error al obtener los miembros activos:', err);
@@ -41,24 +46,55 @@ const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => 
                 </div>
 
                 {projectType === "Personal" ? (
-                    <p className="light-paragraph">Las personas que conforman el equipo del proyecto en la actualidad.</p>
+                    <>
+                        {projectStatus === "Finalizado" ? (
+                            <p className="light-paragraph">Todas las personas que alguna vez formaron parte del equipo del proyecto.</p>
+                        ) : (
+                            <p className="light-paragraph">Las personas que conforman el equipo del proyecto en la actualidad.</p>
+                        )}
+                    </>
                 ) : (
-                    <p className="light-paragraph">Las personas que se encargan de administrar y mantener el proyecto en la actualidad.</p>
+                    <>
+                        {projectStatus === "Finalizado" ? (
+                            <p className="light-paragraph">Todas las personas que alguna vez formaron parte del equipo organizador del proyecto.</p>
+                        ) : (
+                            <p className="light-paragraph">Las personas que se encargan de administrar y mantener el proyecto en la actualidad.</p>
+                        )}
+                    </>
                 )}
             </div>
 
             <div className="dashboard-tab__user-cards-container">
-                {teamMembers.map((member) => (
-                    <TeamMemberCard
-                        key={member._id}
-                        member={member}
-                        projectType={projectType}
-                        projectStatus={projectStatus}
-                        userRole={userRole}
-                        projectId={projectId}
-                        onMemberRemoved={fetchTeamMembers}
-                    />
-                ))}
+
+                {projectStatus === "Finalizado" ? (
+                    <>
+                        {allTeamMembers.map((member) => (
+                            <TeamMemberCard
+                                key={member._id}
+                                member={member}
+                                projectType={projectType}
+                                projectStatus={projectStatus}
+                                userRole={userRole}
+                                projectId={projectId}
+                                onMemberRemoved={fetchTeamMembers}
+                            />
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {activeTeamMembers.map((member) => (
+                            <TeamMemberCard
+                                key={member._id}
+                                member={member}
+                                projectType={projectType}
+                                projectStatus={projectStatus}
+                                userRole={userRole}
+                                projectId={projectId}
+                                onMemberRemoved={fetchTeamMembers}
+                            />
+                        ))}</>
+                )}
+
             </div>
 
         </section>
