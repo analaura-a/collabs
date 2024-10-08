@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { updateProjectShortcut, deleteProjectShortcut } from "../../services/shortcutService";
+import shortcutValidationSchema from "../../validation/projectShortcutValidation";
 import DropdownButton from "../Button/DropdownButton";
 import Modal from "../Modal/Modal";
 import Input from "../Inputs/Input";
@@ -14,11 +15,34 @@ const ShortcutCard = ({ shortcut, project, reloadShortcuts }) => {
     const [updatedName, setUpdatedName] = useState(name);
     const [updatedUrl, setUpdatedUrl] = useState(url);
 
+    const [errors, setErrors] = useState({});
+
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const handleOpenEditModal = () => setEditModalOpen(true);
     const handleCloseEditModal = () => setEditModalOpen(false);
 
+    const validateForm = async () => {
+        try {
+            await shortcutValidationSchema.validate({ name: updatedName, url: updatedUrl }, { abortEarly: false });
+            setErrors({});
+            return true;
+        } catch (validationErrors) {
+            const formattedErrors = validationErrors.inner.reduce((acc, error) => {
+                acc[error.path] = error.message;
+                return acc;
+            }, {});
+            setErrors(formattedErrors);
+            return false;
+        }
+    };
+
     const handleEditShortcut = async () => {
+
+        const isValid = await validateForm();
+        if (!isValid) {
+            return;
+        }
+
         try {
             await updateProjectShortcut(_id, project._id, updatedName, updatedUrl);
 
@@ -85,14 +109,16 @@ const ShortcutCard = ({ shortcut, project, reloadShortcuts }) => {
                         name="name"
                         value={updatedName}
                         onChange={(e) => setUpdatedName(e.target.value)}
+                        errorText={errors.name}
                         required
                     />
                     <Input
-                        label="URL del atajo"
+                        label="URL"
                         placeholder="https://www.link.com"
                         name="url"
                         value={updatedUrl}
                         onChange={(e) => setUpdatedUrl(e.target.value)}
+                        errorText={errors.url}
                         required
                     />
                 </form>
