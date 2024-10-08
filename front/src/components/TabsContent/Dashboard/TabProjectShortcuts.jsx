@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getProjectShortcuts } from '../../../services/shortcutService';
+import AddShortcutButton from '../../Button/AddShortcutButton';
 import ShortcutCard from '../../Cards/ShortcutCard';
 
 const TabProjectShortcuts = ({ project }) => {
@@ -43,21 +44,19 @@ const TabProjectShortcuts = ({ project }) => {
 
             <div className="dashboard-tab__shortcuts-container">
 
-                {shortcuts.map((shortcut) => (
+                <AddShortcutButton
+                    project={project}
+                    reloadShortcuts={fetchShortcuts}
+                />
 
+                {shortcuts.map((shortcut) => (
                     <ShortcutCard
                         key={shortcut._id}
                         shortcut={shortcut}
                         project={project}
                         reloadShortcuts={fetchShortcuts}
                     />
-
                 ))}
-
-                {/* Atajos aquí */}
-                {/* <div>Card</div>
-                <div>Card</div>
-                <div className="first-in-list">Card (primera)</div> */}
 
             </div>
 
