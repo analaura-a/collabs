@@ -26,6 +26,10 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
     const handleOpenFinishProjectModal = () => setFinishProjectModalOpen(true);
     const handleCloseFinishProjectModal = () => setFinishProjectModalOpen(false);
 
+    const [isUnarchiveProjectModalOpen, setUnarchiveProjectModalOpen] = useState(false);
+    const handleOpenUnarchiveProjectModal = () => setUnarchiveProjectModalOpen(true);
+    const handleCloseUnarchiveProjectModal = () => setUnarchiveProjectModalOpen(false);
+
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
         try {
@@ -72,6 +76,22 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
             console.error("Error al finalizar el proyecto:", error);
 
             handleCloseFinishProjectModal();
+        }
+    };
+
+    const handleUnarchiveProject = async () => {
+        try {
+            const updatedProject = await updateProjectStatus(project._id, 'En curso');
+
+            console.log("Proyecto reabierto con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('En curso');
+
+            handleCloseUnarchiveProjectModal();
+        } catch (error) {
+            console.error("Error al reabrir el proyecto:", error);
+
+            handleCloseUnarchiveProjectModal();
         }
     };
 
@@ -172,12 +192,31 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                 }
 
             } else if (projectStatus === 'Finalizado') {
-                options = [
-                    {
-                        title: 'Funcionalidad aquí',
-                        onClick: () => console.log("Funcionalidad")
-                    }
-                ];
+
+                if (userRole === 'Organizador') {
+                    options = [
+                        {
+                            title: 'Reabrir proyecto',
+                            onClick: handleOpenUnarchiveProjectModal
+                        },
+                        {
+                            title: 'Ver convocatoria',
+                            onClick: () => navigate(`/proyectos/${project._id}`)
+                        },
+                        {
+                            title: 'Eliminar proyecto',
+                            onClick: () => console.log("Funcionalidad")
+                        }
+                    ];
+                } else if (userRole === 'Colaborador') {
+                    options = [
+                        {
+                            title: 'Ver convocatoria',
+                            onClick: () => navigate(`/proyectos/${project._id}`)
+                        }
+                    ];
+                }
+
             }
 
         //Proyectos open-source
@@ -213,6 +252,14 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                     {
                         title: 'Reabrir proyecto',
                         onClick: handleOpenReopenProjectModal
+                    },
+                    {
+                        title: 'Ver convocatoria',
+                        onClick: () => navigate(`/proyectos/${project._id}`)
+                    },
+                    {
+                        title: 'Eliminar proyecto',
+                        onClick: () => console.log("Funcionalidad")
                     }
                 ];
             }
@@ -282,6 +329,17 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                     ]}
                 />
             )}
+
+            <Modal
+                isOpen={isUnarchiveProjectModalOpen}
+                onClose={handleCloseUnarchiveProjectModal}
+                title={`¿Quieres reabrir el proyecto ${project.name}?`}
+                subtitle="El proyecto volverá a estar en curso. Además, los miembros del equipo (activos al momento de finalizar el proyecto) podrán volver a trabajar en él."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseUnarchiveProjectModal },
+                    { label: 'Reabrir proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleUnarchiveProject },
+                ]}
+            />
 
         </>
     )
