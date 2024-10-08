@@ -26,6 +26,10 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
     const handleOpenFinishProjectModal = () => setFinishProjectModalOpen(true);
     const handleCloseFinishProjectModal = () => setFinishProjectModalOpen(false);
 
+    const [isUnarchiveProjectModalOpen, setUnarchiveProjectModalOpen] = useState(false);
+    const handleOpenUnarchiveProjectModal = () => setUnarchiveProjectModalOpen(true);
+    const handleCloseUnarchiveProjectModal = () => setUnarchiveProjectModalOpen(false);
+
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
         try {
@@ -72,6 +76,22 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
             console.error("Error al finalizar el proyecto:", error);
 
             handleCloseFinishProjectModal();
+        }
+    };
+
+    const handleUnarchiveProject = async () => {
+        try {
+            const updatedProject = await updateProjectStatus(project._id, 'En curso');
+
+            console.log("Proyecto reabierto con éxito:", updatedProject); //Mostrar al usuario
+
+            onStatusChange('En curso');
+
+            handleCloseUnarchiveProjectModal();
+        } catch (error) {
+            console.error("Error al reabrir el proyecto:", error);
+
+            handleCloseUnarchiveProjectModal();
         }
     };
 
@@ -128,9 +148,21 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                 }
 
             } else if (projectStatus === 'Finalizado') {
-                return (
-                    <Button size="large" width="fullwidth">Funcionalidad aquí</Button>
-                );
+
+                if (userRole === 'Organizador') {
+                    return (
+                        <>
+                            <Button size="large" color="secondary" width="fullwidth" onClick={handleOpenUnarchiveProjectModal}>Reabrir proyecto</Button>
+                        </>
+                    );
+                } else if (userRole === 'Colaborador') {
+                    return (
+                        <>
+                            <p className="paragraph-18">No puedes realizar cambios por ahora.</p>
+                        </>
+                    );
+                }
+
             }
 
 
@@ -224,6 +256,17 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
                     ]}
                 />
             )}
+
+            <Modal
+                isOpen={isUnarchiveProjectModalOpen}
+                onClose={handleCloseUnarchiveProjectModal}
+                title={`¿Quieres reabrir el proyecto ${project.name}?`}
+                subtitle="El proyecto volverá a estar en curso. Además, los miembros del equipo (activos al momento de finalizar el proyecto) podrán volver a trabajar en él."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseUnarchiveProjectModal },
+                    { label: 'Reabrir proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleUnarchiveProject },
+                ]}
+            />
 
         </div>
     )
