@@ -62,6 +62,43 @@ const getActiveProjectMembers = async (projectId) => {
     }
 };
 
+// Obtener a todos los miembros de un proyecto, independientemente de su estado
+const getAllProjectMembers = async (projectId) => {
+
+    try {
+        await client.connect();
+
+        const members = await db.collection('projects_teams')
+            .find({ project_id: new ObjectId(projectId) })
+            .toArray();
+
+        const memberIds = members.map(org => org.user_id);
+
+        // Realizar consulta en la colección 'users' para obtener los datos de los miembros
+        const memberDetails = await db.collection('users')
+            .find({ _id: { $in: memberIds } })
+            .toArray();
+
+        // Combinar los datos de ambas colecciones
+        const enrichedMembers = members.map(org => {
+            const userDetail = memberDetails.find(user => user._id.equals(org.user_id));
+            return {
+                ...org,
+                name: userDetail?.name,
+                last_name: userDetail?.last_name,
+                username: userDetail?.username,
+                bio: userDetail?.bio,
+                location: userDetail?.location,
+                profile_pic: userDetail?.profile_pic,
+            };
+        });
+
+        return enrichedMembers;
+    } catch (error) {
+        throw new Error('Error al obtener los miembros activos: ' + error.message);
+    }
+};
+
 // Obtener a los organizadores de un proyecto
 const getProjectOrganizers = async (projectId) => {
 
@@ -183,6 +220,7 @@ const removeUserFromProject = async (projectId, userId) => {
 export {
     addMemberToProjectTeam,
     getActiveProjectMembers,
+    getAllProjectMembers,
     getProjectOrganizers,
     isUserInTeam,
     getUserRoleInProject,

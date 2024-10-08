@@ -14,6 +14,9 @@ route.post('/project_teams', [validateTokenMiddleware], controllers.addMemberToP
 // Obtener a los miembros activos de un proyecto
 route.get('/projects/:projectId/active-members', [validateTokenMiddleware], controllers.getActiveProjectMembers);
 
+// Obtener a todos los miembros de un proyecto, independientemente de su estado
+route.get('/projects/:projectId/all-members', [validateTokenMiddleware], controllers.getAllProjectMembers);
+
 // Obtener a los organizadores de un proyecto
 route.get('/projects/:projectId/organizers', [validateTokenMiddleware], controllers.getProjectOrganizers);
 
