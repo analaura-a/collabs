@@ -52,8 +52,6 @@ const isUsernameAvailable = async (username) => {
         return true;
     } catch (error) {
         throw new Error(error.message || 'Error al comprobar la disponibilidad del username.');
-    } finally {
-        await client.close();
     }
 };
 
@@ -89,8 +87,6 @@ const completeOnboarding = async (userId, onboardingData) => {
     } catch (error) {
         console.error('Ocurrió un error al completar el onboarding:', error);
         throw error;
-    } finally {
-        await client.close();
     }
 };
 

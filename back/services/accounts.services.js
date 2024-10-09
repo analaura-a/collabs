@@ -54,8 +54,6 @@ async function createAccount(account) {
 
     } catch (error) {
         throw new Error(error.message || 'Error del servidor, por favor inténtalo de nuevo más tarde.');
-    } finally {
-        await client.close();
     }
 
 }
@@ -83,8 +81,6 @@ async function login(account) {
 
     } catch (error) {
         throw new Error(error.message || 'Error del servidor, por favor inténtalo de nuevo más tarde.');
-    } finally {
-        await client.close();
     }
 
 }

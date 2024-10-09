@@ -52,8 +52,6 @@ async function removeToken(token) {
         return { message: 'Sesión cerrada con éxito. ¡Te esperamos pronto!' };
     } catch (error) {
         throw new Error(`Error al eliminar el token: ${error.message}`);
-    } finally {
-        await client.close();
     }
 
 }
