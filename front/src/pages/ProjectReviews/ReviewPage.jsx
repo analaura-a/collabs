@@ -60,6 +60,7 @@ const ReviewPage = () => {
                         <ReviewForm
                             projectId={project._id}
                             reviewedUserId={reviewedUser._id}
+                            reviewedUserName={reviewedUser.name}
                         />
                     }
                 </div>

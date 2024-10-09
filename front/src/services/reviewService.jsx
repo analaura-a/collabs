@@ -44,12 +44,12 @@ export const updateReview = async (projectId, reviewId, reviewData) => {
     return await response.json();
 };
 
-export const getReview = async (projectId, reviewId) => {
+export const getReview = async (projectId, reviewedUserId) => {
 
     const token = localStorage.getItem('token');
     if (!token) throw new Error('No se encontró el token de autenticación');
 
-    const response = await fetch(`${API_URL}/projects/${projectId}/reviews/${reviewId}`, {
+    const response = await fetch(`${API_URL}/projects/${projectId}/reviews?reviewedUserId=${reviewedUserId}`, {
         method: 'GET',
         headers: {
             'auth-token': token

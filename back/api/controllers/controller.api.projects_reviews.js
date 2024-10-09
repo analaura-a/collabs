@@ -12,7 +12,7 @@ const getReviewByProjectAndUser = async (req, res) => {
         if (!review) {
             return res.status(404).json({ message: 'Reseña no encontrada.' });
         }
-        res.status(200).json({ review });
+        res.status(200).json(review);
     } catch (error) {
         res.status(500).json({ message: `Error al obtener la reseña: ${error.message}` });
     }

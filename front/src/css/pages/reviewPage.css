@@ -18,6 +18,26 @@
     gap: 4px;
 }
 
+.review-page__form{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.review-page__form__fieldset>legend{
+    margin-bottom: 12px;
+}
+
+.review-page__form__fieldset>div{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+fieldset{
+    border: none;
+}
+
 
 
 @media only screen and (min-width: 1024px) {
@@ -39,6 +59,10 @@
 
     .review-page__content {
         gap: 80px;
+    }
+
+    .review-page__form{
+        gap: 40px;
     }
 
 }
