@@ -10,4 +10,7 @@ const route = Router();
 // Crear una reseña
 route.post('/project-reviews/:projectId', [validateTokenMiddleware, verifyTeamMember], controllers.createReview);
 
+// Editar una reseña
+route.patch('/project-reviews/:projectId/:reviewId', [validateTokenMiddleware, verifyTeamMember], controllers.updateReview);
+
 export default route;

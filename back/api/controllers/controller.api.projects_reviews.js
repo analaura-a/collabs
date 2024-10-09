@@ -26,6 +26,25 @@ const createReview = async (req, res) => {
     }
 };
 
+// Editar una reseña
+const updateReview = async (req, res) => {
+
+    const { reviewId } = req.params;
+    const { recommend, comment } = req.body;
+
+    if (typeof recommend !== 'boolean' || !comment) {
+        return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
+    }
+
+    try {
+        const updatedReview = await service.updateReview(reviewId, { recommend, comment });
+        res.status(200).json({ message: 'Reseña actualizada con éxito.', review: updatedReview });
+    } catch (error) {
+        res.status(500).json({ message: `Error al actualizar la reseña: ${error.message}` });
+    }
+};
+
 export {
-    createReview
+    createReview,
+    updateReview
 }

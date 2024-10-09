@@ -43,7 +43,26 @@ const findReview = async (projectId, reviewerId, reviewedUserId) => {
     }
 };
 
+// Editar una reseña
+const updateReview = async (reviewId, updatedData) => {
+
+    try {
+        await client.connect();
+
+        const result = await db.collection('projects_reviews').findOneAndUpdate(
+            { _id: new ObjectId(reviewId) },
+            { $set: { ...updatedData, updated_at: new Date() } },
+            { returnDocument: 'after' }
+        );
+
+        return result;
+    } catch (error) {
+        throw new Error(`Error al actualizar la reseña: ${error.message}`);
+    }
+};
+
 export {
     createReview,
-    findReview
+    findReview,
+    updateReview
 }
