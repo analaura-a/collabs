@@ -9,6 +9,7 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
     const navigate = useNavigate();
 
     const [isEditMode, setIsEditMode] = useState(false);
+    const [reviewId, setReviewId] = useState(null);
 
     const [recommend, setRecommend] = useState(null);
     const [comment, setComment] = useState('');
@@ -23,6 +24,7 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
                 setIsEditMode(true);  // Cambiamos a "modo edición"
                 setRecommend(review.recommend);
                 setComment(review.comment);
+                setReviewId(review._id);
             }
         } catch (error) {
             console.error('Error al cargar la reseña:', error);
@@ -47,7 +49,7 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
         try {
             if (isEditMode) {
                 // Editar la reseña existente
-                // await updateReview(projectId, reviewedUserId, { recommend, comment });
+                await updateReview(projectId, reviewId, { recommend, comment });
                 console.log('Reseña actualizada con éxito');
             } else {
                 // Crear una nueva reseña
