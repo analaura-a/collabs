@@ -21,7 +21,6 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
             const review = await getReview(projectId, reviewedUserId);
             if (review) {
                 setIsEditMode(true);  // Cambiamos a "modo edición"
-                console.log(review)
                 setRecommend(review.recommend);
                 setComment(review.comment);
             }
@@ -36,10 +35,36 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
         fetchReviewData();
     }, [projectId, reviewedUserId]);
 
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+        if (recommend === null || comment.trim() === '') {
+            console.log('Por favor, responde ambas preguntas.');
+            return;
+        }
+
+        try {
+            if (isEditMode) {
+                // Editar la reseña existente
+                // await updateReview(projectId, reviewedUserId, { recommend, comment });
+                console.log('Reseña actualizada con éxito');
+            } else {
+                // Crear una nueva reseña
+                await createReview(projectId, reviewedUserId, { recommend, comment });
+                console.log('Reseña creada con éxito');
+            }
+
+            navigate(`/mis-proyectos/${projectId}`);
+        } catch (error) {
+            console.error('Error al enviar la reseña:', error);
+        }
+    };
+
     if (loading) return <div>Cargando...</div>; // Componente de carga
 
     return (
-        <form className="review-page__form" noValidate>
+        <form className="review-page__form" onSubmit={handleSubmit} noValidate>
 
             <fieldset className="review-page__form__fieldset">
                 <legend className="form-label">¿Recomendarías a otras personas colaborar con {reviewedUserName}?<span className="primary-color-text">*</span></legend>
