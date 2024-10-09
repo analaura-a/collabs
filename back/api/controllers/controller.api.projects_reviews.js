@@ -1,12 +1,14 @@
 import * as service from "../../services/projects_reviews.services.js";
 
 // Obtener una reseña en particular
-const getReviewById = async (req, res) => {
+const getReviewByProjectAndUser = async (req, res) => {
 
-    const { projectId, reviewId } = req.params;
+    const { projectId } = req.params;
+    const { reviewedUserId } = req.query;
+    const reviewerId = req.account._id;
 
     try {
-        const review = await service.getReviewById(reviewId);
+        const review = await service.findReview(projectId, reviewerId, reviewedUserId);
         if (!review) {
             return res.status(404).json({ message: 'Reseña no encontrada.' });
         }
@@ -61,7 +63,7 @@ const updateReview = async (req, res) => {
 };
 
 export {
-    getReviewById,
+    getReviewByProjectAndUser,
     createReview,
     updateReview
 }

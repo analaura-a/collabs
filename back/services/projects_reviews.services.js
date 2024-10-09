@@ -3,14 +3,19 @@ import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
 
-// Obtener una reseña en particular
-const getReviewById = async (reviewId) => {
+// Obtener/verificar si ya existe una reseña en particular
+const findReview = async (projectId, reviewerId, reviewedUserId) => {
+
     try {
         await client.connect();
-        
-        return await db.collection('projects_reviews').findOne({ _id: new ObjectId(reviewId) });
+
+        return await db.collection('projects_reviews').findOne({
+            project_id: new ObjectId(projectId),
+            reviewer_id: new ObjectId(reviewerId),
+            reviewed_user_id: new ObjectId(reviewedUserId)
+        });
     } catch (error) {
-        throw new Error(`Error al obtener la reseña: ${error.message}`);
+        throw new Error(`Error al buscar reseña existente: ${error.message}`);
     }
 };
 
@@ -38,22 +43,6 @@ const createReview = async (projectId, reviewerId, reviewedUserId, recommend, co
     }
 };
 
-// Verificar si ya existe una reseña
-const findReview = async (projectId, reviewerId, reviewedUserId) => {
-
-    try {
-        await client.connect();
-
-        return await db.collection('projects_reviews').findOne({
-            project_id: new ObjectId(projectId),
-            reviewer_id: new ObjectId(reviewerId),
-            reviewed_user_id: new ObjectId(reviewedUserId)
-        });
-    } catch (error) {
-        throw new Error(`Error al buscar reseña existente: ${error.message}`);
-    }
-};
-
 // Editar una reseña
 const updateReview = async (reviewId, updatedData) => {
 
@@ -73,7 +62,6 @@ const updateReview = async (reviewId, updatedData) => {
 };
 
 export {
-    getReviewById,
     createReview,
     findReview,
     updateReview

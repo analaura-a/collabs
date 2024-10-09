@@ -8,7 +8,7 @@ const route = Router();
 /* API RESEÑAS DE PROYECTOS */
 
 // Obtener una reseña en particular
-route.get('/projects/:projectId/reviews/:reviewId', [validateTokenMiddleware, verifyTeamMember], controllers.getReviewById);
+route.get('/projects/:projectId/reviews', [validateTokenMiddleware, verifyTeamMember], controllers.getReviewByProjectAndUser);
 
 // Crear una reseña
 route.post('/project-reviews/:projectId', [validateTokenMiddleware, verifyTeamMember], controllers.createReview);
