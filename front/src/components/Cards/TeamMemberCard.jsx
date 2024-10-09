@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { removeUserFromProject } from '../../services/teamService';
 import DropdownButton from '../Button/DropdownButton';
@@ -10,6 +10,8 @@ import SendIcon from '../../assets/svg/send.svg?react';
 const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectId, onMemberRemoved }) => {
 
     const { profile_pic, name, last_name, username, bio, location, role, profile } = member;
+
+    const navigate = useNavigate();
 
     const { authState } = useContext(AuthContext);
     const loggedInUser = authState.user;
@@ -106,8 +108,8 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
                 </div>
             }
 
-            {projectStatus === "Finalizado" &&
-                <Button size="large" width="fullwidth" icon={<SendIcon />}>Dejar una reseña</Button>
+            {projectStatus === "Finalizado" && !isCurrentUser &&
+                <Button size="large" width="fullwidth" icon={<SendIcon />} onClick={() => navigate(`/mis-proyectos/${projectId}/reseñar/${member.user_id}`)}>Dejar una reseña</Button>
             }
 
             <Modal
