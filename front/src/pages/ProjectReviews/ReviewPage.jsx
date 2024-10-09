@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getProjectById } from '../../services/projectService';
 import { getUserById } from '../../services/userService';
 import ReviewForm from '../../components/Form/Review/ReviewForm';
@@ -46,17 +46,23 @@ const ReviewPage = () => {
 
     return (
         <main>
-            <div className="container project-dashboard-page">
+            <div className="container review-page">
 
-                <h1>Reseña para {reviewedUser.name} {reviewedUser.last_name}</h1>
-                <h2>del proyecto {project.name}</h2>
+                <Link to={`/mis-proyectos/${projectId}`} className="small-button-with-icon arrow-left"></Link>
 
-                {project && reviewedUser &&
-                    <ReviewForm
-                        projectId={project._id}
-                        reviewedUserId={reviewedUser._id}
-                    />
-                }
+                <div className="review-page__content">
+                    <div className="review-page__title">
+                        <h1 className="title-40">Reseña para <span className="primary-color-text">{reviewedUser.name} {reviewedUser.last_name}</span></h1>
+                        <h2 className="big-subtitle">del proyecto <span className="medium-text">{project.name}</span></h2>
+                    </div>
+
+                    {project && reviewedUser &&
+                        <ReviewForm
+                            projectId={project._id}
+                            reviewedUserId={reviewedUser._id}
+                        />
+                    }
+                </div>
 
             </div>
         </main>

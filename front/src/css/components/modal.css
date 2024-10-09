@@ -73,7 +73,7 @@
 
 /* Cuerpo del modal */
 .modal-body {
-    max-height: 60vh;
+    max-height: 52vh;
     overflow-y: auto;
 }
 
@@ -107,7 +107,7 @@
         width: 100%;
         max-width: 586px;
         height: auto;
-        max-height: 80vh;
+        max-height: 90vh;
         padding: 32px;
 
         position: relative;

@@ -21,6 +21,7 @@
 @import './pages/projectDashboardPage.css';
 @import './pages/editProjectPages.css';
 @import './pages/dashboardTabs.css';
+@import './pages/reviewPage.css';
 
 @import './components/button.css';
 @import './components/input.css';
