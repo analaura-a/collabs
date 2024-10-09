@@ -1,5 +1,21 @@
 import * as service from "../../services/projects_reviews.services.js";
 
+// Obtener una reseña en particular
+const getReviewById = async (req, res) => {
+
+    const { projectId, reviewId } = req.params;
+
+    try {
+        const review = await service.getReviewById(reviewId);
+        if (!review) {
+            return res.status(404).json({ message: 'Reseña no encontrada.' });
+        }
+        res.status(200).json({ review });
+    } catch (error) {
+        res.status(500).json({ message: `Error al obtener la reseña: ${error.message}` });
+    }
+};
+
 // Crear una reseña
 const createReview = async (req, res) => {
 
@@ -29,7 +45,7 @@ const createReview = async (req, res) => {
 // Editar una reseña
 const updateReview = async (req, res) => {
 
-    const { reviewId } = req.params;
+    const { projectId, reviewId } = req.params;
     const { recommend, comment } = req.body;
 
     if (typeof recommend !== 'boolean' || !comment) {
@@ -45,6 +61,7 @@ const updateReview = async (req, res) => {
 };
 
 export {
+    getReviewById,
     createReview,
     updateReview
 }

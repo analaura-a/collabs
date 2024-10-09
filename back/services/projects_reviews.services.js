@@ -3,6 +3,17 @@ import { MongoClient, ObjectId } from "mongodb";
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
 
+// Obtener una reseña en particular
+const getReviewById = async (reviewId) => {
+    try {
+        await client.connect();
+        
+        return await db.collection('projects_reviews').findOne({ _id: new ObjectId(reviewId) });
+    } catch (error) {
+        throw new Error(`Error al obtener la reseña: ${error.message}`);
+    }
+};
+
 // Crear una reseña
 const createReview = async (projectId, reviewerId, reviewedUserId, recommend, comment) => {
 
@@ -62,6 +73,7 @@ const updateReview = async (reviewId, updatedData) => {
 };
 
 export {
+    getReviewById,
     createReview,
     findReview,
     updateReview
