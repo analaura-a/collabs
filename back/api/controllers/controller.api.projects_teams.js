@@ -78,6 +78,27 @@ const getProjectOrganizers = async (req, res) => {
     }
 };
 
+// Obtener proyectos finalizados en común con otro usuario
+const getSharedCompletedProjects = async (req, res) => {
+
+    const { reviewedUserId } = req.params;
+    const viewerId = req.account._id;
+
+    try {
+        const sharedProjects = await service.getSharedCompletedProjects(viewerId, reviewedUserId);
+
+        if (sharedProjects.length === 0) {
+            return res.status(404).json({
+                message: 'No hay proyectos finalizados en los que ambos hayan colaborado.'
+            });
+        }
+
+        res.status(200).json(sharedProjects);
+    } catch (error) {
+        res.status(500).json({ message: `Error al obtener los proyectos compartidos: ${error.message}` });
+    }
+};
+
 // Verificar si un usuario ya está en el equipo de un proyecto
 const isUserInTeam = async (req, res) => {
 
@@ -173,6 +194,7 @@ export {
     getActiveProjectMembers,
     getAllProjectMembers,
     getProjectOrganizers,
+    getSharedCompletedProjects,
     isUserInTeam,
     getUserRoleInProject,
     removeUserFromProject,
