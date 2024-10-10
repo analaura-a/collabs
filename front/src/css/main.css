@@ -44,5 +44,6 @@
 @import './components/modal.css';
 @import './components/tabsContent/Dashboard/tabProjectShortcuts.css';
 @import './components/cards/shortcutCard.css';
+@import './components/cards/reviewCard.css';
 
 @import './misc/faded-pattern.css';
