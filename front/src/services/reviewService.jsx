@@ -63,3 +63,26 @@ export const getReview = async (projectId, reviewedUserId) => {
 
     return await response.json();
 };
+
+export const getUserReviews = async (userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/users/${userId}/reviews`, {
+        method: 'GET',
+        headers: {
+            'auth-token': token
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar obtener las reseñas.');
+    }
+
+    return await response.json();
+};
