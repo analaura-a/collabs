@@ -43,7 +43,7 @@ const TabReviewsContent = () => {
                             <div className="tab-profile__collab-stats-column__status">
                                 <div>
                                     <img src="../../assets/svg/star.svg" alt="Rating" />
-                                    <p className="paragraph bold-text primary-color-text">{recommendPercentage}% recomiendan a {user.name}</p>
+                                    <p className="paragraph bold-text primary-color-text">{recommendPercentage}% recomienda a {user.name}</p>
                                 </div>
 
                                 <p className="paragraph">Basado en <span className="primary-color-text">{reviews.length}</span> {reviews.length === 1 ? "reseña" : "reseñas"} de <span className="primary-color-text">{totalProjects}</span> {totalProjects === 1 ? "proyecto" : "proyectos"}.</p>
