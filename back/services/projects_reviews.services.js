@@ -19,6 +19,54 @@ const findReview = async (projectId, reviewerId, reviewedUserId) => {
     }
 };
 
+// Obtener las reseñas de un usuario
+const getReviewsByUserId = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // Obtener las reseñas del usuario
+        const reviews = await db.collection('projects_reviews')
+            .find({ reviewed_user_id: new ObjectId(userId) })
+            .toArray();
+
+        // Extraer los IDs de los proyectos y de los usuarios que hicieron las reseñas
+        const projectIds = reviews.map(review => review.project_id);
+        const reviewerIds = reviews.map(review => review.reviewer_id);
+
+        // Obtener detalles de los proyectos
+        const projects = await db.collection('projects')
+            .find({ _id: { $in: projectIds } })
+            .toArray();
+
+        // Obtener detalles de los usuarios que hicieron las reseñas
+        const reviewers = await db.collection('users')
+            .find({ _id: { $in: reviewerIds } })
+            .toArray();
+
+        // Combinar los datos de reseñas, proyectos y usuarios
+        const enrichedReviews = reviews.map(review => {
+            const project = projects.find(proj => proj._id.equals(review.project_id));
+            const reviewer = reviewers.find(user => user._id.equals(review.reviewer_id));
+
+            return {
+                ...review,
+                projectName: project?.name,
+                reviewer: {
+                    name: reviewer?.name,
+                    last_name: reviewer?.last_name,
+                    username: reviewer?.username,
+                    profile_pic: reviewer?.profile_pic,
+                }
+            };
+        });
+
+        return enrichedReviews;
+    } catch (error) {
+        throw new Error(`Error al obtener las reseñas del usuario: ${error.message}`);
+    }
+};
+
 // Crear una reseña
 const createReview = async (projectId, reviewerId, reviewedUserId, recommend, comment) => {
 
@@ -62,7 +110,8 @@ const updateReview = async (reviewId, updatedData) => {
 };
 
 export {
-    createReview,
     findReview,
+    getReviewsByUserId,
+    createReview,
     updateReview
 }
