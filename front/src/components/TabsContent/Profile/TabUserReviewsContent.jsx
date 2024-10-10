@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchUserProfileByUsername } from "../../../services/userService";
 import { getUserReviews } from '../../../services/reviewService';
+import ReviewCard from '../../Cards/ReviewCard';
 import Button from "../../Button/Button";
 import InputReviewIcon from '../../../assets/svg/directbox-send.svg?react';
 
@@ -68,7 +69,9 @@ const TabUserReviewsContent = () => {
                     <div className="tab-reviews__reviews-column">
                         <h2 className="title-18">Reseñas</h2>
                         <div>
-                            {/*Reseñas aquí*/}
+                            {reviews.map((review) => (
+                                <ReviewCard key={review._id} review={review} reviewedUserName={user.name} />
+                            ))}
                         </div>
                     </div>
 
