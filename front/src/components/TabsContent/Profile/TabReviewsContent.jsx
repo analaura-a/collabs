@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from '../../../context/AuthContext';
 import { getUserReviews } from '../../../services/reviewService';
+import ReviewCard from '../../Cards/ReviewCard';
 
 const TabReviewsContent = () => {
 
@@ -54,7 +55,9 @@ const TabReviewsContent = () => {
                     <div className="tab-reviews__reviews-column">
                         <h2 className="title-18">Reseñas</h2>
                         <div>
-                            {/*Reseñas aquí*/}
+                            {reviews.map((review) => (
+                                <ReviewCard key={review._id} review={review} reviewedUserName={user.name} />
+                            ))}
                         </div>
                     </div>
 
