@@ -41,6 +41,56 @@ async function getUserByUsername(username) {
     }
 }
 
+// Obtener estadísticas de colaboración del usuario
+const getUserCollaborationStats = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // Obtener todos los proyectos en los que el usuario participó
+        const projectsTeams = await db.collection('projects_teams')
+            .find({ user_id: new ObjectId(userId) })
+            .toArray();
+
+        if (!projectsTeams.length) {
+            return {
+                isCollaborating: false,
+                collaboratedProjects: 0,
+                finishedProjects: 0,
+                organizedProjects: 0,
+                abandonedProjects: 0
+            };
+        }
+
+        // Obtener los estados de cada proyecto
+        const projectIds = projectsTeams.map(project => project.project_id);
+        const projectStatuses = await db.collection('projects')
+            .find({ _id: { $in: projectIds } }, { projection: { status: 1 } })
+            .toArray();
+
+        // Filtrar proyectos por categorías:
+        const collaboratedProjects = projectsTeams.length;  // Total de proyectos donde colaboró
+        const finishedProjects = projectStatuses.filter((proj, index) =>
+            proj.status === 'Finalizado' && projectsTeams[index].status === 'Activo').length; // Proyectos finalizados 
+        const organizedProjects = projectsTeams.filter(proj => proj.role === 'Organizador').length; // Proyectos donde fue organizador
+        const abandonedProjects = projectsTeams.filter(proj => proj.status === 'Inactivo').length; // Proyectos que abandonó
+
+        // Verificar si el usuario está colaborando actualmente
+        const isCollaborating = projectStatuses.some((proj, index) =>
+            proj.status !== 'Finalizado' && projectsTeams[index].status === 'Activo');
+
+        return {
+            isCollaborating,
+            collaboratedProjects,
+            finishedProjects,
+            organizedProjects,
+            abandonedProjects
+        };
+    } catch (error) {
+        throw new Error(`Error al obtener estadísticas de colaboración: ${error.message}`);
+    }
+};
+
 //Verificar si ya existe un usuario con el mismo username
 const isUsernameAvailable = async (username) => {
     try {
@@ -89,12 +139,6 @@ const completeOnboarding = async (userId, onboardingData) => {
         throw error;
     }
 };
-
-//Editar un usuario en especifico (SIN USAR)
-// async function editUser(id, user) {
-//     const editedUser = await db.collection("users").updateOne({ _id: new ObjectId(id) }, { $set: user });
-//     return editedUser;
-// }
 
 //Editar los datos de la cuenta
 async function updateUserAccountData(userId, newEmail, newUsername) {
@@ -304,10 +348,10 @@ export {
     getUsers,
     getUserById,
     getUserByUsername,
+    getUserCollaborationStats,
     isUsernameAvailable,
     checkIfEmailExists,
     completeOnboarding,
-    // editUser,
     updateUserAccountData,
     updateUserPreferencesData,
     updateUserPortfolioData,

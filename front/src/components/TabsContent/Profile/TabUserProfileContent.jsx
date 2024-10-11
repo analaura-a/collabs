@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchUserProfileByUsername } from "../../../services/userService";
+import { fetchUserProfileByUsername, getUserCollaborationStats } from "../../../services/userService";
 import ContactInfo from "./ContactInfo.jsx"
 
 const TabUserProfileContent = () => {
 
     const { username } = useParams();
+
     const [user, setUser] = useState(null);
+    const [stats, setStats] = useState(null);
+
     const [loading, setLoading] = useState(true);
 
     const loadUserProfile = async () => {
         try {
             const userData = await fetchUserProfileByUsername(username);
             setUser(userData);
+
+            const statsData = await getUserCollaborationStats(userData._id);
+            setStats(statsData);
         } catch (error) {
             console.error(error.message);
         } finally {
@@ -84,12 +90,15 @@ const TabUserProfileContent = () => {
 
             <div className="tab-profile__collab-stats-column">
 
-                <div className="tab-profile__space-between"> {/* Mostrar dinámicamente */}
+                <div className="tab-profile__space-between">
                     <h2 className="title-18">Estado</h2>
-                    {user.collaborating_status ? (
+                    {stats.isCollaborating ? (
                         <div className="tab-profile__collab-stats-column__status">
-                            <div></div>
-                            <p className="paragraph">{user.name} está colaborando en 1 proyecto.</p>
+                            <div>
+                                <img src="../../assets/svg/purple-dot-status.svg" alt="Estatus" />
+                                <p className="paragraph bold-text primary-color-text">Colaborando</p>
+                            </div>
+                            <p className="paragraph">{user.name} está colaborando en <span className="medium-text primary-color-text">{stats.collaboratedProjects - stats.finishedProjects}</span> proyecto(s).</p>
                         </div>
                     ) : (
                         <div className="tab-profile__collab-stats-column__status">
@@ -102,24 +111,24 @@ const TabUserProfileContent = () => {
                     )}
                 </div>
 
-                <div className="tab-profile__space-between"> {/* Mostrar dinámicamente */}
+                <div className="tab-profile__space-between">
                     <h2 className="title-18">Estadísticas de colaboración</h2>
                     <ul className="tab-profile__collab-stats-column__stats">
                         <li>
-                            <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos en los que colaboró</p>
+                            <h3 className={`big-number-stat-placeholder ${stats.collaboratedProjects > 0 ? "primary-color-text" : ""}`}>{stats.collaboratedProjects}</h3>
+                            <p className="smaller-paragraph">{stats.collaboratedProjects === 1 ? "Proyecto" : "Proyectos"} en los que colaboró</p>
                         </li>
                         <li>
-                            <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos que finalizó</p>
+                            <h3 className={`big-number-stat-placeholder ${stats.finishedProjects > 0 ? "primary-color-text" : ""}`}>{stats.finishedProjects}</h3>
+                            <p className="smaller-paragraph">{stats.finishedProjects === 1 ? "Proyecto" : "Proyectos"} que finalizó</p>
                         </li>
                         <li>
-                            <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos que organizó</p>
+                            <h3 className={`big-number-stat-placeholder ${stats.organizedProjects > 0 ? "primary-color-text" : ""}`}>{stats.organizedProjects}</h3>
+                            <p className="smaller-paragraph">{stats.organizedProjects === 1 ? "Proyecto" : "Proyectos"} que organizó</p>
                         </li>
                         <li>
-                            <h3 className="big-number-stat-placeholder">0</h3>
-                            <p className="smaller-paragraph">Proyectos que abandonó</p>
+                            <h3 className={`big-number-stat-placeholder ${stats.abandonedProjects > 0 ? "primary-color-text" : ""}`}>{stats.abandonedProjects}</h3>
+                            <p className="smaller-paragraph">{stats.abandonedProjects === 1 ? "Proyecto" : "Proyectos"} que abandonó</p>
                         </li>
                     </ul>
                 </div>
