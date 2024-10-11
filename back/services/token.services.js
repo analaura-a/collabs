@@ -3,7 +3,8 @@ import { MongoClient, ObjectId } from "mongodb";
 
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
-const tokenCollection = db.collection("tokens")
+const tokenCollection = db.collection("tokens");
+const JWT_SECRET = 'clave_secreta';
 
 //Crear token
 async function createToken(account) {
@@ -56,8 +57,24 @@ async function removeToken(token) {
 
 }
 
+// Generar un token para el restablecimiento de contraseña
+function generateResetToken(userId) {
+    return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '1h' }); // Token válido por 1 hora
+  }
+  
+// Verificar el token de restablecimiento de contraseña
+function verifyResetToken(token) {
+    try {
+      return jwt.verify(token, JWT_SECRET);
+    } catch (error) {
+      throw new Error('Token inválido o expirado.');
+    }
+  }
+
 export {
     createToken,
     validateToken,
-    removeToken
+    removeToken,
+    generateResetToken,
+    verifyResetToken
 }

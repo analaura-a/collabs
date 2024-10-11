@@ -59,9 +59,35 @@ async function changePassword(req, res) {
     }
 }
 
+// Solicitar restablecimiento de contraseña
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      await service.requestPasswordReset(email);
+      res.status(200).json({ message: 'Correo de restablecimiento enviado con éxito.' });
+    } catch (error) {
+      res.status(400).json({ message:'No se pudo enviar el mail (back)' ,error});
+    }
+  };
+  
+  // Restablecer la contraseña
+  const updatePassword = async (req, res) => {
+    const { token, password } = req.body;
+  
+    try {
+      await service.resetPassword(token, password);
+      res.status(200).json({ message: 'Contraseña actualizada con éxito.' });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+
 export {
     createAccount,
     login,
     logout,
-    changePassword
+    changePassword,
+    forgotPassword,
+    updatePassword
 }
