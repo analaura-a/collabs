@@ -426,3 +426,26 @@ export const updateUserAvailability = async (userId, availability) => {
     const updatedUser = await response.json();
     return updatedUser;
 };
+
+export const getUserCollaborationStats = async (userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/users/${userId}/collaboration-stats`, {
+        method: 'GET',
+        headers: {
+            'auth-token': token
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar obtener estadísticas de colaboración.');
+    }
+
+    return await response.json();
+};
