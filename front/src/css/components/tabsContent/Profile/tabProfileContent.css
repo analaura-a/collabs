@@ -9,8 +9,7 @@
     padding: 40px 0px 0px 0px;
 }
 
-.tab-profile__user-info-column,
-.tab-reviews__reviews-column {
+.tab-profile__user-info-column {
     display: flex;
     flex-direction: column;
     gap: 48px;
@@ -209,8 +208,7 @@
         padding: 48px 0px 0px 0px;
     }
 
-    .tab-profile__user-info-column,
-    .tab-reviews__reviews-column {
+    .tab-profile__user-info-column {
         gap: 56px;
         width: 50%;
     }

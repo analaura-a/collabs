@@ -104,7 +104,7 @@ const TabUserReviewsContent = () => {
 
                     <div className="tab-reviews__reviews-column">
                         <h2 className="title-18">Reseñas</h2>
-                        <div>
+                        <div className="tab-reviews__reviews-column__review-cards">
                             {reviews.map((review) => (
                                 <ReviewCard key={review._id} review={review} reviewedUserName={user.name} />
                             ))}
