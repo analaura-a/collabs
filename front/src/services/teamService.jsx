@@ -110,6 +110,31 @@ export const getProjectOrganizers = async (projectId) => {
     }
 };
 
+export const getSharedCompletedProjects = async (reviewedUserId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/users/${reviewedUserId}/shared-projects`, {
+        method: 'GET',
+        headers: {
+            'auth-token': token,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar obtener los proyectos compartidos.');
+    }
+
+    const data = await response.json();
+    return data;
+};
+
 export const checkUserInProjectTeam = async (projectId, userId) => {
 
     const token = localStorage.getItem('token');

@@ -7,6 +7,8 @@ import Button from '../Button/Button';
 import Modal from '../Modal/Modal'
 import SendIcon from '../../assets/svg/send.svg?react';
 
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+
 const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectId, onMemberRemoved }) => {
 
     const { profile_pic, name, last_name, username, bio, location, role, profile } = member;

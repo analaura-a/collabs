@@ -137,6 +137,52 @@ const getProjectOrganizers = async (projectId) => {
     }
 };
 
+// Obtener proyectos finalizados en común con otro usuario
+const getSharedCompletedProjects = async (viewerId, reviewedUserId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Buscar proyectos en los que ambos usuarios son parte del equipo
+        const viewerProjects = await db.collection('projects_teams')
+            .find({ user_id: new ObjectId(viewerId) })
+            .toArray();
+
+        const reviewedUserProjects = await db.collection('projects_teams')
+            .find({ user_id: new ObjectId(reviewedUserId) })
+            .toArray();
+
+        // 2. Obtener IDs de los proyectos
+        const viewerProjectIds = viewerProjects.map(p => p.project_id.toString());
+        const reviewedUserProjectIds = reviewedUserProjects.map(p => p.project_id.toString());
+
+        // 3. Filtrar proyectos en común
+        const sharedProjectIds = viewerProjectIds.filter(id => reviewedUserProjectIds.includes(id));
+
+        if (sharedProjectIds.length === 0) {
+            return [];
+        }
+
+        // 4. Obtener detalles de los proyectos en común de la colección 'projects'
+        const sharedProjectsDetails = await db.collection('projects')
+            .find({
+                _id: { $in: sharedProjectIds.map(id => new ObjectId(id)) },
+                status: 'Finalizado'
+            })
+            .toArray();
+
+        // 5. Formatear los resultados
+        const enrichedProjects = sharedProjectsDetails.map(project => ({
+            projectId: project._id.toString(),
+            projectName: project.name,
+        }));
+
+        return enrichedProjects;
+    } catch (error) {
+        throw new Error(`Error al obtener proyectos compartidos: ${error.message}`);
+    }
+};
+
 // Verificar si un usuario ya está en el equipo de un proyecto
 const isUserInTeam = async (projectId, userId) => {
 
@@ -222,6 +268,7 @@ export {
     getActiveProjectMembers,
     getAllProjectMembers,
     getProjectOrganizers,
+    getSharedCompletedProjects,
     isUserInTeam,
     getUserRoleInProject,
     checkIfOrganizer,

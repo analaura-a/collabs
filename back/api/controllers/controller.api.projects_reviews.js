@@ -1,6 +1,6 @@
 import * as service from "../../services/projects_reviews.services.js";
 
-// Obtener una reseña en particular
+// Obtener/verificar si ya existe una reseña en particular
 const getReviewByProjectAndUser = async (req, res) => {
 
     const { projectId } = req.params;
@@ -15,6 +15,24 @@ const getReviewByProjectAndUser = async (req, res) => {
         res.status(200).json(review);
     } catch (error) {
         res.status(500).json({ message: `Error al obtener la reseña: ${error.message}` });
+    }
+};
+
+// Obtener las reseñas de un usuario
+const getUserReviews = async (req, res) => {
+
+    const { userId } = req.params;
+
+    try {
+        const reviews = await service.getReviewsByUserId(userId);
+        if (reviews.length === 0) {
+            return res.status(404).json({ message: 'Este usuario no tiene reseñas aún.' });
+        }
+        return res.status(200).json(reviews);
+    } catch (error) {
+        return res.status(500).json({
+            message: `Error al obtener las reseñas: ${error.message}`,
+        });
     }
 };
 
@@ -64,6 +82,7 @@ const updateReview = async (req, res) => {
 
 export {
     getReviewByProjectAndUser,
+    getUserReviews,
     createReview,
     updateReview
 }

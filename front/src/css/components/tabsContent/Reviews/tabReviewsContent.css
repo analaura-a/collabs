@@ -33,6 +33,24 @@
      gap: 0.5rem;
  }
 
+ .tab-reviews__reviews-column {
+     display: flex;
+     flex-direction: column;
+     gap: 24px;
+ }
+
+ .tab-reviews__reviews-column__review-cards {
+     display: flex;
+     flex-direction: column;
+     gap: 52px;
+ }
+
+ .tab-review-modal__content {
+     display: flex;
+     flex-direction: column;
+     gap: 12px;
+ }
+
 
 
  @media only screen and (min-width: 1024px) {
@@ -48,6 +66,10 @@
 
      .tab-reviews__empty-state {
          padding: 7.5rem 0 1.5rem 0;
+     }
+
+     .tab-reviews__reviews-column {
+         width: 48%;
      }
 
  }

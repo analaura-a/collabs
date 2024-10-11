@@ -45,7 +45,7 @@ const MyProfilePage = () => {
 
     return (
         <main>
-            <div className="container profile-page-container">{/* contenedor general */}
+            <div className="container profile-page-container">
 
                 <section className="profile-page__header">
 

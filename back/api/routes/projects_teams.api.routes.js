@@ -20,6 +20,9 @@ route.get('/projects/:projectId/all-members', [validateTokenMiddleware], control
 // Obtener a los organizadores de un proyecto
 route.get('/projects/:projectId/organizers', [validateTokenMiddleware], controllers.getProjectOrganizers);
 
+// Obtener proyectos finalizados en común con otro usuario
+route.get('/users/:reviewedUserId/shared-projects', [validateTokenMiddleware], controllers.getSharedCompletedProjects);
+
 // Verificar si un usuario ya está en el equipo de un proyecto
 route.get('/projects/:projectId/team/check-user/:userId', [validateTokenMiddleware], controllers.isUserInTeam);
 
