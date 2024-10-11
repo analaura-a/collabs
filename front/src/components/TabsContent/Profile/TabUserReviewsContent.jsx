@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchUserProfileByUsername } from "../../../services/userService";
 import { getUserReviews } from '../../../services/reviewService';
+import { getSharedCompletedProjects } from "../../../services/teamService";
+import Modal from "../../Modal/Modal";
 import ReviewCard from '../../Cards/ReviewCard';
 import Button from "../../Button/Button";
 import InputReviewIcon from '../../../assets/svg/directbox-send.svg?react';
 
 const TabUserReviewsContent = () => {
 
+    const navigate = useNavigate();
+
     const { username } = useParams();
 
     const [user, setUser] = useState(null);
     const [reviews, setReviews] = useState([]);
+    const [sharedProjects, setSharedProjects] = useState([]);
+    const [selectedProjectId, setSelectedProjectId] = useState(null);
 
     const [loading, setLoading] = useState(true);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const loadUserProfile = async () => {
         try {
@@ -29,6 +36,15 @@ const TabUserReviewsContent = () => {
         }
     };
 
+    const loadSharedProjects = async () => {
+        try {
+            const projects = await getSharedCompletedProjects(user._id);
+            setSharedProjects(projects);
+        } catch (error) {
+            console.error('Error al obtener los proyectos compartidos:', error);
+        }
+    };
+
     useEffect(() => {
         loadUserProfile();
     }, [username]);
@@ -36,6 +52,19 @@ const TabUserReviewsContent = () => {
     const totalProjects = new Set(reviews.map(review => review.project_id)).size;
     const recommendCount = reviews.filter(review => review.recommend).length;
     const recommendPercentage = ((recommendCount / reviews.length) * 100).toFixed(0);
+
+    const openReviewModal = async () => {
+        await loadSharedProjects();
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    const handleSelectProject = () => {
+        navigate(`/mis-proyectos/${selectedProjectId}/reseñar/${user._id}`);
+    };
 
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
@@ -62,7 +91,7 @@ const TabUserReviewsContent = () => {
 
                         <div className="tab-profile__space-between tab-reviews__rating-column__add-review">
                             <p className="paragraph">  ¿Colaboraste en algún proyecto junto a <span className="primary-color-text">{user.name}</span>? Comparte cómo fue tu experiencia con una reseña.</p>
-                            <Button size="large" color="secondary" width="fullwidth" icon={<InputReviewIcon />}>Dejar una reseña</Button>
+                            <Button size="large" color="secondary" width="fullwidth" icon={<InputReviewIcon />} onClick={openReviewModal}>Dejar una reseña</Button>
                         </div>
                     </div>
 
@@ -87,11 +116,45 @@ const TabUserReviewsContent = () => {
                             <p className="subtitle-18">¿Colaboraste en algún proyecto junto a {user.name}? Comparte cómo fue tu experiencia con una reseña.</p>
                         </div>
 
-                        <Button size="large" width="full-then-fit">Dejar una reseña</Button>
+                        <Button size="large" width="full-then-fit" onClick={openReviewModal}>Dejar una reseña</Button>
                     </div>
 
                 </section>
             )}
+
+            <Modal
+                isOpen={modalOpen}
+                onClose={closeModal}
+                title={`Reseñar a ${user.name} ${user.last_name}`}
+                subtitle={sharedProjects.length === 0 ? `Aún no trabajaste en ningún proyecto junto a ${user.name}, por lo que no puedes dejarle una reseña.` : "Selecciona el proyecto en el que trabajaron juntos y para el cual te gustaría dejar una reseña."}
+                actions={sharedProjects.length > 0 ? [
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: closeModal },
+                    { label: 'Siguiente', color: 'primary', size: "large", width: "fullwidth", onClick: () => handleSelectProject() }
+                ] : [
+                    { label: 'Volver atrás', color: 'secondary', size: "large", width: "fullwidth", onClick: closeModal },
+                ]}
+            >
+                {sharedProjects.length !== 0 &&
+                    <div className="tab-review-modal__content">
+                        {sharedProjects.map(project => (
+                            <div key={project.projectId} className={`checkbox-item ${selectedProjectId === project.projectId ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedProjectId(project.projectId)}>
+                                <input
+                                    type="radio"
+                                    name="project"
+                                    id={project.projectId}
+                                    value={project.projectId}
+                                    checked={selectedProjectId === project.projectId}
+                                    onChange={(e) => e.stopPropagation()}
+                                    className="hidden-input"
+                                />
+                                <label htmlFor={project.projectId} className="subtitle bold-text">
+                                    {project.projectName}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                }
+            </Modal>
         </>
     );
 };
