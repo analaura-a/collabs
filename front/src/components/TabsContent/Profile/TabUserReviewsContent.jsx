@@ -20,6 +20,8 @@ const TabUserReviewsContent = () => {
     const [selectedProjectId, setSelectedProjectId] = useState(null);
 
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [modalOpen, setModalOpen] = useState(false);
 
     const loadUserProfile = async () => {
@@ -63,6 +65,11 @@ const TabUserReviewsContent = () => {
     };
 
     const handleSelectProject = () => {
+        if (!selectedProjectId) {
+            setError('Por favor, selecciona un proyecto para continuar.');
+            return;
+        }
+
         navigate(`/mis-proyectos/${selectedProjectId}/reseñar/${user._id}`);
     };
 
@@ -136,22 +143,26 @@ const TabUserReviewsContent = () => {
             >
                 {sharedProjects.length !== 0 &&
                     <div className="tab-review-modal__content">
-                        {sharedProjects.map(project => (
-                            <div key={project.projectId} className={`checkbox-item ${selectedProjectId === project.projectId ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedProjectId(project.projectId)}>
-                                <input
-                                    type="radio"
-                                    name="project"
-                                    id={project.projectId}
-                                    value={project.projectId}
-                                    checked={selectedProjectId === project.projectId}
-                                    onChange={(e) => e.stopPropagation()}
-                                    className="hidden-input"
-                                />
-                                <label htmlFor={project.projectId} className="subtitle bold-text">
-                                    {project.projectName}
-                                </label>
-                            </div>
-                        ))}
+                        <div className="tab-review-modal__content">
+                            {sharedProjects.map(project => (
+                                <div key={project.projectId} className={`checkbox-item ${selectedProjectId === project.projectId ? 'checkbox-item-checked' : ''}`} onClick={() => setSelectedProjectId(project.projectId)}>
+                                    <input
+                                        type="radio"
+                                        name="project"
+                                        id={project.projectId}
+                                        value={project.projectId}
+                                        checked={selectedProjectId === project.projectId}
+                                        onChange={(e) => e.stopPropagation()}
+                                        className="hidden-input"
+                                    />
+                                    <label htmlFor={project.projectId} className="subtitle bold-text">
+                                        {project.projectName}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+
+                        {error && <p className="error-text">{error}</p>}
                     </div>
                 }
             </Modal>
