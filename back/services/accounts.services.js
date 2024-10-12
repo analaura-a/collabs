@@ -156,7 +156,7 @@ async function resetPassword(token, newPassword) {
   const hashedPassword = await bcrypt.hash(newPassword, 10);
 
   // Actualizar la contraseña del usuario en la base de datos
-  await accountsCollection.updateOne(
+  await db.collection('accounts').updateOne(
     { _id: ObjectId(userId) },
     { $set: { password: hashedPassword } }
   );
