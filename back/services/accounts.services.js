@@ -147,7 +147,7 @@ async function resetPassword(token, newPassword) {
      const userId = decoded.id;
 
   // Verificar si el usuario existe
-  const user = await db.collection('accounts').findOne({ _id: ObjectId(userId) });
+  const user = await db.collection('accounts').findOne({ _id: new ObjectId(userId) });
   if (!user) {
     throw new Error('El token es inválido o ha expirado.');
   }
@@ -157,7 +157,7 @@ async function resetPassword(token, newPassword) {
 
   // Actualizar la contraseña del usuario en la base de datos
   await db.collection('accounts').updateOne(
-    { _id: ObjectId(userId) },
+    { _id: new ObjectId(userId) },
     { $set: { password: hashedPassword } }
   );
 

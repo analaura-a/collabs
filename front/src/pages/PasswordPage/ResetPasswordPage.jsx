@@ -47,7 +47,7 @@ const ResetPasswordPage = () => {
             <section className="password-page-container">
 
                 <Link to="/">
-                    <img src='../assets/svg/collabs-logo.svg' alt="Collabs" />
+                    <img src='../../assets/svg/collabs-logo.svg' alt="Collabs" />
                 </Link>
 
                 <div>

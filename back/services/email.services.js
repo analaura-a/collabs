@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   
   // Función para enviar el correo de restablecimiento de contraseña
   async function sendResetPasswordEmail(email, token) {
-    const resetLink = `http://localhost:5173/auth/reset-password/${token}`; // Cambia la URL según tu frontend
+    const resetLink = `http://localhost:5173/auth/restablecer-contraseña/${token}`; 
   
     const mailOptions = {
       from: 'arg.collabs@gmail.com',
