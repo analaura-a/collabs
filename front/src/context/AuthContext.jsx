@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { login as loginService, logout as logoutService } from '../services/authService';
 import { completeOnboarding as completeOnboardingService } from '../services/userService'
-// import { fetchUserProfile as fetchUserProfileService } from '../services/userService';
 
 const AuthContext = createContext();
 
@@ -79,16 +78,6 @@ export const AuthProvider = ({ children }) => {
         }
 
     };
-
-    // const fetchUserProfile = async () => {
-    //     try {
-    //         const userProfile = await fetchUserProfileService();
-    //         updateUser(userProfile);
-    //     } catch (error) {
-    //         console.error('Failed to fetch user profile', error);
-    //         setAuthState((prevState) => ({ ...prevState, error: error.message }));
-    //     }
-    // };
 
     return (
         <AuthContext.Provider value={{ authState, login, logout, updateUser, completeOnboarding }}>
