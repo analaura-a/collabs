@@ -169,7 +169,7 @@ const AppRoutes = createBrowserRouter([
                 </AuthRoute>),
             },
             {
-                path: "/auth/restablecer-contraseña",
+                path: "/auth/restablecer-contraseña/:token",
                 element: (<AuthRoute>
                     <ResetPasswordPage />
                 </AuthRoute>),

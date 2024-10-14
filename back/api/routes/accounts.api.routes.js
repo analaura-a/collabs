@@ -18,6 +18,10 @@ route.delete('/auth/logout', controllers.logout);
 // Cambiar la contraseña (desde editar mi perfil)
 route.patch('/auth/change-password', [verifyUserOwnership], controllers.changePassword);
 
-// auth/change-forgotten-password
+// Solicitar restablecimiento de contraseña
+route.post('/auth/forgot-password', controllers.forgotPassword);
+
+// Restablecer la contraseña con el token
+route.post('/auth/reset-password', controllers.updatePassword);
 
 export default route;
