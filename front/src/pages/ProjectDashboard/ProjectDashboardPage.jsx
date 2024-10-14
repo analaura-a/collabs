@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getProjectById } from '../../services/projectService';
 import { getUserRoleInProject } from '../../services/teamService';
+import { useToast } from '../../context/ToastContext';
 import DashboardDropdownButtons from '../../components/Button/DashboardDropdownButtons';
 import DashboardActionButtons from '../../components/Button/DashboardActionButtons';
 import Tabs from "../../components/Tabs/Tabs";
@@ -24,6 +25,8 @@ const ProjectDashboardPage = () => {
 
     const [loading, setLoading] = useState(true);
 
+    const { addToast } = useToast();
+
     const fetchProjectData = async () => {
         try {
             // Obtener los detalles del proyecto
@@ -38,7 +41,11 @@ const ProjectDashboardPage = () => {
 
             setLoading(false);
         } catch (error) {
-            console.error('Error al cargar el proyecto:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar el proyecto',
+                message: 'Ocurrió un error desconocido al intentar cargar el proyecto. Inténtalo de nuevo más tarde.'
+            });
             setLoading(false);
         }
     };
