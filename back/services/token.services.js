@@ -60,16 +60,16 @@ async function removeToken(token) {
 // Generar un token para el restablecimiento de contraseña
 function generateResetToken(userId) {
     return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '1h' }); // Token válido por 1 hora
-  }
-  
+}
+
 // Verificar el token de restablecimiento de contraseña
 function verifyResetToken(token) {
     try {
-      return jwt.verify(token, JWT_SECRET);
+        return jwt.verify(token, JWT_SECRET);
     } catch (error) {
-      throw new Error('Token inválido o expirado.');
+        throw new Error('Token inválido o expirado.');
     }
-  }
+}
 
 export {
     createToken,

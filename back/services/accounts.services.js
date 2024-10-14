@@ -125,41 +125,43 @@ const updatePersonalProfileData = async (userId, accountData) => {
 };
 
 // Solicitar restablecimiento de contraseña
-async function requestPasswordReset(email){
-     // Verificar si el usuario existe
-  const user = await db.collection('accounts').findOne({ email });
-  if (!user) {
-    throw new Error('No se encontró ninguna cuenta con ese correo electrónico.');
-  }
+async function requestPasswordReset(email) {
 
-  // Generar un token de restablecimiento
-  const token = generateResetToken(user._id);
+    // Verificar si el usuario existe
+    const user = await db.collection('accounts').findOne({ email });
+    if (!user) {
+        throw new Error('No se encontró ninguna cuenta con ese correo electrónico.');
+    }
 
-  // Enviar el correo de restablecimiento de contraseña
-  await sendResetPasswordEmail(email, token);
-  
+    // Generar un token de restablecimiento
+    const token = generateResetToken(user._id);
+
+    // Enviar el correo de restablecimiento de contraseña
+    await sendResetPasswordEmail(email, token);
+
 };
 
 // Restablecer la contraseña
 async function resetPassword(token, newPassword) {
+
     // Verificar el token
-     const decoded = verifyResetToken(token);
-     const userId = decoded.id;
+    const decoded = verifyResetToken(token);
+    const userId = decoded.id;
 
-  // Verificar si el usuario existe
-  const user = await db.collection('accounts').findOne({ _id: new ObjectId(userId) });
-  if (!user) {
-    throw new Error('El token es inválido o ha expirado.');
-  }
+    // Verificar si el usuario existe
+    const user = await db.collection('accounts').findOne({ _id: new ObjectId(userId) });
+    if (!user) {
+        throw new Error('El token es inválido o ha expirado.');
+    }
 
-  // Hashear la nueva contraseña
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // Hashear la nueva contraseña
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-  // Actualizar la contraseña del usuario en la base de datos
-  await db.collection('accounts').updateOne(
-    { _id: new ObjectId(userId) },
-    { $set: { password: hashedPassword } }
-  );
+    // Actualizar la contraseña del usuario en la base de datos
+    await db.collection('accounts').updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { password: hashedPassword } }
+    );
 
 }
 
