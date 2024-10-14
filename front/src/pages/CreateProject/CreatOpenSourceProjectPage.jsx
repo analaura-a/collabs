@@ -41,14 +41,14 @@ const CreatOpenSourceProjectPage = () => {
     const nextStep = () => {
         if (isStepValid && currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
-            setIsStepValid(false); // Reset validation for the next step
+            setIsStepValid(false); 
         }
     };
 
     const prevStep = () => {
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
-            setIsStepValid(true); // Assume previous step is valid
+            setIsStepValid(true);
         }
     };
 

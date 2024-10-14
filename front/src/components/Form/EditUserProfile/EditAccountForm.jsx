@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
 import { updateUserAccountData } from "../../../services/userService";
 import { UserAccountDataSchema } from "../../../validation/userAccountDataValidation";
+import { useToast } from "../../../context/ToastContext";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 
@@ -14,6 +15,8 @@ const EditAccountForm = () => {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { addToast } = useToast();
 
     useEffect(() => {
         if (authState.user) {
@@ -33,7 +36,6 @@ const EditAccountForm = () => {
             await UserAccountDataSchema.validate(updatedFields, { abortEarly: false });
             setErrors({});
             return true;
-            // return console.log("es valido")
         } catch (validationErrors) {
             const formattedErrors = validationErrors.inner.reduce((acc, error) => {
                 acc[error.path] = error.message;
@@ -41,7 +43,6 @@ const EditAccountForm = () => {
             }, {});
             setErrors(formattedErrors);
             return false;
-            // console.log("no es valido")
         }
 
     };
@@ -70,8 +71,15 @@ const EditAccountForm = () => {
             }
 
             if (Object.keys(fieldsToUpdate).length === 0) {
-                console.log("No hay cambios para guardar."); //Mostrar al usuario
+
+                addToast({
+                    type: 'info',
+                    title: 'No hay cambios para guardar',
+                    message: 'Los datos son los mismos que están guardados actualmente.'
+                });
+
                 setIsSubmitting(false);
+
                 return;
             }
 
@@ -81,10 +89,18 @@ const EditAccountForm = () => {
             // Actualizar el contexto con la nueva información
             updateUser({ ...authState.user, email, username });
 
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Datos de la cuenta actualizados con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
 
         } catch (error) {
-            console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al guardar los datos de la cuenta',
+                message: 'Ocurrió un error desconocido al intentar guardar los nuevos datos. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setIsSubmitting(false);
         }
