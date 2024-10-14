@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { getProjectById, updateProjectOpenPositions } from "../../services/projectService";
+import { useToast } from "../../context/ToastContext";
 import CreateProjectForm3 from "../../components/Form/CreateProject/Personal/CreateProjectForm3";
 import Button from "../../components/Button/Button";
 
@@ -15,6 +16,8 @@ const EditOpenPositionsPage = () => {
     const [isFormValid, setIsFormValid] = useState(false);
     const [loading, setLoading] = useState(true);
 
+    const { addToast } = useToast();
+
     const fetchProjectDetails = async () => {
         try {
             const projectData = await getProjectById(id);
@@ -28,7 +31,11 @@ const EditOpenPositionsPage = () => {
 
             setLoading(false);
         } catch (error) {
-            console.error('Error al cargar los detalles del proyecto:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los detalles del proyecto',
+                message: 'Ocurrió un error desconocido al intentar cargar el proyecto. Inténtalo de nuevo más tarde.'
+            });
             setLoading(false);
         }
     };
@@ -40,17 +47,32 @@ const EditOpenPositionsPage = () => {
     const validateOpenPositions = () => {
 
         if (openPositions.length === 0) {
-            // setErrors({ open_positions: 'Debe haber al menos una posición abierta.' }); ¿Mostrar al usuario?
-            console.log("Debe haber al menos una posición abierta")
-            return false;
+
+            if (!loading) {
+                addToast({
+                    type: 'info',
+                    title: 'Información incompleta',
+                    message: 'Debe haber al menos una posición abierta.'
+                });
+
+                return false;
+            }
         }
 
         const invalidPositions = openPositions.filter(pos => !pos.profile || pos.required_skills.length === 0);
 
         if (invalidPositions.length > 0) {
-            // setErrors({ open_positions: 'Cada posición debe tener un perfil seleccionado y al menos una skill requerida.' }); ¿Mostrar al usuario?
-            console.log("Cada posición debe tener un perfil seleccionado y al menos una skill requerida")
-            return false;
+
+            if (!loading) {
+                addToast({
+                    type: 'info',
+                    title: 'Información incompleta',
+                    message: 'Cada posición debe tener un perfil seleccionado y al menos una skill requerida.'
+                });
+
+                return false;
+            }
+
         }
 
         return true;
@@ -73,10 +95,18 @@ const EditOpenPositionsPage = () => {
 
             fetchProjectDetails();
 
-            console.log('Convocatoria actualizada con éxito.'); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: 'Convocatoria actualizada con éxito',
+                message: 'Los cambios han sido guardados correctamente.'
+            });
+
         } catch (error) {
-            console.error('Error al actualizar la convocatoria:', error);
-            //Avisarle al usuario
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar la convocatoria',
+                message: 'Ocurrió un error desconocido al intentar actualizar la convocatoria. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 

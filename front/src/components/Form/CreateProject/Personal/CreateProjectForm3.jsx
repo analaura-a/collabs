@@ -113,7 +113,7 @@ const CreateProjectForm3 = ({ onChange, onValidate, initialData }) => {
                 </OpenPositionAccordion>
             ))}
 
-            <Button size="large" width="fullwidth" color="secondary" icon={<AddIcon />} onClick={addOpenPosition}>Agregar colaborador</Button>
+            <Button type="button" size="large" width="fullwidth" color="secondary" icon={<AddIcon />} onClick={addOpenPosition}>Agregar colaborador</Button>
 
         </div>
     );
