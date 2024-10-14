@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProjectById, updateProjectDetails, uploadProjectImage } from "../../services/projectService";
 import { editPersonalProjectSchema, editOpenSourceProjectSchema } from "../../validation/editProjectDetailsValidation";
+import { useToast } from "../../context/ToastContext";
 import Input from "../../components/Inputs/Input";
 import Textarea from "../../components/Inputs/Textarea";
 import Select from "../../components/Inputs/Select";
@@ -30,6 +31,8 @@ const EditProjectDetailsPage = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(true);
 
+    const { addToast } = useToast();
+
     const extractImageFileName = (path) => {
         return path.replace('uploads/projects/', '');
     };
@@ -49,7 +52,11 @@ const EditProjectDetailsPage = () => {
 
             setLoading(false);
         } catch (error) {
-            console.error('Error al cargar los detalles del proyecto:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los detalles del proyecto',
+                message: 'Ocurrió un error desconocido al intentar cargar el proyecto. Inténtalo de nuevo más tarde.'
+            });
             setLoading(false);
         }
     };
@@ -104,7 +111,12 @@ const EditProjectDetailsPage = () => {
             // Recargar la página con los nuevos datos
             fetchProjectDetails();
 
-            console.log("Proyecto actualizado con éxito."); //Mostrar al usuario
+            //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: 'Proyecto actualizado con éxito',
+                message: 'Los cambios han sido guardados correctamente.'
+            });
 
         } catch (error) {
             if (error.name === 'ValidationError') {
@@ -113,7 +125,11 @@ const EditProjectDetailsPage = () => {
                 }, {});
                 setErrors(errorMessages);
             } else {
-                console.error('Error al actualizar el proyecto:', error);
+                addToast({
+                    type: 'error',
+                    title: 'Error al actualizar el proyecto',
+                    message: 'Ocurrió un error desconocido al intentar actualizar el proyecto. Inténtalo de nuevo más tarde.'
+                });
             }
         }
     };
