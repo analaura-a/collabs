@@ -155,7 +155,7 @@
     gap: 20px;
 }
 
-.project-detail-page__status {
+.project-detail-page__status-open {
     padding-bottom: 44px;
     border-bottom: 1px solid var(--color-gray-line);
 }
@@ -240,7 +240,7 @@
     gap: 4px;
 }
 
-.project-detail-modal__content{
+.project-detail-modal__content {
     display: flex;
     flex-direction: column;
     gap: 24px;

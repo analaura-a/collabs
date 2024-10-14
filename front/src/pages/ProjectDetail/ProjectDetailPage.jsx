@@ -232,7 +232,7 @@ const ProjectDetailPage = () => {
 
                         <div className="project-detail-page__join-column__blocks project-detail-page__join-column__status-and-positions">
 
-                            <div className="project-detail-page__status">
+                            <div className={`project-detail-page__status ${project.status === "Abierto" ? "project-detail-page__status-open" : ""}`}>
                                 <h2 className="title-24">Estado</h2>
 
                                 {/* Mostrar dinámicamente */}
@@ -242,55 +242,57 @@ const ProjectDetailPage = () => {
                                 </div>
                             </div>
 
-                            <div className="project-detail-page__positions">
-                                {
-                                    project.type == "Personal" ? (
-                                        <>
-                                            <h2 className="title-24">Quiero colaborar como...</h2>
+                            {project.status === "Abierto" &&
+                                <div className="project-detail-page__positions">
+                                    {
+                                        project.type == "Personal" ? (
+                                            <>
+                                                <h2 className="title-24">Quiero colaborar como...</h2>
 
-                                            <form className="edit-profile-page__form-container__inputs-container">
-                                                {project.open_positions.map((position) => (
-                                                    <div key={position._id} className={`checkbox-item ${selectedPositionId === position._id ? 'checkbox-item-checked' : ''}`} onClick={() => { setSelectedPositionId(position._id); setSelectedPositionProfile(position.profile) }}>
+                                                <form className="edit-profile-page__form-container__inputs-container">
+                                                    {project.open_positions.map((position) => (
+                                                        <div key={position._id} className={`checkbox-item ${selectedPositionId === position._id ? 'checkbox-item-checked' : ''}`} onClick={() => { setSelectedPositionId(position._id); setSelectedPositionProfile(position.profile) }}>
 
-                                                        <input
-                                                            type="radio"
-                                                            name="open_position"
-                                                            id={position._id}
-                                                            value={position._id}
-                                                            checked={selectedPositionId === position._id}
-                                                            onChange={(e) => e.stopPropagation()}
-                                                            className="hidden-input"
-                                                        />
+                                                            <input
+                                                                type="radio"
+                                                                name="open_position"
+                                                                id={position._id}
+                                                                value={position._id}
+                                                                checked={selectedPositionId === position._id}
+                                                                onChange={(e) => e.stopPropagation()}
+                                                                className="hidden-input"
+                                                            />
 
-                                                        <label htmlFor={position._id} className="subtitle bold-text">
-                                                            {position.profile}
-                                                        </label>
+                                                            <label htmlFor={position._id} className="subtitle bold-text">
+                                                                {position.profile}
+                                                            </label>
 
-                                                    </div>
-                                                ))}
-                                            </form>
+                                                        </div>
+                                                    ))}
+                                                </form>
 
-                                            {!isUserInTeam ? (
-                                                <Button width="fullwidth" size="large" onClick={handleOpenModal}>Postularme</Button>
-                                            ) : (
-                                                <Button width="fullwidth" size="large" onClick={() => { console.log("Ya eres parte de este proyecto") }}>Postularme</Button>
-                                            )}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <h2 className="title-24">Colaboradores buscados</h2>
+                                                {!isUserInTeam ? (
+                                                    <Button width="fullwidth" size="large" onClick={handleOpenModal}>Postularme</Button>
+                                                ) : (
+                                                    <Button width="fullwidth" size="large" onClick={() => { console.log("Ya eres parte de este proyecto") }}>Postularme</Button>
+                                                )}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <h2 className="title-24">Colaboradores buscados</h2>
 
-                                            <ul className="project-detail-page__positions__open-source">
-                                                {project.open_positions.map((position) => (
-                                                    <li key={position._id} className="subtitle">{position.profile}</li>
-                                                ))}
-                                            </ul>
+                                                <ul className="project-detail-page__positions__open-source">
+                                                    {project.open_positions.map((position) => (
+                                                        <li key={position._id} className="subtitle">{position.profile}</li>
+                                                    ))}
+                                                </ul>
 
-                                            <Button width="fullwidth" size="large" onClick={() => handleExternalRedirect(project.url)}>Quiero contribuir</Button>
-                                        </>
-                                    )
-                                }
-                            </div>
+                                                <Button width="fullwidth" size="large" onClick={() => handleExternalRedirect(project.url)}>Quiero contribuir</Button>
+                                            </>
+                                        )
+                                    }
+                                </div>
+                            }
 
                         </div>
 
