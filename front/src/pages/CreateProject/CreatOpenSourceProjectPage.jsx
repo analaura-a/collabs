@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { createProject, uploadProjectImage } from '../../services/projectService';
 import { addMemberToProjectTeam } from '../../services/teamService';
+import { useToast } from '../../context/ToastContext';
 import CreateProjectStep from '../../components/Step/CreateProjectStep';
 import CreateProjectForm1 from '../../components/Form/CreateProject/OpenSource/CreateProjectForm1';
 import CreateProjectForm2 from '../../components/Form/CreateProject/OpenSource/CreateProjectForm2';
@@ -30,6 +31,8 @@ const CreatOpenSourceProjectPage = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
     const [isStepValid, setIsStepValid] = useState(false);
+
+    const { addToast } = useToast();
 
     const navigate = useNavigate();
 
@@ -79,7 +82,6 @@ const CreatOpenSourceProjectPage = () => {
             // Paso 2: Subir la imagen del proyecto (si el usuario seleccionó una)
             if (projectImage) {
                 const uploadedImage = await uploadProjectImage(projectId, projectImage);
-                console.log('Imagen subida con éxito:', uploadedImage.imageUrl);
             }
 
             // Paso 3: Agregar al organizador al equipo del proyecto
@@ -90,11 +92,20 @@ const CreatOpenSourceProjectPage = () => {
                 null
             );
 
-            console.log("Proyecto creado con éxito"); //Notificar al usuario
-
             navigate(`/mis-proyectos/${projectId}`);
+
+            addToast({
+                type: 'success',
+                title: '¡Proyecto open-source creado con éxito!',
+                message: 'Puedes acceder y hacer cambios en él desde su dashboard.'
+            });
+
         } catch (error) {
-            console.error('Error al completar la creación del proyecto:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al completar la creación del proyecto',
+                message: 'Ocurrió un error desconocido al intentar crear el proyecto. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
