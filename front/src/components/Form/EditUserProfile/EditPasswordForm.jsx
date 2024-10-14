@@ -4,6 +4,7 @@ import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 import { passwordSchema } from "../../../validation/newPasswordValidation";
 import { changePassword } from "../../../services/authService";
+import { useToast } from "../../../context/ToastContext";
 
 const EditPasswordForm = () => {
 
@@ -14,6 +15,8 @@ const EditPasswordForm = () => {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { addToast } = useToast();
 
     const validateForm = async () => {
 
@@ -53,7 +56,12 @@ const EditPasswordForm = () => {
             // Actualizar datos en la database
             await changePassword(authState.user._id, currentPassword, newPassword);
 
-            console.log("Contraseña actualizada con éxito.") //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Contraseña actualizada con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
+
             setCurrentPassword('');
             setNewPassword('');
 
@@ -62,7 +70,11 @@ const EditPasswordForm = () => {
             if (error.message === "La contraseña actual es incorrecta.") {
                 setErrors({ currentPassword: error.message })
             } else {
-                console.log("Error del back", error.message) //Mostrárselo al usuario | setErrorMessage(error.message);
+                addToast({
+                    type: 'error',
+                    title: 'Error al guardar los datos de la contraseña',
+                    message: 'Ocurrió un error desconocido al intentar guardar los nuevos datos. Inténtalo de nuevo más tarde.'
+                });
             }
 
         } finally {
