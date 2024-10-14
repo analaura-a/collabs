@@ -22,6 +22,7 @@
 @import './pages/editProjectPages.css';
 @import './pages/dashboardTabs.css';
 @import './pages/reviewPage.css';
+@import './pages/messagesPage.css';
 
 @import './components/button.css';
 @import './components/input.css';

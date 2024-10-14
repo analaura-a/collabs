@@ -27,6 +27,7 @@ import ProjectDashboardPage from '../pages/ProjectDashboard/ProjectDashboardPage
 import EditProjectDetailsPage from '../pages/ProjectDashboard/EditProjectDetailsPage.jsx'
 import EditOpenPositionsPage from '../pages/ProjectDashboard/EditOpenPositionsPage.jsx'
 import ReviewPage from '../pages/ProjectReviews/ReviewPage.jsx'
+import MessagesPage from '../pages/Messages/MessagesPage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -135,7 +136,13 @@ const AppRoutes = createBrowserRouter([
                 element: (<ProtectedRoute>
                     <ReviewPage />
                 </ProtectedRoute>),
-            }
+            },
+            {
+                path: "/mensajes",
+                element: (<ProtectedRoute>
+                    <MessagesPage />
+                </ProtectedRoute>),
+            },
         ]
     },
     {
