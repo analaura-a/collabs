@@ -42,7 +42,6 @@ const AuthNavbar = () => {
 
             const newVisibility = currentVisibility === 'true' ? 'false' : 'true';
             navbarRef.setAttribute('data-visible', newVisibility);
-            console.log('(Visibility) Después del click:', newVisibility);
         }
 
         if (navToggleRef) {
@@ -50,7 +49,6 @@ const AuthNavbar = () => {
 
             const newValue = isExpanded === 'true' ? 'false' : 'true';
             navToggleRef.setAttribute('aria-expanded', newValue);
-            console.log('(Expanded) Después del click:', newValue);
         }
     };
 
@@ -114,13 +112,16 @@ const AuthNavbar = () => {
                         <li>
                             <Link to="/postulaciones" className="navbar-text">Mis postulaciones</Link>
                         </li>
+                        <li className="navbar-link-mobile">
+                            <Link to="/mensajes" className="navbar-text">Mensajes</Link>
+                        </li>
 
                     </ul>
                 </nav>
 
                 <ul className="navbar-buttons-container">
                     <li className="message-button">
-                        <button className="navbar-button message"></button>
+                        <button className="navbar-button message" onClick={() => navigate('/mensajes')}></button>
                     </li>
                     <li className="notification-button">
                         <button className="navbar-button notification"></button>

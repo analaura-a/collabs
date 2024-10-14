@@ -235,4 +235,8 @@
         order: initial;
     }
 
+    .navbar-link-mobile{
+        display: none;
+    }
+
 }
