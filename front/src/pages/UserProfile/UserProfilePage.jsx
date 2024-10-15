@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import { fetchUserProfileByUsername } from "../../services/userService";
+import { useToast } from "../../context/ToastContext";
 import Button from "../../components/Button/Button";
 import Tabs from '../../components/Tabs/Tabs';
 import TabUserProfileContent from "../../components/TabsContent/Profile/TabUserProfileContent";
@@ -18,7 +19,8 @@ const UserProfilePage = () => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+
+    const { addToast } = useToast();
 
     useEffect(() => {
         if (authState.user && username === authState.user.username) {
@@ -31,7 +33,11 @@ const UserProfilePage = () => {
             const userData = await fetchUserProfileByUsername(username);
             setUser(userData);
         } catch (error) {
-            setError(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar el perfil del usuario',
+                message: 'Ocurrió un error desconocido al intentar cargar el perfil del usuario. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setLoading(false);
         }
@@ -49,10 +55,6 @@ const UserProfilePage = () => {
 
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>; //Error
     }
 
     const formatRoles = (roles) => {
