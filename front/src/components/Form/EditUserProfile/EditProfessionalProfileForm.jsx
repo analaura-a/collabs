@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
 import { updateUserSkills, updateUserRoles, updateUserExperienceLevel, updateUserAvailability } from "../../../services/userService";
+import { useToast } from "../../../context/ToastContext";
 import Button from "../../Button/Button";
 import SkillSearch from "../../Inputs/SkillSearch";
 
@@ -16,6 +17,8 @@ const EditProfessionalProfileForm = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const { addToast } = useToast();
+
     //Roles
     const availableRoles = ['UX/UI Designer', 'Web Designer', 'Frontend Developer', 'Backend Developer', 'Fullstack Developer', 'Mobile Developer', 'No-code Developer', 'Project Manager', 'QA Tester'];
 
@@ -30,12 +33,25 @@ const EditProfessionalProfileForm = () => {
     const handleUpdateRoles = async () => {
         try {
             setIsSubmitting(true);
+
             const updatedUser = await updateUserRoles(user._id, roles);
+
             updateUser(updatedUser);
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+
+            addToast({
+                type: 'success',
+                title: '¡Roles actualizados con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
+
             setIsSubmitting(false);
         } catch (error) {
-            console.error('Error al actualizar los roles:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar los roles',
+                message: 'Ocurrió un error desconocido al intentar actualizar los roles. Inténtalo de nuevo más tarde.'
+            });
+
             setIsSubmitting(false);
         }
     };
@@ -52,12 +68,25 @@ const EditProfessionalProfileForm = () => {
     const handleUpdateSkills = async () => {
         try {
             setIsSubmitting(true);
+
             const updatedUser = await updateUserSkills(user._id, skills);
+
             updateUser(updatedUser);
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+
+            addToast({
+                type: 'success',
+                title: '¡Skills actualizadas con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
+
             setIsSubmitting(false);
         } catch (error) {
-            console.error('Error al actualizar las skills:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar las skills',
+                message: 'Ocurrió un error desconocido al intentar actualizar las skills. Inténtalo de nuevo más tarde.'
+            });
+
             setIsSubmitting(false);
         }
     };
@@ -68,12 +97,25 @@ const EditProfessionalProfileForm = () => {
     const handleUpdateExperienceLevel = async () => {
         try {
             setIsSubmitting(true);
+
             const updatedUser = await updateUserExperienceLevel(user._id, experienceLevel);
+
             updateUser(updatedUser);
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+
+            addToast({
+                type: 'success',
+                title: '¡Nivel de conocimiento actualizado con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
+
             setIsSubmitting(false);
         } catch (error) {
-            console.error('Error al actualizar el nivel de conocimiento:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar el nivel de conocimiento',
+                message: 'Ocurrió un error desconocido al intentar actualizar el nivel de conocimiento. Inténtalo de nuevo más tarde.'
+            });
+
             setIsSubmitting(false);
         }
     };
@@ -84,16 +126,28 @@ const EditProfessionalProfileForm = () => {
     const handleUpdateAvailability = async () => {
         try {
             setIsSubmitting(true);
+
             const updatedUser = await updateUserAvailability(user._id, availability);
+
             updateUser(updatedUser);
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+
+            addToast({
+                type: 'success',
+                title: '¡Disponibilidad actualizada con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
+
             setIsSubmitting(false);
         } catch (error) {
-            console.error('Error al actualizar el nivel de conocimiento:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar la disponibilidad',
+                message: 'Ocurrió un error desconocido al intentar actualizar la disponibilidad. Inténtalo de nuevo más tarde.'
+            });
+
             setIsSubmitting(false);
         }
     };
-
 
     return (
         <div className="edit-profile-page__form-container__space-between-forms">
