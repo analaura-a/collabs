@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import Input from "../Inputs/Input";
 import AuthContext from "../../context/AuthContext.jsx";
 import { LoginSchema } from "../../validation/loginValidation";
+import { useToast } from "../../context/ToastContext.jsx";
 
 const LoginForm = () => {
 
@@ -15,6 +16,8 @@ const LoginForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
+
+    const { addToast } = useToast();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -76,7 +79,11 @@ const LoginForm = () => {
             } else if (error.message === "La contraseña es incorrecta.") {
                 setErrors({ password: error.message });
             } else {
-                console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message); 
+                addToast({
+                    type: 'error',
+                    title: 'Error al iniciar sesión',
+                    message: 'Ocurrió un error desconocido al intentar iniciar sesión con esta cuenta. Inténtalo de nuevo más tarde.'
+                });
             }
 
         } finally {
