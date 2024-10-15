@@ -1,6 +1,7 @@
 import { useState, useContext, useRef } from "react";
 import AuthContext from "../../../context/AuthContext";
 import { updateUserProfilePhotoData, updateUserPersonalProfileData, deleteProfilePhoto } from "../../../services/userService";
+import { useToast } from "../../../context/ToastContext";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 import Textarea from "../../Inputs/Textarea";
@@ -22,6 +23,8 @@ const EditPersonalProfileForm = () => {
     const [profilePicUploaded, setProfilePicUploaded] = useState(false);
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { addToast } = useToast();
 
     const fileInputRef = useRef(null);
 
@@ -50,7 +53,12 @@ const EditPersonalProfileForm = () => {
             updateUser({ ...user, profile_pic: null });
             setIsSubmitting(false);
         } catch (error) {
-            console.log("Ocurrió un error al intentar eliminar la foto de perfil.", error) //Mostrárselo al usuario
+            addToast({
+                type: 'error',
+                title: 'Error al eliminar la foto',
+                message: 'Ocurrió un error desconocido al intentar eliminar la foto de perfil. Inténtalo de nuevo más tarde.'
+            });
+
             setIsSubmitting(false);
         }
     };
@@ -99,9 +107,17 @@ const EditPersonalProfileForm = () => {
                 profile_pic: updatedProfilePic
             });
 
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Información personal actualizada con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
         } catch (error) {
-            console.log("Ocurrió un error al intentar actualizar el perfil.", error) //Mostrárselo al usuario
+            addToast({
+                type: 'error',
+                title: 'Error al guardar la información personal',
+                message: 'Ocurrió un error desconocido al intentar guardar los nuevos datos. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setIsSubmitting(false);
         }
