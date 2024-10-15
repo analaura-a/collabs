@@ -3,20 +3,31 @@ import { Link } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Button/Button";
 import { requestPasswordReset } from '../../services/passwordService';
+import { useToast } from "../../context/ToastContext";
 
 const ForgottenPasswordPage = () => {
 
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+
+  const { addToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await requestPasswordReset(email);
-      setMessage(response.message);
+
+      addToast({
+        type: 'success',
+        title: '¡Correo electrónico enviado con éxito!',
+        message: 'Revisa tu bandeja de entrada para restablecer la contraseña.'
+      });
     } catch (error) {
-      setMessage(error.message);
+      addToast({
+        type: 'error',
+        title: 'Error al enviar el correo electrónico',
+        message: error.message
+      });
     }
   };
 
@@ -46,7 +57,6 @@ const ForgottenPasswordPage = () => {
 
           <Link to="/auth/iniciar-sesion" className="subtitle link">Volver al inicio de sesión</Link>
 
-          {message && <p>{message}</p>}
         </div>
 
       </section>

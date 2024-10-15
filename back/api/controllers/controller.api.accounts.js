@@ -68,7 +68,7 @@ const forgotPassword = async (req, res) => {
         await service.requestPasswordReset(email);
         res.status(200).json({ message: 'Correo de restablecimiento enviado con éxito.' });
     } catch (error) {
-        res.status(400).json({ message: 'No se pudo enviar el mail (back)', error });
+        res.status(400).json({ message: error.message });
     }
 };
 
