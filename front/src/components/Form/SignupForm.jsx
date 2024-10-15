@@ -5,6 +5,7 @@ import Input from "../Inputs/Input";
 import { register } from "../../services/authService";
 import { SignupSchema } from "../../validation/signupValidation.jsx";
 import AuthContext from "../../context/AuthContext.jsx";
+import { useToast } from "../../context/ToastContext.jsx";
 
 const SignupForm = () => {
 
@@ -16,8 +17,11 @@ const SignupForm = () => {
     });
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
     const navigate = useNavigate();
+
     const { login } = useContext(AuthContext);
+    const { addToast } = useToast();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -96,7 +100,11 @@ const SignupForm = () => {
             if (error.message === 'Ya existe una cuenta asociada a ese correo electrónico.') {
                 setErrors({ email: error.message });
             } else {
-                console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message); 
+                addToast({
+                    type: 'error',
+                    title: 'Error al crear la cuenta',
+                    message: 'Ocurrió un error desconocido al intentar crear la cuenta. Inténtalo de nuevo más tarde.'
+                });
             }
 
         } finally {
@@ -104,7 +112,6 @@ const SignupForm = () => {
         }
 
     };
-
 
     return (
 
