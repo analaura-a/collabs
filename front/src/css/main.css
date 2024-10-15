@@ -23,6 +23,7 @@
 @import './pages/dashboardTabs.css';
 @import './pages/reviewPage.css';
 @import './pages/messagesPage.css';
+@import './pages/notificationsPage.css';
 
 @import './components/button.css';
 @import './components/input.css';
@@ -47,5 +48,6 @@
 @import './components/cards/shortcutCard.css';
 @import './components/cards/reviewCard.css';
 @import './components/toastNotification.css';
+@import './components/cards/notificationCard.css';
 
 @import './misc/faded-pattern.css';
