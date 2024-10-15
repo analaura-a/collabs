@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
 import portfolioValidationSchema from "../../../validation/userPorfolioDataValidation";
 import { updateUserPortfolioData } from "../../../services/userService";
+import { useToast } from "../../../context/ToastContext";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
 
@@ -14,6 +15,8 @@ const EditPortfolioForm = () => {
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { addToast } = useToast();
 
     useEffect(() => {
         if (user && user.portfolio_link) {
@@ -64,9 +67,17 @@ const EditPortfolioForm = () => {
 
             setIsSubmitting(true);
 
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Portfolio actualizado con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
         } catch (error) {
-            console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar el portfolio',
+                message: 'Ocurrió un error desconocido al intentar actualizar el portfolio. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setIsSubmitting(false);
         }
