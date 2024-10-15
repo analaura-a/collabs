@@ -3,6 +3,7 @@ import AuthContext from "../../../context/AuthContext";
 import { updateUserSocialsData } from "../../../services/userService";
 import Button from "../../Button/Button";
 import Input from "../../Inputs/Input";
+import { useToast } from "../../../context/ToastContext";
 
 const EditContactForm = () => {
 
@@ -20,6 +21,8 @@ const EditContactForm = () => {
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { addToast } = useToast();
 
     const socialTypes = {
         LinkedIn: "url",
@@ -87,9 +90,17 @@ const EditContactForm = () => {
                 socials: updatedSocialsArray
             });
 
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Datos de contacto actualizados con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
         } catch (error) {
-            console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar los datos de contacto',
+                message: 'Ocurrió un error desconocido al intentar actualizar los datos de contacto. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setIsSubmitting(false);
         }
