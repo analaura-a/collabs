@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthContext"; //Para verificar que, si el usuario ya está en el equipo del proyecto, este no pueda postularse
+import AuthContext from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
 import { getProjectById } from "../../services/projectService";
 import { getProjectOrganizers, checkUserInProjectTeam } from "../../services/teamService";
 import { createRequest } from "../../services/requestService";
@@ -19,6 +20,8 @@ const ProjectDetailPage = () => {
     const { user } = authState;
 
     const [isUserInTeam, setIsUserInTeam] = useState(false);
+
+    const { addToast } = useToast();
 
     const [project, setProject] = useState(null);
     const [organizers, setOrganizers] = useState([]);
@@ -52,7 +55,11 @@ const ProjectDetailPage = () => {
 
             setLoading(false);
         } catch (error) {
-            console.error('Error al obtener el proyecto:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar el proyecto',
+                message: 'Ocurrió un error desconocido al intentar cargar el proyecto. Inténtalo de nuevo más tarde.'
+            });
             setLoading(false);
         }
     };
@@ -65,10 +72,18 @@ const ProjectDetailPage = () => {
         const projectUrl = window.location.href;
         navigator.clipboard.writeText(projectUrl)
             .then(() => {
-                console.log("Copiado con éxito") // Mostrar al usuario
+                addToast({
+                    type: 'success',
+                    title: 'Enlace copiado',
+                    message: 'El link a esta convocatoria se copió con éxito.'
+                });
             })
             .catch(err => {
-                console.error('Error al copiar el enlace: ', err); // Mostrar al usuario
+                addToast({
+                    type: 'error',
+                    title: 'Error al copiar el enlace',
+                    message: 'Ocurrió un error desconocido al intentar copiar el enlace. Inténtalo de nuevo más tarde.'
+                });
             });
     };
 
@@ -85,7 +100,11 @@ const ProjectDetailPage = () => {
 
         // Verificar si hay una posición seleccionada
         if (!selectedPositionId) {
-            console.log('Por favor selecciona un rol para postularte.'); //Mostrar al usuario
+            addToast({
+                type: 'info',
+                title: 'No hay ningún rol seleccionado',
+                message: 'Debes seleccionar uno de los roles disponibles para postularte.'
+            });
             return;
         }
 
@@ -98,7 +117,11 @@ const ProjectDetailPage = () => {
 
         if (!selectedPositionId || !selectedPositionProfile) {
             handleCloseModal();
-            console.log('Por favor selecciona un rol para postularte.'); //Mostrar al usuario
+            addToast({
+                type: 'info',
+                title: 'No hay ningún rol seleccionado',
+                message: 'Debes seleccionar uno de los roles disponibles para postularte.'
+            });
             return;
         }
 
@@ -115,12 +138,24 @@ const ProjectDetailPage = () => {
                 message: messageToSend
             });
 
-            console.log('¡Te has postulado con éxito!'); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Te has postulado con éxito!',
+                message: 'Puedes revisar las postulaciones que enviaste en la página de "Mis postulaciones".'
+            });
         } catch (error) {
             if (error.message === '409') {
-                console.log('Ya te has postulado para esta posición.'); //Mostrar al usuario
+                addToast({
+                    type: 'error',
+                    title: 'Ya te has postulado para esta posición',
+                    message: 'No puedes postularte dos veces a la misma posición.'
+                });
             } else {
-                console.log('Ocurrió un error al enviar la postulación. Inténtalo de nuevo más tarde.'); //Mostrar al usuario
+                addToast({
+                    type: 'error',
+                    title: 'Error al enviar la postulación',
+                    message: 'Ocurrió un error desconocido al intentar enviar la postulación. Inténtalo de nuevo más tarde.'
+                });
             }
         }
 
@@ -274,7 +309,13 @@ const ProjectDetailPage = () => {
                                                 {!isUserInTeam ? (
                                                     <Button width="fullwidth" size="large" onClick={handleOpenModal}>Postularme</Button>
                                                 ) : (
-                                                    <Button width="fullwidth" size="large" onClick={() => { console.log("Ya eres parte de este proyecto") }}>Postularme</Button>
+                                                    <Button width="fullwidth" size="large" onClick={() => {
+                                                        addToast({
+                                                            type: 'info',
+                                                            title: 'Ya eres parte de este proyecto',
+                                                            message: 'No puedes postularte a colaborar en un proyecto del que ya eres parte.'
+                                                        });
+                                                    }}>Postularme</Button>
                                                 )}
                                             </>
                                         ) : (
