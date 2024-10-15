@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
 import { updateUserPreferencesData } from "../../../services/userService";
+import { useToast } from "../../../context/ToastContext";
 import Button from "../../Button/Button";
 import OnboardingCheckboxWithDescription from '../../Inputs/OnboardingCheckboxWithDescription';
 
@@ -10,6 +11,8 @@ const EditPreferencesForm = () => {
     const [preferences, setPreferences] = useState([]);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { addToast } = useToast();
 
     const preferenceOptions = [
         {
@@ -53,9 +56,17 @@ const EditPreferencesForm = () => {
             // Actualizar el contexto con las nuevas preferencias
             updateUser({ ...authState.user, preferences });
 
-            console.log("Se guardaron los cambios con éxito.") //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Preferencias actualizadas con éxito!',
+                message: 'Se guardaron correctamente los nuevos datos.'
+            });
         } catch (error) {
-            console.log("Error del back", error) //Mostrárselo al usuario | setErrorMessage(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar las preferencias',
+                message: 'Ocurrió un error desconocido al intentar actualizar las preferencias. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setIsSubmitting(false);
         }
