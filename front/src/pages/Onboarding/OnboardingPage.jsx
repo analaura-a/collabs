@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from "../../context/AuthContext";
+import { useToast } from '../../context/ToastContext';
 import OnboardingStep from '../../components/Step/OnboardingStep';
 import OnboardingForm1 from '../../components/Form/Onboarding/OnboardingForm1';
 import OnboardingForm2 from '../../components/Form/Onboarding/OnboardingForm2';
@@ -52,20 +53,23 @@ const OnboardingPage = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
     const [isStepValid, setIsStepValid] = useState(false);
+
     const navigate = useNavigate();
+
     const { authState, completeOnboarding } = useContext(AuthContext);
+    const { addToast } = useToast();
 
     const nextStep = () => {
         if (isStepValid && currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
-            setIsStepValid(false); // Reset validation for the next step
+            setIsStepValid(false);
         }
     };
 
     const prevStep = () => {
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
-            setIsStepValid(true); // Assume previous step is valid
+            setIsStepValid(true);
         }
     };
 
@@ -92,7 +96,11 @@ const OnboardingPage = () => {
             await completeOnboarding(authState.user._id, flattenedData);
             navigate('/auth/onboarding-completado');
         } catch (error) {
-            console.error('Error al completar el onboarding:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al completar el onboarding',
+                message: 'Ocurrió un error desconocido al intentar completar el onboarding. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
