@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReview, createReview, updateReview } from '../../../services/reviewService';
 import reviewSchema from '../../../validation/reviewValidation';
+import { useToast } from '../../../context/ToastContext';
 import Textarea from '../../Inputs/Textarea';
 import Button from '../../Button/Button';
 
@@ -18,6 +19,8 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState({});
 
+    const { addToast } = useToast();
+
     const fetchReviewData = async () => {
         try {
             // Verificar si ya existe la reseña
@@ -29,7 +32,15 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
                 setReviewId(review._id);
             }
         } catch (error) {
-            console.error('Error al cargar la reseña:', error);
+            if (error.message === "Reseña no encontrada.") {
+                return
+            } else {
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar la reseña',
+                    message: 'Ocurrió un error desconocido al intentar cargar la reseña. Inténtalo de nuevo más tarde.'
+                });
+            }
         } finally {
             setLoading(false);
         }
@@ -52,11 +63,21 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
             if (isEditMode) {
                 // Editar la reseña existente
                 await updateReview(projectId, reviewId, { recommend, comment });
-                console.log('Reseña actualizada con éxito');
+
+                addToast({
+                    type: 'success',
+                    title: '¡Reseña actualizada con éxito!',
+                    message: 'Se envió correctamente la reseña.'
+                });
             } else {
                 // Crear una nueva reseña
                 await createReview(projectId, reviewedUserId, { recommend, comment });
-                console.log('Reseña creada con éxito');
+
+                addToast({
+                    type: 'success',
+                    title: '¡Reseña creada con éxito!',
+                    message: 'Se envió correctamente la reseña.'
+                });
             }
 
             navigate(`/mis-proyectos/${projectId}`);
@@ -68,7 +89,11 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
                 });
                 setErrors(yupErrors);
             } else {
-                console.error('Error al enviar la reseña:', err);
+                addToast({
+                    type: 'error',
+                    title: 'Error al enviar la reseña',
+                    message: 'Ocurrió un error desconocido al intentar enviar la reseña. Inténtalo de nuevo más tarde.'
+                });
             }
         }
     };

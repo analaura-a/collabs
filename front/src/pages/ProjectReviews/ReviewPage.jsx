@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getProjectById } from '../../services/projectService';
 import { getUserById } from '../../services/userService';
+import { useToast } from '../../context/ToastContext';
 import ReviewForm from '../../components/Form/Review/ReviewForm';
 
 const ReviewPage = () => {
@@ -12,6 +13,8 @@ const ReviewPage = () => {
     const [reviewedUser, setReviewedUser] = useState(null);
 
     const [loading, setLoading] = useState(true);
+
+    const { addToast } = useToast();
 
     const navigate = useNavigate();
 
@@ -31,8 +34,13 @@ const ReviewPage = () => {
             const userData = await getUserById(reviewedUserId);
             setReviewedUser(userData);
         } catch (error) {
-            console.error('Error al cargar los datos para reseñar:', error);
             navigate(`/mis-proyectos/${projectId}`);
+
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los datos para reseñar',
+                message: 'Ocurrió un error desconocido al intentar cargar la reseña. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setLoading(false);
         }
