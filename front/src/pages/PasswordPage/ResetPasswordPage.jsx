@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Button/Button";
 import { resetPassword } from "../../services/passwordService";
+import { useToast } from "../../context/ToastContext";
 
 const ResetPasswordPage = () => {
 
@@ -12,29 +13,39 @@ const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const { addToast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden.');
+      addToast({
+        type: 'info',
+        title: 'Las contraseñas no coinciden',
+        message: 'Revisa que ambas contraseñas sean idénticas.'
+      });
+
       return;
     }
 
-    setError('');
-
     try {
       const response = await resetPassword(token, password);
-      setMessage(response.message);
 
-      setTimeout(() => {
-        navigate('/auth/iniciar-sesion');
-      }, 3000);
+      navigate('/auth/iniciar-sesion');
+
+      addToast({
+        type: 'success',
+        title: 'Tu contraseña se restauró con éxito',
+        message: 'Inicia sesión para continuar.'
+      });
+
     } catch (error) {
-      setError(error.message);
+      addToast({
+        type: 'error',
+        title: 'Error al restablecer la contraseña',
+        message: error.message
+      });
     }
   };
 
@@ -59,8 +70,7 @@ const ResetPasswordPage = () => {
           <form onSubmit={handleSubmit} className="reset-password-form">
             <Input label="Nueva contraseña" type="password" placeholder="***************" helperText="Debe contener mínimo 8 caracteres." value={password} onChange={(e) => setPassword(e.target.value)} required />
             <Input label="Confirmar nueva contraseña" type="password" placeholder="***************" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {message && <p style={{ color: 'green' }}>{message}</p>}
+
             <Button type="submit" size="large" width="fullwidth">Guardar contraseña</Button>
           </form>
 
