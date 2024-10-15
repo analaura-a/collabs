@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import UserCard from '../../components/Cards/UserCard';
 import SearchAndFilters from '../../components/Inputs/SearchAndFilters';
 import { getUsers } from '../../services/userService';
+import { useToast } from '../../context/ToastContext';
 
 const ExploreUsersPage = () => {
 
@@ -19,6 +20,8 @@ const ExploreUsersPage = () => {
 
     const [loading, setLoading] = useState(true);
 
+    const { addToast } = useToast();
+
     const fetchUsers = async () => {
         try {
             const fetchedUsers = await getUsers();
@@ -26,7 +29,12 @@ const ExploreUsersPage = () => {
             setFilteredUsers(fetchedUsers);
             setLoading(false);
         } catch (error) {
-            console.error('Error al obtener a los usuarios: ', error);
+            addToast({
+                type: 'error',
+                title: 'Error al obtener los colaboradores',
+                message: 'Ocurrió un error desconocido al intentar obtener a los colaboradores. Inténtalo de nuevo más tarde.'
+            });
+
             setLoading(false);
         }
     };

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getOpenProjects } from '../../services/projectService';
 import { getUserById } from '../../services/userService';
+import { useToast } from '../../context/ToastContext';
 import Tabs from '../../components/Tabs/Tabs';
 import ProjectCard from '../../components/Cards/ProjectCard';
 import SearchAndFilters from '../../components/Inputs/SearchAndFilters';
@@ -23,7 +24,8 @@ const ExploreProjectsPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+
+    const { addToast } = useToast();
 
     const fetchProjects = async () => {
         try {
@@ -53,8 +55,11 @@ const ExploreProjectsPage = () => {
 
             setLoading(false);
         } catch (error) {
-            console.error('Error al cargar proyectos:', error);
-            // setError('Ocurrió un error al cargar los proyectos. Inténtalo de nuevo más tarde.');
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los proyectos',
+                message: 'Ocurrió un error desconocido al intentar cargar los proyectos. Inténtalo de nuevo más tarde.'
+            });
             setLoading(false);
         }
     };
