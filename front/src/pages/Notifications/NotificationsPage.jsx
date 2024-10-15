@@ -1,4 +1,5 @@
 import Button from "../../components/Button/Button";
+import NotificationCard from "../../components/Cards/NotificationCard";
 
 const NotificationsPage = () => {
 
@@ -13,7 +14,7 @@ const NotificationsPage = () => {
                     </div>
 
                     <div className="notifications-page__notifications">
-
+                        <NotificationCard />
                     </div>
                 </section>
 
