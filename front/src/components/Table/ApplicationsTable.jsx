@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { deleteRequest } from '../../services/requestService';
 import DropdownButton from '../Button/DropdownButton';
+import { useToast } from '../../context/ToastContext';
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
@@ -12,6 +13,8 @@ const ApplicationsTable = ({ applications, setApplications }) => {
 
     const { user } = authState;
 
+    const { addToast } = useToast();
+
     const navigate = useNavigate();
 
     const handleCancelApplication = async (applicationId) => {
@@ -20,10 +23,18 @@ const ApplicationsTable = ({ applications, setApplications }) => {
 
             setApplications(prevApplications => prevApplications.filter(app => app._id !== applicationId));
 
-            alert('Postulación cancelada exitosamente.');
+            addToast({
+                type: 'success',
+                title: '¡Postulación cancelada con éxito!',
+                message: 'La postulación fue eliminada correctamente.'
+            });
 
         } catch (error) {
-            console.log('Ocurrió un error al cancelar la postulación. Inténtalo nuevamente.', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cancelar la postulación',
+                message: error.message
+            });
         }
     };
 

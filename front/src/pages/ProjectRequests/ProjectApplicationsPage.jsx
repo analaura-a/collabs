@@ -4,6 +4,7 @@ import AuthContext from '../../context/AuthContext';
 import { getRequestsByUserId } from '../../services/requestService';
 import { getProjectById } from '../../services/projectService';
 import { getUserById } from '../../services/userService';
+import { useToast } from '../../context/ToastContext';
 import ApplicationsTable from "../../components/Table/ApplicationsTable";
 import Button from "../../components/Button/Button";
 
@@ -16,7 +17,8 @@ const ProjectApplicationsPage = () => {
 
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+
+    const { addToast } = useToast();
 
     const fetchApplications = async () => {
         try {
@@ -40,8 +42,11 @@ const ProjectApplicationsPage = () => {
             setApplications(enrichedRequests);
             setLoading(false);
         } catch (error) {
-            // setError('Ocurrió un error al cargar las postulaciones.');
-            console.log(error); //¿Hacer un if?
+            addToast({
+                type: 'error',
+                title: 'Error al cargar las postulaciones',
+                message: 'Ocurrió un error desconocido al intentar cargar las postulaciones. Inténtalo de nuevo más tarde.'
+            });
             setLoading(false);
         }
     }
@@ -54,10 +59,6 @@ const ProjectApplicationsPage = () => {
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
-
-    // if (error) {
-    //     return <div>Error: {error}</div>; //Error
-    // }
 
     return (
         <main>
