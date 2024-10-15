@@ -124,7 +124,7 @@ const AuthNavbar = () => {
                         <button className="navbar-button message" onClick={() => navigate('/mensajes')}></button>
                     </li>
                     <li className="notification-button">
-                        <button className="navbar-button notification"></button>
+                        <button className="navbar-button notification" onClick={() => navigate('/notificaciones')}></button>
                     </li>
                     <li className="profile-button" onClick={handleProfileDropdownToggle}>
                         <div className="navbar-profile-photo">
