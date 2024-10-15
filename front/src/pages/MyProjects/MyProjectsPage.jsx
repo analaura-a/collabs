@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getUserProjects } from '../../services/projectService';
+import { useToast } from '../../context/ToastContext';
 import Button from '../../components/Button/Button';
 import Tabs from '../../components/Tabs/Tabs';
 import MyProjectCard from '../../components/Cards/MyProjectCard';
@@ -18,7 +19,8 @@ const MyProjectsPage = () => {
     const [completedProjects, setCompletedProjects] = useState([]);
 
     const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+
+    const { addToast } = useToast();
 
     const fetchUserProjects = async () => {
         try {
@@ -28,7 +30,12 @@ const MyProjectsPage = () => {
             setCompletedProjects(userProjects.completedProjects);
             setLoading(false);
         } catch (error) {
-            console.error('Ocurrió un error al cargar tus proyectos.');
+            addToast({
+                type: 'error',
+                title: 'Error al cargar tus proyectos',
+                message: 'Ocurrió un error desconocido al intentar cargar los proyectos. Inténtalo de nuevo más tarde.'
+            });
+
             setLoading(false);
         }
     };
@@ -106,10 +113,6 @@ const MyProjectsPage = () => {
     if (loading) {
         return <div>Cargando...</div>; //Reemplazar por componente de carga
     }
-
-    // if (error) {
-    //     return <div>{error}</div>;
-    // }
 
     return (
         <main>
