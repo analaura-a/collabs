@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/es';
 import { markNotificationAsRead } from "../../services/notificationService";
+
+dayjs.extend(relativeTime);
+dayjs.locale('es');
 
 const NotificationCard = ({ notification, isAllRead }) => {
 
@@ -55,7 +61,7 @@ const NotificationCard = ({ notification, isAllRead }) => {
 
             <div className="notification-card__info">
                 <p className="subtitle"><span className="medium-text">Salvador Reynoso</span> te invitó a colaborar en el proyecto <span className="medium-text">Web de cuentos para niños</span>, ¡revisa su convocatoria! </p>
-                <p className="smaller-paragraph-light">hace 24 minutos</p>
+                <p className="smaller-paragraph-light">{dayjs(notification.created_at).fromNow()}</p>
             </div>
 
         </div>
