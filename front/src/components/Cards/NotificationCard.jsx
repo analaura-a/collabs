@@ -43,9 +43,11 @@ const NotificationCard = ({ notification, isAllRead }) => {
                 break;
             case 'application-accepted':
                 console.log("Tu postulación para colaborar en un proyecto fue aceptada -> Redirigir al dashboard del proyecto");
+                navigate(`/mis-proyectos/${notification.related_resource_id}`);
                 break;
             case 'application-denied':
                 console.log("Tu postulación para colaborar en un proyecto fue denegada -> Redirigir a la convocatoria del proyecto");
+                navigate(`/proyectos/${notification.related_resource_id}`);
                 break;
             case 'review-received':
                 console.log("Un usuario te dejó una reseña -> Redirigir a tu perfil");

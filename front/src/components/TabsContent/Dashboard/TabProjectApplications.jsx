@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getRequestsByProjectId } from '../../../services/requestService';
 import ProjectApplicationsTable from '../../Table/ProjectApplicationsTable';
 
-const TabProjectApplications = ({ projectId }) => {
+const TabProjectApplications = ({ project, projectId }) => {
 
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ const TabProjectApplications = ({ projectId }) => {
             </div>
 
             {applications.length > 0 ? (
-                <ProjectApplicationsTable applications={applications} projectId={projectId} reloadApplications={fetchApplications} />
+                <ProjectApplicationsTable applications={applications} project={project} projectId={projectId} reloadApplications={fetchApplications} />
             ) : (
                 <div className="my-projects-page__empty-state">
                     <div className="my-projects-page__empty-state__title">

@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import { acceptApplication, declineApplication } from '../../services/requestService';
+import { createNotification } from "../../services/notificationService";
+import AuthContext from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import MessageIcon from '../../assets/svg/message-purple.svg?react';
@@ -9,12 +12,17 @@ import CrossIcon from '../../assets/svg/x.svg?react';
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
-const ProjectApplicationsTable = ({ applications, projectId, reloadApplications }) => {
+const ProjectApplicationsTable = ({ applications, project, projectId, reloadApplications }) => {
 
     const [selectedApplication, setSelectedApplication] = useState(null);
 
     const [isAcceptModalOpen, setAcceptModalOpen] = useState(false);
     const [isDeclineModalOpen, setDeclineModalOpen] = useState(false);
+
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
+
+    const { addToast } = useToast();
 
     const handleOpenAcceptModal = (application) => {
         setSelectedApplication(application)
@@ -39,32 +47,70 @@ const ProjectApplicationsTable = ({ applications, projectId, reloadApplications 
         const { _id, user_id, applied_role } = selectedApplication;
 
         try {
+            // Aceptar postulación
             await acceptApplication(_id, projectId, user_id, applied_role);
 
-            console.log('Postulación aceptada con éxito.'); //Mostrar al usuario
+            // Enviar notificación 
+            await createNotification({
+                user_id: user_id,
+                sender_id: user._id,
+                type: 'application-accepted',
+                message: `${user.name} ${user.last_name} aceptó tu solicitud para unirte a colaborar en el proyecto ${project.name}.`,
+                related_resource_id: projectId,
+            });
+
+            // Mostrar mensaje al usuario
+            addToast({
+                type: 'success',
+                title: '¡Postulación aceptada con éxito!',
+                message: `${selectedApplication.user.name} se ha unido al equipo del proyecto correctamente.`
+            });
 
             reloadApplications();
 
             handleCloseAcceptModal();
         } catch (error) {
-            console.error('Error al aceptar la postulación:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al aceptar la postulación',
+                message: 'Ocurrió un error desconocido al intentar aceptar la postulación. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
     const handleDecline = async () => {
 
-        const { _id } = selectedApplication;
+        const { _id, user_id } = selectedApplication;
 
         try {
+            // Declinar postulación
             await declineApplication(_id, projectId);
 
-            console.log('Postulación rechazada con éxito.'); //Mostrar al usuario
+            // Enviar notificación 
+            await createNotification({
+                user_id: user_id,
+                sender_id: user._id,
+                type: 'application-denied',
+                message: `${user.name} ${user.last_name} rechazó tu solicitud para unirte a colaborar en el proyecto ${project.name}.`,
+                related_resource_id: projectId,
+            });
+
+            // Mostrar mensaje al usuario
+            addToast({
+                type: 'success',
+                title: 'Postulación rechazada con éxito',
+                message: `Se rechazó la postulación enviada por ${selectedApplication.user.name} ${selectedApplication.user.last_name}.`
+            });
 
             reloadApplications();
 
             handleCloseDeclineModal();
         } catch (error) {
-            console.error('Error al rechazar la postulación:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al rechazar la postulación',
+                message: 'Ocurrió un error desconocido al intentar rechazar la postulación. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
