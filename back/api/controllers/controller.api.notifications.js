@@ -1,5 +1,18 @@
 import * as service from "../../services/notifications.services.js"
 
+// Obtener todas las notificaciones de un usuario
+const getUserNotifications = async (req, res) => {
+
+    const { userId } = req.params;
+
+    try {
+        const notifications = await service.getUserNotifications(userId);
+        res.status(200).json(notifications);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Crear una notificación
 const createNotification = async (req, res) => {
     try {
@@ -11,5 +24,6 @@ const createNotification = async (req, res) => {
 };
 
 export {
+    getUserNotifications,
     createNotification
 }
