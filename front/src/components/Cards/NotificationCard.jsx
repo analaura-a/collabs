@@ -1,11 +1,47 @@
 import { useState } from "react";
+import { markNotificationAsRead } from "../../services/notificationService";
 
 const NotificationCard = ({ notification }) => {
 
     const [isRead, setIsRead] = useState(notification.is_read);
 
+    const handleNotificationClick = async () => {
+
+        // Marcar como leída
+        if (!isRead) {
+            try {
+                await markNotificationAsRead(notification._id);
+                setIsRead(true);
+            } catch (error) {
+                console.error("Error al marcar la notificación como leída:", error.message);
+            }
+        }
+
+        // Realizar acción dependiendo el tipo de notificación
+        switch (notification.type) {
+            case 'project-invitation':
+                console.log("Un usuario te invita a colaborar en un proyecto de él -> Redirigir a la convocatoria abierta");
+                break;
+            case 'application-received':
+                console.log("Un usuario quiere unirse a colaborar en tu proyecto -> Redirigir al dashboard del proyecto");
+                break;
+            case 'application-accepted':
+                console.log("Tu postulación para colaborar en un proyecto fue aceptada -> Redirigir al dashboard del proyecto");
+                break;
+            case 'application-denied':
+                console.log("Tu postulación para colaborar en un proyecto fue denegada -> Redirigir a la convocatoria del proyecto");
+                break;
+            case 'review-received':
+                console.log("Un usuario te dejó una reseña -> Redirigir a tu perfil");
+                break;
+            default:
+                console.log("Notificación sin tipo (sin acción definida)");
+                break;
+        }
+    };
+
     return (
-        <div className={`notification-card ${!isRead ? 'notification-unread' : ''}`}>
+        <div className={`notification-card ${!isRead ? 'notification-unread' : ''}`} onClick={handleNotificationClick}>
 
             <div className="notification-card__profile-pic">
                 <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
