@@ -1,7 +1,11 @@
+import { useState } from "react";
+
 const NotificationCard = ({ notification }) => {
 
+    const [isRead, setIsRead] = useState(notification.is_read);
+
     return (
-        <div className="notification-card notification-unread"> {/* Read/unread dinámico */}
+        <div className={`notification-card ${!isRead ? 'notification-unread' : ''}`}>
 
             <div className="notification-card__profile-pic">
                 <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
