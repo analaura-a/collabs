@@ -51,6 +51,7 @@ const NotificationCard = ({ notification, isAllRead }) => {
                 break;
             case 'review-received':
                 console.log("Un usuario te dejó una reseña -> Redirigir a tu perfil");
+                navigate(`/mi-perfil`);
                 break;
             default:
                 console.log("Notificación sin tipo (sin acción definida)");

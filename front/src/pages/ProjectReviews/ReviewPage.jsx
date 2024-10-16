@@ -66,6 +66,7 @@ const ReviewPage = () => {
 
                     {project && reviewedUser &&
                         <ReviewForm
+                            project={project}
                             projectId={project._id}
                             reviewedUserId={reviewedUser._id}
                             reviewedUserName={reviewedUser.name}

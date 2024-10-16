@@ -1,14 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getReview, createReview, updateReview } from '../../../services/reviewService';
+import { createNotification } from '../../../services/notificationService';
 import reviewSchema from '../../../validation/reviewValidation';
+import AuthContext from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import Textarea from '../../Inputs/Textarea';
 import Button from '../../Button/Button';
 
-const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
+const ReviewForm = ({ project, projectId, reviewedUserId, reviewedUserName }) => {
 
     const navigate = useNavigate();
+
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [reviewId, setReviewId] = useState(null);
@@ -67,16 +72,25 @@ const ReviewForm = ({ projectId, reviewedUserId, reviewedUserName }) => {
                 addToast({
                     type: 'success',
                     title: '¡Reseña actualizada con éxito!',
-                    message: 'Se envió correctamente la reseña.'
+                    message: `Se editó correctamente la reseña para ${reviewedUserName}.`
                 });
             } else {
                 // Crear una nueva reseña
                 await createReview(projectId, reviewedUserId, { recommend, comment });
 
+                // Enviar notificación
+                await createNotification({
+                    user_id: reviewedUserId,
+                    sender_id: user._id,
+                    type: 'review-received',
+                    message: `${user.name} ${user.last_name} te dejó una reseña sobre la experiencia colaborativa en el proyecto ${project.name}, ¡revisa tu perfil!`,
+                });
+
+                // Mostrar mensaje al usuario
                 addToast({
                     type: 'success',
                     title: '¡Reseña creada con éxito!',
-                    message: 'Se envió correctamente la reseña.'
+                    message: `Se envió correctamente la reseña para ${reviewedUserName}.`
                 });
             }
 
