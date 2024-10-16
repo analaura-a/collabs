@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { markNotificationAsRead } from "../../services/notificationService";
 
-const NotificationCard = ({ notification }) => {
+const NotificationCard = ({ notification, isAllRead }) => {
 
     const [isRead, setIsRead] = useState(notification.is_read);
+
+    useEffect(() => {
+        if (isAllRead) {
+            setIsRead(true);
+        }
+    }, [isAllRead]);
 
     const handleNotificationClick = async () => {
 
