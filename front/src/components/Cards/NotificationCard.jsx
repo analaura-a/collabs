@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/es';
@@ -8,6 +9,8 @@ dayjs.extend(relativeTime);
 dayjs.locale('es');
 
 const NotificationCard = ({ notification, isAllRead }) => {
+
+    const navigate = useNavigate();
 
     const [isRead, setIsRead] = useState(notification.is_read);
 
@@ -36,6 +39,7 @@ const NotificationCard = ({ notification, isAllRead }) => {
                 break;
             case 'application-received':
                 console.log("Un usuario quiere unirse a colaborar en tu proyecto -> Redirigir al dashboard del proyecto");
+                navigate(`/mis-proyectos/${notification.related_resource_id}`);
                 break;
             case 'application-accepted':
                 console.log("Tu postulación para colaborar en un proyecto fue aceptada -> Redirigir al dashboard del proyecto");
@@ -60,7 +64,7 @@ const NotificationCard = ({ notification, isAllRead }) => {
             </div>
 
             <div className="notification-card__info">
-                <p className="subtitle"><span className="medium-text">Salvador Reynoso</span> te invitó a colaborar en el proyecto <span className="medium-text">Web de cuentos para niños</span>, ¡revisa su convocatoria! </p>
+                <p className="subtitle">{notification.message}</p>
                 <p className="smaller-paragraph-light">{dayjs(notification.created_at).fromNow()}</p>
             </div>
 
