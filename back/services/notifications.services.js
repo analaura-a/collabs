@@ -46,8 +46,22 @@ const markAllNotificationsAsRead = async (userId) => {
     }
 };
 
+// Marcar una notificación como leída
+const markNotificationAsRead = async (notificationId) => {
+
+    try {
+        await notifications.updateOne(
+            { _id: new ObjectId(notificationId) },
+            { $set: { is_read: true } }
+        );
+    } catch (error) {
+        throw new Error('Error al marcar la notificación como leída: ' + error.message);
+    }
+};
+
 export {
     getUserNotifications,
     createNotification,
-    markAllNotificationsAsRead
+    markAllNotificationsAsRead,
+    markNotificationAsRead
 }

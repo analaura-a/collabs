@@ -12,4 +12,7 @@ route.post('/notifications', [validateTokenMiddleware], controllers.createNotifi
 // Marcar todas las notificaciones de un usuario como leídas
 route.patch('/notifications/:userId/read-all', [validateTokenMiddleware], controllers.markAllNotificationsAsRead);
 
+// Marcar una notificación como leída
+route.patch('/notifications/:notificationId/read', [validateTokenMiddleware], controllers.markNotificationAsRead);
+
 export default route;

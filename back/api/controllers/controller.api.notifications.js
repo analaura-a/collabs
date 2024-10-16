@@ -36,8 +36,22 @@ const markAllNotificationsAsRead = async (req, res) => {
     }
 };
 
+// Marcar una notificación como leída
+const markNotificationAsRead = async (req, res) => {
+
+    const { notificationId } = req.params;
+
+    try {
+        await service.markNotificationAsRead(notificationId);
+        res.status(200).json({ message: 'Notificación marcada como leída' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export {
     getUserNotifications,
     createNotification,
-    markAllNotificationsAsRead
+    markAllNotificationsAsRead,
+    markNotificationAsRead
 }
