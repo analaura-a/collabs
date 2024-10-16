@@ -8,11 +8,29 @@ const notifications = db.collection("notifications");
 const getUserNotifications = async (userId) => {
 
     try {
+        // 1. Obtener las notificaciones del usuario
         const userNotifications = await notifications
             .find({ user_id: new ObjectId(userId) })
             .sort({ created_at: -1 })
             .toArray();
-        return userNotifications;
+
+        // 2. Obtener información extra de los usuarios que dispararon las notificaciones
+        const senderIds = userNotifications.map(notification => notification.sender_id);
+
+        const sendersDetails = await db.collection('users')
+            .find({ _id: { $in: senderIds } })
+            .toArray();
+
+        // 3. Combinar y devolver datos
+        const enrichedNotifications = userNotifications.map(notification => {
+            const senderDetail = sendersDetails.find(user => user._id.equals(notification.sender_id));
+            return {
+                ...notification,
+                sender_profile_pic: senderDetail?.profile_pic,
+            };
+        });
+
+        return enrichedNotifications;
     } catch (error) {
         throw new Error('Error al obtener las notificaciones del usuario: ' + error.message);
     }

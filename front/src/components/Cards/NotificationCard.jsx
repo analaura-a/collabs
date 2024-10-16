@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/es';
 import { markNotificationAsRead } from "../../services/notificationService";
-
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 dayjs.extend(relativeTime);
 dayjs.locale('es');
 
@@ -63,7 +63,7 @@ const NotificationCard = ({ notification, isAllRead }) => {
         <div className={`notification-card ${!isRead ? 'notification-unread' : ''}`} onClick={handleNotificationClick}>
 
             <div className="notification-card__profile-pic">
-                <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
+                <img src={notification.profile_pic ? `${SERVER_BASE_URL}${notification.profile_pic}` : "../assets/jpg/no-profile-picture.jpg"} />
             </div>
 
             <div className="notification-card__info">
