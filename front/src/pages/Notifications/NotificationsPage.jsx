@@ -71,15 +71,27 @@ const NotificationsPage = () => {
                         <Button color="secondary" size="small" width="full-then-fit" onClick={handleMarkAllAsRead}>Marcar todo como leído</Button>
                     </div>
 
-                    <div className="notifications-page__notifications">
-                        {notifications.map(notification => (
-                            <NotificationCard
-                                key={notification._id}
-                                notification={notification}
-                                isAllRead={notifications.every(n => n.is_read)}
-                            />
-                        ))}
-                    </div>
+                    {notifications.length > 0 ? (
+
+                        <div className="notifications-page__notifications">
+                            {notifications.map(notification => (
+                                <NotificationCard
+                                    key={notification._id}
+                                    notification={notification}
+                                    isAllRead={notifications.every(n => n.is_read)}
+                                />
+                            ))}
+                        </div>
+
+                    ) : (
+                        <div className="applications-page__empty-state">
+                            <img src="../../assets/svg/notifications-empty-state.svg" alt="Sin postulaciones" />
+
+                            <div>
+                                <h2 className="title-32-medium placeholder-color-text">Aún no tienes notificaciones</h2>
+                            </div>
+                        </div>
+                    )}
                 </section>
 
             </div>
