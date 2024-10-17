@@ -36,6 +36,7 @@ const NotificationCard = ({ notification, isAllRead }) => {
         switch (notification.type) {
             case 'project-invitation':
                 console.log("Un usuario te invita a colaborar en un proyecto de él -> Redirigir a la convocatoria abierta");
+                navigate(`/proyectos/${notification.related_resource_id}`);
                 break;
             case 'application-received':
                 console.log("Un usuario quiere unirse a colaborar en tu proyecto -> Redirigir al dashboard del proyecto");

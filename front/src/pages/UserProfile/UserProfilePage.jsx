@@ -2,9 +2,12 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import { fetchUserProfileByUsername } from "../../services/userService";
+import { getUserProjects } from "../../services/projectService";
+import { createNotification } from "../../services/notificationService";
 import { useToast } from "../../context/ToastContext";
 import Button from "../../components/Button/Button";
 import Tabs from '../../components/Tabs/Tabs';
+import Modal from "../../components/Modal/Modal";
 import TabUserProfileContent from "../../components/TabsContent/Profile/TabUserProfileContent";
 import TabUserReviewsContent from "../../components/TabsContent/Profile/TabUserReviewsContent";
 import MessageIcon from '../../assets/svg/messages-2.svg?react';
@@ -13,14 +16,20 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 const UserProfilePage = () => {
 
     const { authState } = useContext(AuthContext);
+    const { addToast } = useToast();
 
     const { username } = useParams();
     const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
 
-    const { addToast } = useToast();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [openProjects, setOpenProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [selectedProjectId, setSelectedProjectId] = useState(null);
 
     useEffect(() => {
         if (authState.user && username === authState.user.username) {
@@ -72,6 +81,58 @@ const UserProfilePage = () => {
         return date.toLocaleDateString('es-ES', options);
     };
 
+    const handleOpenModal = async () => {
+
+        try {
+            const projects = await getUserProjects(authState.user._id);
+            setOpenProjects(projects.openProjects);
+
+            setModalOpen(true);
+        } catch (error) {
+            console.error(error);
+            setModalOpen(true);
+        }
+
+    }
+    const handleCloseModal = () => setModalOpen(false);
+
+    const handleSendInvitation = async () => {
+
+        if (!selectedProjectId) {
+            setError('Por favor, selecciona un proyecto para continuar.');
+            return;
+        }
+
+        handleCloseModal();
+        setError(null);
+
+        try {
+            // Enviar invitación
+            await createNotification({
+                user_id: user._id,
+                sender_id: authState.user._id,
+                type: 'project-invitation',
+                message: `${authState.user.name} ${authState.user.last_name} te invitó a colaborar en el proyecto ${selectedProject.name}, ¡revisa su convocatoria!`,
+                related_resource_id: selectedProjectId,
+            });
+
+            // Notificar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Invitación enviada con éxito!',
+                message: `${user.name} ${user.last_name} recibió tu invitación para el proyecto ${selectedProject.name}.`
+            });
+
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error al enviar la invitación',
+                message: 'Ocurrió un error desconocido al intentar enviar la invitación. Inténtalo de nuevo más tarde.'
+            });
+        }
+
+    }
+
     const tabs = [
         { label: 'Perfil', content: <TabUserProfileContent /> },
         { label: 'Reseñas', content: <TabUserReviewsContent /> },
@@ -79,7 +140,7 @@ const UserProfilePage = () => {
 
     return (
         <main>
-            <div className="container profile-page-container">{/* contenedor general */}
+            <div className="container profile-page-container">
 
                 <section className="profile-page__header">
 
@@ -143,7 +204,7 @@ const UserProfilePage = () => {
                                 <p className="subtitle">{user.name} aún no agregó su portfolio.</p>
                             )}
 
-                            <Button width="fullwidth" size="large" icon={<MessageIcon />}>Invitar a colaborar</Button>
+                            <Button width="fullwidth" size="large" icon={<MessageIcon />} onClick={handleOpenModal}>Invitar a colaborar</Button>
 
                         </div>
 
@@ -154,6 +215,45 @@ const UserProfilePage = () => {
                 <Tabs tabs={tabs} />
 
             </div >
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={`Invitar a colaborar a ${user.name} ${user.last_name} en un proyecto`}
+                subtitle={openProjects.length > 0 ? "Selecciona el proyecto con convocatoria abierta:" : "No eres parte de ningún proyecto con convocatoria abierta en la actualidad."}
+                actions={openProjects.length > 0 ? [
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseModal },
+                    { label: 'Enviar', color: 'primary', size: "large", width: "fullwidth", onClick: handleSendInvitation }
+                ] : [
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseModal },
+                ]}
+            >
+                {openProjects.length !== 0 &&
+                    <div className="tab-review-modal__content">
+
+                        <div className="tab-review-modal__content">
+                            {openProjects.map(project => (
+                                <div key={project._id} className={`checkbox-item ${selectedProjectId === project._id ? 'checkbox-item-checked' : ''}`} onClick={() => { setSelectedProjectId(project._id); setSelectedProject(project) }}>
+                                    <input
+                                        type="radio"
+                                        name="project"
+                                        id={project._id}
+                                        value={project._id}
+                                        checked={selectedProjectId === project._id}
+                                        onChange={(e) => e.stopPropagation()}
+                                        className="hidden-input"
+                                    />
+                                    <label htmlFor={project._id} className="subtitle bold-text">
+                                        {project.name}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+
+                        {error && <p className="error-text">{error}</p>}
+                    </div>
+                }
+            </Modal>
         </main >
     )
 }
