@@ -63,7 +63,7 @@ const NotificationCard = ({ notification, isAllRead }) => {
         <div className={`notification-card ${!isRead ? 'notification-unread' : ''}`} onClick={handleNotificationClick}>
 
             <div className="notification-card__profile-pic">
-                <img src={notification.profile_pic ? `${SERVER_BASE_URL}${notification.profile_pic}` : "../assets/jpg/no-profile-picture.jpg"} />
+                <img src={notification.sender_profile_pic ? `${SERVER_BASE_URL}${notification.sender_profile_pic}` : "../assets/jpg/no-profile-picture.jpg"} />
             </div>
 
             <div className="notification-card__info">
