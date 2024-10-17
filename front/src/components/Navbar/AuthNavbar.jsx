@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import smallLogo from '../../assets/svg/collabs-isotipo.svg';
 import largeLogo from '../../assets/svg/collabs-logo.svg';
 import AuthContext from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
+import { getUserNotifications } from "../../services/notificationService";
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const AuthNavbar = () => {
@@ -10,8 +12,12 @@ const AuthNavbar = () => {
     const { authState, logout } = useContext(AuthContext);
     const { user } = authState;
 
+    const { addToast } = useToast();
+
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isProfileDropdownOpen, setisProfileDropdownOpen] = useState(false);
+
+    const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -32,6 +38,20 @@ const AuthNavbar = () => {
 
         setIsDropdownOpen(false)
     }, [location.pathname])
+
+    useEffect(() => {
+        const checkUnreadNotifications = async () => {
+            try {
+                const notifications = await getUserNotifications(user._id);
+                const unreadNotifications = notifications.some(notification => !notification.is_read);
+                setHasUnreadNotifications(unreadNotifications);
+            } catch (error) {
+                console.error("Error al obtener las notificaciones:", error);
+            }
+        };
+
+        checkUnreadNotifications();
+    }, [location, user._id]);
 
     const handleNavbarToggle = () => {
         const navbarRef = primaryNavigation.current;
@@ -63,11 +83,20 @@ const AuthNavbar = () => {
     const handleLogout = async () => {
         try {
             await logout();
+
             navigate('/auth/iniciar-sesion');
-            //Incluir mensaje de éxito
+
+            addToast({
+                type: 'success',
+                title: 'Sesión cerrada con éxito',
+                message: '¡Te esperamos de nuevo pronto!'
+            });
         } catch (error) {
-            // setErrorMessage('Error al cerrar sesión. Inténtalo de nuevo.');  Avisarle del error al usuario
-            console.log(error)
+            addToast({
+                type: 'error',
+                title: 'Error al al cerrar sesión',
+                message: 'Ocurrió un error desconocido al intentar cerrar sesión. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
@@ -124,7 +153,7 @@ const AuthNavbar = () => {
                         <button className="navbar-button message" onClick={() => navigate('/mensajes')}></button>
                     </li>
                     <li className="notification-button">
-                        <button className="navbar-button notification"></button>
+                        <button className={`navbar-button notification ${hasUnreadNotifications ? 'has-unread-notifications' : ''}`} onClick={() => navigate('/notificaciones')}></button>
                     </li>
                     <li className="profile-button" onClick={handleProfileDropdownToggle}>
                         <div className="navbar-profile-photo">

@@ -150,6 +150,21 @@
     background-color: transparent;
 }
 
+.navbar-button.notification.has-unread-notifications {
+    position: relative;
+}
+
+.navbar-button.notification.has-unread-notifications::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary-logo);
+    border-radius: 50%;
+}
+
 .navbar-button:hover {
     background-color: var(--color-gray);
 }
@@ -235,7 +250,7 @@
         order: initial;
     }
 
-    .navbar-link-mobile{
+    .navbar-link-mobile {
         display: none;
     }
 

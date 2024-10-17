@@ -110,7 +110,7 @@ const ProjectDashboardPage = () => {
 
                 if (userRole === 'Organizador') {
                     tabs = [
-                        { label: 'Postulaciones', content: <TabProjectApplications projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> },
+                        { label: 'Postulaciones', content: <TabProjectApplications project={project} projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> },
                         { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                     ];
                 } else if (userRole === 'Colaborador') {

@@ -5,6 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import { getProjectById } from "../../services/projectService";
 import { getProjectOrganizers, checkUserInProjectTeam } from "../../services/teamService";
 import { createRequest } from "../../services/requestService";
+import { createNotification } from "../../services/notificationService";
 import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import Textarea from "../../components/Inputs/Textarea";
@@ -138,6 +139,16 @@ const ProjectDetailPage = () => {
                 message: messageToSend
             });
 
+            // Crear notificación para el organizador
+            await createNotification({
+                user_id: project.founder_id,
+                sender_id: user._id,
+                type: 'application-received',
+                message: `${user.name} ${user.last_name} quiere unirse a colaborar en tu proyecto ${project.name}, ¡revisa su postulación!`,
+                related_resource_id: project._id,
+            });
+
+            // Mostrar mensaje al usuario
             addToast({
                 type: 'success',
                 title: '¡Te has postulado con éxito!',

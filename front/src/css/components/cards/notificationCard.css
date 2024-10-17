@@ -1,0 +1,76 @@
+.notification-card {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    padding: 12px 20px 12px 12px;
+
+    background-color: var(--color-white-background);
+    border: 1px solid var(--color-gray-line);
+    border-radius: 20px;
+
+    cursor: pointer;
+    transition: all 240ms ease-out;
+}
+
+.notification-card:hover {
+    background-color: var(--color-gray);
+}
+
+.notification-unread {
+    position: relative;
+
+    background-color: var(--color-primary-light);
+    border: 1px solid var(--color-primary-logo);
+}
+
+.notification-unread:hover {
+    background-color: var(--color-primary-selected);
+}
+
+.notification-unread::after {
+    content: "•";
+    color: var(--color-primary-logo);
+    font-size: 32px;
+
+    position: absolute;
+    top: 0px;
+    right: 12px;
+}
+
+.notification-card__profile-pic {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-card__profile-pic>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
+
+.notification-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+
+@media only screen and (min-width: 1024px) {
+
+    .notification-card {
+        padding: 20px 40px 20px 20px;
+    }
+
+    .notification-unread::after {
+        right: 14px;
+    }
+
+}

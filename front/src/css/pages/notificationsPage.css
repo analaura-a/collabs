@@ -1,0 +1,42 @@
+.notifications-page {
+    padding: 56px 24px;
+}
+
+.notifications-page__container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.notifications-page__header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.notifications-page__notifications {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+
+@media only screen and (min-width: 1024px) {
+
+    .notifications-page {
+        padding: 88px 0;
+    }
+
+    .notifications-page__container {
+        max-width: 800px;
+    }
+
+    .notifications-page__header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
+    }
+
+}
