@@ -281,9 +281,15 @@ const ProjectDetailPage = () => {
                             <div className={`project-detail-page__status ${project.status === "Abierto" ? "project-detail-page__status-open" : ""}`}>
                                 <h2 className="title-24">Estado</h2>
 
-                                {/* Mostrar dinámicamente */}
                                 <div className="project-detail-page__status__cta">
-                                    <p className="subtitle bold-text status-green">Buscando colaboradores</p>
+                                    {
+                                        project.status == "Abierto" ? (
+                                            <p className="subtitle bold-text status-green">Buscando colaboradores</p>
+                                        ) : (
+                                            <p className="subtitle bold-text status-red">Convocatoria cerrada</p>
+                                        )
+                                    }
+
                                     <button className="small-button-with-icon link-icon" onClick={handleCopyLink}></button>
                                 </div>
                             </div>
