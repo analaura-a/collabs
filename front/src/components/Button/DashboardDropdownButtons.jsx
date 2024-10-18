@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { updateProjectStatus } from '../../services/projectService';
 import { leaveProject } from '../../services/teamService';
+import { declinePendingRequests } from "../../services/requestService";
 import DropdownButton from './DropdownButton';
 import Modal from '../Modal/Modal';
 
@@ -40,6 +41,8 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
             onStatusChange('En curso');
 
             handleCloseStartProjectModal();
+
+            await declinePendingRequests(project._id);
         } catch (error) {
             console.error("Error al iniciar el proyecto:", error);
 
