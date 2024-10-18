@@ -128,6 +128,25 @@ const declineProjectRequest = async (req, res) => {
     }
 };
 
+// Declinar todas las postulaciones pendientes de un proyecto
+const declinePendingProjectRequests = async (req, res) => {
+
+    const { projectId } = req.params;
+
+    try {
+        const result = await service.declineAllPendingRequests(projectId);
+
+        res.status(200).json({
+            message: `Se han declinado las ${result.modifiedCount} postulaciones pendientes del proyecto.`
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al declinar las postulaciones pendientes.',
+            error: error.message
+        });
+    }
+};
+
 //Eliminar una postulación
 const deleteRequest = async (req, res) => {
 
@@ -160,5 +179,6 @@ export {
     createRequest,
     acceptProjectRequest,
     declineProjectRequest,
-    deleteRequest
+    deleteRequest,
+    declinePendingProjectRequests
 }

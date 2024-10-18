@@ -23,6 +23,9 @@ route.patch('/project_requests/:id/accept', [validateTokenMiddleware, verifyOrga
 //Declinar una postulación
 route.patch('/project_requests/:id/decline', [validateTokenMiddleware, verifyOrganizerRole], controllers.declineProjectRequest);
 
+// Declinar todas las postulaciones pendientes de un proyecto
+route.patch('/projects/:projectId/decline-pending-requests', [validateTokenMiddleware, verifyOrganizerRole], controllers.declinePendingProjectRequests);
+
 //Eliminar una postulación
 route.delete('/project_requests/:id', [verifyUserOwnership], controllers.deleteRequest);
 
