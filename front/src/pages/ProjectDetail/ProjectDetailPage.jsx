@@ -193,7 +193,7 @@ const ProjectDetailPage = () => {
                                 <div className="project-detail-page__about-column__dates">
                                     <div>
                                         <img src="../assets/svg/clock.svg" alt="Reloj" />
-                                        <p className="subtitle-18">Publicado el 19/10/2023</p>
+                                        <p className="subtitle-18">Publicado el {new Date(project.created_at).toLocaleDateString('en-GB')}</p>
                                     </div>
 
                                     <div>
