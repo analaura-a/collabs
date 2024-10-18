@@ -128,6 +128,30 @@ export const declineApplication = async (requestId, projectId) => {
     return await response.json();
 };
 
+export const declinePendingRequests = async (projectId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación.');
+    }
+
+    const response = await fetch(`${API_URL}/projects/${projectId}/decline-pending-requests`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar declinar las postulaciones pendientes.');
+    }
+
+    return await response.json();
+};
+
 export const deleteRequest = async (requestId, userId) => {
 
     try {

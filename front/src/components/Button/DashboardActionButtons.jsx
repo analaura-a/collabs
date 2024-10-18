@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { updateProjectStatus } from '../../services/projectService';
 import { leaveProject } from '../../services/teamService';
+import { declinePendingRequests } from "../../services/requestService";
 import Button from "./Button";
 import Modal from '../Modal/Modal';
 
@@ -40,6 +41,8 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
             onStatusChange('En curso');
 
             handleCloseStartProjectModal();
+
+            await declinePendingRequests(project._id);
         } catch (error) {
             console.error("Error al iniciar el proyecto:", error);
 
