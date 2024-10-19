@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchUserProfileByUsername } from "../../../services/userService";
 import { getUserReviews } from '../../../services/reviewService';
 import { getSharedCompletedProjects } from "../../../services/teamService";
+import { useToast } from "../../../context/ToastContext";
 import Modal from "../../Modal/Modal";
 import ReviewCard from '../../Cards/ReviewCard';
 import Button from "../../Button/Button";
@@ -22,6 +23,8 @@ const TabUserReviewsContent = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const { addToast } = useToast();
+
     const [modalOpen, setModalOpen] = useState(false);
 
     const loadUserProfile = async () => {
@@ -32,7 +35,11 @@ const TabUserReviewsContent = () => {
             const userReviews = await getUserReviews(userData._id);
             setReviews(userReviews);
         } catch (error) {
-            console.error('Error al obtener las reseñas del usuario:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar las reseñas',
+                message: 'Ocurrió un error desconocido al intentar obtener las reseñas del usuario. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setLoading(false);
         }
@@ -43,7 +50,11 @@ const TabUserReviewsContent = () => {
             const projects = await getSharedCompletedProjects(user._id);
             setSharedProjects(projects);
         } catch (error) {
-            console.error('Error al obtener los proyectos compartidos:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los proyectos compartidos',
+                message: 'Ocurrió un error desconocido al intentar obtener los proyectos compartidos con el usuario. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 

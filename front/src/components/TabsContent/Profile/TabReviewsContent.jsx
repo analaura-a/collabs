@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from '../../../context/AuthContext';
 import { getUserReviews } from '../../../services/reviewService';
+import { useToast } from '../../../context/ToastContext';
 import ReviewCard from '../../Cards/ReviewCard';
 
 const TabReviewsContent = () => {
@@ -11,12 +12,18 @@ const TabReviewsContent = () => {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const { addToast } = useToast();
+
     const fetchUserReviews = async () => {
         try {
             const userReviews = await getUserReviews(user._id);
             setReviews(userReviews);
         } catch (error) {
-            console.error('Error al obtener las reseñas:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar las reseñas',
+                message: 'Ocurrió un error desconocido al intentar obtener las reseñas del usuario. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setLoading(false);
         }
