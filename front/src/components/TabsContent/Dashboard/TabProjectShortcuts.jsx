@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { getProjectShortcuts } from '../../../services/shortcutService';
 import AddShortcutButton from '../../Button/AddShortcutButton';
 import ShortcutCard from '../../Cards/ShortcutCard';
+import { useToast } from '../../../context/ToastContext';
 
 const TabProjectShortcuts = ({ project }) => {
 
     const [shortcuts, setShortcuts] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const { addToast } = useToast();
 
     const fetchShortcuts = async () => {
         try {
@@ -14,7 +17,11 @@ const TabProjectShortcuts = ({ project }) => {
             setShortcuts(data);
             setLoading(false);
         } catch (error) {
-            console.error('Error al cargar los atajos:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los atajos rápidos',
+                message: 'Ocurrió un error desconocido al intentar obtener los atajos rápidos. Inténtalo de nuevo más tarde.'
+            });
             setShortcuts([]);
             setLoading(false);
         }
