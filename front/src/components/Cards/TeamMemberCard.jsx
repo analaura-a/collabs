@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { removeUserFromProject } from '../../services/teamService';
+import { useToast } from '../../context/ToastContext';
 import DropdownButton from '../Button/DropdownButton';
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal'
@@ -15,6 +16,8 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
 
     const navigate = useNavigate();
 
+    const { addToast } = useToast();
+
     const { authState } = useContext(AuthContext);
     const loggedInUser = authState.user;
     const isCurrentUser = loggedInUser?.username === username;
@@ -27,11 +30,19 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
         try {
             await removeUserFromProject(projectId, member.user_id);
 
-            console.log(`Se eliminó a ${name} del proyecto con éxito.`); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: `Se eliminó a ${name} del proyecto con éxito.`,
+                message: 'El equipo del proyecto fue actualizado correctamente.'
+            });
 
             onMemberRemoved();
         } catch (error) {
-            console.error('Error al remover al miembro del proyecto:', error);
+            addToast({
+                type: 'error',
+                title: `Error al eliminar a ${name} del proyecto`,
+                message: 'Ocurrió un error desconocido. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
