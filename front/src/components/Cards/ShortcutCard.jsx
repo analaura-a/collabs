@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { updateProjectShortcut, deleteProjectShortcut } from "../../services/shortcutService";
 import shortcutValidationSchema from "../../validation/projectShortcutValidation";
+import { useToast } from "../../context/ToastContext";
 import DropdownButton from "../Button/DropdownButton";
 import Modal from "../Modal/Modal";
 import Input from "../Inputs/Input";
@@ -8,6 +9,8 @@ import Input from "../Inputs/Input";
 const ShortcutCard = ({ shortcut, project, reloadShortcuts }) => {
 
     const { _id, name, url } = shortcut;
+
+    const { addToast } = useToast();
 
     const formattedUrl = url.replace(/^https?:\/\/(www\.)?/, '');
 
@@ -46,13 +49,21 @@ const ShortcutCard = ({ shortcut, project, reloadShortcuts }) => {
         try {
             await updateProjectShortcut(_id, project._id, updatedName, updatedUrl);
 
-            console.log('Atajo actualizado con éxito'); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Atajo actualizado con éxito!',
+                message: 'Todos los miembros del equipo pueden acceder a la última versión.'
+            });
 
             reloadShortcuts();
 
             handleCloseEditModal();
         } catch (error) {
-            console.error('Error al actualizar el atajo:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al actualizar el atajo',
+                message: 'Ocurrió un error desconocido al intentar actualizar el atajo. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
@@ -65,13 +76,21 @@ const ShortcutCard = ({ shortcut, project, reloadShortcuts }) => {
         try {
             await deleteProjectShortcut(_id, project._id);
 
-            console.log('Atajo eliminado con éxito'); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: 'Atajo eliminado',
+                message: 'Se eliminó del proyecto correctamente.'
+            });
 
             reloadShortcuts();
 
             handleCloseDeleteModal();
         } catch (error) {
-            console.error('Error al eliminar el atajo:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al eliminar el atajo',
+                message: 'Ocurrió un error desconocido al intentar eliminar el atajo. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
