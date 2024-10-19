@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { updateProjectStatus } from '../../services/projectService';
 import { leaveProject } from '../../services/teamService';
 import { declinePendingRequests } from "../../services/requestService";
+import { useToast } from "../../context/ToastContext";
 import Button from "./Button";
 import Modal from '../Modal/Modal';
 
 const DashboardActionButtons = ({ project, projectType, projectStatus, user, userRole, onStatusChange }) => {
 
     const navigate = useNavigate();
+
+    const { addToast } = useToast();
 
     /* Modal */
     const [isLeaveModalOpen, setLeaveModalOpen] = useState(false);
@@ -34,9 +37,13 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
         try {
-            const updatedProject = await updateProjectStatus(project._id, 'En curso');
+            await updateProjectStatus(project._id, 'En curso');
 
-            console.log("Proyecto iniciado con éxito:", updatedProject); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Proyecto iniciado con éxito!',
+                message: 'El proyecto ahora está "en curso".'
+            });
 
             onStatusChange('En curso');
 
@@ -44,7 +51,11 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
             await declinePendingRequests(project._id);
         } catch (error) {
-            console.error("Error al iniciar el proyecto:", error);
+            addToast({
+                type: 'error',
+                title: 'Error al iniciar el proyecto',
+                message: 'Ocurrió un error desconocido al intentar cambiar el estado del proyecto. Inténtalo de nuevo más tarde.'
+            });
 
             handleCloseStartProjectModal();
         }
@@ -52,15 +63,23 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
     const handleReopenProject = async () => {
         try {
-            const updatedProject = await updateProjectStatus(project._id, 'Abierto');
+            await updateProjectStatus(project._id, 'Abierto');
 
-            console.log("Proyecto reabierto con éxito:", updatedProject); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Proyecto reabierto con éxito!',
+                message: 'La convocatoria del proyecto ahora está abierta nuevamente.'
+            });
 
             onStatusChange('Abierto');
 
             handleCloseReopenProjectModal();
         } catch (error) {
-            console.error("Error al reabrir el proyecto:", error);
+            addToast({
+                type: 'error',
+                title: 'Error al reabrir el proyecto',
+                message: 'Ocurrió un error desconocido al intentar cambiar el estado del proyecto. Inténtalo de nuevo más tarde.'
+            });
 
             handleCloseReopenProjectModal();
         }
@@ -68,15 +87,23 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
     const handleFinishProject = async () => {
         try {
-            const updatedProject = await updateProjectStatus(project._id, 'Finalizado');
+            await updateProjectStatus(project._id, 'Finalizado');
 
-            console.log("Proyecto finalizado con éxito:", updatedProject); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Proyecto finalizado con éxito!',
+                message: 'El proyecto ahora está archivado.'
+            });
 
             onStatusChange('Finalizado');
 
             handleCloseFinishProjectModal();
         } catch (error) {
-            console.error("Error al finalizar el proyecto:", error);
+            addToast({
+                type: 'error',
+                title: 'Error al finalizar el proyecto',
+                message: 'Ocurrió un error desconocido al intentar cambiar el estado del proyecto. Inténtalo de nuevo más tarde.'
+            });
 
             handleCloseFinishProjectModal();
         }
@@ -84,15 +111,23 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
 
     const handleUnarchiveProject = async () => {
         try {
-            const updatedProject = await updateProjectStatus(project._id, 'En curso');
+            await updateProjectStatus(project._id, 'En curso');
 
-            console.log("Proyecto reabierto con éxito:", updatedProject); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Proyecto reabierto con éxito!',
+                message: 'El proyecto ahora está "en curso" nuevamente.'
+            });
 
             onStatusChange('En curso');
 
             handleCloseUnarchiveProjectModal();
         } catch (error) {
-            console.error("Error al reabrir el proyecto:", error);
+            addToast({
+                type: 'error',
+                title: 'Error al reabrir el proyecto',
+                message: 'Ocurrió un error desconocido al intentar cambiar el estado del proyecto. Inténtalo de nuevo más tarde.'
+            });
 
             handleCloseUnarchiveProjectModal();
         }
@@ -102,11 +137,19 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
         try {
             await leaveProject(project._id, user._id);
 
-            console.log('Has abandonado el proyecto con éxito.'); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: 'Has abandonado el proyecto con éxito',
+                message: 'Ya no perteneces al equipo del proyecto ni puedes colaborar en él.'
+            });
 
             navigate(`/mis-proyectos`);
         } catch (error) {
-            console.error('Error al abandonar el proyecto:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al abandonar el proyecto',
+                message: 'Ocurrió un error desconocido al intentar abandonar el equipo del proyecto. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
