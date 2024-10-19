@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getRequestsByProjectId } from '../../../services/requestService';
 import ProjectApplicationsTable from '../../Table/ProjectApplicationsTable';
+import { useToast } from '../../../context/ToastContext';
 
 const TabProjectApplications = ({ project, projectId }) => {
+
+    const { addToast } = useToast();
 
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,7 +16,12 @@ const TabProjectApplications = ({ project, projectId }) => {
             setApplications(projectApplications);
             setLoading(false);
         } catch (error) {
-            console.error(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar las postulaciones',
+                message: 'Ocurrió un error desconocido al intentar cargar las postulaciones. Inténtalo de nuevo más tarde.'
+            });
+
             setApplications([]);
             setLoading(false);
         }

@@ -47,7 +47,6 @@ const GuestNavbar = () => {
 
             const newVisibility = currentVisibility === 'true' ? 'false' : 'true';
             navbarRef.setAttribute('data-visible', newVisibility);
-            console.log('(Visibility) Después del click:', newVisibility);
         }
 
         if (navToggleRef) {
@@ -55,7 +54,6 @@ const GuestNavbar = () => {
 
             const newValue = isExpanded === 'true' ? 'false' : 'true';
             navToggleRef.setAttribute('aria-expanded', newValue);
-            console.log('(Expanded) Después del click:', newValue);
         }
     };
 
