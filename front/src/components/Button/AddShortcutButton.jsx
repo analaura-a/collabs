@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { createProjectShortcut } from "../../services/shortcutService";
 import shortcutValidationSchema from "../../validation/projectShortcutValidation";
+import { useToast } from "../../context/ToastContext";
 import Button from "./Button";
 import Modal from "../Modal/Modal";
 import Input from "../Inputs/Input";
 import AddIcon from '../../assets/svg/add.svg?react';
 
 const AddShortcutButton = ({ project, reloadShortcuts }) => {
+
+    const { addToast } = useToast();
 
     const [newShortcutName, setNewShortcutName] = useState('');
     const [newShortcutUrl, setNewShortcutUrl] = useState('');
@@ -42,13 +45,21 @@ const AddShortcutButton = ({ project, reloadShortcuts }) => {
         try {
             await createProjectShortcut(project._id, newShortcutName, newShortcutUrl);
 
-            console.log('Atajo creado con éxito'); //Mostrar al usuario
+            addToast({
+                type: 'success',
+                title: '¡Atajo creado con éxito!',
+                message: 'Todos los miembros del equipo pueden acceder a él.'
+            });
 
             reloadShortcuts();
 
             setAddModalOpen(false);
         } catch (error) {
-            console.error('Error al crear el atajo:', error);
+            addToast({
+                type: 'error',
+                title: 'Error al crear el atajo',
+                message: 'Ocurrió un error desconocido al intentar crear el atajo. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
