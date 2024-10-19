@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { fetchSkills, addSkill } from '../../services/skillService';
+import { useToast } from '../../context/ToastContext';
 
 const SkillSearchWithLabel = ({ label, name, helperText, required, selectedSkills, onSkillAdd, onSkillRemove }) => {
+
+    const { addToast } = useToast();
 
     const [skills, setSkills] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,8 +16,11 @@ const SkillSearchWithLabel = ({ label, name, helperText, required, selectedSkill
             const fetchedSkills = await fetchSkills();
             setSkills(fetchedSkills);
         } catch (error) {
-            console.error('Error al cargar las skills:', error);
-            //Agregar feedback al usuario
+            addToast({
+                type: 'error',
+                title: 'Error al cargar las skills disponibles',
+                message: 'Ocurrió un error desconocido al intentar cargar las skills. Inténtalo de nuevo más tarde.'
+            });
         }
     };
 
@@ -48,7 +54,11 @@ const SkillSearchWithLabel = ({ label, name, helperText, required, selectedSkill
                 await addSkill(normalizedSkill);
                 setSkills([...skills, normalizedSkill]);
             } catch (error) {
-                console.error('Error al agregar la skill a la database:', error);
+                addToast({
+                    type: 'error',
+                    title: 'Error al agregar la skill',
+                    message: 'Ocurrió un error desconocido al intentar agregar la skill. Inténtalo de nuevo más tarde.'
+                });
             }
         }
 
