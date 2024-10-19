@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../../context/AuthContext';
 import { getUserCollaborationStats } from '../../../services/userService.jsx';
+import { useToast } from '../../../context/ToastContext.jsx';
 import ContactInfo from "./ContactInfo.jsx"
 
 const TabProfileContent = () => {
@@ -11,12 +12,18 @@ const TabProfileContent = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const { addToast } = useToast();
+
     const fetchUserCollaborationStats = async () => {
         try {
             const statsData = await getUserCollaborationStats(user._id);
             setStats(statsData);
         } catch (error) {
-            console.error(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar las estadísticas del perfil',
+                message: 'Ocurrió un error desconocido al intentar obtener las estadísticas. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setLoading(false);
         }

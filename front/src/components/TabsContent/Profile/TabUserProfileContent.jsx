@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchUserProfileByUsername, getUserCollaborationStats } from "../../../services/userService";
+import { useToast } from "../../../context/ToastContext.jsx";
 import ContactInfo from "./ContactInfo.jsx"
 
 const TabUserProfileContent = () => {
@@ -12,6 +13,8 @@ const TabUserProfileContent = () => {
 
     const [loading, setLoading] = useState(true);
 
+    const { addToast } = useToast();
+
     const loadUserProfile = async () => {
         try {
             const userData = await fetchUserProfileByUsername(username);
@@ -20,7 +23,11 @@ const TabUserProfileContent = () => {
             const statsData = await getUserCollaborationStats(userData._id);
             setStats(statsData);
         } catch (error) {
-            console.error(error.message);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar la información del perfil',
+                message: 'Ocurrió un error desconocido al intentar obtener los datos del usuario. Inténtalo de nuevo más tarde.'
+            });
         } finally {
             setLoading(false);
         }
