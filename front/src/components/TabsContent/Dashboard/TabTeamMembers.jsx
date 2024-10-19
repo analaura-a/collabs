@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getActiveProjectMembers, getAllProjectMembers } from '../../../services/teamService';
 import TeamMemberCard from '../../Cards/TeamMemberCard';
+import { useToast } from '../../../context/ToastContext';
 
 const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => {
 
@@ -8,6 +9,8 @@ const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => 
     const [allTeamMembers, setAllTeamMembers] = useState([]);
 
     const [loading, setLoading] = useState(true);
+
+    const { addToast } = useToast();
 
     const fetchTeamMembers = async () => {
         try {
@@ -19,7 +22,11 @@ const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => 
 
             setLoading(false);
         } catch (err) {
-            console.error('Error al obtener los miembros activos:', err);
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los miembros del equipo',
+                message: 'Ocurrió un error desconocido al intentar obtener los miembros del equipo. Inténtalo de nuevo más tarde.'
+            });
             setLoading(false);
         }
     };
