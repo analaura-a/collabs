@@ -49,5 +49,6 @@
 @import './components/cards/reviewCard.css';
 @import './components/toastNotification.css';
 @import './components/cards/notificationCard.css';
+@import './components/loader.css';
 
 @import './misc/faded-pattern.css';
