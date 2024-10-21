@@ -4,6 +4,7 @@ import { getProjectById, updateProjectOpenPositions } from "../../services/proje
 import { useToast } from "../../context/ToastContext";
 import CreateProjectForm3 from "../../components/Form/CreateProject/Personal/CreateProjectForm3";
 import Button from "../../components/Button/Button";
+import Loader from "../../components/Loader/Loader";
 
 const EditOpenPositionsPage = () => {
 
@@ -110,8 +111,9 @@ const EditOpenPositionsPage = () => {
         }
     };
 
-
-    if (loading) return <div>Cargando...</div>; // Componente de carga
+    if (loading) {
+        return <Loader message="Cargando proyecto..." />;
+    }
 
     return (
         <main>
