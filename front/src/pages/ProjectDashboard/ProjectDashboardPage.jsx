@@ -10,6 +10,7 @@ import Tabs from "../../components/Tabs/Tabs";
 import TabTeamMembers from '../../components/TabsContent/Dashboard/TabTeamMembers';
 import TabProjectApplications from '../../components/TabsContent/Dashboard/TabProjectApplications';
 import TabProjectShortcuts from '../../components/TabsContent/Dashboard/TabProjectShortcuts';
+import Loader from '../../components/Loader/Loader';
 
 const ProjectDashboardPage = () => {
 
@@ -157,7 +158,7 @@ const ProjectDashboardPage = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader />;
     }
 
     return (
