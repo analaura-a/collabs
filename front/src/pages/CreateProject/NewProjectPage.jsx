@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import OnboardingCheckboxWithDescription from "../../components/Inputs/OnboardingCheckboxWithDescription";
+import { useToast } from "../../context/ToastContext";
 import Button from "../../components/Button/Button";
 
 const NewProjectPage = () => {
@@ -8,6 +9,8 @@ const NewProjectPage = () => {
     const [projectType, setProjectType] = useState(null);
 
     const navigate = useNavigate();
+
+    const { addToast } = useToast();
 
     const typeOptions = [
         {
@@ -32,7 +35,11 @@ const NewProjectPage = () => {
         } else if (projectType === "Open-source") {
             navigate('/nueva-convocatoria/open-source');
         } else {
-            console.log("Selecciona un tipo para continuar") //Mostrárselo al usuario
+            addToast({
+                type: 'info',
+                title: 'Selecciona un tipo para continuar',
+                message: 'Es necesario seleccionar el tipo de proyecto.'
+            });
         }
     }
 
