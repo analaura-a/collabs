@@ -4,6 +4,7 @@ import AuthContext from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 import Button from "../../components/Button/Button";
 import NotificationCard from "../../components/Cards/NotificationCard";
+import Loader from "../../components/Loader/Loader";
 
 const NotificationsPage = () => {
 
@@ -58,9 +59,8 @@ const NotificationsPage = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader />;
     }
-
     return (
         <main>
             <div className="container notifications-page">
