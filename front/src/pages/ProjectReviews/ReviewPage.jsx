@@ -4,6 +4,7 @@ import { getProjectById } from '../../services/projectService';
 import { getUserById } from '../../services/userService';
 import { useToast } from '../../context/ToastContext';
 import ReviewForm from '../../components/Form/Review/ReviewForm';
+import Loader from '../../components/Loader/Loader';
 
 const ReviewPage = () => {
 
@@ -50,7 +51,9 @@ const ReviewPage = () => {
         fetchData();
     }, [projectId, reviewedUserId, navigate]);
 
-    if (loading) return <div>Cargando...</div>;  // Componente de carga
+    if (loading) {
+        return <Loader />;
+    }
 
     return (
         <main>
