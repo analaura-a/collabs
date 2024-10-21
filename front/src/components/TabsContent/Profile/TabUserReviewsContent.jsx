@@ -8,6 +8,7 @@ import Modal from "../../Modal/Modal";
 import ReviewCard from '../../Cards/ReviewCard';
 import Button from "../../Button/Button";
 import InputReviewIcon from '../../../assets/svg/directbox-send.svg?react';
+import Loader from "../../Loader/Loader";
 
 const TabUserReviewsContent = () => {
 
@@ -85,7 +86,7 @@ const TabUserReviewsContent = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader size="small" />;
     }
 
     return (
