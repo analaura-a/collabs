@@ -4,6 +4,7 @@ import UserCard from '../../components/Cards/UserCard';
 import SearchAndFilters from '../../components/Inputs/SearchAndFilters';
 import { getUsers } from '../../services/userService';
 import { useToast } from '../../context/ToastContext';
+import Loader from '../../components/Loader/Loader';
 
 const ExploreUsersPage = () => {
 
@@ -92,7 +93,7 @@ const ExploreUsersPage = () => {
         filterAndSearchUsers(searchTerm, newFilters);
     };
 
-    if (loading) return <div>Cargando colaboradores...</div>; //Componente de carga
+    if (loading) return <Loader message="Cargando colaboradores..." />;
 
     return (
         <main>

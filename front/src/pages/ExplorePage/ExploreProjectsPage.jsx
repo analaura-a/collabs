@@ -6,6 +6,7 @@ import { useToast } from '../../context/ToastContext';
 import Tabs from '../../components/Tabs/Tabs';
 import ProjectCard from '../../components/Cards/ProjectCard';
 import SearchAndFilters from '../../components/Inputs/SearchAndFilters';
+import Loader from '../../components/Loader/Loader';
 
 const ExploreProjectsPage = () => {
 
@@ -166,9 +167,7 @@ const ExploreProjectsPage = () => {
         }
     ];
 
-    if (loading) return <div>Cargando proyectos...</div>; //Componente de carga
-
-    // if (error) return <div>{error}</div>; 
+    if (loading) return <Loader message="Cargando proyectos..." />;
 
     return (
         <main>
