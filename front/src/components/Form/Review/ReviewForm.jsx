@@ -7,6 +7,7 @@ import AuthContext from '../../../context/AuthContext';
 import { useToast } from '../../../context/ToastContext';
 import Textarea from '../../Inputs/Textarea';
 import Button from '../../Button/Button';
+import Loader from '../../Loader/Loader';
 
 const ReviewForm = ({ project, projectId, reviewedUserId, reviewedUserName }) => {
 
@@ -112,7 +113,9 @@ const ReviewForm = ({ project, projectId, reviewedUserId, reviewedUserName }) =>
         }
     };
 
-    if (loading) return <div>Cargando...</div>; // Componente de carga
+    if (loading) {
+        return <Loader size="small" message=""/>;
+    }
 
     return (
         <form className="review-page__form" onSubmit={handleSubmit} noValidate>
