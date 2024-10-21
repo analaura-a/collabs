@@ -3,6 +3,7 @@ import { getProjectShortcuts } from '../../../services/shortcutService';
 import AddShortcutButton from '../../Button/AddShortcutButton';
 import ShortcutCard from '../../Cards/ShortcutCard';
 import { useToast } from '../../../context/ToastContext';
+import Loader from '../../Loader/Loader';
 
 const TabProjectShortcuts = ({ project }) => {
 
@@ -34,7 +35,7 @@ const TabProjectShortcuts = ({ project }) => {
     }, [project._id]);
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader size="small" />;
     }
 
     return (
