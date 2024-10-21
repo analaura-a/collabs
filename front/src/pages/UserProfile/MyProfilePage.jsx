@@ -6,6 +6,7 @@ import Tabs from '../../components/Tabs/Tabs';
 import TabProfileContent from '../../components/TabsContent/Profile/TabProfileContent';
 import TabReviewsContent from '../../components/TabsContent/Profile/TabReviewsContent';
 import EditIcon from '../../assets/svg/edit.svg?react';
+import Loader from '../../components/Loader/Loader';
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const MyProfilePage = () => {
@@ -16,7 +17,7 @@ const MyProfilePage = () => {
     const navigate = useNavigate();
 
     if (!user) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader />;
     }
 
     const formatRoles = (roles) => {

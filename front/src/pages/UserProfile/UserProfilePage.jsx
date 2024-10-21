@@ -11,6 +11,7 @@ import Modal from "../../components/Modal/Modal";
 import TabUserProfileContent from "../../components/TabsContent/Profile/TabUserProfileContent";
 import TabUserReviewsContent from "../../components/TabsContent/Profile/TabUserReviewsContent";
 import MessageIcon from '../../assets/svg/messages-2.svg?react';
+import Loader from "../../components/Loader/Loader";
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const UserProfilePage = () => {
@@ -63,7 +64,7 @@ const UserProfilePage = () => {
     }, [loading, user, navigate]);
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader message="Cargando perfil..." />;
     }
 
     const formatRoles = (roles) => {
