@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import Loader from '../Loader/Loader';
 
 const AuthRoute = ({ children }) => {
 
@@ -8,7 +9,7 @@ const AuthRoute = ({ children }) => {
     const { token, user, loading } = authState;
 
     if (loading) {
-        return <div>Cargando...</div>; //Cambiar a componente de carga
+        return <Loader />;
     }
 
     if (token && user) {
