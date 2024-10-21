@@ -6,6 +6,7 @@ import { useToast } from '../../context/ToastContext';
 import Button from '../../components/Button/Button';
 import Tabs from '../../components/Tabs/Tabs';
 import MyProjectCard from '../../components/Cards/MyProjectCard';
+import Loader from '../../components/Loader/Loader';
 
 const MyProjectsPage = () => {
 
@@ -111,7 +112,7 @@ const MyProjectsPage = () => {
     ];
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader />;
     }
 
     return (
