@@ -3,6 +3,7 @@ import AuthContext from '../../../context/AuthContext';
 import { getUserCollaborationStats } from '../../../services/userService.jsx';
 import { useToast } from '../../../context/ToastContext.jsx';
 import ContactInfo from "./ContactInfo.jsx"
+import Loader from '../../Loader/Loader.jsx';
 
 const TabProfileContent = () => {
 
@@ -33,7 +34,7 @@ const TabProfileContent = () => {
         fetchUserCollaborationStats();
     }, [user._id]);
 
-    if (loading) return <div>Cargando...</div>; //Reemplazar por componente de carga
+    if (loading) return <Loader size="small" />;
 
     return (
         <section className="tab-profile-container">
