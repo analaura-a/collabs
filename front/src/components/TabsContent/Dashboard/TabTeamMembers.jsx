@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getActiveProjectMembers, getAllProjectMembers } from '../../../services/teamService';
 import TeamMemberCard from '../../Cards/TeamMemberCard';
 import { useToast } from '../../../context/ToastContext';
+import Loader from '../../Loader/Loader';
 
 const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => {
 
@@ -36,7 +37,7 @@ const TabTeamMembers = ({ projectId, projectType, projectStatus, userRole }) => 
     }, [projectId]);
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader size="small" />;
     }
 
     return (
