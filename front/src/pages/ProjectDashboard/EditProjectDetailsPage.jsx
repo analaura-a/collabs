@@ -8,6 +8,7 @@ import Textarea from "../../components/Inputs/Textarea";
 import Select from "../../components/Inputs/Select";
 import FileInput from "../../components/Inputs/FileInput";
 import Button from "../../components/Button/Button";
+import Loader from "../../components/Loader/Loader";
 
 const availabilities = [
     { value: 'De 1 a 2 horas / día', label: 'De 1 a 2 horas / día' },
@@ -134,7 +135,9 @@ const EditProjectDetailsPage = () => {
         }
     };
 
-    if (loading) return <div>Cargando...</div>; // Componente de carga
+    if (loading) {
+        return <Loader message="Cargando proyecto..." />;
+    }
 
     return (
         <main>
