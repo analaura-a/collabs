@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Loader from '../Loader/Loader';
 
 const Tabs = ({ tabs }) => {
 
@@ -16,7 +17,7 @@ const Tabs = ({ tabs }) => {
 
     // Verificar si el array de tabs tiene contenido antes de intentar renderizarlos
     if (!tabs || tabs.length === 0) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader size="small" />;
     }
 
     return (
