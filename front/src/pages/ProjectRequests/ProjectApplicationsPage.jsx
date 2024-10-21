@@ -7,6 +7,7 @@ import { getUserById } from '../../services/userService';
 import { useToast } from '../../context/ToastContext';
 import ApplicationsTable from "../../components/Table/ApplicationsTable";
 import Button from "../../components/Button/Button";
+import Loader from '../../components/Loader/Loader';
 
 const ProjectApplicationsPage = () => {
 
@@ -55,9 +56,8 @@ const ProjectApplicationsPage = () => {
         fetchApplications();
     }, [user]);
 
-
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader />;
     }
 
     return (
