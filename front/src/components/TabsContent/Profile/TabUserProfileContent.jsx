@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchUserProfileByUsername, getUserCollaborationStats } from "../../../services/userService";
 import { useToast } from "../../../context/ToastContext.jsx";
 import ContactInfo from "./ContactInfo.jsx"
+import Loader from "../../Loader/Loader.jsx";
 
 const TabUserProfileContent = () => {
 
@@ -38,7 +39,7 @@ const TabUserProfileContent = () => {
     }, [username]);
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader size="small" />;
     }
 
     return (
