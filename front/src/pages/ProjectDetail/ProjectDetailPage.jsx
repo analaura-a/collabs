@@ -10,6 +10,7 @@ import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import Textarea from "../../components/Inputs/Textarea";
 import PositionAccordion from "../../components/Accordion/PositionAccordion";
+import Loader from "../../components/Loader/Loader";
 
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
@@ -174,7 +175,7 @@ const ProjectDetailPage = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
+        return <Loader message="Cargando proyecto..." />;
     }
 
     return (
