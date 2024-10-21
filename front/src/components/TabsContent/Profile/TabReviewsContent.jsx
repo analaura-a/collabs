@@ -3,6 +3,7 @@ import AuthContext from '../../../context/AuthContext';
 import { getUserReviews } from '../../../services/reviewService';
 import { useToast } from '../../../context/ToastContext';
 import ReviewCard from '../../Cards/ReviewCard';
+import Loader from '../../Loader/Loader';
 
 const TabReviewsContent = () => {
 
@@ -37,7 +38,7 @@ const TabReviewsContent = () => {
     const recommendCount = reviews.filter(review => review.recommend).length;
     const recommendPercentage = ((recommendCount / reviews.length) * 100).toFixed(0);
 
-    if (loading) return <div>Cargando...</div>; //Reemplazar por componente de carga
+    if (loading) return <Loader size="small" />;
 
     return (
         <>
