@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { getUserRoleInProject } from '../../services/teamService';
+import Loader from '../Loader/Loader';
 
 const OrganizerRoute = ({ children }) => {
 
@@ -34,7 +35,7 @@ const OrganizerRoute = ({ children }) => {
     }, [user, token, id]);
 
     if (loading || loadingRole) {
-        return <div>Cargando...</div>; // Componente de carga
+        return <Loader />;
     }
 
     if (!token) {
