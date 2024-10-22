@@ -51,6 +51,8 @@ const MessagesPage = () => {
         }
     }, [chats]);
 
+    const hasChats = chats.length > 0;
+
     return (
         <main>
             <div className="container messages-page">
@@ -70,8 +72,10 @@ const MessagesPage = () => {
                     </div>
 
                     <ChatView
+                        activeTab={activeTab}
                         chat={selectedChat}
-                        // onBack={() => setSelectedChat(null)}
+                        hasChats={hasChats}
+                    // onBack={() => setSelectedChat(null)}
                     />
 
                 </div>

@@ -1,26 +1,71 @@
 import ChatInput from "./ChatInput";
 
-const ChatView = ({ chat, onBack }) => {
+const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
+
+    const renderEmptyState = () => {
+        if (activeTab === 'Privados' && !hasChats) {
+            return (
+                <div className="chat-container chat-empty-state faded-pattern-container">
+
+                    <div className="faded-pattern faded-pattern-top-left"></div>
+                    <div className="faded-pattern faded-pattern-bottom-right"></div>
+
+                    <div className="applications-page__empty-state">
+                        <img src="../../assets/svg/messages-empty-state.svg" alt="Sin mensajes" />
+
+                        <div>
+                            <h2 className="title-32-medium">No tienes chats privados</h2>
+                            <p className="subtitle-18">Envía mensajes a otras personas desde su perfil.</p>
+                        </div>
+                    </div>
+
+                </div>
+            );
+        }
+        if (activeTab === 'Grupales' && !hasChats) {
+            return (
+                <div className="chat-container chat-empty-state faded-pattern-container">
+
+                    <div className="faded-pattern faded-pattern-top-left"></div>
+                    <div className="faded-pattern faded-pattern-bottom-right"></div>
+
+                    <div className="applications-page__empty-state">
+                        <img src="../../assets/svg/messages-empty-state.svg" alt="Sin mensajes" />
+
+                        <div>
+                            <h2 className="title-32-medium">No tienes chats grupales</h2>
+                            <p className="subtitle-18">Una vez que te unas a colaborar en un proyecto, podrás hablar con tus compañeros de equipo por chat.</p>
+                        </div>
+                    </div>
+
+                </div>
+            );
+        }
+        return null;
+    };
 
     return (
         <>
             {/* {onBack && <button className="back-button" onClick={onBack}>Atrás</button>}  Botón "Atrás" en mobile */}
 
-            <div className="chat-container">
+            {!hasChats ? (
+                renderEmptyState()
+            ) : (
+                <div className="chat-container">
 
-                <div className="chat__header">
-                    <div className="chat-item__img"> {/* Obtener datos reales */}
-                        <img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil" />
+                    <div className="chat__header">
+                        <div className="chat-item__img"> {/* Obtener datos reales */}
+                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil" />
+                        </div>
+
+                        <div className="chat__header__info"> {/* Obtener datos reales */}
+                            <h2 className="title-20 medium-text">María Fernández</h2>
+                            <p className="light-paragraph">@maríafernandez</p>
+                        </div>
                     </div>
 
-                    <div className="chat__header__info"> {/* Obtener datos reales */}
-                        <h2 className="title-20 medium-text">María Fernández</h2>
-                        <p className="light-paragraph">@maríafernandez</p>
-                    </div>
-                </div>
-
-                <div className="chat__messages">
-                    {/* {chat.messages.map((message) => (
+                    <div className="chat__messages">
+                        {/* {chat.messages.map((message) => (
                         <MessageBubble
                             key={message.id}
                             message={message}
@@ -28,12 +73,13 @@ const ChatView = ({ chat, onBack }) => {
                             isGroupChat={chat.type === 'group'} // True si es un chat grupal
                         />
                     ))} */}
-                    Mensajes aquí
+                        Mensajes aquí
+                    </div>
+
+                    <ChatInput />
+
                 </div>
-
-                <ChatInput />
-
-            </div>
+            )}
         </>
     );
 };
