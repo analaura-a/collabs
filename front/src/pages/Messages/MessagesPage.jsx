@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ChatList from '../../components/Chat/ChatList';
+import ChatView from '../../components/Chat/ChatView';
 
 const MessagesPage = () => {
 
@@ -68,9 +69,11 @@ const MessagesPage = () => {
                         />
                     </div>
 
-                    <div className="messages-page__chat">
-                        Chat
-                    </div>
+                    <ChatView
+                        chat={selectedChat}
+                        // onBack={() => setSelectedChat(null)}
+                    />
+
                 </div>
 
             </div>
