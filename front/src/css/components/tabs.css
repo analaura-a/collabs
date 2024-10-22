@@ -11,12 +11,22 @@
     border-bottom: 0.0625rem solid var(--color-gray-line);
 }
 
+.chat-tabs {
+    justify-content: space-between;
+    gap: 0;
+}
+
 .tab-item {
     width: fit-content;
     padding: 15px 0;
 
     cursor: pointer;
     position: relative;
+}
+
+.chat-tabs .tab-item {
+    width: 100%;
+    text-align: center;
 }
 
 .tab-active::after {
