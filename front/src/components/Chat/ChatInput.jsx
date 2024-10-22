@@ -24,7 +24,7 @@ const ChatInput = () => {
                 required
             />
 
-            <Button type="submit" icon={<SendIcon />}></Button>
+            <Button type="submit" icon={<SendIcon />} disabled={message.trim() === ""}></Button>
         </form>
     );
 };
