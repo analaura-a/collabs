@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import ChatTabs from '../../components/Tabs/ChatTabs';
-import ChatItem from '../../components/Chat/ChatItem';
+import ChatList from '../../components/Chat/ChatList';
 
 const MessagesPage = () => {
 
@@ -60,24 +59,13 @@ const MessagesPage = () => {
                     <div className="messages-page__chat-list">
                         <h1 className="title-40">Mensajes</h1>
 
-                        <div className="messages-page__chat-list-with-tabs">
-                            <ChatTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-
-                            <div className="messages-page__chat-list__chat-items">
-                                {chats.length > 0 ? (
-                                    chats.map((chat) => (
-                                        <ChatItem
-                                            key={chat.id}
-                                            chat={chat}
-                                            onClick={() => setSelectedChat(chat)}
-                                            isSelected={selectedChat === chat}
-                                        />
-                                    ))
-                                ) : (
-                                    <></>
-                                )}
-                            </div>
-                        </div>
+                        <ChatList
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                            chats={chats}
+                            selectedChat={selectedChat}
+                            onSelectChat={setSelectedChat}
+                        />
                     </div>
 
                     <div className="messages-page__chat">
