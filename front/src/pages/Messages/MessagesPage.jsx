@@ -1,12 +1,89 @@
+import { useState, useEffect } from 'react';
+import ChatTabs from '../../components/Tabs/ChatTabs';
+import ChatItem from '../../components/Chat/ChatItem';
+
 const MessagesPage = () => {
+
+    const [activeTab, setActiveTab] = useState('Privados');
+
+    const [chats, setChats] = useState([]); // Lista de chats para la tab actual
+    const [selectedChat, setSelectedChat] = useState(null);
+
+    const [isMobileView, setIsMobileView] = useState(false);
+
+    // Detectar si la vista es mobile
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobileView(window.innerWidth <= 768);
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Carga de chats según la tab seleccionada
+    useEffect(() => {
+
+        const fetchChats = async () => {
+            if (activeTab === 'Privados') {
+                // Ejemplo:
+                setChats([
+                    { id: 1, name: 'Juan Pérez', lastMessage: 'Hola, ¿cómo estás?', profilePic: 'path-to-pic' },
+                    { id: 2, name: 'Ana López', lastMessage: 'Sería genial empezar mañana si es posible para todos. Yo puedo a partir de las...', profilePic: 'path-to-pic' }
+                ]);
+            } else if (activeTab === 'Grupales') {
+                // Ejemplo:
+                setChats([
+                    { id: 3, name: 'Proyecto Web de cuentos', lastMessage: 'María: ¡Yo también puedo!', profilePic: 'default-group-pic' },
+                    { id: 4, name: 'Proyecto de Red Social', lastMessage: 'Tú: Empezamos con la división de tareas, ¿qué les parece?', profilePic: 'default-group-pic' }
+                ]);
+            }
+        };
+        fetchChats();
+
+        setSelectedChat(null); // Limpiar chat seleccionado al cambiar de tab
+    }, [activeTab]);
+
+    // Seleccionar el primer chat por defecto
+    useEffect(() => {
+        if (chats.length > 0) {
+            setSelectedChat(chats[0]);
+        }
+    }, [chats]);
 
     return (
         <main>
             <div className="container messages-page">
 
-                <h1 className="title-40">Mensajes</h1>
+                <div className="messages-page__desktop">
 
-                {/* Los estilos están en front>src>css>pages>messagesPage.css */}
+                    <div className="messages-page__chat-list">
+                        <h1 className="title-40">Mensajes</h1>
+
+                        <div className="messages-page__chat-list-with-tabs">
+                            <ChatTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+
+                            <div className="messages-page__chat-list__chat-items">
+                                {chats.length > 0 ? (
+                                    chats.map((chat) => (
+                                        <ChatItem
+                                            key={chat.id}
+                                            chat={chat}
+                                            onClick={() => setSelectedChat(chat)}
+                                            isSelected={selectedChat === chat}
+                                        />
+                                    ))
+                                ) : (
+                                    <></>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="messages-page__chat">
+                        Chat
+                    </div>
+                </div>
 
             </div>
         </main>
