@@ -1,6 +1,6 @@
 /*Página de mensajes*/
 .messages-page {
-    padding: 56px 24px;
+    padding: 48px 24px;
 }
 
 .messages-page-with-back-button {
@@ -105,7 +105,10 @@
     flex-direction: column;
     gap: 16px;
 
+    height: 50vh;
     padding: 20px;
+
+    overflow-y: scroll;
 }
 
 .chat-empty-state {
@@ -185,6 +188,10 @@
 
 @media only screen and (min-width: 800px) {
 
+    .messages-page {
+        padding: 72px 24px;
+    }
+
     .messages-page__desktop {
         display: flex;
         flex-direction: row;
@@ -203,6 +210,10 @@
 
     .chat-container {
         height: 100%;
+    }
+
+    .chat__messages {
+        height: auto;
     }
 
 }
