@@ -253,6 +253,14 @@
     line-height: 1.4;
 }
 
+.tiny-paragraph {
+    font-family: var(--inter);
+    font-size: var(--font-12px);
+    font-weight: var(--font-regular);
+    color: var(--color-black-subtitle);
+    line-height: 1.4;
+}
+
 .link {
     font-weight: var(--font-semibold) !important;
     color: var(--color-primary-text) !important;

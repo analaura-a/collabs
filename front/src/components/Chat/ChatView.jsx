@@ -1,3 +1,4 @@
+import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
 
 const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
@@ -84,7 +85,8 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                             isGroupChat={chat.type === 'group'} // True si es un chat grupal
                         />
                     ))} */}
-                        Mensajes aquí
+
+                        <MessageBubble />
                     </div>
 
                     <ChatInput />
