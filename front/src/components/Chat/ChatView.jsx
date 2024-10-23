@@ -2,6 +2,7 @@ import ChatInput from "./ChatInput";
 
 const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
 
+    //Empty states
     const renderEmptyState = () => {
         if (activeTab === 'Privados' && !hasChats) {
             return (
@@ -44,6 +45,15 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
         return null;
     };
 
+    //Verificación para que no renderice el chat hasta que haya un chat seleccionado
+    if (!chat) {
+        return (
+            <div className={onBack ? "messages-page-with-back-button" : "messages-page-without-back-button"}>
+                {renderEmptyState()}
+            </div>
+        )
+    }
+
     return (
         <div className={onBack ? "messages-page-with-back-button" : "messages-page-without-back-button"}>
 
@@ -60,7 +70,7 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                         </div>
 
                         <div className="chat__header__info"> {/* Obtener datos reales */}
-                            <h2 className="title-20 medium-text">María Fernández</h2>
+                            <h2 className="title-20 medium-text">{chat.name}</h2>
                             <p className="light-paragraph">@maríafernandez</p>
                         </div>
                     </div>
