@@ -34,6 +34,7 @@ const MessagesPage = () => {
                         name: "Juan Pérez",
                         username: "juanperez",
                         last_message: "Te quería comentar que estuve viendo tu postulación y me encantaría que te unas a mi proyecto.",
+                        has_unread_messages: false,
                         profile_pic: null,
                         created_at: "2024-10-10T10:00:00Z"
                     },
@@ -43,6 +44,7 @@ const MessagesPage = () => {
                         name: "María Lopez",
                         username: "marialopez",
                         last_message: "Hola, ¿estás interesada en unirte a mi proyecto?",
+                        has_unread_messages: true,
                         profile_pic: null,
                         created_at: "2024-10-10T10:00:00Z"
                     },
@@ -57,6 +59,7 @@ const MessagesPage = () => {
                         participants_names: ["María Fernandez", "Lara Becker"],
                         last_message: "Hola, creo que ya estamos todos!",
                         last_to_speak: "María",
+                        has_unread_messages: true,
                         project_pic: null,
                         created_at: "2024-10-10T10:00:00Z"
                     },
@@ -67,6 +70,7 @@ const MessagesPage = () => {
                         participants_names: ["Pedro Martínez", "Luisa Guevara", "Lara Becker", "Nilda Sosa"],
                         last_message: "¿Les parece si hacemos un meet?",
                         last_to_speak: "Pedro",
+                        has_unread_messages: false,
                         project_pic: null,
                         created_at: "2024-10-10T10:00:00Z"
                     },

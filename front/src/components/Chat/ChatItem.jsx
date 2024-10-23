@@ -3,7 +3,7 @@ const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 const ChatItem = ({ chat, onClick, isSelected }) => {
 
     return (
-        <div className={`chat-item ${isSelected ? 'chat-item-selected' : ''}`} onClick={onClick}>
+        <div className={`chat-item ${isSelected ? 'chat-item-selected' : ''} ${chat.has_unread_messages ? 'chat-item-unread' : ''}`} onClick={onClick}>
 
             {chat.type === "private" ? (
                 // Si el chat es privado, mostramos la foto de perfil del usuario 

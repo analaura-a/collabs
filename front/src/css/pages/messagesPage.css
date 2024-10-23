@@ -48,6 +48,11 @@
     border-radius: 12px;
 
     cursor: pointer;
+    transition: all 240ms ease-out;
+}
+
+.chat-item:hover {
+    background-color: var(--color-gray);
 }
 
 .chat-item-selected {
@@ -82,6 +87,25 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.chat-item-unread {
+    position: relative;
+}
+
+.chat-item-unread::after {
+    content: "";
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary-logo);
+    border-radius: 50%;
+}
+
+.chat-item-unread .chat-item__last-message {
+    color: var(--color-black);
 }
 
 
