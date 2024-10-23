@@ -14,7 +14,7 @@ const MessagesPage = () => {
     // Detectar si la vista es mobile
     useEffect(() => {
         const handleResize = () => {
-            setIsMobileView(window.innerWidth <= 768);
+            setIsMobileView(window.innerWidth <= 800);
         };
         handleResize();
         window.addEventListener('resize', handleResize);
@@ -46,10 +46,10 @@ const MessagesPage = () => {
 
     // Seleccionar el primer chat por defecto
     useEffect(() => {
-        if (chats.length > 0) {
+        if (!isMobileView && chats.length > 0) {
             setSelectedChat(chats[0]);
         }
-    }, [chats]);
+    }, [chats, isMobileView]);
 
     const hasChats = chats.length > 0;
 
@@ -57,8 +57,8 @@ const MessagesPage = () => {
         <main>
             <div className="container messages-page">
 
-                <div className="messages-page__desktop">
-
+                {/* Vista mobile: mostrar listado de chats */}
+                {isMobileView && !selectedChat ? (
                     <div className="messages-page__chat-list">
                         <h1 className="title-40">Mensajes</h1>
 
@@ -70,15 +70,39 @@ const MessagesPage = () => {
                             onSelectChat={setSelectedChat}
                         />
                     </div>
+                ) : isMobileView && selectedChat ? (
 
+                    // Vista mobile: mostrar el chat seleccionado
                     <ChatView
                         activeTab={activeTab}
                         chat={selectedChat}
                         hasChats={hasChats}
-                    // onBack={() => setSelectedChat(null)}
+                        onBack={() => setSelectedChat(null)}
                     />
+                ) : (
+                    // Vista desktop: mostrar listado de chats + chat seleccionado
+                    <div className="messages-page__desktop">
 
-                </div>
+                        <div className="messages-page__chat-list">
+                            <h1 className="title-40">Mensajes</h1>
+
+                            <ChatList
+                                activeTab={activeTab}
+                                setActiveTab={setActiveTab}
+                                chats={chats}
+                                selectedChat={selectedChat}
+                                onSelectChat={setSelectedChat}
+                            />
+                        </div>
+
+                        <ChatView
+                            activeTab={activeTab}
+                            chat={selectedChat}
+                            hasChats={hasChats}
+                        />
+
+                    </div>
+                )}
 
             </div>
         </main>

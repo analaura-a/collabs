@@ -3,12 +3,14 @@
     padding: 56px 24px;
 }
 
-.messages-page__desktop {
+.messages-page-with-back-button {
     display: flex;
-    flex-direction: row;
-    gap: 16px;
+    flex-direction: column;
+    gap: 24px;
+}
 
-    height: 68vh;
+.messages-page-without-back-button {
+    width: 100%;
 }
 
 
@@ -18,7 +20,7 @@
     flex-direction: column;
     gap: 16px;
 
-    width: 30%;
+    width: 100%;
 }
 
 .messages-page__chat-list-with-tabs {
@@ -117,6 +119,14 @@
 
 @media only screen and (min-width: 800px) {
 
+    .messages-page__desktop {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+
+        height: 68vh;
+    }
+
     .messages-page__chat-list {
         display: flex;
         flex-direction: column;
@@ -124,6 +134,10 @@
 
         width: 30%;
         max-width: 430px;
+    }
+
+    .chat-container {
+        height: 100%;
     }
 
 }
@@ -138,7 +152,6 @@
 
     .messages-page__chat-list {
         width: 34%;
-        max-width: 430px;
     }
 
 }

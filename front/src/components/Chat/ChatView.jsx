@@ -45,8 +45,9 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
     };
 
     return (
-        <>
-            {/* {onBack && <button className="back-button" onClick={onBack}>Atrás</button>}  Botón "Atrás" en mobile */}
+        <div className={onBack ? "messages-page-with-back-button" : "messages-page-without-back-button"}>
+
+            {onBack && <button className="small-button-with-icon arrow-left" onClick={onBack}></button>}
 
             {!hasChats ? (
                 renderEmptyState()
@@ -80,7 +81,7 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
 
                 </div>
             )}
-        </>
+        </div>
     );
 };
 
