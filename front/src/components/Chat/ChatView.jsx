@@ -1,7 +1,56 @@
+import { useState, useEffect } from 'react';
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
 
 const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
+
+    const [messages, setMessages] = useState([]);
+
+    useEffect(() => {
+        // const fetchMessages = async () => {
+        //     try {
+        //         const response = await fetch(`/api/chats/${chat._id}/messages`);
+        //         const messagesData = await response.json();
+        //         setMessages(messagesData);
+        //     } catch (error) {
+        //         console.error('Error al cargar los mensajes:', error);
+        //     }
+        // };
+
+        // if (chat) {
+        //     fetchMessages(); // Solo cuando hay un chat seleccionado
+        // }
+
+        //Mensajes de ejemplo
+        setMessages([
+            {
+                _id: "1",
+                chat_id: "chat-1",
+
+                sender_id: "1",
+                sender_name: "María Fernandez",
+                profile_pic: null,
+
+                text: "Hola, creo que ya estamos todos!",
+                created_at: "2024-10-10T10:00:00Z",
+
+                read_by: ["id-1", "id-2", "id-3"]
+            },
+            {
+                _id: "2",
+                chat_id: "chat-1",
+
+                sender_id: "66da121b63c75f6c6516a204",
+                sender_name: "Manuel Pérez",
+                profile_pic: null,
+
+                text: "Buenísimo! Cuándo empezamos? 👀",
+                created_at: "2024-10-10T10:00:00Z",
+
+                read_by: ["id-1", "id-2", "id-3"]
+            },
+        ])
+    }, [chat]);
 
     //Empty states
     const renderEmptyState = () => {
@@ -127,16 +176,13 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                     </div>
 
                     <div className="chat__messages">
-                        {/* {chat.messages.map((message) => (
-                        <MessageBubble
-                            key={message.id}
-                            message={message}
-                            userId={userId} // ID del usuario actual
-                            isGroupChat={chat.type === 'group'} // True si es un chat grupal
-                        />
-                    ))} */}
-
-                        <MessageBubble />
+                        {messages.map((message) => (
+                            <MessageBubble
+                                key={message._id}
+                                message={message}
+                                isGroupChat={chat.type === 'group'}
+                            />
+                        ))}
                     </div>
 
                     <ChatInput />

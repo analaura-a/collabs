@@ -1,57 +1,48 @@
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+
 const MessageBubble = ({ message, isGroupChat }) => {
 
-    // const isMyMessage = message.sender_id === userId; // Verificar si el mensaje es mío
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
+
+    // Verificar si el mensaje fue enviado por el usuario actual
+    const isMyMessage = user && message.sender_id === user._id;
 
     return (
-        <>
-            {/* <div className={`message-bubble ${isMyMessage ? 'my-message' : 'other-message'}`}>
-                {/* Mostrar la foto de perfil solo si es un chat grupal y no soy yo 
-                {!isMyMessage && isGroupChat && (
-                    <img
-                        src={message.senderProfilePic}
-                        alt={message.senderName}
-                        className="message-sender-pic"
-                    />
-                )}
+        <div className={`message-bubble-container ${isMyMessage ? 'my-message' : 'other-message'}`}>
 
-                <div className="message-content">
-                    {/* Mostrar el nombre del remitente en chats grupales (si no soy yo) 
+            {/* Mostrar la foto de perfil solo si es un chat grupal y no soy yo */}
+            {!isMyMessage && isGroupChat && (
+                <>
+                    {
+                        message.profile_pic ? (
+                            <div className="message-bubble__profile-pic">
+                                <img src={`${SERVER_BASE_URL}${message.profile_pic}`} alt={message.sender_name} />
+                            </div>
+                        ) : (
+                            <div className="message-bubble__profile-pic">
+                                <img src="../assets/jpg/no-profile-picture.jpg" alt={message.sender_name} />
+                            </div>
+                        )
+                    }
+                </>
+            )}
+
+            <div className="message-bubble__content">
+                <div className="message-bubble">
+                    {/* Mostrar el nombre del remitente en chats grupales */}
                     {isGroupChat && !isMyMessage && (
-                        <p className="message-sender-name">{message.senderName}</p>
+                        <p className="smaller-paragraph medium-text primary-color-text">{message.sender_name}</p>
                     )}
 
-                    <p className="message-text">{message.text}</p>
-                    <p className="message-timestamp">{message.timestamp}</p>
-                </div>
-            </div> */}
-
-            {/* Ejemplo de mensaje enviado por otra persona */}
-            <div className={`message-bubble-container other-message`}>
-                <div className="message-bubble__profile-pic">
-                    <img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil" />
+                    <p className="paragraph">{message.text}</p>
                 </div>
 
-                <div className="message-bubble__content">
-                    <div className="message-bubble">
-                        <p className="smaller-paragraph medium-text primary-color-text">María Fernandez</p>
-                        <p className="paragraph">Hola, creo que ya estamos todos!</p>
-                    </div>
-
-                    <p className="tiny-paragraph black-light-color-text">Sep 03, 2023, 10:44 AM</p>
-                </div>
+                <p className="tiny-paragraph black-light-color-text">{message.created_at}</p>
             </div>
-
-            {/* Ejemplo de mensaje enviado por mí */}
-            <div className={`message-bubble-container my-message`}>
-                <div className="message-bubble__content">
-                    <div className="message-bubble">
-                        <p className="paragraph">Buenísimo! Cuándo empezamos? 👀</p>
-                    </div>
-
-                    <p className="tiny-paragraph black-light-color-text">Sep 03, 2023, 10:46 AM</p>
-                </div>
-            </div>
-        </>
+        </div>
     );
 };
 
