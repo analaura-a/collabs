@@ -27,6 +27,13 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    flex-grow: 1;
+    overflow-y: hidden;
+}
+
+.messages-page__chat-list__chat-items {
+    flex-grow: 1;
+    overflow-y: scroll;
 }
 
 
@@ -201,11 +208,8 @@
     }
 
     .messages-page__chat-list {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-
         width: 35%;
+        height: 100%;
     }
 
     .chat-container {
