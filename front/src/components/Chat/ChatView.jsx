@@ -16,7 +16,7 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
 
                         <div>
                             <h2 className="title-32-medium">No tienes chats privados</h2>
-                            <p className="subtitle-18">Envía mensajes a otras personas desde su perfil.</p>
+                            <p className="subtitle-18">Envía mensajes a otras personas a través de su perfil.</p>
                         </div>
                     </div>
 

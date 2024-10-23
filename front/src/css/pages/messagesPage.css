@@ -132,8 +132,7 @@
         flex-direction: column;
         gap: 16px;
 
-        width: 30%;
-        max-width: 430px;
+        width: 35%;
     }
 
     .chat-container {
@@ -150,8 +149,14 @@
         padding: 100px 0;
     }
 
+}
+
+
+
+@media only screen and (min-width: 1200px) {
+
     .messages-page__chat-list {
-        width: 34%;
+        min-width: 430px;
     }
 
 }

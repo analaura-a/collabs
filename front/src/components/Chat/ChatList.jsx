@@ -1,7 +1,7 @@
 import ChatTabs from "../Tabs/ChatTabs";
 import ChatItem from "./ChatItem";
 
-const ChatList = ({ activeTab, setActiveTab, chats, selectedChat, onSelectChat }) => {
+const ChatList = ({ activeTab, setActiveTab, chats, selectedChat, onSelectChat, isMobileView }) => {
 
     return (
         <div className="messages-page__chat-list-with-tabs">
@@ -18,7 +18,15 @@ const ChatList = ({ activeTab, setActiveTab, chats, selectedChat, onSelectChat }
                         />
                     ))
                 ) : (
-                    <></>
+                    <>
+                        {isMobileView && activeTab === 'Privados' ? (
+                            <p className="light-paragraph">No tienes chats privados.</p>
+                        ) : isMobileView && activeTab === 'Grupales' ? (
+                            <p className="light-paragraph">No tienes chats grupales.</p>
+                        ) : (
+                            <></>
+                        )}
+                    </>
                 )}
             </div>
         </div>

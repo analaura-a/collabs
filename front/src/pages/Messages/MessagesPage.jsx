@@ -68,6 +68,7 @@ const MessagesPage = () => {
                             chats={chats}
                             selectedChat={selectedChat}
                             onSelectChat={setSelectedChat}
+                            isMobileView={isMobileView}
                         />
                     </div>
                 ) : isMobileView && selectedChat ? (
