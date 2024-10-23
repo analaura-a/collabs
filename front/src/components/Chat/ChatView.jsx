@@ -55,6 +55,22 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
         )
     }
 
+    //Renderizar los nombres de los participantes del chat grupal
+    const renderParticipants = (participants) => {
+        if (participants.length === 0) {
+            // Caso 1: Si no hay participantes
+            return "Solo tú";
+        } else if (participants.length === 1) {
+            // Caso 2: Si hay solo 1 participante más
+            return `${participants[0]} y tú`;
+        } else {
+            // Caso 3: Si hay más de 1 participante
+            const allButLast = participants.slice(0, -1).join(', ');
+            const lastParticipant = participants[participants.length - 1];
+            return `${allButLast}, ${lastParticipant} y tú`;
+        }
+    };
+
     return (
         <div className={onBack ? "messages-page-with-back-button" : "messages-page-without-back-button"}>
 
@@ -66,13 +82,47 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                 <div className="chat-container">
 
                     <div className="chat__header">
-                        <div className="chat-item__img"> {/* Obtener datos reales */}
-                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil" />
-                        </div>
+
+                        {chat.type === "private" ? (
+                            // Si el chat es privado, mostramos la foto de perfil del usuario 
+                            <>
+                                {
+                                    chat.profile_pic ? (
+                                        <div className="chat-item__img">
+                                            <img src={`${SERVER_BASE_URL}${chat.profile_pic}`} alt={chat.name} />
+                                        </div>
+                                    ) : (
+                                        <div className="chat-item__img">
+                                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil" />
+                                        </div>
+                                    )
+                                }
+                            </>
+                        ) : (
+                            // Si el chat es grupal, mostramos la foto del proyecto
+                            <>
+                                {
+                                    chat.project_pic ? (
+                                        <div className="chat-item__img">
+                                            <img src={`${SERVER_BASE_URL}${chat.project_pic}`} alt={chat.name} />
+                                        </div>
+                                    ) : (
+                                        <div className="chat-item__img">
+                                            <img src="../assets/jpg/no-project-picture.jpg" alt={chat.name} />
+                                        </div>
+                                    )
+                                }
+                            </>
+                        )}
 
                         <div className="chat__header__info"> {/* Obtener datos reales */}
                             <h2 className="title-20 medium-text">{chat.name}</h2>
-                            <p className="light-paragraph">@maríafernandez</p>
+
+                            {chat.type === "private" ? (
+                                <p className="light-paragraph">@{chat.username}</p>
+                            ) : (
+                                <p className="light-paragraph">{renderParticipants(chat.participants_names)}</p>
+                            )}
                         </div>
                     </div>
 

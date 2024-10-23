@@ -28,14 +28,48 @@ const MessagesPage = () => {
             if (activeTab === 'Privados') {
                 // Ejemplo:
                 setChats([
-                    { id: 1, name: 'Juan Pérez', lastMessage: 'Hola, ¿cómo estás?', profilePic: 'path-to-pic' },
-                    { id: 2, name: 'Ana López', lastMessage: 'Sería genial empezar mañana si es posible para todos. Yo puedo a partir de las...', profilePic: 'path-to-pic' }
+                    {
+                        _id: "chat_id_1",
+                        type: "private",
+                        name: "Juan Pérez",
+                        username: "juanperez",
+                        last_message: "Te quería comentar que estuve viendo tu postulación y me encantaría que te unas a mi proyecto.",
+                        profile_pic: null,
+                        created_at: "2024-10-10T10:00:00Z"
+                    },
+                    {
+                        _id: "chat_id_2",
+                        type: "private",
+                        name: "María Lopez",
+                        username: "marialopez",
+                        last_message: "Hola, ¿estás interesada en unirte a mi proyecto?",
+                        profile_pic: null,
+                        created_at: "2024-10-10T10:00:00Z"
+                    },
                 ]);
             } else if (activeTab === 'Grupales') {
                 // Ejemplo:
                 setChats([
-                    { id: 3, name: 'Proyecto Web de cuentos', lastMessage: 'María: ¡Yo también puedo!', profilePic: 'default-group-pic' },
-                    { id: 4, name: 'Proyecto de Red Social', lastMessage: 'Tú: Empezamos con la división de tareas, ¿qué les parece?', profilePic: 'default-group-pic' }
+                    {
+                        _id: "chat_id_3",
+                        type: "group",
+                        name: "Web para adoptar mascotas",
+                        participants_names: ["María Fernandez", "Lara Becker"],
+                        last_message: "Hola, creo que ya estamos todos!",
+                        last_to_speak: "María",
+                        project_pic: null,
+                        created_at: "2024-10-10T10:00:00Z"
+                    },
+                    {
+                        _id: "chat_id_4",
+                        type: "group",
+                        name: "Nerdearla",
+                        participants_names: ["Pedro Martínez", "Luisa Guevara", "Lara Becker", "Nilda Sosa"],
+                        last_message: "¿Les parece si hacemos un meet?",
+                        last_to_speak: "Pedro",
+                        project_pic: null,
+                        created_at: "2024-10-10T10:00:00Z"
+                    },
                 ]);
             }
         };

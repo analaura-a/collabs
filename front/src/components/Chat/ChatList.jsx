@@ -11,7 +11,7 @@ const ChatList = ({ activeTab, setActiveTab, chats, selectedChat, onSelectChat, 
                 {chats.length > 0 ? (
                     chats.map((chat) => (
                         <ChatItem
-                            key={chat.id}
+                            key={chat._id}
                             chat={chat}
                             onClick={() => onSelectChat(chat)}
                             isSelected={selectedChat === chat}
@@ -19,6 +19,7 @@ const ChatList = ({ activeTab, setActiveTab, chats, selectedChat, onSelectChat, 
                     ))
                 ) : (
                     <>
+                        {/* Empty state para vista mobile */}
                         {isMobileView && activeTab === 'Privados' ? (
                             <p className="light-paragraph">No tienes chats privados.</p>
                         ) : isMobileView && activeTab === 'Grupales' ? (
