@@ -65,7 +65,7 @@ const getUserProjectsCount = async (req, res) => {
         res.status(200).json(projectCollaborations);
     } catch (error) {
         console.error('Error al obtener el número de proyectos del usuario:', error.message);
-        res.status(500).json({ message: 'Error al obtener las colaboraciones del usuario.' });
+        res.status(500).json({ message: 'Ocurrió un error al obtener el número de proyectos del usuario.' });
     }
 };
 

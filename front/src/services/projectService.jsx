@@ -69,6 +69,78 @@ export const getUserProjects = async (userId) => {
     return await response.json();
 };
 
+export const getUserProjectsCount = async (userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/users/${userId}/projects-count`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar obtener el número de proyectos personales y open-source.');
+    }
+
+    return await response.json();
+};
+
+export const getLastTwoProjectsJoinedByUser = async (userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/users/${userId}/last-projects`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar obtener los últimos proyectos.');
+    }
+
+    return await response.json();
+};
+
+export const getRecommendedProjectsForUser = async (userId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await fetch(`${API_URL}/users/${userId}/recommended-projects`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar obtener los proyectos recomendados.');
+    }
+
+    return await response.json();
+};
+
 export const createProject = async (userId, projectData, type) => {
 
     try {
