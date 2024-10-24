@@ -55,6 +55,20 @@ const getUserProjects = async (req, res) => {
     }
 };
 
+//Obtener la cantidad de proyectos personales y open-source en los que el usuario colaboró
+const getUserProjectsCount = async (req, res) => {
+
+    const userId = req.params.userId;
+
+    try {
+        const projectCollaborations = await service.getUserProjectsCount(userId);
+        res.status(200).json(projectCollaborations);
+    } catch (error) {
+        console.error('Error al obtener el número de proyectos del usuario:', error.message);
+        res.status(500).json({ message: 'Error al obtener las colaboraciones del usuario.' });
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (req, res) => {
 
@@ -257,6 +271,7 @@ export {
     getOpenProjects,
     getProjectById,
     getUserProjects,
+    getUserProjectsCount,
     createProject,
     uploadProjectImage,
     updateProjectDetails,

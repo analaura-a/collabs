@@ -72,6 +72,40 @@ const getUserProjects = async (userId) => {
     }
 };
 
+//Obtener la cantidad de proyectos personales y open-source en los que el usuario colaboró
+const getUserProjectsCount = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Obtener los proyectos en los que el usuario ha colaborado
+        const userProjects = await db.collection('projects_teams')
+            .find({ user_id: new ObjectId(userId) })
+            .toArray();
+
+        // 2. Obtener los IDs de los proyectos en los que ha colaborado el usuario
+        const projectIds = userProjects.map(project => new ObjectId(project.project_id));
+
+        // 3. Realizar una consulta en la colección 'projects' para obtener el tipo de cada proyecto
+        const projects = await db.collection('projects')
+            .find({ _id: { $in: projectIds } })
+            .toArray();
+
+        // 4. Clasificar los proyectos por tipo (Personal / Open-source)
+        const personalProjects = projects.filter(project => project.type === 'Personal');
+        const openSourceProjects = projects.filter(project => project.type === 'Open-source');
+
+        // 5. Devolver los totales de cada tipo de proyecto
+        return {
+            personalProjectsCount: personalProjects.length,
+            openSourceProjectsCount: openSourceProjects.length
+        };
+
+    } catch (error) {
+        throw new Error('Error al obtener el número de proyectos del usuario: ' + error.message);
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (userId, projectData, type) => {
 
@@ -212,6 +246,7 @@ export {
     getOpenProjects,
     getProjectById,
     getUserProjects,
+    getUserProjectsCount,
     createProject,
     updateProjectImage,
     updateProjectDetails,
