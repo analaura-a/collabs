@@ -1,5 +1,9 @@
 /* Página de inicio */
 .home-page {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+
     padding: 56px 24px;
 }
 
@@ -177,12 +181,21 @@
     gap: 4px;
 }
 
+/* Sección explorar proyectos */
+.home-page__explore {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 
 
 @media only screen and (min-width: 1200px) {
 
     /* Página de inicio */
     .home-page {
+        gap: 96px;
+
         padding: 100px 0;
     }
 

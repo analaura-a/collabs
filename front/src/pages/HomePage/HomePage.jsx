@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Button from "../../components/Button/Button";
+import ProjectCard from "../../components/Cards/ProjectCard";
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const HomePage = () => {
@@ -129,20 +130,20 @@ const HomePage = () => {
                     </div>
                 </section>
 
-                {/* <section>
+                <section className="home-page__explore">
                     <div className="title-with-icon-and-paragraph">
                         <div className="title-with-icon">
-                            <img src="../assets/svg/inbox.svg" alt="Postulaciones" />
+                            <img src="../assets/svg/projects.svg" alt="Proyectos" />
                             <h2 className="title-20 medium-text">Explora estas oportunidades de colaboración</h2>
                         </div>
 
                         <p className="light-paragraph">Recomendaciones basadas en tus preferencias y en tu perfil profesional.</p>
                     </div>
 
-                    <div>
-                        {/* Cards 
+                    <div className="explore-page__container-user-cards">
+                        {/* Cards  */}
                     </div>
-                </section> */}
+                </section>
 
             </div>
         </main>
