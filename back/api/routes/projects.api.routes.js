@@ -35,6 +35,9 @@ route.get('/users/:userId/projects-count', [validateTokenMiddleware], controller
 //Obtener los últimos 2 proyectos de un usuario
 route.get('/users/:userId/last-projects', [validateTokenMiddleware], controllers.getLastTwoProjectsJoinedByUser);
 
+// Obtener los proyectos recomendados para un usuario
+route.get('/users/:userId/recommended-projects', [validateTokenMiddleware], controllers.getRecommendedProjectsForUser);
+
 // Crear un nuevo proyecto
 route.post('/projects', [verifyUserOwnership], controllers.createProject);
 

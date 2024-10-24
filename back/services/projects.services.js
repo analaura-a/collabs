@@ -136,6 +136,77 @@ const getLastTwoProjectsJoinedByUser = async (userId) => {
     }
 };
 
+// Obtener los proyectos recomendados para un usuario
+const getRecommendedProjectsForUser = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Obtener los datos del usuario
+        const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+
+        if (!user) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        const { availability, preferences, roles, skills } = user;
+
+        // 2. Consulta para obtener proyectos que coincidan al menos en una característica del usuario
+        const projects = await db.collection('projects').find({
+            status: 'Abierto',
+            founder_id: { $ne: new ObjectId(userId) },
+            $or: [
+                { type: { $in: preferences } },
+                { required_availability: availability },
+                { "open_positions.profile": { $in: roles } },
+                { "open_positions.required_skills": { $in: skills } }
+            ]
+        }).toArray();
+
+        // 3. Calcular las coincidencias para cada proyecto
+        const scoredProjects = projects.map(project => {
+            let score = 0;
+
+            // Incrementar el puntaje basado en las coincidencias
+            if (preferences.includes(project.type)) score++;
+            if (project.required_availability === availability) score++;
+            if (project.open_positions.some(pos => roles.includes(pos.profile))) score++;
+            if (project.open_positions.some(pos => pos.required_skills.some(skill => skills.includes(skill)))) score++;
+
+            return { ...project, score };
+        });
+
+        // 4. Ordenar proyectos por puntaje (mayor número de coincidencias primero)
+        const sortedProjects = scoredProjects.sort((a, b) => b.score - a.score);
+
+        // 5. Devolver solo los 6 primeros proyectos con mayor puntaje
+        const topProjects = sortedProjects.slice(0, 6);
+
+        // 6. Para cada proyecto, obtenemos también los datos del organizador
+        const projectWithOrganizerData = await Promise.all(topProjects.map(async (project) => {
+            const founder = await db.collection('users').findOne(
+                { _id: new ObjectId(project.founder_id) },
+                { projection: { name: 1, last_name: 1, profile_pic: 1 } } // Solo obtener el nombre y la foto de perfil
+            );
+
+            return {
+                ...project,
+                organizer: {
+                    name: founder.name,
+                    last_name: founder.last_name,
+                    profile_pic: founder?.profile_pic || null
+                }
+            };
+        }));
+
+        // 7. Devolver la información de los proyectos + de los organizadores
+        return projectWithOrganizerData;
+
+    } catch (error) {
+        throw new Error('Error al obtener los proyectos recomendados: ' + error.message);
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (userId, projectData, type) => {
 
@@ -278,6 +349,7 @@ export {
     getUserProjects,
     getUserProjectsCount,
     getLastTwoProjectsJoinedByUser,
+    getRecommendedProjectsForUser,
     createProject,
     updateProjectImage,
     updateProjectDetails,
