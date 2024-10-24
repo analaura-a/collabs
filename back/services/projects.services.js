@@ -106,6 +106,36 @@ const getUserProjectsCount = async (userId) => {
     }
 };
 
+//Obtener los últimos 2 proyectos de un usuario
+const getLastTwoProjectsJoinedByUser = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Obtener los últimos 2 proyectos a los que se unió el usuario
+        const userProjects = await db.collection('projects_teams')
+            .find({ user_id: new ObjectId(userId) })
+            .sort({ joined_at: -1 })
+            .limit(2)
+            .toArray();
+
+        // 2. Obtener los IDs de los proyectos
+        const projectIds = userProjects.map(project => new ObjectId(project.project_id));
+
+        // 3. Realizar una consulta en la colección 'projects' para obtener la info de cada proyecto
+        const projects = await db.collection('projects')
+            .find({ _id: { $in: projectIds } })
+            .project({ _id: 1, name: 1 }) // Solo obtener el nombre y el ID de cada proyecto
+            .toArray();
+
+        // 4. Devolver los últimos 2 proyectos
+        return projects;
+
+    } catch (error) {
+        throw new Error('Error al obtener los últimos proyectos del usuario: ' + error.message);
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (userId, projectData, type) => {
 
@@ -247,6 +277,7 @@ export {
     getProjectById,
     getUserProjects,
     getUserProjectsCount,
+    getLastTwoProjectsJoinedByUser,
     createProject,
     updateProjectImage,
     updateProjectDetails,

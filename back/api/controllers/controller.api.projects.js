@@ -69,6 +69,20 @@ const getUserProjectsCount = async (req, res) => {
     }
 };
 
+//Obtener los últimos 2 proyectos de un usuario
+const getLastTwoProjectsJoinedByUser = async (req, res) => {
+
+    const userId = req.params.userId;
+
+    try {
+        const lastTwoProjects = await service.getLastTwoProjectsJoinedByUser(userId);
+        res.status(200).json(lastTwoProjects);
+    } catch (error) {
+        console.error('Error al obtener los últimos proyectos del usuario:', error.message);
+        res.status(500).json({ message: 'Ocurrió un error al obtener los últimos proyectos del usuario.' });
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (req, res) => {
 
@@ -272,6 +286,7 @@ export {
     getProjectById,
     getUserProjects,
     getUserProjectsCount,
+    getLastTwoProjectsJoinedByUser,
     createProject,
     uploadProjectImage,
     updateProjectDetails,

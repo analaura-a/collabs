@@ -32,6 +32,9 @@ route.get('/users/:userId/projects', [validateTokenMiddleware], controllers.getU
 //Obtener la cantidad de proyectos personales y open-source en los que el usuario colaboró
 route.get('/users/:userId/projects-count', [validateTokenMiddleware], controllers.getUserProjectsCount);
 
+//Obtener los últimos 2 proyectos de un usuario
+route.get('/users/:userId/last-projects', [validateTokenMiddleware], controllers.getLastTwoProjectsJoinedByUser);
+
 // Crear un nuevo proyecto
 route.post('/projects', [verifyUserOwnership], controllers.createProject);
 
