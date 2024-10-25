@@ -114,7 +114,10 @@ const getLastTwoProjectsJoinedByUser = async (userId) => {
 
         // 1. Obtener los últimos 2 proyectos a los que se unió el usuario
         const userProjects = await db.collection('projects_teams')
-            .find({ user_id: new ObjectId(userId) })
+            .find({
+                user_id: new ObjectId(userId),
+                status: 'Activo'
+            })
             .sort({ joined_at: -1 })
             .limit(2)
             .toArray();

@@ -30,6 +30,10 @@ const HomePage = () => {
                     openSourceProjects: projectCountsData.openSourceProjectsCount
                 });
 
+                // Obtener los últimos 2 proyectos activos
+                const recentProjectsData = await getLastTwoProjectsJoinedByUser(user._id);
+                setRecentProjects(recentProjectsData);
+
             } catch (error) {
                 console.error("Error al cargar datos de inicio:", error.message);
             } finally {
@@ -93,21 +97,26 @@ const HomePage = () => {
                                 <p className="light-paragraph">Proyectos en los que estuviste colaborando recientemente.</p>
                             </div>
 
-                            <div className="home-page__overview__projects-column__my-projects-with-cta">
-                                <div className="home-page__overview__projects-column__my-projects__card-container">
-                                    <Link to="/mis-proyectos" className="home-page__overview__projects-column__my-projects__card">
-                                        <p className="subtitle-18 medium-text subtitle-color-text">Web para adoptar mascotas</p>
-                                        <img src="../assets/svg/extern-link.svg" />
-                                    </Link>
+                            {recentProjects.length > 0 ? (
+                                <div className="home-page__overview__projects-column__my-projects-with-cta">
+                                    <div className="home-page__overview__projects-column__my-projects__card-container">
+                                        {recentProjects.map((project) => (
+                                            <Link to={`/mis-proyectos/${project._id}`} key={project._id} className="home-page__overview__projects-column__my-projects__card">
+                                                <p className="subtitle-18 medium-text subtitle-color-text">{project.name}</p>
+                                                <img src="../assets/svg/extern-link.svg" alt="Enlace al proyecto" />
+                                            </Link>
+                                        ))}
+                                    </div>
 
-                                    <Link to="/mis-proyectos" className="home-page__overview__projects-column__my-projects__card">
-                                        <p className="subtitle-18 medium-text subtitle-color-text">Hackaton SummerFest</p>
-                                        <img src="../assets/svg/extern-link.svg" />
-                                    </Link>
+                                    <Link to="/mis-proyectos" className="subtitle link">Ver todos</Link>
                                 </div>
-
-                                <Link to="/mis-proyectos" className="subtitle link">Ver todos</Link>
-                            </div>
+                            ) : (
+                                <div className="home-page__overview__projects-column__my-projects-emtpy-state">
+                                    <div className="home-page__overview__projects-column__my-projects__card">
+                                        <p className="subtitle-18 medium-text placeholder-color-text">Aún no te uniste a colaborar en ningún proyecto</p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                     </div>

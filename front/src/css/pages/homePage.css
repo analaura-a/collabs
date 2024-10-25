@@ -105,6 +105,10 @@
     background-color: var(--color-gray);
 }
 
+.home-page__overview__projects-column__my-projects-emtpy-state>.home-page__overview__projects-column__my-projects__card:hover {
+    background-color: var(--color-white-background);
+}
+
 /* Columna de CTAs */
 .home-page__overview__cta-column {
     display: flex;
