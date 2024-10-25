@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Button from "../../components/Button/Button";
 import ProjectCard from "../../components/Cards/ProjectCard";
+import Loader from "../../components/Loader/Loader";
+import { getUserProjectsCount, getLastTwoProjectsJoinedByUser, getRecommendedProjectsForUser } from "../../services/projectService";
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const HomePage = () => {
@@ -12,9 +14,38 @@ const HomePage = () => {
 
     const navigate = useNavigate();
 
+    const [projectCounts, setProjectCounts] = useState({ personalProjects: 0, openSourceProjects: 0 });
+    const [recentProjects, setRecentProjects] = useState([]);
+    const [recommendedProjects, setRecommendedProjects] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Obtenemos el número de proyectos colaborados
+                const projectCountsData = await getUserProjectsCount(user._id);
+                setProjectCounts({
+                    personalProjects: projectCountsData.personalProjectsCount,
+                    openSourceProjects: projectCountsData.openSourceProjectsCount
+                });
+
+            } catch (error) {
+                console.error("Error al cargar datos de inicio:", error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [user._id]);
+
+
     const handleEditProfile = () => {
         navigate('/editar-perfil', { state: { section: 'professional-profile' } });
     };
+
+    if (loading) return <Loader />;
 
     return (
         <main>
@@ -32,19 +63,19 @@ const HomePage = () => {
 
                             <div className="home-page__overview__projects-column__header__project-numbers">
                                 <div className="home-page__overview__projects-column__header__project-number-card">
-                                    <img src="../assets/svg/personal-projects.svg" alt="Postulaciones" />
+                                    <img src="../assets/svg/personal-projects.svg" alt="Proyectos personales" />
 
                                     <div>
-                                        <p className="title-40 regular-text primary-color-text">2</p>
+                                        <p className={`title-40 regular-text ${projectCounts.personalProjects > 0 ? 'primary-color-text' : 'placeholder-color-text'}`}>{projectCounts.personalProjects}</p>
                                         <p className="subtitle-18 medium-text black-color-text">Proyectos personales</p>
                                     </div>
                                 </div>
 
                                 <div className="home-page__overview__projects-column__header__project-number-card">
-                                    <img src="../assets/svg/open-source-projects.svg" alt="Postulaciones" />
+                                    <img src="../assets/svg/open-source-projects.svg" alt="Proyectos open-source" />
 
                                     <div>
-                                        <p className="title-40 regular-text placeholder-color-text">0</p>
+                                        <p className={`title-40 regular-text ${projectCounts.openSourceProjects > 0 ? 'primary-color-text' : 'placeholder-color-text'}`}>{projectCounts.openSourceProjects}</p>
                                         <p className="subtitle-18 medium-text black-color-text">Proyectos open-source</p>
                                     </div>
                                 </div>
@@ -140,8 +171,12 @@ const HomePage = () => {
                         <p className="light-paragraph">Recomendaciones basadas en tus preferencias y en tu perfil profesional.</p>
                     </div>
 
-                    <div className="explore-page__container-user-cards">
-                        {/* Cards  */}
+                    <div className="home-page__overview__projects-column__my-projects-with-cta">
+                        <div className="explore-page__container-user-cards">
+                            {/* Cards  */}
+                        </div>
+
+                        <Link to="/explorar/proyectos" className="subtitle link">Ver más</Link>
                     </div>
                 </section>
 
