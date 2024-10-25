@@ -266,6 +266,10 @@
     color: var(--color-primary-text) !important;
 }
 
+.regular-text {
+    font-weight: var(--font-regular) !important;
+}
+
 .medium-text {
     font-weight: var(--font-medium) !important;
 }
@@ -286,6 +290,10 @@
 
 .black-light-color-text {
     color: var(--color-black-light) !important;
+}
+
+.subtitle-color-text {
+    color: var(--color-black-subtitle) !important;
 }
 
 .black-color-text {

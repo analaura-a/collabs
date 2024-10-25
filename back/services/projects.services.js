@@ -72,6 +72,144 @@ const getUserProjects = async (userId) => {
     }
 };
 
+//Obtener la cantidad de proyectos personales y open-source en los que el usuario colaboró
+const getUserProjectsCount = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Obtener los proyectos en los que el usuario ha colaborado
+        const userProjects = await db.collection('projects_teams')
+            .find({ user_id: new ObjectId(userId) })
+            .toArray();
+
+        // 2. Obtener los IDs de los proyectos en los que ha colaborado el usuario
+        const projectIds = userProjects.map(project => new ObjectId(project.project_id));
+
+        // 3. Realizar una consulta en la colección 'projects' para obtener el tipo de cada proyecto
+        const projects = await db.collection('projects')
+            .find({ _id: { $in: projectIds } })
+            .toArray();
+
+        // 4. Clasificar los proyectos por tipo (Personal / Open-source)
+        const personalProjects = projects.filter(project => project.type === 'Personal');
+        const openSourceProjects = projects.filter(project => project.type === 'Open-source');
+
+        // 5. Devolver los totales de cada tipo de proyecto
+        return {
+            personalProjectsCount: personalProjects.length,
+            openSourceProjectsCount: openSourceProjects.length
+        };
+
+    } catch (error) {
+        throw new Error('Error al obtener el número de proyectos del usuario: ' + error.message);
+    }
+};
+
+//Obtener los últimos 2 proyectos de un usuario
+const getLastTwoProjectsJoinedByUser = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Obtener los últimos 2 proyectos a los que se unió el usuario
+        const userProjects = await db.collection('projects_teams')
+            .find({
+                user_id: new ObjectId(userId),
+                status: 'Activo'
+            })
+            .sort({ joined_at: -1 })
+            .limit(2)
+            .toArray();
+
+        // 2. Obtener los IDs de los proyectos
+        const projectIds = userProjects.map(project => new ObjectId(project.project_id));
+
+        // 3. Realizar una consulta en la colección 'projects' para obtener la info de cada proyecto
+        const projects = await db.collection('projects')
+            .find({ _id: { $in: projectIds } })
+            .project({ _id: 1, name: 1 }) // Solo obtener el nombre y el ID de cada proyecto
+            .toArray();
+
+        // 4. Devolver los últimos 2 proyectos
+        return projects;
+
+    } catch (error) {
+        throw new Error('Error al obtener los últimos proyectos del usuario: ' + error.message);
+    }
+};
+
+// Obtener los proyectos recomendados para un usuario
+const getRecommendedProjectsForUser = async (userId) => {
+
+    try {
+        await client.connect();
+
+        // 1. Obtener los datos del usuario
+        const user = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+
+        if (!user) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        const { availability, preferences, roles, skills } = user;
+
+        // 2. Consulta para obtener proyectos que coincidan al menos en una característica del usuario
+        const projects = await db.collection('projects').find({
+            status: 'Abierto',
+            founder_id: { $ne: new ObjectId(userId) },
+            $or: [
+                { type: { $in: preferences } },
+                { required_availability: availability },
+                { "open_positions.profile": { $in: roles } },
+                { "open_positions.required_skills": { $in: skills } }
+            ]
+        }).toArray();
+
+        // 3. Calcular las coincidencias para cada proyecto
+        const scoredProjects = projects.map(project => {
+            let score = 0;
+
+            // Incrementar el puntaje basado en las coincidencias
+            if (preferences.includes(project.type)) score++;
+            if (project.required_availability === availability) score++;
+            if (project.open_positions.some(pos => roles.includes(pos.profile))) score++;
+            if (project.open_positions.some(pos => pos.required_skills.some(skill => skills.includes(skill)))) score++;
+
+            return { ...project, score };
+        });
+
+        // 4. Ordenar proyectos por puntaje (mayor número de coincidencias primero)
+        const sortedProjects = scoredProjects.sort((a, b) => b.score - a.score);
+
+        // 5. Devolver solo los 6 primeros proyectos con mayor puntaje
+        const topProjects = sortedProjects.slice(0, 6);
+
+        // 6. Para cada proyecto, obtenemos también los datos del organizador
+        const projectWithOrganizerData = await Promise.all(topProjects.map(async (project) => {
+            const founder = await db.collection('users').findOne(
+                { _id: new ObjectId(project.founder_id) },
+                { projection: { name: 1, last_name: 1, profile_pic: 1 } } // Solo obtener el nombre y la foto de perfil
+            );
+
+            return {
+                ...project,
+                organizer: {
+                    name: founder.name,
+                    last_name: founder.last_name,
+                    profile_pic: founder?.profile_pic || null
+                }
+            };
+        }));
+
+        // 7. Devolver la información de los proyectos + de los organizadores
+        return projectWithOrganizerData;
+
+    } catch (error) {
+        throw new Error('Error al obtener los proyectos recomendados: ' + error.message);
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (userId, projectData, type) => {
 
@@ -212,6 +350,9 @@ export {
     getOpenProjects,
     getProjectById,
     getUserProjects,
+    getUserProjectsCount,
+    getLastTwoProjectsJoinedByUser,
+    getRecommendedProjectsForUser,
     createProject,
     updateProjectImage,
     updateProjectDetails,

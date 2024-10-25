@@ -24,6 +24,7 @@
 @import './pages/reviewPage.css';
 @import './pages/messagesPage.css';
 @import './pages/notificationsPage.css';
+@import './pages/homePage.css';
 
 @import './components/button.css';
 @import './components/input.css';
