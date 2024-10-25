@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
 import Button from "../../components/Button/Button";
 import ProjectCard from "../../components/Cards/ProjectCard";
 import Loader from "../../components/Loader/Loader";
@@ -13,6 +14,7 @@ const HomePage = () => {
     const { user } = authState;
 
     const navigate = useNavigate();
+    const { addToast } = useToast();
 
     const [projectCounts, setProjectCounts] = useState({ personalProjects: 0, openSourceProjects: 0 });
     const [recentProjects, setRecentProjects] = useState([]);
@@ -38,7 +40,11 @@ const HomePage = () => {
                 const recommendedProjectsData = await getRecommendedProjectsForUser(user._id);
                 setRecommendedProjects(recommendedProjectsData);
             } catch (error) {
-                console.error("Error al cargar datos de inicio:", error.message);
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar la página de inicio',
+                    message: 'Ocurrió un error desconocido al intentar cargar los datos de la página de inicio. Inténtalo de nuevo más tarde.'
+                });
             } finally {
                 setLoading(false);
             }
@@ -46,7 +52,6 @@ const HomePage = () => {
 
         fetchData();
     }, [user._id]);
-
 
     const handleEditProfile = () => {
         navigate('/editar-perfil', { state: { section: 'professional-profile' } });
