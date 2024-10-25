@@ -34,6 +34,9 @@ const HomePage = () => {
                 const recentProjectsData = await getLastTwoProjectsJoinedByUser(user._id);
                 setRecentProjects(recentProjectsData);
 
+                // Obtener proyectos recomendados
+                const recommendedProjectsData = await getRecommendedProjectsForUser(user._id);
+                setRecommendedProjects(recommendedProjectsData);
             } catch (error) {
                 console.error("Error al cargar datos de inicio:", error.message);
             } finally {
@@ -180,13 +183,24 @@ const HomePage = () => {
                         <p className="light-paragraph">Recomendaciones basadas en tus preferencias y en tu perfil profesional.</p>
                     </div>
 
-                    <div className="home-page__overview__projects-column__my-projects-with-cta">
-                        <div className="explore-page__container-user-cards">
-                            {/* Cards  */}
-                        </div>
+                    {recommendedProjects.length > 0 ? (
+                        <div className="home-page__overview__projects-column__my-projects-with-cta">
+                            <div className="explore-page__container-user-cards">
+                                {recommendedProjects.map(project => (
+                                    <ProjectCard
+                                        key={project._id}
+                                        project={project}
+                                    />
+                                ))}
+                            </div>
 
-                        <Link to="/explorar/proyectos" className="subtitle link">Ver más</Link>
-                    </div>
+                            <Link to="/explorar/proyectos" className="subtitle link">Ver más</Link>
+                        </div>
+                    ) : (
+                        <div className="explore-page__empty-state-container-projects">
+                            <h2 className="title-18 placeholder-color-text">No se encontraron proyectos coincidan con los criterios de recomendación.</h2>
+                        </div>
+                    )}
                 </section>
 
             </div>
