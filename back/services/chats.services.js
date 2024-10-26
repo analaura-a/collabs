@@ -96,7 +96,39 @@ const getUserChats = async (userId) => {
     return enrichedChats;
 };
 
+// Obtener el chat grupal de un proyecto
+const getProjectChat = async (projectId, userId) => {
+
+    const projectObjectId = new ObjectId(projectId);
+    const userObjectId = new ObjectId(userId);
+
+    // Obtener el chat
+    const chat = await db.collection('chats')
+        .findOne({ project_id: projectObjectId });
+
+    if (!chat) return null;
+
+    // Obtener detalles del proyecto y el resto de participantes
+    const project = await db.collection('projects')
+        .findOne({ _id: projectObjectId });
+
+    const otherParticipants = chat.participants.filter(id => !id.equals(userObjectId));
+    const participantDetails = await db.collection('users')
+        .find({ _id: { $in: otherParticipants } })
+        .project({ name: 1, last_name: 1 })
+        .toArray();
+
+    return {
+        _id: chat._id,
+        type: 'group',
+        name: project.name,
+        project_pic: project?.cover || null,
+        participants_names: participantDetails.map(p => `${p.name} ${p.last_name}`),
+    };
+};
+
 export {
     createChat,
-    getUserChats
+    getUserChats,
+    getProjectChat
 }

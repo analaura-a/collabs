@@ -26,7 +26,23 @@ const getUserChats = async (req, res) => {
     }
 };
 
+// Obtener el chat grupal de un proyecto
+const getProjectChat = async (req, res) => {
+
+    const projectId = req.params.projectId;
+    const userId = req.account._id;
+
+    try {
+        const projectChat = await service.getProjectChat(projectId, userId);
+        if (!projectChat) return res.status(404).json({ message: 'Chat no encontrado' });
+        res.status(200).json(projectChat);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener el chat del proyecto', error: error.message });
+    }
+};
+
 export {
     createChat,
-    getUserChats
+    getUserChats,
+    getProjectChat
 }
