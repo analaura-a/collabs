@@ -7,4 +7,7 @@ const route = Router();
 // Crear un nuevo chat
 route.post('/chats', [validateTokenMiddleware], controllers.createChat);
 
+// Obtener todos los chats de un usuario
+route.get('/user/chats', [validateTokenMiddleware], controllers.getUserChats);
+
 export default route;

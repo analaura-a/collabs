@@ -13,6 +13,20 @@ const createChat = async (req, res) => {
     }
 };
 
+// Obtener todos los chats de un usuario
+const getUserChats = async (req, res) => {
+
+    const userId = req.account._id;
+
+    try {
+        const userChats = await service.getUserChats(userId);
+        res.status(200).json(userChats);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener los chats', error: error.message });
+    }
+};
+
 export {
-    createChat
+    createChat,
+    getUserChats
 }
