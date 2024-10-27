@@ -7,4 +7,7 @@ const route = Router();
 // Enviar un mensaje en un chat
 route.post('/messages', [validateTokenMiddleware], controllers.sendMessage);
 
+// Obtener mensajes de un chat
+route.get('/chats/:chatId/messages', [validateTokenMiddleware], controllers.getChatMessages);
+
 export default route;

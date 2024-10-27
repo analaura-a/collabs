@@ -13,6 +13,20 @@ const sendMessage = async (req, res) => {
     }
 };
 
+// Obtener mensajes de un chat
+const getChatMessages = async (req, res) => {
+
+    const chatId = req.params.chatId;
+
+    try {
+        const messages = await service.getChatMessages(chatId);
+        res.status(200).json(messages);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener los mensajes del chat', error: error.message });
+    }
+};
+
 export {
-    sendMessage
+    sendMessage,
+    getChatMessages
 }
