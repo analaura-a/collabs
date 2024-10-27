@@ -47,7 +47,24 @@ const getChatMessages = async (chatId) => {
     return enrichedMessages;
 };
 
+// Marcar mensajes como leídos
+const markMessagesAsRead = async ({ chatId, userId }) => {
+
+    const chatObjectId = new ObjectId(chatId);
+    const userObjectId = new ObjectId(userId);
+
+    // Actualizar los mensajes en el chat que no han sido leídos por el usuario
+    await db.collection('messages').updateMany(
+        {
+            chat_id: chatObjectId,
+            read_by: { $ne: userObjectId }
+        },
+        { $push: { read_by: userObjectId } }
+    );
+};
+
 export {
     sendMessage,
-    getChatMessages
+    getChatMessages,
+    markMessagesAsRead
 }

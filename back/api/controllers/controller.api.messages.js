@@ -26,7 +26,22 @@ const getChatMessages = async (req, res) => {
     }
 };
 
+// Marcar mensajes como leídos
+const markMessagesAsRead = async (req, res) => {
+
+    const chatId = req.params.chatId;
+    const userId = req.account._id;
+
+    try {
+        await service.markMessagesAsRead({ chatId, userId });
+        res.status(200).json({ message: 'Mensajes marcados como leídos' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al marcar los mensajes como leídos', error: error.message });
+    }
+};
+
 export {
     sendMessage,
-    getChatMessages
+    getChatMessages,
+    markMessagesAsRead
 }
