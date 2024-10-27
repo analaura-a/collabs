@@ -1,5 +1,9 @@
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+dayjs.locale('es');
+
 const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 
 const MessageBubble = ({ message, isGroupChat }) => {
@@ -9,6 +13,9 @@ const MessageBubble = ({ message, isGroupChat }) => {
 
     // Verificar si el mensaje fue enviado por el usuario actual
     const isMyMessage = user && message.sender_id === user._id;
+
+    // Formatear la fecha 
+    const formattedDate = dayjs(message.created_at).format("MMM DD, YYYY, hh:mm A");
 
     return (
         <div className={`message-bubble-container ${isMyMessage ? 'my-message' : 'other-message'}`}>
@@ -40,7 +47,7 @@ const MessageBubble = ({ message, isGroupChat }) => {
                     <p className="paragraph">{message.text}</p>
                 </div>
 
-                <p className="tiny-paragraph black-light-color-text">{message.created_at}</p>
+                <p className="tiny-paragraph black-light-color-text">{formattedDate}</p>
             </div>
         </div>
     );
