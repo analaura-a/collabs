@@ -9,6 +9,7 @@ import ApiProjectsShortcutsRoute from '../api/routes/projects_shortcuts.api.rout
 import ApiProjectsReviewsRoute from '../api/routes/projects_reviews.api.routes.js'
 import ApiNotificationsRoute from '../api/routes/notifications.routes.js'
 import ApiChatsRoute from '../api/routes/chats.api.routes.js'
+import ApiMessagesRoute from '../api/routes/messages.api.route.js'
 
 import cors from 'cors'
 
@@ -32,3 +33,4 @@ app.use('/api', ApiProjectsShortcutsRoute);
 app.use('/api', ApiProjectsReviewsRoute);
 app.use('/api', ApiNotificationsRoute);
 app.use('/api', ApiChatsRoute);
+app.use('/api', ApiMessagesRoute);
