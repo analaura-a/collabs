@@ -11,27 +11,28 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
 
     const { addToast } = useToast();
 
+    const fetchMessages = async () => {
+        try {
+            //Obtener mensajes del chat
+            const messagesData = await getChatMessages(chat._id);
+            setMessages(messagesData);
+
+            // Marcar los mensajes como leídos después de cargarlos
+            await markMessagesAsRead(chat._id);
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los mensajes',
+                message: 'Ocurrió un error desconocido al intentar cargar los mensajes. Inténtalo de nuevo más tarde.'
+            });
+        }
+    };
+
     useEffect(() => {
-        setMessages([]);
-
-        const fetchMessages = async () => {
-            try {
-                //Obtener mensajes del chat
-                const messagesData = await getChatMessages(chat._id);
-                setMessages(messagesData);
-
-                // Marcar los mensajes como leídos después de cargarlos
-                await markMessagesAsRead(chat._id);
-            } catch (error) {
-                addToast({
-                    type: 'error',
-                    title: 'Error al cargar los mensajes',
-                    message: 'Ocurrió un error desconocido al intentar cargar los mensajes. Inténtalo de nuevo más tarde.'
-                });
-            }
-        };
-
-        if (chat) fetchMessages(); // Solo cuando hay un chat seleccionado
+        if (chat) {
+            // setMessages([]);
+            fetchMessages();
+        }
     }, [chat]);
 
     //Empty states
@@ -167,7 +168,10 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                         ))}
                     </div>
 
-                    <ChatInput />
+                    <ChatInput
+                        chatId={chat._id}
+                        onMessageSent={fetchMessages}
+                    />
 
                 </div>
             )}

@@ -1,6 +1,6 @@
 const API_URL = 'http://localhost:3333/api';
 
-export const sendMessage = async ({ chat_id, sender_id, text }) => {
+export const sendMessage = async ({ chat_id, text }) => {
 
     const token = localStorage.getItem('token');
 
@@ -12,7 +12,7 @@ export const sendMessage = async ({ chat_id, sender_id, text }) => {
             'Content-Type': 'application/json',
             'auth-token': token
         },
-        body: JSON.stringify({ chat_id, sender_id, text })
+        body: JSON.stringify({ chat_id, text })
     });
 
     if (!response.ok) {

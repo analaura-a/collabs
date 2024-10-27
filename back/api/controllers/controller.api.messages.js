@@ -3,7 +3,8 @@ import * as service from "../../services/messages.services.js"
 // Enviar un mensaje en un chat
 const sendMessage = async (req, res) => {
 
-    const { chat_id, sender_id, text } = req.body;
+    const { chat_id, text } = req.body;
+    const sender_id = req.account._id;
 
     try {
         const newMessage = await service.sendMessage({ chat_id, sender_id, text });
