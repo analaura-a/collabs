@@ -32,14 +32,28 @@ const getUserChats = async (userId) => {
     const enrichedChats = await Promise.all(chats.map(async (chat) => {
 
         const isGroup = chat.type === 'group';
-        let lastMessageData, hasUnreadMessages;
+
+        let lastMessageData, lastMessageSenderName = 'Usuario desconocido', hasUnreadMessages;
 
         // Obtener el último mensaje
         const lastMessage = await db.collection('messages').findOne(
             { chat_id: chat._id },
             { sort: { created_at: -1 } }
         );
+
         lastMessageData = lastMessage?.text || 'Sin mensajes';
+
+        // Si hay un último mensaje, obtener los datos del remitente
+        if (lastMessage?.sender_id) {
+
+            if (lastMessage.sender_id == userId) {
+                lastMessageSenderName = 'Tú';
+            } else {
+                const lastMessageSender = await db.collection('users').findOne({ _id: lastMessage.sender_id }, { projection: { name: 1, last_name: 1 } });
+
+                lastMessageSenderName = lastMessageSender ? `${lastMessageSender.name}` : 'Usuario desconocido';
+            }
+        }
 
         // Verificar si hay mensajes no leídos
         hasUnreadMessages = await db.collection('messages')
@@ -70,6 +84,7 @@ const getUserChats = async (userId) => {
                 project_pic: project?.cover || null,
                 participants_names: participantDetails.map(p => `${p.name} ${p.last_name}`),
                 last_message: lastMessageData,
+                last_to_speak: lastMessageSenderName,
                 has_unread_messages: hasUnreadMessages
             };
         } else {
