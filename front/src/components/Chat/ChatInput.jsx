@@ -5,7 +5,7 @@ import Input from "../Inputs/Input"
 import Button from "../Button/Button"
 import SendIcon from '../../assets/svg/send-message.svg?react';
 
-const ChatInput = ({ chatId, onMessageSent }) => {
+const ChatInput = ({ chatId, onMessageSent, refreshChats }) => {
 
     const [message, setMessage] = useState('');
 
@@ -23,6 +23,8 @@ const ChatInput = ({ chatId, onMessageSent }) => {
             setMessage('');
 
             onMessageSent();
+
+            refreshChats();
         } catch (error) {
             addToast({
                 type: 'error',

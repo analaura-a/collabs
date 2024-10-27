@@ -5,7 +5,7 @@ import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
 import Loader from '../Loader/Loader';
 
-const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
+const ChatView = ({ activeTab, chat, onBack, hasChats, refreshChats }) => {
 
     const [messages, setMessages] = useState([]);
 
@@ -171,6 +171,7 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                     <ChatInput
                         chatId={chat._id}
                         onMessageSent={fetchMessages}
+                        refreshChats={refreshChats}
                     />
 
                 </div>

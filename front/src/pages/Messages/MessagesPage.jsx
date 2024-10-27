@@ -29,30 +29,30 @@ const MessagesPage = () => {
     }, []);
 
     // Carga de chats según la tab seleccionada
+    const fetchChats = async () => {
+        try {
+            const userChats = await getUserChats();
+
+            const filteredChats = userChats.filter(chat =>
+                activeTab === 'Privados' ? chat.type === 'private' : chat.type === 'group'
+            );
+
+            setChats(filteredChats);
+
+            setLoading(false);
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los chats',
+                message: 'Ocurrió un error desconocido al intentar cargar tus chats. Inténtalo de nuevo más tarde.'
+            });
+
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchChats = async () => {
-            try {
-                const userChats = await getUserChats();
-
-                const filteredChats = userChats.filter(chat =>
-                    activeTab === 'Privados' ? chat.type === 'private' : chat.type === 'group'
-                );
-
-                setChats(filteredChats);
-
-                setLoading(false);
-            } catch (error) {
-                addToast({
-                    type: 'error',
-                    title: 'Error al cargar los chats',
-                    message: 'Ocurrió un error desconocido al intentar cargar tus chats. Inténtalo de nuevo más tarde.'
-                });
-
-                setLoading(false);
-            }
-        };
         fetchChats();
-
         setSelectedChat(null); // Limpiar chat seleccionado al cambiar de tab
     }, [activeTab]);
 
@@ -94,6 +94,7 @@ const MessagesPage = () => {
                         activeTab={activeTab}
                         chat={selectedChat}
                         hasChats={hasChats}
+                        refreshChats={fetchChats}
                         onBack={() => setSelectedChat(null)}
                     />
                 ) : (
@@ -116,6 +117,7 @@ const MessagesPage = () => {
                             activeTab={activeTab}
                             chat={selectedChat}
                             hasChats={hasChats}
+                            refreshChats={fetchChats}
                         />
 
                     </div>
