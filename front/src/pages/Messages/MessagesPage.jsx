@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { getUserChats } from '../../services/chatService';
+import { useToast } from '../../context/ToastContext';
 import ChatList from '../../components/Chat/ChatList';
 import ChatView from '../../components/Chat/ChatView';
+import Loader from '../../components/Loader/Loader';
 
 const MessagesPage = () => {
 
@@ -10,6 +13,10 @@ const MessagesPage = () => {
     const [selectedChat, setSelectedChat] = useState(null);
 
     const [isMobileView, setIsMobileView] = useState(false);
+
+    const [loading, setLoading] = useState(true);
+
+    const { addToast } = useToast();
 
     // Detectar si la vista es mobile
     useEffect(() => {
@@ -23,58 +30,25 @@ const MessagesPage = () => {
 
     // Carga de chats según la tab seleccionada
     useEffect(() => {
-
         const fetchChats = async () => {
-            if (activeTab === 'Privados') {
-                // Ejemplo:
-                setChats([
-                    {
-                        _id: "chat_id_1",
-                        type: "private",
-                        name: "Juan Pérez",
-                        username: "juanperez",
-                        last_message: "Te quería comentar que estuve viendo tu postulación y me encantaría que te unas a mi proyecto.",
-                        has_unread_messages: false,
-                        profile_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                    {
-                        _id: "chat_id_2",
-                        type: "private",
-                        name: "María Lopez",
-                        username: "marialopez",
-                        last_message: "Hola, ¿estás interesada en unirte a mi proyecto?",
-                        has_unread_messages: true,
-                        profile_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                ]);
-            } else if (activeTab === 'Grupales') {
-                // Ejemplo:
-                setChats([
-                    {
-                        _id: "chat_id_3",
-                        type: "group",
-                        name: "Web para adoptar mascotas",
-                        participants_names: ["María Fernandez", "Lara Becker"],
-                        last_message: "Hola, creo que ya estamos todos!",
-                        last_to_speak: "María",
-                        has_unread_messages: true,
-                        project_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                    {
-                        _id: "chat_id_4",
-                        type: "group",
-                        name: "Nerdearla",
-                        participants_names: ["Pedro Martínez", "Luisa Guevara", "Lara Becker", "Nilda Sosa"],
-                        last_message: "¿Les parece si hacemos un meet?",
-                        last_to_speak: "Pedro",
-                        has_unread_messages: false,
-                        project_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                ]);
+            try {
+                const userChats = await getUserChats();
+
+                const filteredChats = userChats.filter(chat =>
+                    activeTab === 'Privados' ? chat.type === 'private' : chat.type === 'group'
+                );
+
+                setChats(filteredChats);
+
+                setLoading(false);
+            } catch (error) {
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar los chats',
+                    message: 'Ocurrió un error desconocido al intentar cargar tus chats. Inténtalo de nuevo más tarde.'
+                });
+
+                setLoading(false);
             }
         };
         fetchChats();
@@ -90,6 +64,10 @@ const MessagesPage = () => {
     }, [chats, isMobileView]);
 
     const hasChats = chats.length > 0;
+
+    if (loading) {
+        return <Loader />;
+    }
 
     return (
         <main>

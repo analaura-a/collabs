@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
+import Loader from '../Loader/Loader';
 
 const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
 
@@ -92,7 +93,7 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                 </div>
             );
         }
-        return null;
+        return <Loader />;
     };
 
     //Verificación para que no renderice el chat hasta que haya un chat seleccionado

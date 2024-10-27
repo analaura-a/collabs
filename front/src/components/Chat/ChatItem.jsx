@@ -43,7 +43,9 @@ const ChatItem = ({ chat, onClick, isSelected }) => {
                 {chat.type === "private" ? (
                     <p className="light-paragraph chat-item__last-message">{chat.last_message}</p>
                 ) : (
-                    <p className="light-paragraph chat-item__last-message">{chat.last_to_speak}: {chat.last_message}</p>
+                    // <p className="light-paragraph chat-item__last-message">{chat.last_to_speak}: {chat.last_message}</p>
+                    //Verificar si hay mensajes en el chat antes de poner el siguiente nombre
+                    <p className="light-paragraph chat-item__last-message">Nombre: {chat.last_message}</p>
                 )}
 
             </div>
