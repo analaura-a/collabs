@@ -83,10 +83,9 @@ const getUserChats = async (userId) => {
             return {
                 _id: chat._id,
                 type: 'private',
-                name: otherUser?.name,
-                last_name: otherUser?.last_name,
+                name: `${otherUser?.name} ${otherUser?.last_name}` || 'Usuario desconocido',
                 username: otherUser?.username,
-                profile_pic: otherUser?.profile_pic,
+                profile_pic: otherUser?.profile_pic || null,
                 last_message: lastMessageData,
                 has_unread_messages: hasUnreadMessages
             };
