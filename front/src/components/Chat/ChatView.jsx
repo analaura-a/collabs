@@ -1,55 +1,37 @@
 import { useState, useEffect } from 'react';
+import { getChatMessages, markMessagesAsRead } from '../../services/messagesService';
+import { useToast } from '../../context/ToastContext';
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
+import Loader from '../Loader/Loader';
 
-const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
+const ChatView = ({ activeTab, chat, onBack, hasChats, refreshChats }) => {
 
     const [messages, setMessages] = useState([]);
 
+    const { addToast } = useToast();
+
+    const fetchMessages = async () => {
+        try {
+            //Obtener mensajes del chat
+            const messagesData = await getChatMessages(chat._id);
+            setMessages(messagesData);
+
+            // Marcar los mensajes como leídos después de cargarlos
+            await markMessagesAsRead(chat._id);
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los mensajes',
+                message: 'Ocurrió un error desconocido al intentar cargar los mensajes. Inténtalo de nuevo más tarde.'
+            });
+        }
+    };
+
     useEffect(() => {
-        // const fetchMessages = async () => {
-        //     try {
-        //         const response = await fetch(`/api/chats/${chat._id}/messages`);
-        //         const messagesData = await response.json();
-        //         setMessages(messagesData);
-        //     } catch (error) {
-        //         console.error('Error al cargar los mensajes:', error);
-        //     }
-        // };
-
-        // if (chat) {
-        //     fetchMessages(); // Solo cuando hay un chat seleccionado
-        // }
-
-        //Mensajes de ejemplo
-        setMessages([
-            {
-                _id: "1",
-                chat_id: "chat-1",
-
-                sender_id: "1",
-                sender_name: "María Fernandez",
-                profile_pic: null,
-
-                text: "Hola, creo que ya estamos todos!",
-                created_at: "2024-10-10T10:00:00Z",
-
-                read_by: ["id-1", "id-2", "id-3"]
-            },
-            {
-                _id: "2",
-                chat_id: "chat-1",
-
-                sender_id: "66da121b63c75f6c6516a204",
-                sender_name: "Manuel Pérez",
-                profile_pic: null,
-
-                text: "Buenísimo! Cuándo empezamos? 👀",
-                created_at: "2024-10-10T10:00:00Z",
-
-                read_by: ["id-1", "id-2", "id-3"]
-            },
-        ])
+        if (chat) {
+            fetchMessages();
+        }
     }, [chat]);
 
     //Empty states
@@ -92,7 +74,7 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                 </div>
             );
         }
-        return null;
+        return <Loader />;
     };
 
     //Verificación para que no renderice el chat hasta que haya un chat seleccionado
@@ -164,7 +146,7 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                             </>
                         )}
 
-                        <div className="chat__header__info"> {/* Obtener datos reales */}
+                        <div className="chat__header__info">
                             <h2 className="title-20 medium-text">{chat.name}</h2>
 
                             {chat.type === "private" ? (
@@ -185,7 +167,11 @@ const ChatView = ({ activeTab, chat, onBack, hasChats }) => {
                         ))}
                     </div>
 
-                    <ChatInput />
+                    <ChatInput
+                        chatId={chat._id}
+                        onMessageSent={fetchMessages}
+                        refreshChats={refreshChats}
+                    />
 
                 </div>
             )}

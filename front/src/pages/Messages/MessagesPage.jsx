@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { getUserChats } from '../../services/chatService';
+import { useToast } from '../../context/ToastContext';
 import ChatList from '../../components/Chat/ChatList';
 import ChatView from '../../components/Chat/ChatView';
+import Loader from '../../components/Loader/Loader';
 
 const MessagesPage = () => {
 
@@ -9,7 +12,11 @@ const MessagesPage = () => {
     const [chats, setChats] = useState([]); // Lista de chats para la tab actual
     const [selectedChat, setSelectedChat] = useState(null);
 
-    const [isMobileView, setIsMobileView] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 800);
+
+    const [loading, setLoading] = useState(true);
+
+    const { addToast } = useToast();
 
     // Detectar si la vista es mobile
     useEffect(() => {
@@ -22,74 +29,55 @@ const MessagesPage = () => {
     }, []);
 
     // Carga de chats según la tab seleccionada
-    useEffect(() => {
+    const fetchChats = async () => {
+        try {
+            // Obtener chats y filtrarlos
+            const userChats = await getUserChats();
 
-        const fetchChats = async () => {
-            if (activeTab === 'Privados') {
-                // Ejemplo:
-                setChats([
-                    {
-                        _id: "chat_id_1",
-                        type: "private",
-                        name: "Juan Pérez",
-                        username: "juanperez",
-                        last_message: "Te quería comentar que estuve viendo tu postulación y me encantaría que te unas a mi proyecto.",
-                        has_unread_messages: false,
-                        profile_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                    {
-                        _id: "chat_id_2",
-                        type: "private",
-                        name: "María Lopez",
-                        username: "marialopez",
-                        last_message: "Hola, ¿estás interesada en unirte a mi proyecto?",
-                        has_unread_messages: true,
-                        profile_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                ]);
-            } else if (activeTab === 'Grupales') {
-                // Ejemplo:
-                setChats([
-                    {
-                        _id: "chat_id_3",
-                        type: "group",
-                        name: "Web para adoptar mascotas",
-                        participants_names: ["María Fernandez", "Lara Becker"],
-                        last_message: "Hola, creo que ya estamos todos!",
-                        last_to_speak: "María",
-                        has_unread_messages: true,
-                        project_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                    {
-                        _id: "chat_id_4",
-                        type: "group",
-                        name: "Nerdearla",
-                        participants_names: ["Pedro Martínez", "Luisa Guevara", "Lara Becker", "Nilda Sosa"],
-                        last_message: "¿Les parece si hacemos un meet?",
-                        last_to_speak: "Pedro",
-                        has_unread_messages: false,
-                        project_pic: null,
-                        created_at: "2024-10-10T10:00:00Z"
-                    },
-                ]);
+            const filteredChats = userChats.filter(chat =>
+                activeTab === 'Privados' ? chat.type === 'private' : chat.type === 'group'
+            );
+
+            setChats(filteredChats);
+
+            // Mantener o asignar el chat seleccionado
+            if (!isMobileView) {
+                if (selectedChat) {
+                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
+                    setSelectedChat(updatedSelectedChat || filteredChats[0] || null);
+                } else {
+                    setSelectedChat(filteredChats[0] || null);
+                }
+            } else {
+                if (selectedChat) {
+                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
+                    setSelectedChat(updatedSelectedChat || null);
+                } else {
+                    setSelectedChat(null);
+                }
             }
-        };
-        fetchChats();
 
-        setSelectedChat(null); // Limpiar chat seleccionado al cambiar de tab
-    }, [activeTab]);
+            setLoading(false);
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error al cargar los chats',
+                message: 'Ocurrió un error desconocido al intentar cargar tus chats. Inténtalo de nuevo más tarde.'
+            });
 
-    // Seleccionar el primer chat por defecto
-    useEffect(() => {
-        if (!isMobileView && chats.length > 0) {
-            setSelectedChat(chats[0]);
+            setLoading(false);
         }
-    }, [chats, isMobileView]);
+    };
+
+    useEffect(() => {
+        fetchChats();
+    }, [activeTab, isMobileView]);
 
     const hasChats = chats.length > 0;
+
+    if (loading) {
+        return <Loader />;
+    }
 
     return (
         <main>
@@ -116,6 +104,7 @@ const MessagesPage = () => {
                         activeTab={activeTab}
                         chat={selectedChat}
                         hasChats={hasChats}
+                        refreshChats={fetchChats}
                         onBack={() => setSelectedChat(null)}
                     />
                 ) : (
@@ -138,6 +127,7 @@ const MessagesPage = () => {
                             activeTab={activeTab}
                             chat={selectedChat}
                             hasChats={hasChats}
+                            refreshChats={fetchChats}
                         />
 
                     </div>
