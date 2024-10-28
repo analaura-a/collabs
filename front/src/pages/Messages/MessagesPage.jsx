@@ -12,7 +12,7 @@ const MessagesPage = () => {
     const [chats, setChats] = useState([]); // Lista de chats para la tab actual
     const [selectedChat, setSelectedChat] = useState(null);
 
-    const [isMobileView, setIsMobileView] = useState(false);
+    const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 800);
 
     const [loading, setLoading] = useState(true);
 
@@ -31,6 +31,7 @@ const MessagesPage = () => {
     // Carga de chats según la tab seleccionada
     const fetchChats = async () => {
         try {
+            // Obtener chats y filtrarlos
             const userChats = await getUserChats();
 
             const filteredChats = userChats.filter(chat =>
@@ -38,6 +39,23 @@ const MessagesPage = () => {
             );
 
             setChats(filteredChats);
+
+            // Mantener o asignar el chat seleccionado
+            if (!isMobileView) {
+                if (selectedChat) {
+                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
+                    setSelectedChat(updatedSelectedChat || filteredChats[0] || null);
+                } else {
+                    setSelectedChat(filteredChats[0] || null);
+                }
+            } else {
+                if (selectedChat) {
+                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
+                    setSelectedChat(updatedSelectedChat || null);
+                } else {
+                    setSelectedChat(null);
+                }
+            }
 
             setLoading(false);
         } catch (error) {
@@ -53,15 +71,7 @@ const MessagesPage = () => {
 
     useEffect(() => {
         fetchChats();
-        setSelectedChat(null); // Limpiar chat seleccionado al cambiar de tab
-    }, [activeTab]);
-
-    // Seleccionar el primer chat por defecto
-    useEffect(() => {
-        if (!isMobileView && chats.length > 0) {
-            setSelectedChat(chats[0]);
-        }
-    }, [chats, isMobileView]);
+    }, [activeTab, isMobileView]);
 
     const hasChats = chats.length > 0;
 
