@@ -30,7 +30,6 @@ const ChatView = ({ activeTab, chat, onBack, hasChats, refreshChats }) => {
 
     useEffect(() => {
         if (chat) {
-            // setMessages([]);
             fetchMessages();
         }
     }, [chat]);
