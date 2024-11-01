@@ -37,14 +37,16 @@ const ChatView = ({ activeTab, chat, onBack, hasChats, refreshChats }) => {
             // Escuchar nuevos mensajes
             socket.on('newMessage', (newMessage) => {
                 setMessages((prevMessages) => [...prevMessages, newMessage]);
+
             });
+            // Limpiar efecto al desmontar el componente
+            return () => {
+                socket.off('newMessage'); // Desuscribirse al evento al desmontar
+                socket.emit('leaveChat', chat._id); // Salir del chat
+            };
         }
 
-        // Limpiar efecto al desmontar el componente
-        return () => {
-            socket.off('newMessage'); // Desuscribirse al evento al desmontar
-            socket.emit('leaveChat', chat._id); // Salir del chat
-        };
+
     }, [chat]);
 
     //Empty states
