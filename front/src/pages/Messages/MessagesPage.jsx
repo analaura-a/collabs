@@ -41,22 +41,32 @@ const MessagesPage = () => {
 
             setChats(filteredChats);
 
-            // Mantener o asignar el chat seleccionado
-            if (!isMobileView) {
-                if (selectedChat) {
-                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
-                    setSelectedChat(updatedSelectedChat || filteredChats[0] || null);
-                } else {
-                    setSelectedChat(filteredChats[0] || null);
-                }
-            } else {
-                if (selectedChat) {
-                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
-                    setSelectedChat(updatedSelectedChat || null);
-                } else {
-                    setSelectedChat(null);
-                }
-            }
+            // // Mantener o asignar el chat seleccionado
+            // if (!isMobileView) {
+            //     if (selectedChat) {
+            //         const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
+            //         setSelectedChat(updatedSelectedChat || filteredChats[0] || null);
+            //     } else {
+            //         setSelectedChat(filteredChats[0] || null);
+            //     }
+            // } else {
+            //     if (selectedChat) {
+            //         const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
+            //         setSelectedChat(updatedSelectedChat || null);
+            //     } else {
+            //         setSelectedChat(null);
+            //     }
+            // }
+           // Si el chat seleccionado sigue existiendo, mantenerlo seleccionado
+           if (selectedChat && filteredChats.some(chat => chat._id === selectedChat._id)) {
+            setSelectedChat(prevSelectedChat => 
+                filteredChats.find(chat => chat._id === prevSelectedChat._id)
+            );
+        } else if (filteredChats.length > 0) {
+            setSelectedChat(filteredChats[0]);
+        } else {
+            setSelectedChat(null);
+        }
 
             setLoading(false);
         } catch (error) {
@@ -74,18 +84,18 @@ const MessagesPage = () => {
         fetchChats();
     }, [activeTab, isMobileView]);
 
-    // Escuchar el evento `new_message_received` para actualizar la lista de chats en tiempo real
-    useEffect(() => {
-        socket.on('new_message_received', () => {
-            // Actualiza el listado de chats cuando se recibe un nuevo mensaje
-            fetchChats(); 
-        });
+     // Evento de socket para actualizar chats en tiempo real y mantener el chat seleccionado
+     useEffect(() => {
+        const handleNewMessage = () => {
+            fetchChats();
+        };
+
+        socket.on('new_message_received', handleNewMessage);
 
         return () => {
-            socket.off('new_message_received');
+            socket.off('new_message_received', handleNewMessage);
         };
-    }, []);
-
+    }, [selectedChat]);
     const hasChats = chats.length > 0;
 
     if (loading) {
