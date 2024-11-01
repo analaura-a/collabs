@@ -1,4 +1,6 @@
 import { MongoClient, ObjectId } from 'mongodb';
+import { io } from '../app/server.js';
+
 
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
@@ -15,6 +17,11 @@ const sendMessage = async ({ chat_id, sender_id, text }) => {
     };
 
     const result = await db.collection('messages').insertOne(newMessage);
+    // Emitir el nuevo mensaje a los clientes conectados
+    io.to(chat_id).emit('newMessage', {
+        ...newMessage,
+        _id: result.insertedId
+    });
     return result;
 };
 
@@ -61,6 +68,8 @@ const markMessagesAsRead = async ({ chatId, userId }) => {
         },
         { $push: { read_by: userObjectId } }
     );
+     // Notificar que los mensajes han sido leídos
+    io.to(chatId).emit('messagesRead', { chatId, userId });
 };
 
 export {

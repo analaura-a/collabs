@@ -4,6 +4,7 @@ import { useToast } from '../../context/ToastContext';
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
 import Loader from '../Loader/Loader';
+import socket from '../../services/socket';
 
 const ChatView = ({ activeTab, chat, onBack, hasChats, refreshChats }) => {
 
@@ -27,11 +28,25 @@ const ChatView = ({ activeTab, chat, onBack, hasChats, refreshChats }) => {
             });
         }
     };
-
+    // Unirse al chat en tiempo real al abrirlo
     useEffect(() => {
         if (chat) {
             fetchMessages();
+            socket.emit('join_chat', chat._id); // Unirse a la sala del chat
+
+            // Escuchar nuevos mensajes
+            socket.on('newMessage', (newMessage) => {
+                setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+            });
+            // Limpiar efecto al desmontar el componente
+            return () => {
+                socket.off('newMessage'); // Desuscribirse al evento al desmontar
+                socket.emit('leaveChat', chat._id); // Salir del chat
+            };
         }
+
+
     }, [chat]);
 
     //Empty states

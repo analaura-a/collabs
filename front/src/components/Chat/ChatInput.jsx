@@ -4,6 +4,7 @@ import { useToast } from '../../context/ToastContext';
 import Input from "../Inputs/Input"
 import Button from "../Button/Button"
 import SendIcon from '../../assets/svg/send-message.svg?react';
+import socket from '../../services/socket';
 
 const ChatInput = ({ chatId, onMessageSent, refreshChats }) => {
 
@@ -18,7 +19,14 @@ const ChatInput = ({ chatId, onMessageSent, refreshChats }) => {
         if (message.trim() === "") return;
 
         try {
-            await sendMessage({ chat_id: chatId, text: message });
+            // Enviar el mensaje al backend para guardarlo en la base de datos
+            const savedMessage = await sendMessage({ chat_id: chatId, text: message });
+
+            // Emitir el mensaje guardado a los otros usuarios en el chat en tiempo real
+            socket.emit('send_message', {
+                ...savedMessage, 
+                chatId: chatId
+            });
 
             setMessage('');
 

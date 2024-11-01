@@ -4,6 +4,7 @@ import { useToast } from '../../context/ToastContext';
 import ChatList from '../../components/Chat/ChatList';
 import ChatView from '../../components/Chat/ChatView';
 import Loader from '../../components/Loader/Loader';
+import socket from '../../services/socket';
 
 const MessagesPage = () => {
 
@@ -22,11 +23,15 @@ const MessagesPage = () => {
     useEffect(() => {
         const handleResize = () => {
             setIsMobileView(window.innerWidth <= 800);
+            if (window.innerWidth > 800 && !selectedChat && chats.length > 0) {
+                // Si cambiamos a vista de escritorio y no hay un chat seleccionado, selecciona el primero
+                setSelectedChat(chats[0]);
+            }
         };
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [chats, selectedChat]);
 
     // Carga de chats según la tab seleccionada
     const fetchChats = async () => {
@@ -40,22 +45,17 @@ const MessagesPage = () => {
 
             setChats(filteredChats);
 
-            // Mantener o asignar el chat seleccionado
-            if (!isMobileView) {
-                if (selectedChat) {
-                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
-                    setSelectedChat(updatedSelectedChat || filteredChats[0] || null);
-                } else {
-                    setSelectedChat(filteredChats[0] || null);
-                }
-            } else {
-                if (selectedChat) {
-                    const updatedSelectedChat = filteredChats.find(chat => chat._id === selectedChat._id);
-                    setSelectedChat(updatedSelectedChat || null);
-                } else {
-                    setSelectedChat(null);
-                }
+            // Mantener el chat seleccionado en vista de escritorio, pero evitar selección automática en móvil
+            if (!isMobileView && !selectedChat && filteredChats.length > 0) {
+                setSelectedChat(filteredChats[0]);
+            } else if (selectedChat && filteredChats.some(chat => chat._id === selectedChat._id)) {
+                setSelectedChat(prevSelectedChat =>
+                    filteredChats.find(chat => chat._id === prevSelectedChat._id)
+                );
+            } else if (filteredChats.length === 0) {
+                setSelectedChat(null);
             }
+
 
             setLoading(false);
         } catch (error) {
@@ -73,6 +73,18 @@ const MessagesPage = () => {
         fetchChats();
     }, [activeTab, isMobileView]);
 
+     // Evento de socket para actualizar chats en tiempo real y mantener el chat seleccionado
+     useEffect(() => {
+        const handleNewMessage = () => {
+            fetchChats();
+        };
+
+        socket.on('new_message_received', handleNewMessage);
+
+        return () => {
+            socket.off('new_message_received', handleNewMessage);
+        };
+    }, [selectedChat]);
     const hasChats = chats.length > 0;
 
     if (loading) {
