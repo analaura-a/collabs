@@ -4,6 +4,7 @@ import { useToast } from '../../context/ToastContext';
 import ChatList from '../../components/Chat/ChatList';
 import ChatView from '../../components/Chat/ChatView';
 import Loader from '../../components/Loader/Loader';
+import socket from '../../services/socket';
 
 const MessagesPage = () => {
 
@@ -72,6 +73,18 @@ const MessagesPage = () => {
     useEffect(() => {
         fetchChats();
     }, [activeTab, isMobileView]);
+
+    // Escuchar el evento `new_message_received` para actualizar la lista de chats en tiempo real
+    useEffect(() => {
+        socket.on('new_message_received', () => {
+            // Actualiza el listado de chats cuando se recibe un nuevo mensaje
+            fetchChats(); 
+        });
+
+        return () => {
+            socket.off('new_message_received');
+        };
+    }, []);
 
     const hasChats = chats.length > 0;
 
