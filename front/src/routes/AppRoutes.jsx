@@ -29,6 +29,7 @@ import EditOpenPositionsPage from '../pages/ProjectDashboard/EditOpenPositionsPa
 import ReviewPage from '../pages/ProjectReviews/ReviewPage.jsx'
 import MessagesPage from '../pages/Messages/MessagesPage.jsx'
 import NotificationsPage from '../pages/Notifications/NotificationsPage.jsx'
+import DonationPage from '../pages/DonationPage/DonationPage.jsx'
 
 import ProtectedRoute from '../components/Route/ProtectedRoute.jsx'
 import OnboardingRoute from '../components/Route/OnboardingRoute.jsx'
@@ -45,6 +46,10 @@ const AppRoutes = createBrowserRouter([
             {
                 path: "/",
                 element: <LandingPage />,
+            },
+            {
+                path: "/donaciones",
+                element: <DonationPage />,
             },
             {
                 path: "/inicio",

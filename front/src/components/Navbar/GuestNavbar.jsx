@@ -102,6 +102,9 @@ const GuestNavbar = () => {
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <Link to="/donaciones" className="navbar-text">Donaciones</Link>
+                        </li>
                     </ul>
                 </nav>
 
