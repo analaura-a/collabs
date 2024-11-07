@@ -1,5 +1,3 @@
-import Button from "../../components/Button/Button";
-
 const DonationPage = () => {
     return (
         <main className="landing-page">
