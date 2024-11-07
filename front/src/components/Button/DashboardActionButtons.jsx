@@ -64,13 +64,19 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
             });
 
         } catch (error) {
-            addToast({
-                type: 'error',
-                title: 'Error al iniciar el proyecto',
-                message: 'Ocurrió un error desconocido al intentar cambiar el estado del proyecto. Inténtalo de nuevo más tarde.'
-            });
+            const errorMessage = error.response?.data?.message || error.message;
 
-            handleCloseStartProjectModal();
+            if (errorMessage === 'El chat ya existe') {
+                handleCloseStartProjectModal();
+            } else {
+                handleCloseStartProjectModal();
+
+                addToast({
+                    type: 'error',
+                    title: 'Error al iniciar el proyecto',
+                    message: 'Ocurrió un error desconocido al intentar cambiar el estado del proyecto. Inténtalo de nuevo más tarde.'
+                });
+            }
         }
     };
 
