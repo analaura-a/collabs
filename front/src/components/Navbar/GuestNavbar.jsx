@@ -103,7 +103,7 @@ const GuestNavbar = () => {
                             </ul>
                         </li>
                         <li>
-                            <Link to="/donaciones" className="navbar-text">Donaciones</Link>
+                            <Link to="/donaciones" className="navbar-text">Donar</Link>
                         </li>
                     </ul>
                 </nav>

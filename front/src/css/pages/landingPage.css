@@ -68,6 +68,10 @@
         align-items: center;
     }
 
+    .hero-section__heading {
+        align-items: center;
+    }
+
     .title-with-faces {
         justify-content: center;
         margin-top: 0px;
