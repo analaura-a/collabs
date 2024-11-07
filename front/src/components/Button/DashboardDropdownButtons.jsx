@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { updateProjectStatus } from '../../services/projectService';
-import { leaveProject } from '../../services/teamService';
+import { leaveProject, getActiveProjectMembers } from '../../services/teamService';
 import { declinePendingRequests } from "../../services/requestService";
+import { createChat } from '../../services/chatService';
 import { useToast } from "../../context/ToastContext";
 import DropdownButton from './DropdownButton';
 import Modal from '../Modal/Modal';
@@ -37,6 +38,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
         try {
+            // Cambiar estado del proyecto
             await updateProjectStatus(project._id, 'En curso');
 
             addToast({
@@ -46,10 +48,21 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
             });
 
             onStatusChange('En curso');
-
             handleCloseStartProjectModal();
 
+            // Declinar las postulaciones pendientes
             await declinePendingRequests(project._id);
+
+            // Crear el chat grupal
+            const activeMembers = await getActiveProjectMembers(project._id);
+            const participantIds = activeMembers.map(member => member.user_id);
+
+            await createChat({
+                type: "group",
+                participants: participantIds,
+                project_id: project._id
+            });
+
         } catch (error) {
             addToast({
                 type: 'error',
