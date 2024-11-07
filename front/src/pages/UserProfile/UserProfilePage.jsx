@@ -4,6 +4,7 @@ import AuthContext from "../../context/AuthContext";
 import { fetchUserProfileByUsername } from "../../services/userService";
 import { getUserProjects } from "../../services/projectService";
 import { createNotification } from "../../services/notificationService";
+import { createChat } from "../../services/chatService";
 import { useToast } from "../../context/ToastContext";
 import Button from "../../components/Button/Button";
 import Tabs from '../../components/Tabs/Tabs';
@@ -63,10 +64,6 @@ const UserProfilePage = () => {
         }
     }, [loading, user, navigate]);
 
-    if (loading) {
-        return <Loader message="Cargando perfil..." />;
-    }
-
     const formatRoles = (roles) => {
         return roles.map((role, index) => (
             <React.Fragment key={index}>
@@ -83,7 +80,6 @@ const UserProfilePage = () => {
     };
 
     const handleOpenModal = async () => {
-
         try {
             const projects = await getUserProjects(authState.user._id);
             setOpenProjects(projects.openProjects);
@@ -93,7 +89,6 @@ const UserProfilePage = () => {
             console.error(error);
             setModalOpen(true);
         }
-
     }
     const handleCloseModal = () => setModalOpen(false);
 
@@ -134,10 +129,44 @@ const UserProfilePage = () => {
 
     }
 
+    const handleSendMessage = async () => {
+        try {
+            // Intentar crear el chat
+            await createChat({
+                type: "private",
+                participants: [
+                    `${user._id}`,
+                    `${authState.user._id}`
+                ]
+            });
+
+            //Redirigir al chat
+            navigate('/mensajes');
+        } catch (error) {
+
+            const errorMessage = error.response?.data?.message || error.message;
+
+            if (errorMessage === 'El chat ya existe') {
+                // Si el chat ya existe, redirigir al chat sin mostrar error
+                navigate('/mensajes');
+            } else {
+                addToast({
+                    type: 'error',
+                    title: 'Error al crear el chat',
+                    message: 'Ocurrió un error desconocido al intentar crear el chat. Inténtalo de nuevo más tarde.'
+                });
+            }
+        }
+    }
+
     const tabs = [
         { label: 'Perfil', content: <TabUserProfileContent /> },
         { label: 'Reseñas', content: <TabUserReviewsContent /> },
     ];
+
+    if (loading) {
+        return <Loader message="Cargando perfil..." />;
+    }
 
     return (
         <main>
@@ -187,7 +216,7 @@ const UserProfilePage = () => {
 
                     <div className="profile-page__header__actions">
 
-                        <Button color="secondary" width="full-then-fit" size="large">Enviar mensaje</Button>
+                        <Button color="secondary" width="full-then-fit" size="large" onClick={handleSendMessage}>Enviar mensaje</Button>
 
                         <div className="profile-page__header__actions__portfolio-container">
 
