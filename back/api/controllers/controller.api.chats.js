@@ -6,6 +6,12 @@ const createChat = async (req, res) => {
     const { type, participants, project_id } = req.body;
 
     try {
+        const existingChat = await service.findExistingChat({ type, participants, project_id });
+
+        if (existingChat) {
+            return res.status(409).json({ message: 'El chat ya existe' });
+        }
+
         const newChat = await service.createChat({ type, participants, project_id });
         res.status(201).json(newChat);
     } catch (error) {

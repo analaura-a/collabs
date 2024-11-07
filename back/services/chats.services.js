@@ -3,6 +3,31 @@ import { MongoClient, ObjectId } from 'mongodb';
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
 
+// Verificar si un chat ya existe
+const findExistingChat = async ({ type, participants, project_id }) => {
+
+    const participantsIds = participants.map(id => new ObjectId(id));
+
+    if (type === 'private') {
+
+        // Verificar si un chat privado ya existe entre estos dos participantes
+        return await db.collection('chats').findOne({
+            type: 'private',
+            participants: { $all: participantsIds, $size: participantsIds.length }
+        });
+
+    } else if (type === 'group' && project_id) {
+
+        // Verificar si ya existe un chat grupal para este proyecto
+        return await db.collection('chats').findOne({
+            type: 'group',
+            project_id: new ObjectId(project_id)
+        });
+    }
+
+    return null;
+};
+
 // Crear un nuevo chat
 const createChat = async ({ type, participants, project_id }) => {
 
@@ -142,6 +167,7 @@ const getProjectChat = async (projectId, userId) => {
 };
 
 export {
+    findExistingChat,
     createChat,
     getUserChats,
     getProjectChat
