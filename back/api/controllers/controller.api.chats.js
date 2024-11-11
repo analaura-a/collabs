@@ -57,7 +57,7 @@ const leaveGroupChat = async (req, res) => {
         const result = await service.leaveGroupChat(projectId, userId);
 
         if (result.modifiedCount === 0) {
-            return res.status(404).json({ message: 'Chat o usuario no encontrado en el chat' });
+            return res.status(404).json({ message: 'Chat o usuario no encontrado' });
         }
 
         res.status(200).json({ message: 'Has abandonado el chat con éxito.' });

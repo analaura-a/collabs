@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { updateProjectStatus } from '../../services/projectService';
 import { leaveProject, getActiveProjectMembers } from '../../services/teamService';
 import { declinePendingRequests } from "../../services/requestService";
-import { createChat } from '../../services/chatService';
+import { createChat, leaveGroupChat } from '../../services/chatService';
 import { useToast } from "../../context/ToastContext";
 import Button from "./Button";
 import Modal from '../Modal/Modal';
@@ -156,21 +156,36 @@ const DashboardActionButtons = ({ project, projectType, projectStatus, user, use
         try {
             await leaveProject(project._id, user._id);
 
+            await leaveGroupChat(project._id);
+
+            navigate(`/mis-proyectos`);
+
             addToast({
                 type: 'success',
                 title: 'Has abandonado el proyecto con éxito',
                 message: 'Ya no perteneces al equipo del proyecto ni puedes colaborar en él.'
             });
 
-            navigate(`/mis-proyectos`);
         } catch (error) {
-            addToast({
-                type: 'error',
-                title: 'Error al abandonar el proyecto',
-                message: 'Ocurrió un error desconocido al intentar abandonar el equipo del proyecto. Inténtalo de nuevo más tarde.'
-            });
-        }
-    };
+            const errorMessage = error.response?.data?.message || error.message;
+
+            if (errorMessage === 'Chat o usuario no encontrado') {
+                navigate(`/mis-proyectos`);
+
+                addToast({
+                    type: 'success',
+                    title: 'Has abandonado el proyecto con éxito',
+                    message: 'Ya no perteneces al equipo del proyecto ni puedes colaborar en él.'
+                });
+            } else {
+                addToast({
+                    type: 'error',
+                    title: 'Error al abandonar el proyecto',
+                    message: 'Ocurrió un error desconocido al intentar abandonar el equipo del proyecto. Inténtalo de nuevo más tarde.'
+                });
+            }
+        };
+    }
 
     /* Botones */
     const renderActionButtons = () => {
