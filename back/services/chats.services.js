@@ -166,9 +166,25 @@ const getProjectChat = async (projectId, userId) => {
     };
 };
 
+// Salir de un chat grupal
+const leaveGroupChat = async (projectId, userId) => {
+
+    const projectObjectId = new ObjectId(projectId);
+    const userObjectId = new ObjectId(userId);
+
+    // Actualizar el chat, eliminando al usuario de la lista de participantes
+    const result = await db.collection('chats').updateOne(
+        { project_id: projectObjectId },
+        { $pull: { participants: userObjectId } }
+    );
+
+    return result;
+};
+
 export {
     findExistingChat,
     createChat,
     getUserChats,
-    getProjectChat
+    getProjectChat,
+    leaveGroupChat
 }

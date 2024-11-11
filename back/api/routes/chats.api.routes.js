@@ -14,4 +14,7 @@ route.get('/user/chats', [validateTokenMiddleware], controllers.getUserChats);
 // Obtener el chat grupal de un proyecto
 route.get('/project/:projectId/chat', [validateTokenMiddleware, verifyTeamMember], controllers.getProjectChat);
 
+// Salir de un chat grupal
+route.patch('/project/:projectId/chat/leave', [validateTokenMiddleware], controllers.leaveGroupChat);
+
 export default route;

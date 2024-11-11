@@ -47,8 +47,28 @@ const getProjectChat = async (req, res) => {
     }
 };
 
+// Salir de un chat grupal
+const leaveGroupChat = async (req, res) => {
+
+    const { projectId } = req.params;
+    const userId = req.account._id;
+
+    try {
+        const result = await service.leaveGroupChat(projectId, userId);
+
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({ message: 'Chat o usuario no encontrado en el chat' });
+        }
+
+        res.status(200).json({ message: 'Has abandonado el chat con éxito.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al salir del chat', error: error.message });
+    }
+};
+
 export {
     createChat,
     getUserChats,
-    getProjectChat
+    getProjectChat,
+    leaveGroupChat
 }
