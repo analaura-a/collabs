@@ -48,10 +48,6 @@ const AppRoutes = createBrowserRouter([
                 element: <LandingPage />,
             },
             {
-                path: "/donaciones",
-                element: <DonationPage />,
-            },
-            {
                 path: "/inicio",
                 element: (<ProtectedRoute>
                     <HomePage />
@@ -155,6 +151,10 @@ const AppRoutes = createBrowserRouter([
                     <NotificationsPage />
                 </ProtectedRoute>),
             },
+            {
+                path: "/donaciones",
+                element: <DonationPage />,
+            }
         ]
     },
     {
