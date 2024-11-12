@@ -6,6 +6,8 @@ import ChatInput from "./ChatInput";
 import Loader from '../Loader/Loader';
 import socket from '../../services/socket';
 
+const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
+
 const ChatView = ({ activeTab, chat, onBack, hasChats, refreshChats }) => {
 
     const [messages, setMessages] = useState([]);
