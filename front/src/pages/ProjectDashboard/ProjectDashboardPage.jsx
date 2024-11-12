@@ -140,7 +140,6 @@ const ProjectDashboardPage = () => {
             if (projectStatus === 'Abierto') {
 
                 tabs = [
-                    { label: 'Personas interesadas', content: <div>Lista de interesados aquí...</div> },
                     { label: 'Organizadores', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> }
                 ];
 
