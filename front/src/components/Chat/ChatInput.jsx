@@ -32,7 +32,9 @@ const ChatInput = ({ chatId, onMessageSent, refreshChats }) => {
 
             onMessageSent();
 
-            refreshChats();
+            if (refreshChats) {
+                refreshChats();
+            }
         } catch (error) {
             addToast({
                 type: 'error',

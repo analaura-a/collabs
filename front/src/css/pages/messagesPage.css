@@ -254,6 +254,10 @@
         padding: 100px 0;
     }
 
+    .project-chat-container {
+        min-height: 650px;
+    }
+
 }
 
 
