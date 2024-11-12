@@ -10,6 +10,7 @@ import Tabs from "../../components/Tabs/Tabs";
 import TabTeamMembers from '../../components/TabsContent/Dashboard/TabTeamMembers';
 import TabProjectApplications from '../../components/TabsContent/Dashboard/TabProjectApplications';
 import TabProjectShortcuts from '../../components/TabsContent/Dashboard/TabProjectShortcuts';
+import TabGroupChat from '../../components/TabsContent/Dashboard/TabGroupChat';
 import Loader from '../../components/Loader/Loader';
 
 const ProjectDashboardPage = () => {
@@ -124,7 +125,7 @@ const ProjectDashboardPage = () => {
 
                 tabs = [
                     { label: 'Equipo', content: <TabTeamMembers projectId={project._id} projectType={projectType} projectStatus={projectStatus} userRole={userRole} /> },
-                    { label: 'Chat grupal', content: <div>Contenido aquí...</div> },
+                    { label: 'Chat grupal', content: <TabGroupChat project={project} /> },
                     { label: 'Atajos rápidos', content: <TabProjectShortcuts project={project} /> }
                 ];
 
