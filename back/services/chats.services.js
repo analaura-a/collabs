@@ -28,6 +28,17 @@ const findExistingChat = async ({ type, participants, project_id }) => {
     return null;
 };
 
+// Verificar si un proyecto ya tiene un chat creado
+const findProjectGroupChat = async (projectId) => {
+    try {
+        const chat = await db.collection('chats')
+            .findOne({ project_id: new ObjectId(projectId) });
+        return chat;
+    } catch (error) {
+        throw new Error(`Error al encontrar el chat del proyecto: ${error.message}`);
+    }
+};
+
 // Crear un nuevo chat
 const createChat = async ({ type, participants, project_id }) => {
 
@@ -166,6 +177,18 @@ const getProjectChat = async (projectId, userId) => {
     };
 };
 
+// Agregar usuario a un chat grupal
+const addUserToChat = async (chatId, userId) => {
+    try {
+        await db.collection('chats').updateOne(
+            { _id: new ObjectId(chatId) },
+            { $addToSet: { participants: new ObjectId(userId) } }
+        );
+    } catch (error) {
+        throw new Error(`Error al agregar usuario al chat: ${error.message}`);
+    }
+};
+
 // Salir de un chat grupal
 const leaveGroupChat = async (projectId, userId) => {
 
@@ -183,8 +206,10 @@ const leaveGroupChat = async (projectId, userId) => {
 
 export {
     findExistingChat,
+    findProjectGroupChat,
     createChat,
     getUserChats,
     getProjectChat,
+    addUserToChat,
     leaveGroupChat
 }

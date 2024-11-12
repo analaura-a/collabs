@@ -1,5 +1,6 @@
 import * as service from "../../services/projects_requests.services.js";
-import * as teamService from "../../services/projects_teams.services.js"
+import * as teamService from "../../services/projects_teams.services.js";
+import * as chatService from "../../services/chats.services.js";
 
 //Obtener las postulaciones de un proyecto en particular
 const getRequestsByProjectId = async (req, res) => {
@@ -71,13 +72,6 @@ const acceptProjectRequest = async (req, res) => {
     const { projectId, userId, appliedRole } = req.body;
 
     try {
-        // Cambiar el estado de la postulación 
-        const updatedRequest = await service.acceptProjectRequest(id);
-
-        if (!updatedRequest) {
-            return res.status(404).json({ message: 'Postulación no encontrada.' });
-        }
-
         // Agregar al usuario al equipo del proyecto
         await teamService.addMemberToProjectTeam({
             projectId,
@@ -86,12 +80,26 @@ const acceptProjectRequest = async (req, res) => {
             profile: appliedRole
         });
 
+        // Cambiar el estado de la postulación 
+        const updatedRequest = await service.acceptProjectRequest(id);
+
+        if (!updatedRequest) {
+            return res.status(404).json({ message: 'Postulación no encontrada.' });
+        }
+
         // Declinar las otras postulaciones del mismo usuario para este proyecto
         await service.declineOtherRequests({
             projectId,
             userId,
             excludeRequestId: id
         });
+
+        // Verificar si es necesario agregar al nuevo miembro al chat del proyecto
+        const projectChat = await chatService.findProjectGroupChat(projectId);
+
+        if (projectChat) {
+            await chatService.addUserToChat(projectChat._id, userId);
+        }
 
         return res.status(200).json({
             message: 'Postulación aceptada y usuario agregado al equipo del proyecto.',
