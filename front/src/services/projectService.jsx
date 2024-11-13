@@ -264,3 +264,32 @@ export const updateProjectStatus = async (projectId, newStatus) => {
 
     return await response.json();
 };
+
+export const deleteProject = async (projectId) => {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('Token de autenticación no encontrado');
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/projects/${projectId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token,
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Ocurrió un error desconocido al intentar eliminar el proyecto.');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al eliminar el proyecto:', error);
+        throw error;
+    }
+};

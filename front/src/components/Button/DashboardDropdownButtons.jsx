@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { updateProjectStatus } from '../../services/projectService';
+import { updateProjectStatus, deleteProject } from '../../services/projectService';
 import { leaveProject, getActiveProjectMembers } from '../../services/teamService';
 import { declinePendingRequests } from "../../services/requestService";
 import { createChat, leaveGroupChat } from '../../services/chatService';
@@ -34,6 +34,10 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
     const [isUnarchiveProjectModalOpen, setUnarchiveProjectModalOpen] = useState(false);
     const handleOpenUnarchiveProjectModal = () => setUnarchiveProjectModalOpen(true);
     const handleCloseUnarchiveProjectModal = () => setUnarchiveProjectModalOpen(false);
+
+    const [isDeleteProjectModalOpen, setDeleteProjectModalOpen] = useState(false);
+    const handleOpenDeleteProjectModal = () => setDeleteProjectModalOpen(true);
+    const handleCloseDeleteProjectModal = () => setDeleteProjectModalOpen(false);
 
     /* Funcionalidades de los botones */
     const handleStartProject = async () => {
@@ -187,6 +191,31 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
         };
     }
 
+    const handleDeleteProject = async () => {
+        try {
+            await deleteProject(project._id);
+
+            navigate(`/mis-proyectos`);
+
+            handleCloseDeleteProjectModal();
+
+            addToast({
+                type: 'success',
+                title: '¡Proyecto eliminado con éxito!',
+                message: 'El proyecto y todos los datos relacionados se eliminaron correctamente.'
+            });
+
+        } catch (error) {
+            handleCloseDeleteProjectModal();
+
+            addToast({
+                type: 'error',
+                title: 'Error al eliminar el proyecto',
+                message: error.message || 'Ocurrió un error desconocido al intentar eliminar el proyecto. Inténtalo de nuevo más tarde.'
+            });
+        }
+    };
+
     /* Botones */
     const renderDropdownOptions = () => {
 
@@ -217,7 +246,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                         },
                         {
                             title: 'Cancelar proyecto',
-                            onClick: () => console.log("Funcionalidad")
+                            onClick: handleOpenDeleteProjectModal
                         }
                     ];
                 } else if (userRole === 'Colaborador') {
@@ -255,7 +284,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                         },
                         {
                             title: 'Cancelar proyecto',
-                            onClick: () => console.log("Funcionalidad")
+                            onClick: handleOpenDeleteProjectModal
                         }
                     ];
                 } else if (userRole === 'Colaborador') {
@@ -285,7 +314,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                         },
                         {
                             title: 'Eliminar proyecto',
-                            onClick: () => console.log("Funcionalidad")
+                            onClick: handleOpenDeleteProjectModal
                         }
                     ];
                 } else if (userRole === 'Colaborador') {
@@ -323,7 +352,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                     },
                     {
                         title: 'Cancelar proyecto',
-                        onClick: () => console.log("Funcionalidad")
+                        onClick: handleOpenDeleteProjectModal
                     }
                 ];
 
@@ -339,7 +368,7 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                     },
                     {
                         title: 'Eliminar proyecto',
-                        onClick: () => console.log("Funcionalidad")
+                        onClick: handleOpenDeleteProjectModal
                     }
                 ];
             }
@@ -418,6 +447,17 @@ const DashboardDropdownButtons = ({ project, projectType, projectStatus, user, u
                 actions={[
                     { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseUnarchiveProjectModal },
                     { label: 'Reabrir proyecto', color: 'primary', size: "large", width: "fullwidth", onClick: handleUnarchiveProject },
+                ]}
+            />
+
+            <Modal
+                isOpen={isDeleteProjectModalOpen}
+                onClose={handleCloseDeleteProjectModal}
+                title={`¿Quieres cancelar el proyecto ${project.name}?`}
+                subtitle="Dejará de aparecer en el listado de proyectos de Collabs, así como de la página “Mis proyectos” y el perfil de todos los miembros del equipo. Será como si nunca hubiera existido."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseDeleteProjectModal },
+                    { label: 'Eliminar proyecto', color: 'red', size: "large", width: "fullwidth", onClick: handleDeleteProject },
                 ]}
             />
 
