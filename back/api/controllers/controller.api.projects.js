@@ -281,19 +281,18 @@ const updateProjectStatus = async (req, res) => {
     }
 };
 
-// //Eliminar un proyecto
-// const deleteProject = (req, res) => {
+// Eliminar un proyecto
+const deleteProject = async (req, res) => {
 
-//     const id = req.params.id;
+    const { projectId } = req.params;
 
-//     service
-//         .deleteProject(id)
-//         .then(() => {
-//             res.status(204).json();
-//         })
-//         .catch((error) => res.status(500).json());
-
-// };
+    try {
+        await service.deleteProject(projectId);
+        res.status(200).json({ message: '¡Proyecto eliminado con éxito!' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar el proyecto:', error: error.message });
+    }
+};
 
 export {
     getOpenProjects,
@@ -306,6 +305,6 @@ export {
     uploadProjectImage,
     updateProjectDetails,
     updateProjectOpenPositions,
-    updateProjectStatus
-    // deleteProject
+    updateProjectStatus,
+    deleteProject
 }

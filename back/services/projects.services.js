@@ -339,12 +339,46 @@ const removeOpenPositionsByIds = async (projectId, positionIds) => {
     }
 };
 
-// //Eliminar un proyecto
-// const deleteProject = async (id) => {
-//     const deletedProject = await db.collection("projects").updateOne({ _id: new ObjectId(id) }, { $set: { deleted: true } }); //Borrado lógico
-//     return deletedProject;
-// };
+// Eliminar un proyecto
+const deleteProject = async (projectId) => {
 
+    const projectObjectId = new ObjectId(projectId);
+
+    const session = client.startSession();
+
+    try {
+        await session.withTransaction(async () => {
+
+            // 1. Eliminar el proyecto
+            await db.collection('projects').deleteOne({ _id: projectObjectId }, { session });
+
+            // 2. Eliminar miembros del equipo
+            await db.collection('projects_teams').deleteMany({ project_id: projectObjectId }, { session });
+
+            // 3. Eliminar postulaciones 
+            await db.collection('projects_requests').deleteMany({ project_id: projectObjectId }, { session });
+
+            // 4. Eliminar shortcuts 
+            await db.collection('projects_shortcuts').deleteMany({ project_id: projectObjectId }, { session });
+
+            // 5. Eliminar reseñas 
+            await db.collection('projects_reviews').deleteMany({ project_id: projectObjectId }, { session });
+
+            // 6. Eliminar el chat del proyecto
+            const chat = await db.collection('chats').findOneAndDelete({ project_id: projectObjectId }, { session });
+
+            if (chat) {
+                // 7. Eliminar todos los mensajes asociados al chat
+                await db.collection('messages').deleteMany({ chat_id: chat._id }, { session });
+            }
+        });
+
+    } catch (error) {
+        throw new Error(`Error al eliminar el proyecto y datos relacionados: ${error.message}`);
+    } finally {
+        await session.endSession();
+    }
+};
 
 export {
     getOpenProjects,
@@ -359,5 +393,5 @@ export {
     updateProjectOpenPositions,
     updateProjectStatus,
     removeOpenPositionsByIds,
-    // deleteProject
+    deleteProject
 }

@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
 import * as controllers from '../controllers/controller.api.projects.js';
-// import { validatePersonalProjectCreate, validateOpenSourceProjectCreate, validatePersonalProjectPatch, validateOpenSourceProjectPatch } from '../../middleware/projects.validate.middleware.js'
 import { validateTokenMiddleware, verifyUserOwnership } from '../../middleware/token.validate.middleware.js'
 import { verifyOrganizerRole } from "../../middleware/projects_teams.validate.middleware.js"
 
@@ -45,15 +44,15 @@ route.post('/projects', [verifyUserOwnership], controllers.createProject);
 route.post('/projects/:id/image', [upload.single('projectImage')], controllers.uploadProjectImage);
 
 // Editar los detalles de un proyecto
-route.patch('/projects/:id', [validateTokenMiddleware], controllers.updateProjectDetails) //agregar middleware para validar que es un organizador del proyecto
+route.patch('/projects/:id', [validateTokenMiddleware], controllers.updateProjectDetails)
 
 // Editar la convocatoria de un proyecto
-route.patch('/projects/:id/open-positions', [validateTokenMiddleware], controllers.updateProjectOpenPositions) //agregar middleware para validar que es un organizador del proyecto
+route.patch('/projects/:id/open-positions', [validateTokenMiddleware], controllers.updateProjectOpenPositions)
 
 // Cambiar el estado de un proyecto
 route.patch('/projects/:projectId/status', [validateTokenMiddleware, verifyOrganizerRole], controllers.updateProjectStatus);
 
-// //Borrar un proyecto (eliminado lógico)
-// route.delete("/projects/:id", [validateTokenMiddleware], controllers.deleteProject);
+// Eliminar un proyecto
+route.delete("/projects/:projectId", [validateTokenMiddleware, verifyOrganizerRole], controllers.deleteProject);
 
 export default route;
