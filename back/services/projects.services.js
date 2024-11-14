@@ -194,11 +194,8 @@ const getRecommendedProjectsForUser = async (userId) => {
 
             return {
                 ...project,
-                organizer: {
-                    name: founder.name,
-                    last_name: founder.last_name,
-                    profile_pic: founder?.profile_pic || null
-                }
+                organizer_name: `${founder.name} ${founder.last_name}`,
+                organizer_photo: founder?.profile_pic || null
             };
         }));
 
