@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.accounts.js';
 import { validateAccountCreate, validateAccount } from '../../middleware/accounts.validate.middleware.js'
-import { verifyUserOwnership } from '../../middleware/token.validate.middleware.js';
+import { verifyUserOwnership, validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
 
 const route = Router();
 
@@ -23,5 +23,8 @@ route.post('/auth/forgot-password', controllers.forgotPassword);
 
 // Restablecer la contraseña con el token
 route.post('/auth/reset-password', controllers.updatePassword);
+
+// Eliminar una cuenta
+route.delete('/auth/delete-account/:id', [validateTokenMiddleware], controllers.deleteAccount);
 
 export default route;

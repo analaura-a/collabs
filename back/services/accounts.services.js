@@ -2,6 +2,8 @@ import { MongoClient, ObjectId } from "mongodb";
 import bcrypt from 'bcrypt';
 import { sendResetPasswordEmail } from './email.services.js';
 import { generateResetToken, verifyResetToken } from './token.services.js';
+import { deleteProject } from './projects.services.js'
+import { leaveGroupChat } from "./chats.services.js";
 
 const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
 const db = client.db("AH20232CP1");
@@ -165,11 +167,83 @@ async function resetPassword(token, newPassword) {
 
 }
 
+// Eliminar una cuenta
+const deleteAccount = async (userId) => {
+
+    const userObjectId = new ObjectId(userId);
+
+    try {
+        await client.connect();
+
+        // 1. Eliminar cuenta
+        await db.collection('accounts').deleteOne({ _id: userObjectId });
+
+        // 2. Eliminar perfil
+        await db.collection('users').deleteOne({ _id: userObjectId });
+
+        // 3. Eliminar tokens de autenticación activos
+        await db.collection('tokens').deleteMany({ account_id: userObjectId });
+
+        // 4. Eliminar notificaciones del usuario
+        await db.collection('notifications').deleteMany({
+            $or: [{ user_id: userObjectId }, { sender_id: userObjectId }]
+        });
+
+        // 5. Eliminar postulaciones del usuario
+        await db.collection('projects_requests').deleteMany({ user_id: userObjectId });
+
+        // 6. Eliminar reseñas del usuario
+        await db.collection('projects_reviews').deleteMany({
+            $or: [{ reviewer_id: userObjectId }, { reviewed_user_id: userObjectId }]
+        });
+
+        // 7. Eliminar proyectos creados por el usuario
+        const userProjects = await db.collection('projects')
+            .find({ founder_id: userObjectId })
+            .toArray();
+
+        for (const project of userProjects) {
+            await deleteProject(project._id);
+        }
+
+        // 8. Eliminar colaboraciones activas del usuario
+        const userCollaborations = await db.collection('projects_teams')
+            .find({ user_id: userObjectId, role: 'Colaborador' })
+            .toArray();
+
+        for (const collaboration of userCollaborations) {
+            const projectId = collaboration.project_id;
+
+            // a. Abandonar el chat del proyecto (si existe)
+            await leaveGroupChat(projectId, userObjectId);
+
+            // b. Eliminar mensajes enviados por el usuario
+            await db.collection('messages').deleteMany({
+                chat_id: collaboration.project_id,
+                sender_id: userObjectId
+            });
+        }
+
+        // 9. Eliminar todas las participaciones en proyectos del usuario
+        await db.collection('projects_teams').deleteMany({ user_id: userObjectId });
+
+        // 10. Eliminar chats privados donde el usuario es participante
+        await db.collection('chats').deleteMany({
+            type: 'private',
+            participants: userObjectId
+        });
+
+    } catch (error) {
+        throw new Error(`Error al eliminar la cuenta y sus datos asociados: ${error.message}`);
+    }
+};
+
 export {
     createAccount,
     login,
     changePassword,
     updatePersonalProfileData,
     requestPasswordReset,
-    resetPassword
+    resetPassword,
+    deleteAccount
 }

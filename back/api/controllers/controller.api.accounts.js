@@ -85,11 +85,25 @@ const updatePassword = async (req, res) => {
     }
 };
 
+// Eliminar una cuenta
+const deleteAccount = async (req, res) => {
+
+    const userId = req.params.id;
+
+    try {
+        await service.deleteAccount(userId);
+        res.status(200).json({ message: '¡Cuenta y datos asociados eliminados con éxito!' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar la cuenta de usuario', error: error.message });
+    }
+};
+
 export {
     createAccount,
     login,
     logout,
     changePassword,
     forgotPassword,
-    updatePassword
+    updatePassword,
+    deleteAccount
 }
