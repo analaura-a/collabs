@@ -1,7 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useToast } from '../../context/ToastContext';
+import AuthContext from '../../context/AuthContext';
+import { deleteAccount } from '../../services/authService';
+import Modal from '../Modal/Modal';
 
 const EditUserProfileMenu = ({ onSelect, selectedSection }) => {
 
+    const { authState, logout } = useContext(AuthContext);
+    const { addToast } = useToast();
+
+    const navigate = useNavigate();
+
+    /* Menú */
     const [isOpen, setIsOpen] = useState(false);
 
     const menuOptions = [
@@ -18,6 +29,45 @@ const EditUserProfileMenu = ({ onSelect, selectedSection }) => {
     const handleSelect = (section) => {
         onSelect(section);
         setIsOpen(false);
+
+        if (section == "delete-account") {
+            handleOpenDeleteAccountModal();
+        }
+    };
+
+    /* Modal */
+    const [isDeleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false);
+    const handleOpenDeleteAccountModal = () => setDeleteAccountModalOpen(true);
+    const handleCloseDeleteAccountModal = () => setDeleteAccountModalOpen(false);
+
+    const handleDeleteAccount = async () => {
+
+        const userId = authState.user?._id;
+
+        try {
+            // 1. Cerrar sesión
+            await logout();
+
+            // 2. Redirigir a la página de inicio de sesión
+            navigate('/auth/iniciar-sesion');
+
+            // 3. Eliminar la cuenta
+            await deleteAccount(userId);
+
+            // 4. Mostrar notificación
+            addToast({
+                type: 'success',
+                title: 'Tu cuenta ha sido eliminada con éxito',
+                message: '¡Esperamos que vuelvas a colaborar pronto!'
+            });
+
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Error al eliminar tu cuenta',
+                message: error.message || 'Ocurrió un error desconocido al intentar eliminar tu cuenta. Inténtalo de nuevo más tarde.'
+            });
+        }
     };
 
     return (
@@ -58,6 +108,17 @@ const EditUserProfileMenu = ({ onSelect, selectedSection }) => {
                     </li>
                 ))}
             </ul>
+
+            <Modal
+                isOpen={isDeleteAccountModalOpen}
+                onClose={handleCloseDeleteAccountModal}
+                title={`¿Quieres eliminar tu cuenta definitivamente?`}
+                subtitle="Esta es una acción que no se puede deshacer. Los proyectos que hayas creado también se eliminarán."
+                actions={[
+                    { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseDeleteAccountModal },
+                    { label: 'Eliminar mi cuenta', color: 'red', size: "large", width: "fullwidth", onClick: handleDeleteAccount },
+                ]}
+            />
 
         </nav>
     );

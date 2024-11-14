@@ -90,3 +90,25 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
     }
 
 };
+
+export const deleteAccount = async (userId) => {
+
+    try {
+        const response = await fetch(`${API_URL}/auth/delete-account/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Ocurrió un error al intentar eliminar la cuenta.');
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
