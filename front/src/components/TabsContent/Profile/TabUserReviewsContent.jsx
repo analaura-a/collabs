@@ -36,11 +36,13 @@ const TabUserReviewsContent = () => {
             const userReviews = await getUserReviews(userData._id);
             setReviews(userReviews);
         } catch (error) {
-            addToast({
-                type: 'error',
-                title: 'Error al cargar las reseñas',
-                message: 'Ocurrió un error desconocido al intentar obtener las reseñas del usuario. Inténtalo de nuevo más tarde.'
-            });
+            if (error.message !== "Este usuario no tiene reseñas aún.") {
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar las reseñas',
+                    message: 'Ocurrió un error desconocido al intentar obtener las reseñas del usuario. Inténtalo de nuevo más tarde.'
+                });
+            }
         } finally {
             setLoading(false);
         }
@@ -51,11 +53,13 @@ const TabUserReviewsContent = () => {
             const projects = await getSharedCompletedProjects(user._id);
             setSharedProjects(projects);
         } catch (error) {
-            addToast({
-                type: 'error',
-                title: 'Error al cargar los proyectos compartidos',
-                message: 'Ocurrió un error desconocido al intentar obtener los proyectos compartidos con el usuario. Inténtalo de nuevo más tarde.'
-            });
+            if (error.message !== "No hay proyectos finalizados en los que ambos hayan colaborado.") {
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar los proyectos compartidos',
+                    message: 'Ocurrió un error desconocido al intentar obtener los proyectos compartidos con el usuario. Inténtalo de nuevo más tarde.'
+                });
+            }
         }
     };
 

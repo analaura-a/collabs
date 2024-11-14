@@ -20,11 +20,13 @@ const TabReviewsContent = () => {
             const userReviews = await getUserReviews(user._id);
             setReviews(userReviews);
         } catch (error) {
-            addToast({
-                type: 'error',
-                title: 'Error al cargar las reseñas',
-                message: 'Ocurrió un error desconocido al intentar obtener las reseñas del usuario. Inténtalo de nuevo más tarde.'
-            });
+            if (error.message !== "Este usuario no tiene reseñas aún.") {
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar las reseñas',
+                    message: 'Ocurrió un error desconocido al intentar obtener las reseñas del usuario. Inténtalo de nuevo más tarde.'
+                });
+            }
         } finally {
             setLoading(false);
         }
