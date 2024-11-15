@@ -19,21 +19,6 @@ const MyProjectCard = ({ project }) => {
                     </div>
                 </div>
 
-                <div className="my-project-card__team">
-                    {project.type === "Personal" ? (
-                        <h3 className="title-18">Colaboradores</h3>
-                    ) : (
-                        <h3 className="title-18">Organizadores</h3>
-                    )}
-
-                    {/* Mostrar dinámicamente: */}
-                    <div className="my-project-card__team__photos">
-                        <div className="my-project-card__team__profile-pic">
-                            <img src="../assets/jpg/no-profile-picture.jpg" alt="Sin foto de perfil" />
-                        </div>
-                    </div>
-                </div>
-
             </Link>
         </article>
     );

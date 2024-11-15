@@ -1,7 +1,7 @@
 .my-project-card__link {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 20px;
 
     width: 100%;
     height: 100%;
@@ -64,7 +64,7 @@
 @media only screen and (min-width: 1200px) {
 
     .my-project-card__link {
-        padding: 80px 32px 32px 32px;
+        padding: 100px 32px 32px 32px;
     }
 
 }
