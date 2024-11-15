@@ -43,11 +43,13 @@ const ProjectApplicationsPage = () => {
             setApplications(enrichedRequests);
             setLoading(false);
         } catch (error) {
-            addToast({
-                type: 'error',
-                title: 'Error al cargar las postulaciones',
-                message: 'Ocurrió un error desconocido al intentar cargar las postulaciones. Inténtalo de nuevo más tarde.'
-            });
+            if (error.message !== "No se encontraron postulaciones para este usuario.") {
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar las postulaciones',
+                    message: 'Ocurrió un error desconocido al intentar cargar las postulaciones. Inténtalo de nuevo más tarde.'
+                });
+            }
             setLoading(false);
         }
     }
