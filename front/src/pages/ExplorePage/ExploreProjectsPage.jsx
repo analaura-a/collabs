@@ -173,23 +173,29 @@ const ExploreProjectsPage = () => {
         <main>
             <div className="container explore-page-container">
 
-                <section className="explore-page__header">
+                <div className="explore-page__container-with-image">
+                    <section className="explore-page__header">
 
-                    <div className="explore-page__header___toggle light-paragraph">
-                        <Link to="/explorar/proyectos" className="toggle-active">Proyectos</Link>
-                        <Link to="/explorar/colaboradores">Colaboradores</Link>
+                        <div className="explore-page__header___toggle light-paragraph">
+                            <Link to="/explorar/proyectos" className="toggle-active">Proyectos</Link>
+                            <Link to="/explorar/colaboradores">Colaboradores</Link>
+                        </div>
+
+                        <div className="explore-page__header__title-and-filters">
+                            <h1 className="title-56">Descubre oportunidades de colaboración</h1>
+
+                            <SearchAndFilters
+                                placeholder="Buscar proyectos de..."
+                                onSearch={handleSearch}
+                                onFilterChange={handleFilterChange} />
+                        </div>
+
+                    </section>
+
+                    <div className="explore-page__image">
+                        <img src="../assets/svg/collaborators-circle.svg" alt="Círculo de colaboradores" />
                     </div>
-
-                    <div className="explore-page__header__title-and-filters">
-                        <h1 className="title-56">Descubre oportunidades de colaboración</h1>
-
-                        <SearchAndFilters
-                            placeholder="Buscar proyectos de..."
-                            onSearch={handleSearch}
-                            onFilterChange={handleFilterChange} />
-                    </div>
-
-                </section>
+                </div>
 
                 <Tabs tabs={tabs} />
 

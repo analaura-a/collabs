@@ -99,24 +99,30 @@ const ExploreUsersPage = () => {
         <main>
             <div className="container explore-page-container">
 
-                <section className="explore-page__header">
+                <div className="explore-page__container-with-image">
+                    <section className="explore-page__header">
 
-                    <div className="explore-page__header___toggle light-paragraph">
-                        <Link to="/explorar/proyectos">Proyectos</Link>
-                        <Link to="/explorar/colaboradores" className="toggle-active">Colaboradores</Link>
+                        <div className="explore-page__header___toggle light-paragraph">
+                            <Link to="/explorar/proyectos">Proyectos</Link>
+                            <Link to="/explorar/colaboradores" className="toggle-active">Colaboradores</Link>
+                        </div>
+
+                        <div className="explore-page__header__title-and-filters">
+                            <h1 className="title-56">Encuentra colaboradores para tus proyectos</h1>
+
+                            <SearchAndFilters
+                                placeholder="Buscar personas..."
+                                onSearch={handleSearch}
+                                onFilterChange={handleFilterChange}
+                                showExperienceLevelFilter={true} />
+                        </div>
+
+                    </section>
+
+                    <div className="explore-page__image">
+                        <img src="../assets/svg/collaborators-circle.svg" alt="Círculo de colaboradores" />
                     </div>
-
-                    <div className="explore-page__header__title-and-filters">
-                        <h1 className="title-56">Encuentra colaboradores para tus proyectos</h1>
-
-                        <SearchAndFilters
-                            placeholder="Buscar personas..."
-                            onSearch={handleSearch}
-                            onFilterChange={handleFilterChange}
-                            showExperienceLevelFilter={true} />
-                    </div>
-
-                </section>
+                </div>
 
                 {filteredUsers.length > 0 ? (
                     <section className="explore-page__container-user-cards">

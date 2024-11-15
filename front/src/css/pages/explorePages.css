@@ -60,9 +60,13 @@
     text-align: center;
 }
 
-.explore-page__empty-state-container-projects{
+.explore-page__empty-state-container-projects {
     padding: 104px 0 40px 0;
     text-align: center;
+}
+
+.explore-page__image {
+    display: none;
 }
 
 
@@ -82,8 +86,48 @@
         padding: 64px 0 40px 0;
     }
 
-    .explore-page__empty-state-container-projects{
+    .explore-page__empty-state-container-projects {
         padding: 120px 0 0 0;
+    }
+
+    .explore-page__container-with-image {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .explore-page__image {
+        display: block;
+        width: fit-content;
+        min-width: fit-content;
+        height: fit-content;
+    }
+
+    .explore-page__image>img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+}
+
+
+
+@media only screen and (min-width: 1300px) {
+
+    .explore-page__container-with-image {
+        gap: 120px;
+    }
+
+}
+
+
+
+@media only screen and (min-width: 1440px) {
+
+    .explore-page__container-with-image {
+        gap: 224px;
     }
 
 }

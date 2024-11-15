@@ -98,10 +98,6 @@ input[type='checkbox'] {
 
 @media only screen and (min-width: 1024px) {
 
-    .search-and-filters {
-        max-width: 60%;
-    }
-
     .search-and-filters__filters-toggle-container {
         flex-direction: row;
     }
@@ -114,16 +110,6 @@ input[type='checkbox'] {
     .search-and-filters__filter-dropdown-skills {
         width: auto;
         min-width: 400px;
-    }
-
-}
-
-
-
-@media only screen and (min-width: 1366px) {
-
-    .search-and-filters {
-        max-width: 45%;
     }
 
 }
