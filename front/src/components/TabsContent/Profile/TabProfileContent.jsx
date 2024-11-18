@@ -100,7 +100,7 @@ const TabProfileContent = () => {
                                 <img src="../../assets/svg/purple-dot-status.svg" alt="Estatus" />
                                 <p className="paragraph bold-text primary-color-text">Colaborando</p>
                             </div>
-                            <p className="paragraph">Actualmente estás colaborando en <span className="medium-text primary-color-text">{stats.collaboratedProjects - stats.finishedProjects}</span> proyecto(s).</p>
+                            <p className="paragraph">Actualmente estás colaborando en <span className="medium-text primary-color-text">{stats.collaboratedProjects - stats.finishedProjects - stats.abandonedProjects}</span> proyecto(s).</p>
                         </div>
                     ) : (
                         <div className="tab-profile__collab-stats-column__status">
