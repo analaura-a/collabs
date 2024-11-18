@@ -196,11 +196,6 @@ const ProjectDetailPage = () => {
                                         <img src="../assets/svg/clock.svg" alt="Reloj" />
                                         <p className="subtitle-18">Publicado el {new Date(project.created_at).toLocaleDateString('en-GB')}</p>
                                     </div>
-
-                                    <div>
-                                        <img src="../assets/svg/clock.svg" alt="Reloj" />
-                                        <p className="subtitle-18">Cierra convocatoria el 31/10/2023</p>
-                                    </div>
                                 </div>
                             </div>
 
