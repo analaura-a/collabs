@@ -21,13 +21,13 @@ const GuestFooter = () => {
                             <h2 className='footer-headings'>Acerca de</h2>
                             <ul>
                                 <li>
-                                    <Link to="#que-es">¿Qué es Collabs?</Link>
+                                    <Link to="/#que-es">¿Qué es Collabs?</Link>
                                 </li>
                                 <li>
-                                    <Link to="#como-funciona">Cómo funciona</Link>
+                                    <Link to="/#como-funciona">Cómo funciona</Link>
                                 </li>
                                 <li>
-                                    <Link to="#funcionalidades">Funcionalidades</Link>
+                                    <Link to="/#funcionalidades">Funcionalidades</Link>
                                 </li>
                             </ul>
                         </li>
@@ -35,10 +35,10 @@ const GuestFooter = () => {
                             <h2 className='footer-headings'>Explora</h2>
                             <ul>
                                 <li>
-                                    <Link to="/">Proyectos</Link>
+                                    <Link to="/explorar/proyectos">Proyectos</Link>
                                 </li>
                                 <li>
-                                    <Link to="/">Colaboradores</Link>
+                                    <Link to="/explorar/colaboradores">Colaboradores</Link>
                                 </li>
                             </ul>
                         </li>
