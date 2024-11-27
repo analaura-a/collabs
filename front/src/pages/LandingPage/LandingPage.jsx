@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import ArrowIcon from '../../assets/svg/arrow-right.svg?react';
 import Button from '../../components/Button/Button';
@@ -5,6 +6,58 @@ import Button from '../../components/Button/Button';
 const LandingPage = () => {
 
     const navigate = useNavigate();
+
+    // Funcionalidad del toggle 
+    const [activeTab, setActiveTab] = useState("Personales");
+
+    const cardsData = {
+        "Personales": [
+            {
+                number: "1",
+                title: "Abre una nueva convocatoria",
+                text: "Añade los detalles del proyecto y todos los perfiles profesionales que estás buscando que se sumen a colaborar.",
+                imgSrc: "../assets/png/personal-card-1.png",
+                imgAlt: "Agregar un colaborador",
+            },
+            {
+                number: "2",
+                title: "Define tu equipo ideal",
+                text: "Revisa las postulaciones y añade al equipo a aquellos candidatos que creas podrían ser un buen fit para el proyecto.",
+                imgSrc: "../assets/png/personal-card-2.png",
+                imgAlt: "Revisión de postulaciones",
+            },
+            {
+                number: "3",
+                title: "Lleva a cabo el proyecto",
+                text: "Comunícate con tus compañeros, añade atajos a links importantes para todo el equipo y lleven adelante el proyecto.",
+                imgSrc: "../assets/png/personal-card-3.png",
+                imgAlt: "Mensajes de chat",
+            },
+        ],
+        "Open-source": [
+            {
+                number: "1",
+                title: "Abre una nueva convocatoria",
+                text: "Añade los detalles del proyecto y todos los perfiles profesionales que te gustaría que se sumen a contribuir en él.",
+                imgSrc: "../assets/png/personal-card-1.png",
+                imgAlt: "Agregar un colaborador",
+            },
+            {
+                number: "2",
+                title: "Redirige al repositorio",
+                text: "Guía a los interesados en contribuir al repositorio del proyecto, donde podrán encontrar la información necesaria sobre cómo colaborar (desde su respectivo rol).",
+                imgSrc: "../assets/png/open-source-card-2.png",
+                imgAlt: "Link al repositorio del proyecto",
+            },
+            {
+                number: "3",
+                title: "Lleva a cabo el proyecto",
+                text: "¡Listo! Una vez que el proyecto termine, podrás cambiar su estado y cerrar la convocatoria. Si en algún momento vuelves a necesitar colaboradores, podrás reabrirla.",
+                imgSrc: "../assets/png/open-source-card-3.png",
+                imgAlt: "Cambiar estado a finalizado",
+            },
+        ],
+    };
 
     return (
         <main className="landing-page">
@@ -77,50 +130,28 @@ const LandingPage = () => {
                     </div>
 
                     <div className="how-it-works-section___toggle">
-                        <p className="light-paragraph toggle-active">Personales</p>
-                        <p className="light-paragraph">Open-source</p>
+                        <p className={`light-paragraph ${activeTab === "Personales" ? "toggle-active" : ""}`} onClick={() => setActiveTab("Personales")}>Personales</p>
+                        <p className={`light-paragraph ${activeTab === "Open-source" ? "toggle-active" : ""}`} onClick={() => setActiveTab("Open-source")}>Open-source</p>
                     </div>
                 </div>
 
                 <div className="how-it-works-section__cards">
-                    <div className="how-it-works-section__card">
-                        <div className="title-20 how-it-works-section__card__number">1</div>
 
-                        <div className="how-it-works-section__card__text">
-                            <h3 className="title-20 medium-text">Abre una nueva convocatoria</h3>
-                            <p className="light-paragraph">Añade los detalles del proyecto y todos los perfiles profesionales que estás buscando que se sumen a colaborar.</p>
+                    {cardsData[activeTab].map((card) => (
+                        <div className="how-it-works-section__card" key={card.number}>
+                            <div className="title-20 how-it-works-section__card__number">{card.number}</div>
+
+                            <div className="how-it-works-section__card__text">
+                                <h3 className="title-20 medium-text">{card.title}</h3>
+                                <p className="light-paragraph">{card.text}</p>
+                            </div>
+
+                            <div className="how-it-works-section__card__img">
+                                <img src={card.imgSrc} alt={card.imgAlt} />
+                            </div>
                         </div>
+                    ))}
 
-                        <div className="how-it-works-section__card__img">
-                            <img src="../assets/png/personal-card-1.png" alt="Agregar un colaborador" />
-                        </div>
-                    </div>
-
-                    <div className="how-it-works-section__card">
-                        <div className="title-20 how-it-works-section__card__number">2</div>
-
-                        <div className="how-it-works-section__card__text">
-                            <h3 className="title-20 medium-text">Define tu equipo ideal</h3>
-                            <p className="light-paragraph">Revisa las postulaciones y añade al equipo a aquellos candidatos que creas podrían ser un buen fit para el proyecto.</p>
-                        </div>
-
-                        <div className="how-it-works-section__card__img">
-                            <img src="../assets/png/personal-card-2.png" alt="Revisión de postulaciones" />
-                        </div>
-                    </div>
-
-                    <div className="how-it-works-section__card">
-                        <div className="title-20 how-it-works-section__card__number">3</div>
-
-                        <div className="how-it-works-section__card__text">
-                            <h3 className="title-20 medium-text">Lleva a cabo el proyecto</h3>
-                            <p className="light-paragraph">Comunícate con tus compañeros, añade atajos a links importantes para todo el equipo y lleven adelante al proyecto.</p>
-                        </div>
-
-                        <div className="how-it-works-section__card__img">
-                            <img src="../assets/png/personal-card-3.png" alt="Mensajes de chat" />
-                        </div>
-                    </div>
                 </div>
             </section>
 
