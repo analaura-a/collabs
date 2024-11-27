@@ -132,6 +132,8 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+
+    margin-bottom: 148px;
 }
 
 .how-it-works-section__title-with-buttons {
@@ -223,6 +225,60 @@
     object-fit: cover;
 }
 
+/* Features section */
+.features-section {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+
+.features-section__title-with-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    text-align: center;
+}
+
+.features-section__title {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.features-section__features-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.features-section__features-card-left,
+.features-section__features-cards-right__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+
+    padding: 56px 32px 0 32px;
+
+    background-color: var(--color-gray);
+    border-radius: 24px;
+}
+
+.features-section__features-cards-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.features-section__features-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 
 
 @media only screen and (min-width: 1024px) {
@@ -236,6 +292,8 @@
     .hero-section {
         align-items: center;
         text-align: center;
+
+        margin-bottom: 180px;
     }
 
     .hero-section__info {
@@ -261,10 +319,12 @@
         flex-direction: row;
         gap: 0;
         justify-content: space-between;
+
+        margin-bottom: 180px;
     }
 
     .about-section__text-column {
-        width: 55%;
+        width: 50%;
     }
 
     .about-section__text-column__project-types__cards {
@@ -274,9 +334,28 @@
     }
 
     /* How it works section */
+    .how-it-works-section {
+        margin-bottom: 180px;
+    }
+
     .how-it-works-section__cards {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 32px;
+    }
+
+    /* Features section */
+    .features-section__title-with-text {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .features-section__features-cards {
+        flex-direction: row;
+    }
+
+    .features-section__features-card-left,
+    .features-section__features-cards-right__card {
+        padding: 80px 48px 0 48px;
     }
 
 }

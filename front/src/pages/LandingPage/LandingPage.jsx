@@ -102,7 +102,7 @@ const LandingPage = () => {
                         </div>
 
                         <div className="how-it-works-section__card__img">
-                            <img src="../assets/png/personal-card-2.png" alt="Agregar un colaborador" />
+                            <img src="../assets/png/personal-card-2.png" alt="Revisión de postulaciones" />
                         </div>
                     </div>
 
@@ -115,15 +115,62 @@ const LandingPage = () => {
                         </div>
 
                         <div className="how-it-works-section__card__img">
-                            <img src="../assets/png/personal-card-3.png" alt="Agregar un colaborador" />
+                            <img src="../assets/png/personal-card-3.png" alt="Mensajes de chat" />
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* <section id="funcionalidades">
-                <h1>Funcionalidades</h1>
-            </section> */}
+            <section id="funcionalidades" className="container features-section">
+                <div className="features-section__title-with-text">
+                    <div className="features-section__title">
+                        <p className="landing-page-subtitle">Funcionalidades</p>
+                        <h2 className="title-40">El arte de colaborar</h2>
+                    </div>
+
+                    <p className="subtitle-18">Conoce por qué Collabs es la mejor plataforma para organizar proyectos colaborativos en el rubro.</p>
+                </div>
+
+                <div className="features-section__features-cards">
+
+                    <div className="features-section__features-card-left">
+                        <div className="features-section__features-card__info">
+                            <h3 className="title-24">Encuentra proyectos (y colaboradores) ideales para ti</h3>
+                            <p className="light-paragraph">Usa los filtros para encontrar oportunidades de colaboración que sean de tu interés. Ya sean personales u open-source, hay proyectos de todo tipo y para todos los niveles de experiencia. </p>
+                        </div>
+
+                        <div className="how-it-works-section__card__img">
+                            <img src="../assets/png/feature-card-1.png" alt="Página de explorar oportunidades de colaboración" />
+                        </div>
+                    </div>
+
+                    <div className="features-section__features-cards-right">
+
+                        <div className="features-section__features-cards-right__card">
+                            <div className="features-section__features-card__info">
+                                <h3 className="title-24">Facilita el onboarding a nuevos compañeros</h3>
+                                <p className="light-paragraph">Usa herramientas como el chat y los atajos rápidos para que todo el equipo pueda estar en una misma sintonía, sin importar en qué momento del proyecto se unan.</p>
+                            </div>
+
+                            <div className="how-it-works-section__card__img">
+                                <img src="../assets/png/feature-card-2.png" alt="Agregar atajo rápido" />
+                            </div>
+                        </div>
+
+                        <div className="features-section__features-cards-right__card">
+                            <div className="features-section__features-card__info">
+                                <h3 className="title-24">Da forma a un equipo en el que puedas confiar</h3>
+                                <p className="light-paragraph">Con ayuda de las estadísticas y las reseñas en el perfil de cada usuario, siente la tranquilidad de elegir a colegas en los que puedas confiar al momento de definir el equipo del proyecto.</p>
+                            </div>
+
+                            <div className="how-it-works-section__card__img">
+                                <img src="../assets/png/feature-card-3.png" alt="Estadísticas de colaboración" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
 
         </main>
     )
