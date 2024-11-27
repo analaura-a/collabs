@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import ArrowIcon from '../../assets/svg/arrow-right.svg?react';
 import Button from '../../components/Button/Button';
 
 const LandingPage = () => {
+
+    const navigate = useNavigate();
 
     return (
         <main className="landing-page">
@@ -19,8 +22,8 @@ const LandingPage = () => {
                     </div>
 
                     <div className="hero-section__buttons">
-                        <Button color="secondary" width="full-then-fit">Cómo funciona</Button>
-                        <Button width="full-then-fit" icon={<ArrowIcon />}>Empezar a colaborar</Button>
+                        <Button color="secondary" width="full-then-fit" onClick={() => navigate('/#como-funciona')}>Cómo funciona</Button>
+                        <Button width="full-then-fit" icon={<ArrowIcon />} onClick={() => navigate('/auth/crear-cuenta')}>Empezar a colaborar</Button>
                     </div>
 
                 </div>
@@ -196,7 +199,7 @@ const LandingPage = () => {
             <section className="container footer-cta-section">
                 <div className="footer-cta-section__cta">
                     <h2 className="title-40">Da el próximo paso en tu carrera, <span className="primary-color-text">junto a otros</span></h2>
-                    <Button width="full-then-fit" size="large" icon={<ArrowIcon />}>Empezar a colaborar</Button>
+                    <Button width="full-then-fit" size="large" icon={<ArrowIcon />} onClick={() => navigate('/auth/crear-cuenta')}>Empezar a colaborar</Button>
                 </div>
 
                 <div className="footer-cta-section__img how-it-works-section__card__img">
