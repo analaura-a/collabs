@@ -172,6 +172,27 @@ const LandingPage = () => {
                 </div>
             </section>
 
+            <section className="container recent-projects-section">
+                <div className="recent-projects-section__title-with-text">
+                    <div className="recent-projects-section__title">
+                        <p className="landing-page-subtitle">Lo más reciente</p>
+                        <h2 className="title-40">Convocatorias abiertas</h2>
+                    </div>
+
+                    <p className="subtitle-18">Explora algunas de las oportunidades de colaboración que se abrieron recientemente.</p>
+                </div>
+
+                <div className="explore-page__container-user-cards">
+
+                    <article className="user-card"><a className="project-card__link" href="/proyectos/66fc41353cd869841cbf320d"><div className="project-card__photo"><img src="../assets/jpg/no-project-picture.jpg" alt="Portada del proyecto Otro ejemplo" /></div><div className="project-card__content"><div className="project-card__project-info"><div className="project-card__project-info__about"><h2 className="subtitle-18 bold-text">Otro ejemplo</h2><p className="light-paragraph truncated-description-4">Blablabla</p></div><div className="project-card__project-info__created-by"><div className="project-card__project-info__created-by-img"><img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil de Manuel Pérez" /></div><p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">Manuel Pérez</span></p></div></div><div className="user-card__professional-info"><h3 className="subtitle bold-text">Buscando</h3><ul className="user-card__roles"><li className="smaller-paragraph">Web Designer</li><li className="smaller-paragraph">QA Tester</li></ul></div></div></a></article>
+
+                    <article className="user-card"><a className="project-card__link" href="/proyectos/66fc41353cd869841cbf320d"><div className="project-card__photo"><img src="../assets/jpg/no-project-picture.jpg" alt="Portada del proyecto Otro ejemplo" /></div><div className="project-card__content"><div className="project-card__project-info"><div className="project-card__project-info__about"><h2 className="subtitle-18 bold-text">Otro ejemplo</h2><p className="light-paragraph truncated-description-4">Blablabla</p></div><div className="project-card__project-info__created-by"><div className="project-card__project-info__created-by-img"><img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil de Manuel Pérez" /></div><p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">Manuel Pérez</span></p></div></div><div className="user-card__professional-info"><h3 className="subtitle bold-text">Buscando</h3><ul className="user-card__roles"><li className="smaller-paragraph">Web Designer</li><li className="smaller-paragraph">QA Tester</li></ul></div></div></a></article>
+
+                    <article className="user-card"><a className="project-card__link" href="/proyectos/66fc41353cd869841cbf320d"><div className="project-card__photo"><img src="../assets/jpg/no-project-picture.jpg" alt="Portada del proyecto Otro ejemplo" /></div><div className="project-card__content"><div className="project-card__project-info"><div className="project-card__project-info__about"><h2 className="subtitle-18 bold-text">Otro ejemplo</h2><p className="light-paragraph truncated-description-4">Blablabla</p></div><div className="project-card__project-info__created-by"><div className="project-card__project-info__created-by-img"><img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil de Manuel Pérez" /></div><p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">Manuel Pérez</span></p></div></div><div className="user-card__professional-info"><h3 className="subtitle bold-text">Buscando</h3><ul className="user-card__roles"><li className="smaller-paragraph">Web Designer</li><li className="smaller-paragraph">QA Tester</li></ul></div></div></a></article>
+
+                </div>
+            </section>
+
         </main>
     )
 }
