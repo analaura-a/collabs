@@ -1,6 +1,5 @@
 .landing-page {
     margin-top: 80px;
-    margin-bottom: 120px;
 }
 
 /* Hero section */
@@ -286,6 +285,8 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+
+    margin-bottom: 100px;
 }
 
 .recent-projects-section__title-with-text {
@@ -300,13 +301,35 @@
     gap: 4px;
 }
 
+/* Footer CTA section */
+.footer-cta-section {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+    
+    margin-bottom: 100px;
+}
+
+.footer-cta-section__cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+
+    text-align: center;
+}
+
+.footer-cta-section__img {
+    display: none;
+}
+
 
 
 @media only screen and (min-width: 1024px) {
 
     .landing-page {
         margin-top: 120px;
-        margin-bottom: 200px;
     }
 
     /* Hero section */
@@ -381,6 +404,25 @@
     .features-section__features-card-left,
     .features-section__features-cards-right__card {
         padding: 80px 48px 0 48px;
+    }
+
+    /* Recent projects section */
+    .recent-projects-section {
+        margin-bottom: 180px;
+    }
+
+    /* Footer CTA section */
+    .footer-cta-section {
+        margin-bottom: 0;
+    }
+
+    .footer-cta-section__cta {
+        max-width: 590px;
+        margin: 0 auto;
+    }
+
+    .footer-cta-section__img {
+        display: block;
     }
 
 }

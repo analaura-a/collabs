@@ -193,6 +193,17 @@ const LandingPage = () => {
                 </div>
             </section>
 
+            <section className="container footer-cta-section">
+                <div className="footer-cta-section__cta">
+                    <h2 className="title-40">Da el próximo paso en tu carrera, <span className="primary-color-text">junto a otros</span></h2>
+                    <Button width="full-then-fit" size="large" icon={<ArrowIcon />}>Empezar a colaborar</Button>
+                </div>
+
+                <div className="footer-cta-section__img how-it-works-section__card__img">
+                    <img src="../assets/png/collaborators-shining.png" alt="Página de explorar oportunidades de colaboración" />
+                </div>
+            </section>
+
         </main>
     )
 }
