@@ -93,6 +93,16 @@
     max-width: 550px;
 }
 
+.landing-page-subtitle {
+    font-family: var(--inter);
+    font-size: var(--font-16px);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-text);
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
 /*General*/
 .title-56 {
     font-family: var(--inter);
