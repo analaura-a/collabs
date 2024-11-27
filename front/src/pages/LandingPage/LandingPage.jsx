@@ -30,7 +30,6 @@ const LandingPage = () => {
                 </div>
             </section>
 
-
             <section id="que-es" className="container about-section">
                 <div className="about-section__text-column">
                     <div className="about-section__text-column__title-and-text">
@@ -67,11 +66,62 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/*   <section id="como-funciona">
-                <h1>Cómo funciona</h1>
+            <section id="como-funciona" className="container how-it-works-section">
+                <div className="how-it-works-section__title-with-buttons">
+                    <div className="how-it-works-section__title">
+                        <p className="landing-page-subtitle">Sobre la plataforma</p>
+                        <h2 className="title-40">¿Cómo funciona?</h2>
+                    </div>
+
+                    <div className="how-it-works-section___toggle">
+                        <p className="light-paragraph toggle-active">Personales</p>
+                        <p className="light-paragraph">Open-source</p>
+                    </div>
+                </div>
+
+                <div className="how-it-works-section__cards">
+                    <div className="how-it-works-section__card">
+                        <div className="title-20 how-it-works-section__card__number">1</div>
+
+                        <div className="how-it-works-section__card__text">
+                            <h3 className="title-20 medium-text">Abre una nueva convocatoria</h3>
+                            <p className="light-paragraph">Añade los detalles del proyecto y todos los perfiles profesionales que estás buscando que se sumen a colaborar.</p>
+                        </div>
+
+                        <div className="how-it-works-section__card__img">
+                            <img src="../assets/png/personal-card-1.png" alt="Agregar un colaborador" />
+                        </div>
+                    </div>
+
+                    <div className="how-it-works-section__card">
+                        <div className="title-20 how-it-works-section__card__number">2</div>
+
+                        <div className="how-it-works-section__card__text">
+                            <h3 className="title-20 medium-text">Define tu equipo ideal</h3>
+                            <p className="light-paragraph">Revisa las postulaciones y añade al equipo a aquellos candidatos que creas podrían ser un buen fit para el proyecto.</p>
+                        </div>
+
+                        <div className="how-it-works-section__card__img">
+                            <img src="../assets/png/personal-card-2.png" alt="Agregar un colaborador" />
+                        </div>
+                    </div>
+
+                    <div className="how-it-works-section__card">
+                        <div className="title-20 how-it-works-section__card__number">3</div>
+
+                        <div className="how-it-works-section__card__text">
+                            <h3 className="title-20 medium-text">Lleva a cabo el proyecto</h3>
+                            <p className="light-paragraph">Comunícate con tus compañeros, añade atajos a links importantes para todo el equipo y lleven adelante al proyecto.</p>
+                        </div>
+
+                        <div className="how-it-works-section__card__img">
+                            <img src="../assets/png/personal-card-3.png" alt="Agregar un colaborador" />
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <section id="funcionalidades">
+            {/* <section id="funcionalidades">
                 <h1>Funcionalidades</h1>
             </section> */}
 
