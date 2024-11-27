@@ -81,10 +81,10 @@ const GuestNavbar = () => {
                             <Link to="/#que-es" className="navbar-text">Qué es</Link>
                         </li>
                         <li>
-                            <Link to="#como-funciona" className="navbar-text">Cómo funciona</Link>
+                            <Link to="/#como-funciona" className="navbar-text">Cómo funciona</Link>
                         </li>
                         <li>
-                            <Link to="/iniciar-sesion" className="navbar-text">Funcionalidades</Link>
+                            <Link to="/#funcionalidades" className="navbar-text">Funcionalidades</Link>
                         </li>
                         <li>
                             <div className="nav-link-with-icon" onClick={handleDropdownToggle}>
