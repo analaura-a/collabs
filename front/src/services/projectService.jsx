@@ -141,6 +141,27 @@ export const getRecommendedProjectsForUser = async (userId) => {
     return await response.json();
 };
 
+export const getRecentProjects = async () => {
+
+    try {
+        const response = await fetch(`${API_URL}/projects/recent/list`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al obtener los proyectos recientes.');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export const createProject = async (userId, projectData, type) => {
 
     try {

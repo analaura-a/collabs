@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { getRecentProjects } from "../../services/projectService";
+import { useToast } from "../../context/ToastContext";
 import ArrowIcon from '../../assets/svg/arrow-right.svg?react';
 import Button from '../../components/Button/Button';
+import ProjectCard from "../../components/Cards/ProjectCard";
+import Loader from "../../components/Loader/Loader";
 
 const LandingPage = () => {
 
     const navigate = useNavigate();
+    const { addToast } = useToast();
 
     // Funcionalidad del toggle 
     const [activeTab, setActiveTab] = useState("Personales");
@@ -58,6 +63,29 @@ const LandingPage = () => {
             },
         ],
     };
+
+    // Funcionalidad de los proyectos recientes
+    const [recentProjects, setRecentProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchRecentProjects = async () => {
+            try {
+                const projects = await getRecentProjects();
+                setRecentProjects(projects);
+            } catch (error) {
+                addToast({
+                    type: 'error',
+                    title: 'Error al cargar los últimos proyectos',
+                    message: 'Ocurrió un error desconocido al intentar cargar los últimos proyectos. Inténtalo de nuevo más tarde.'
+                });
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRecentProjects();
+    }, []);
 
     return (
         <main className="landing-page">
@@ -216,15 +244,22 @@ const LandingPage = () => {
                     <p className="subtitle-18">Explora algunas de las oportunidades de colaboración que se abrieron recientemente.</p>
                 </div>
 
-                <div className="explore-page__container-user-cards">
+                {loading ? (
+                    <Loader size="small" />
+                ) : recentProjects.length > 0 ? (
+                    <div className="explore-page__container-user-cards">
 
-                    <article className="user-card"><a className="project-card__link" href="/proyectos/66fc41353cd869841cbf320d"><div className="project-card__photo"><img src="../assets/jpg/no-project-picture.jpg" alt="Portada del proyecto Otro ejemplo" /></div><div className="project-card__content"><div className="project-card__project-info"><div className="project-card__project-info__about"><h2 className="subtitle-18 bold-text">Otro ejemplo</h2><p className="light-paragraph truncated-description-4">Blablabla</p></div><div className="project-card__project-info__created-by"><div className="project-card__project-info__created-by-img"><img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil de Manuel Pérez" /></div><p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">Manuel Pérez</span></p></div></div><div className="user-card__professional-info"><h3 className="subtitle bold-text">Buscando</h3><ul className="user-card__roles"><li className="smaller-paragraph">Web Designer</li><li className="smaller-paragraph">QA Tester</li></ul></div></div></a></article>
+                        {recentProjects.map((project) => (
+                            <ProjectCard
+                                key={project._id}
+                                project={project}
+                            />
+                        ))}
 
-                    <article className="user-card"><a className="project-card__link" href="/proyectos/66fc41353cd869841cbf320d"><div className="project-card__photo"><img src="../assets/jpg/no-project-picture.jpg" alt="Portada del proyecto Otro ejemplo" /></div><div className="project-card__content"><div className="project-card__project-info"><div className="project-card__project-info__about"><h2 className="subtitle-18 bold-text">Otro ejemplo</h2><p className="light-paragraph truncated-description-4">Blablabla</p></div><div className="project-card__project-info__created-by"><div className="project-card__project-info__created-by-img"><img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil de Manuel Pérez" /></div><p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">Manuel Pérez</span></p></div></div><div className="user-card__professional-info"><h3 className="subtitle bold-text">Buscando</h3><ul className="user-card__roles"><li className="smaller-paragraph">Web Designer</li><li className="smaller-paragraph">QA Tester</li></ul></div></div></a></article>
-
-                    <article className="user-card"><a className="project-card__link" href="/proyectos/66fc41353cd869841cbf320d"><div className="project-card__photo"><img src="../assets/jpg/no-project-picture.jpg" alt="Portada del proyecto Otro ejemplo" /></div><div className="project-card__content"><div className="project-card__project-info"><div className="project-card__project-info__about"><h2 className="subtitle-18 bold-text">Otro ejemplo</h2><p className="light-paragraph truncated-description-4">Blablabla</p></div><div className="project-card__project-info__created-by"><div className="project-card__project-info__created-by-img"><img src="../assets/jpg/no-profile-picture.jpg" alt="Foto de perfil de Manuel Pérez" /></div><p className="smaller-paragraph">Organizado por <span className="bold-text primary-color-text">Manuel Pérez</span></p></div></div><div className="user-card__professional-info"><h3 className="subtitle bold-text">Buscando</h3><ul className="user-card__roles"><li className="smaller-paragraph">Web Designer</li><li className="smaller-paragraph">QA Tester</li></ul></div></div></a></article>
-
-                </div>
+                    </div>
+                ) : (
+                    <p className="subtitle-18">No hay proyectos recientes disponibles.</p>
+                )}
             </section>
 
             <section className="container footer-cta-section">
