@@ -85,8 +85,8 @@ const getLastTwoProjectsJoinedByUser = async (req, res) => {
 
 // Obtener los proyectos recomendados para un usuario
 const getRecommendedProjectsForUser = async (req, res) => {
-    
-    const userId = req.params.userId; 
+
+    const userId = req.params.userId;
 
     try {
         const recommendedProjects = await service.getRecommendedProjectsForUser(userId);
@@ -94,6 +94,16 @@ const getRecommendedProjectsForUser = async (req, res) => {
     } catch (error) {
         console.error('Error al obtener los proyectos recomendados:', error.message);
         res.status(500).json({ message: 'Ocurrió un error al obtener los proyectos recomendados.' });
+    }
+};
+
+// Obtener los últimos 3 proyectos creados
+const getRecentProjects = async (req, res) => {
+    try {
+        const recentProjects = await service.getRecentProjects();
+        res.status(200).json(recentProjects);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener los proyectos recientes", error: error.message });
     }
 };
 
@@ -301,6 +311,7 @@ export {
     getUserProjectsCount,
     getLastTwoProjectsJoinedByUser,
     getRecommendedProjectsForUser,
+    getRecentProjects,
     createProject,
     uploadProjectImage,
     updateProjectDetails,

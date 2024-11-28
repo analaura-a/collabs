@@ -207,6 +207,42 @@ const getRecommendedProjectsForUser = async (userId) => {
     }
 };
 
+// Obtener los últimos 3 proyectos creados
+const getRecentProjects = async () => {
+    try {
+        await client.connect();
+
+        // Obtener los últimos 3 proyectos
+        const projects = await db.collection("projects")
+            .find()
+            .sort({ created_at: -1 })
+            .limit(3)
+            .project({ _id: 1, name: 1, about: 1, cover: 1, created_at: 1, founder_id: 1, open_positions: 1 })
+            .toArray();
+
+        // Enriquecer con datos del organizador
+        const enrichedProjects = await Promise.all(
+            projects.map(async (project) => {
+                const organizer = await db.collection("users")
+                    .findOne(
+                        { _id: new ObjectId(project.founder_id) },
+                        { projection: { name: 1, last_name: 1, profile_pic: 1 } }
+                    );
+
+                return {
+                    ...project,
+                    organizer_name: organizer?.name + " " + organizer?.last_name || "Usuario desconocido",
+                    organizer_profile_pic: organizer?.profile_pic || null,
+                };
+            })
+        );
+
+        return enrichedProjects;
+    } catch (error) {
+        throw new Error(`Error al obtener los proyectos recientes: ${error.message}`);
+    }
+};
+
 //Crear un nuevo proyecto
 const createProject = async (userId, projectData, type) => {
 
@@ -384,6 +420,7 @@ export {
     getUserProjectsCount,
     getLastTwoProjectsJoinedByUser,
     getRecommendedProjectsForUser,
+    getRecentProjects,
     createProject,
     updateProjectImage,
     updateProjectDetails,
