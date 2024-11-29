@@ -50,9 +50,8 @@
 }
 
 .edit-profile-page__form-container__profile-photo-section__preview {
-    width: 40%;
-    max-width: 148px;
-    height: auto;
+    width: 116px;
+    height: 116px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -159,6 +158,16 @@
 
     .edit-profile-page__form-container__space-between-inputs {
         gap: 32px;
+    }
+
+    .edit-profile-page__form-container__profile-photo-section__preview {
+        width: 148px;
+        height: 148px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
 }
