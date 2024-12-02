@@ -43,7 +43,7 @@
 }
 
 .project-card__project-info__created-by-img {
-    min-width: 32px;
+    width: 32px;
     height: 32px;
     border-radius: 8px;
     overflow: hidden;
