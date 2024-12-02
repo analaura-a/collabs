@@ -232,7 +232,7 @@ const getRecentProjects = async () => {
                 return {
                     ...project,
                     organizer_name: organizer?.name + " " + organizer?.last_name || "Usuario desconocido",
-                    organizer_profile_pic: organizer?.profile_pic || null,
+                    organizer_photo: organizer?.profile_pic || null,
                 };
             })
         );
