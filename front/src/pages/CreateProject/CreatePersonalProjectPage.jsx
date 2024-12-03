@@ -25,7 +25,7 @@ const steps = [
     {
         step: "3",
         title: "Colaboradores buscados",
-        subtitle: "Añade todos los perfiles que estás buscando y las habilidades que necesitan para contribuir al proyecto.",
+        subtitle: "Añade todos los perfiles que estás buscando y las habilidades que necesitan para colaborar en el proyecto.",
         form: CreateProjectForm3,
     },
 ];
