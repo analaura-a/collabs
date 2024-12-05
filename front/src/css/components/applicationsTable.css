@@ -121,7 +121,6 @@
 .application-card__host-photo-modal {
     width: 56px;
     height: 56px;
-    min-width: fit-content;
 }
 
 .application-card__host-photo>img{
