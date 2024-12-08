@@ -19,12 +19,14 @@ import ApiChatsRoute from '../api/routes/chats.api.routes.js'
 import ApiMessagesRoute from '../api/routes/messages.api.route.js'
 
 const app = express();
+
 const server = http.createServer(app);
 const corsOptions = {
     origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
     methods: ["GET", "POST", "PATCH", "DELETE"],
 };
-// Configura CORS para Express y Socket.IO
+
+// Configuración CORS
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -75,9 +77,10 @@ io.on("connection", (socket) => {
     });
 });
 
-// Inicia el servidor con Socket.IO
+// Iniciamos el servidor
+const PORT = process.env.PORT || 3333;
 server.listen(3333, () => {
-    console.log("Servidor corriendo en http://localhost:3333");
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
 export { io };
