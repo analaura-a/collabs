@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import * as controllers from '../controllers/controller.api.users.js';
-import { validateUserPatch, validateOnboarding } from '../../middleware/users.validate.middleware.js'
+import { validateOnboarding } from '../../middleware/users.validate.middleware.js'
 import { validateTokenMiddleware, verifyUserOwnership } from "../../middleware/token.validate.middleware.js"
 
 const route = Router();
@@ -26,7 +26,7 @@ route.get('/users', controllers.getUsers);
 route.get('/users/:id', controllers.getUserById);
 
 // Eliminar la cuenta
-route.delete('/user/:id', [verifyUserOwnership], controllers.deleteAccount); //Se confunde con borrar foto de perfil
+route.delete('/user/:id', [verifyUserOwnership], controllers.deleteAccount);
 
 //Obtener un usuario en especifico por username
 route.get('/users/username/:username', controllers.getUserByUsername);

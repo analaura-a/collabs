@@ -1,10 +1,12 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 
-const client = new MongoClient('mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net');
-const db = client.db("AH20232CP1");
+dotenv.config();
 
-client.connect()
-    .then(async () => {
-        console.log("Conectado");
-    })
-    .catch(() => console.log("No me pude conectar"));
+const MONGO_URI = process.env.MONGO_URI;
+const DATABASE_NAME = process.env.DATABASE_NAME;
+
+const client = new MongoClient(MONGO_URI);
+const db = client.db(DATABASE_NAME);
+
+export { client, db };

@@ -2,8 +2,6 @@ import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects_teams.js';
 import { validateTokenMiddleware, verifyUserOwnership } from '../../middleware/token.validate.middleware.js';
 import { verifyOrganizerRole } from '../../middleware/projects_teams.validate.middleware.js';
-// import { validateTeamCreate, validateTeamPatch, validateTeamMemberPatch } from '../../middleware/projects_teams.validate.middleware.js'
-// import { validateTokenMiddleware } from '../../middleware/token.validate.middleware.js'
 
 const route = Router();
 

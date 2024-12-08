@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import * as controllers from '../controllers/controller.api.projects_requests.js';
-// import { validateRequestCreate, validateRequestEdit } from '../../middleware/projects_requests.validate.middleware.js'
 import { verifyUserOwnership, validateTokenMiddleware } from '../../middleware/token.validate.middleware.js';
 import { verifyOrganizerRole } from '../../middleware/projects_teams.validate.middleware.js';
 

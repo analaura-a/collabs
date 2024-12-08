@@ -1,7 +1,5 @@
-import { MongoClient, ObjectId } from 'mongodb';
-
-const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
-const db = client.db("AH20232CP1");
+import { ObjectId } from 'mongodb';
+import { db } from '../db.js'
 const notifications = db.collection("notifications");
 
 // Obtener todas las notificaciones de un usuario
@@ -53,7 +51,7 @@ const createNotification = async (notificationData) => {
 
 // Marcar todas las notificaciones de un usuario como leídas
 const markAllNotificationsAsRead = async (userId) => {
-    
+
     try {
         await notifications.updateMany(
             { user_id: new ObjectId(userId), is_read: false },

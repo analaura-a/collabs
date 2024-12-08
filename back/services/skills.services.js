@@ -1,7 +1,4 @@
-import { MongoClient, ObjectId } from "mongodb";
-
-const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
-const db = client.db("AH20232CP1");
+import { db, client } from '../db.js'
 
 //Obtener todas las skills
 const getSkills = async () => {

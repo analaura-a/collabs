@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { MongoClient, ObjectId } from "mongodb";
+import { ObjectId } from 'mongodb';
+import { db, client } from '../db.js'
 
-const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
-const db = client.db("AH20232CP1");
 const tokenCollection = db.collection("tokens");
 const JWT_SECRET = 'clave_secreta';
 

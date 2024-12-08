@@ -1,9 +1,6 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
+import { db } from '../db.js'
 import { io } from '../app/server.js';
-
-
-const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
-const db = client.db("AH20232CP1");
 
 // Enviar un mensaje en un chat
 const sendMessage = async ({ chat_id, sender_id, text }) => {

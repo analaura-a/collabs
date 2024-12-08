@@ -1,13 +1,12 @@
-import { MongoClient, ObjectId } from "mongodb";
-
-const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
-const db = client.db("AH20232CP1");
+import { ObjectId } from 'mongodb';
+import { db, client } from '../db.js'
 
 // Obtener una postulación por id
 const getRequestById = async (id) => {
     return await db.collection('projects_requests').findOne({ _id: new ObjectId(id) });
 };
 
+//Obtener las postulaciones de un proyecto en particular
 const getRequestsByProjectId = async (projectId) => {
 
     try {

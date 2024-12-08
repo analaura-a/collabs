@@ -1,20 +1,28 @@
 import nodemailer from 'nodemailer';
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173'
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
 
 // Configuración del servicio de correo electrónico
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'arg.collabs@gmail.com',
-    pass: 'vubkuxowuoupgsgn',
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
   },
 });
 
-// Función para enviar el correo de restablecimiento de contraseña
+// Enviar el correo de restablecimiento de contraseña
 async function sendResetPasswordEmail(email, token) {
-  const resetLink = `http://localhost:5173/auth/restablecer-contraseña/${token}`;
+
+  const resetLink = `${CLIENT_ORIGIN}/auth/restablecer-contraseña/${token}`;
 
   const mailOptions = {
-    from: 'arg.collabs@gmail.com',
+    from: EMAIL_USER,
     to: email,
     subject: 'Restablecimiento de contraseña',
     html: `<p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
@@ -23,9 +31,8 @@ async function sendResetPasswordEmail(email, token) {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log('Correo enviado correctamente.');
   } catch (error) {
-    console.error('Error al enviar el correo:', error);
+    // console.error('Error al enviar el correo:', error);
     throw new Error('No se pudo enviar el correo de restablecimiento.');
   }
 }

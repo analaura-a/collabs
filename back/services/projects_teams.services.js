@@ -1,7 +1,5 @@
-import { MongoClient, ObjectId } from "mongodb";
-
-const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
-const db = client.db("AH20232CP1");
+import { ObjectId } from 'mongodb';
+import { db, client } from '../db.js'
 
 // Agregar miembro al equipo de un proyecto
 const addMemberToProjectTeam = async ({ projectId, userId, role, profile }) => {

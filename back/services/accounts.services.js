@@ -1,14 +1,12 @@
-import { MongoClient, ObjectId } from "mongodb";
+import { db, client } from '../db.js'
 import bcrypt from 'bcrypt';
 import { sendResetPasswordEmail } from './email.services.js';
 import { generateResetToken, verifyResetToken } from './token.services.js';
 import { deleteProject } from './projects.services.js'
 import { leaveGroupChat } from "./chats.services.js";
 
-const client = new MongoClient("mongodb+srv://alumnos:alumnos@cluster0.rufodhz.mongodb.net");
-const db = client.db("AH20232CP1");
-const accounts = db.collection("accounts")
-const users = db.collection("users")
+const accounts = db.collection("accounts");
+const users = db.collection("users");
 
 async function createAccount(account) {
 
