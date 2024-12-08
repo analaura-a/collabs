@@ -1,6 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from "express";
 import http from "http";
+import cors from 'cors';
 import { Server as SocketIOServer } from "socket.io";
+
 import ApiProjectsRoute from '../api/routes/projects.api.routes.js'
 import ApiUsersRoute from '../api/routes/users.api.routes.js'
 import ApiProjectsTeamsRoute from '../api/routes/projects_teams.api.routes.js'
@@ -13,13 +18,10 @@ import ApiNotificationsRoute from '../api/routes/notifications.routes.js'
 import ApiChatsRoute from '../api/routes/chats.api.routes.js'
 import ApiMessagesRoute from '../api/routes/messages.api.route.js'
 
-
-import cors from 'cors';
-
 const app = express();
 const server = http.createServer(app);
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
     methods: ["GET", "POST", "PATCH", "DELETE"],
 };
 // Configura CORS para Express y Socket.IO
