@@ -1,5 +1,4 @@
-const API_URL = 'http://localhost:3333/api';
-// const API_URL = import.meta.env.VITE_SERVER_BASE_URL;
+const API_URL = import.meta.env.VITE_SERVER_API_URL;
 
 export const createChat = async ({ type, participants, project_id }) => {
 

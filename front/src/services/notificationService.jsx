@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3333/api';
+const API_URL = import.meta.env.VITE_SERVER_API_URL;
 
 // Obtener todas las notificaciones de un usuario
 export const getUserNotifications = async (userId) => {
