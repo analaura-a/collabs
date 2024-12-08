@@ -19,7 +19,7 @@ import cors from 'cors';
 const app = express();
 const server = http.createServer(app);
 const corsOptions = {
-    origin: 'http://localhost:5173', 
+    origin: 'http://localhost:5173',
     methods: ["GET", "POST", "PATCH", "DELETE"],
 };
 // Configura CORS para Express y Socket.IO
@@ -49,28 +49,25 @@ app.use('/api', ApiMessagesRoute);
 
 // Configuración de Socket.IO
 io.on("connection", (socket) => {
+
     console.log("Usuario conectado a  Socket:", socket.id);
 
-     // Evento para unirse a una sala de chat específica
-     socket.on("join_chat", (chatId) => {
+    // Evento para unirse a una sala de chat específica
+    socket.on("join_chat", (chatId) => {
         socket.join(chatId);
-       // console.log(`Usuario ${socket.id} se unió al chat ${chatId}`);
     });
 
+    // Salir de un chat específico
     socket.on('leaveChat', (chatId) => {
-        socket.leave(chatId); // Salir de un chat específico
-       // console.log(`Usuario ${socket.id} salió del chat ${chatId}`);
-      });
+        socket.leave(chatId);
+    });
 
     // Evento para manejar la recepción de mensajes en tiempo real
-    socket.on("send_message",async (messageData) => {
-         // Emite el mensaje recibido a todos los usuarios conectados al chat específico
-         io.to(messageData.chatId).emit("new_message_received", messageData);
+    socket.on("send_message", async (messageData) => {
+        io.to(messageData.chatId).emit("new_message_received", messageData); // Emite el mensaje recibido a todos los usuarios conectados al chat específico
     });
 
-   
-
-    // Manejar desconexión
+    // Manejar la desconexión
     socket.on("disconnect", () => {
         console.log("Cliente desconectado:", socket.id);
     });

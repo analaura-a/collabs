@@ -1,7 +1,7 @@
 {
-  "name": "Collabs",
+  "name": "collabs",
   "version": "1.0.0",
-  "description": "Plataforma de búsqueda de colaboradores para proyectos voluntarios del rubro IT",
+  "description": "Plataforma de búsqueda de voluntarios para proyectos colaborativos del rubro IT",
   "main": "server.js",
   "type": "module",
   "scripts": {
