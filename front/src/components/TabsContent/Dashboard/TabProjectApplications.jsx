@@ -59,7 +59,7 @@ const TabProjectApplications = ({ project, projectId }) => {
                         <img src="../../assets/svg/requests-empty-state.svg" alt="Sin postulaciones" />
 
                         <div>
-                            <h3 className="title-32-medium">Aún no has recibido postulaciones</h3>
+                            <h3 className="title-32-medium">La convocatoria no tiene postulaciones</h3>
                             <p className="subtitle-18">Ten paciencia. O también puedes compartir la convocatoria del proyecto para llegar a más personas interesadas.</p>
                         </div>
                     </div>

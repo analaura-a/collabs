@@ -396,7 +396,7 @@ const ProjectDetailPage = () => {
                 <Modal
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
-                    title="¿Quieres postularte a colaborar en el proyecto Web de cuentos?"
+                    title={`¿Quieres postularte a colaborar en el proyecto ${project.name}?`}
                     subtitle="Puedes cancelar tu postulación en cualquier momento."
                     actions={[
                         { label: 'Cancelar', color: 'secondary', size: "large", width: "fullwidth", onClick: handleCloseModal },

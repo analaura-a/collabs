@@ -63,7 +63,7 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
                 {userRole === "Organizador" && !isCurrentUser && projectStatus != "Finalizado" &&
                     <DropdownButton options={[
                         {
-                            title: 'Echar del proyecto',
+                            title: 'Sacar del proyecto',
                             onClick: handleOpenModal
                         }
                     ]} />
