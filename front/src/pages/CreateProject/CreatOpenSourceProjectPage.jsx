@@ -30,7 +30,9 @@ const CreatOpenSourceProjectPage = () => {
 
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
+
     const [isStepValid, setIsStepValid] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { addToast } = useToast();
 
@@ -41,7 +43,7 @@ const CreatOpenSourceProjectPage = () => {
     const nextStep = () => {
         if (isStepValid && currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
-            setIsStepValid(false); 
+            setIsStepValid(false);
         }
     };
 
@@ -68,6 +70,8 @@ const CreatOpenSourceProjectPage = () => {
     };
 
     const handleComplete = async () => {
+
+        setIsSubmitting(true);
 
         const flattenedData = flattenFormData(formData);
 
@@ -106,6 +110,8 @@ const CreatOpenSourceProjectPage = () => {
                 title: 'Error al completar la creación del proyecto',
                 message: 'Ocurrió un error desconocido al intentar crear el proyecto. Inténtalo de nuevo más tarde.'
             });
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -127,6 +133,7 @@ const CreatOpenSourceProjectPage = () => {
                         prevStep={prevStep}
                         isNextDisabled={!isStepValid}
                         handleComplete={handleComplete}
+                        sendDisabled={isSubmitting}
                     />
                 </section>
 

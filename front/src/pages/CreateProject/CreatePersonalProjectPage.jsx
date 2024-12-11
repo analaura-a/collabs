@@ -37,7 +37,9 @@ const CreatePersonalProjectPage = () => {
 
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({});
+
     const [isStepValid, setIsStepValid] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { addToast } = useToast();
 
@@ -48,7 +50,7 @@ const CreatePersonalProjectPage = () => {
     const nextStep = () => {
         if (isStepValid && currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
-            setIsStepValid(false); 
+            setIsStepValid(false);
         }
     };
 
@@ -75,6 +77,8 @@ const CreatePersonalProjectPage = () => {
     };
 
     const handleComplete = async () => {
+
+        setIsSubmitting(true);
 
         // Excluir founder_role de los datos del proyecto
         const flattenedData = flattenFormData(formData);
@@ -112,6 +116,8 @@ const CreatePersonalProjectPage = () => {
                 title: 'Error al completar la creación del proyecto',
                 message: 'Ocurrió un error desconocido al intentar crear el proyecto. Inténtalo de nuevo más tarde.'
             });
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -133,6 +139,7 @@ const CreatePersonalProjectPage = () => {
                         prevStep={prevStep}
                         isNextDisabled={!isStepValid}
                         handleComplete={handleComplete}
+                        sendDisabled={isSubmitting}
                     />
                 </section>
 
