@@ -24,7 +24,7 @@ const OpenPositionAccordion = ({ title, children, onDelete }) => {
 
                 {children}
 
-                <Button type="button" size="small" color="secondary" onClick={onDelete}>
+                <Button type="button" size="small" color="red" onClick={onDelete}>
                     Eliminar
                 </Button>
             </div>

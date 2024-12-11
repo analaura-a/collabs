@@ -9,6 +9,7 @@ import EditProfessionalProfileForm from '../../components/Form/EditUserProfile/E
 import EditPreferencesForm from '../../components/Form/EditUserProfile/EditPreferencesForm';
 import EditPortfolioForm from '../../components/Form/EditUserProfile/EditPortfolioForm';
 import EditContactForm from '../../components/Form/EditUserProfile/EditContactForm';
+import Loader from '../../components/Loader/Loader';
 
 const EditUserProfilePage = () => {
 
@@ -16,10 +17,6 @@ const EditUserProfilePage = () => {
     const { user } = authState;
 
     const location = useLocation();
-
-    if (!user) {
-        return <div>Cargando...</div>; //Reemplazar por componente de carga
-    }
 
     const [selectedSection, setSelectedSection] = useState('account');
 
@@ -51,6 +48,8 @@ const EditUserProfilePage = () => {
                 return <EditAccountForm />;
         }
     };
+
+    if (!user) return <Loader />;
 
     return (
         <main className="edit-profile-page">

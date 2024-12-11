@@ -101,7 +101,7 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
 
             {projectType === "Personal" &&
                 <div className="user-card__professional-info">
-                    <h3 className="subtitle bold-text">Rol en el proyecto</h3>
+                    <h4 className="subtitle bold-text">Rol en el proyecto</h4>
                     <ul className="user-card__roles">
                         <li className="smaller-paragraph">{profile}</li>
                     </ul>
@@ -110,7 +110,7 @@ const TeamMemberCard = ({ member, projectType, projectStatus, userRole, projectI
 
             {projectStatus === "Finalizado" &&
                 <div className="user-card__professional-info">
-                    <h3 className="subtitle bold-text">¿Participó hasta el final?</h3>
+                    <h4 className="subtitle bold-text">¿Participó hasta el final?</h4>
                     <ul className="user-card__roles">
                         {member.status === "Activo" ? (
                             <li className="smaller-paragraph">Sí</li>
