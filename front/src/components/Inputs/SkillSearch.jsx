@@ -10,6 +10,7 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredSkills, setFilteredSkills] = useState([]);
     const [showAddOption, setShowAddOption] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const loadSkills = async () => {
         try {
@@ -51,8 +52,10 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
 
         if (!skills.includes(normalizedSkill)) {
             try {
+                setIsSubmitting(true);
                 await addSkill(normalizedSkill);
                 setSkills([...skills, normalizedSkill]);
+                setIsSubmitting(false);
             } catch (error) {
                 addToast({
                     type: 'error',
@@ -70,7 +73,7 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
     return (
         <div className="skill-search-container">
 
-            <form className="skill-search">
+            <form className="skill-search" onSubmit={(e) => { e.preventDefault(); }}>
 
                 <input
                     type="search"
@@ -93,7 +96,7 @@ const SkillSearch = ({ selectedSkills, onSkillAdd, onSkillRemove }) => {
 
                 {showAddOption && (
                     <ul className="skill-search-options">
-                        <li onClick={() => handleSkillAdd(searchTerm)}>
+                        <li onClick={() => { if (isSubmitting) { return } else { handleSkillAdd(searchTerm) } }}>
                             Agregar "{searchTerm.trim().charAt(0).toUpperCase() + searchTerm.trim().slice(1)}"
                         </li>
                     </ul>
