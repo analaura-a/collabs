@@ -107,7 +107,8 @@
         width: 100%;
         max-width: 586px;
         height: auto;
-        max-height: 90vh;
+        /* overflow-y: auto; */
+        /* max-height: 90vh; */
         padding: 32px;
 
         position: relative;
