@@ -1,6 +1,8 @@
 import React from 'react'
 import { createBrowserRouter } from "react-router-dom"
 
+import ScrollToTop from '../components/ScrollToTop/ScrollToTop.jsx'
+
 import MainLayout from '../layouts/MainLayout.jsx'
 import AuthLayout from '../layouts/AuthLayout.jsx'
 import Error404Page from '../pages/404Page/Error404Page.jsx'
@@ -40,7 +42,12 @@ const AppRoutes = createBrowserRouter([
 
     {
         path: "/",
-        element: <MainLayout />,
+        element: (
+            <>
+                <ScrollToTop />
+                <MainLayout />
+            </>
+        ),
         errorElement: <Error404Page />,
         children: [
             {
@@ -159,7 +166,12 @@ const AppRoutes = createBrowserRouter([
     },
     {
         path: "/auth",
-        element: <AuthLayout />,
+        element: (
+            <>
+                <ScrollToTop />
+                <AuthLayout />
+            </>
+        ),
         errorElement: <Error404Page />,
         children: [
             {
