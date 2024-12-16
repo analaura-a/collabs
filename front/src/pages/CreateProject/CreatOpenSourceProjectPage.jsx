@@ -133,7 +133,7 @@ const CreatOpenSourceProjectPage = () => {
                         prevStep={prevStep}
                         isNextDisabled={!isStepValid}
                         handleComplete={handleComplete}
-                        sendDisabled={isSubmitting}
+                        sendDisabled={!isStepValid || isSubmitting}
                     />
                 </section>
 

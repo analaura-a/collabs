@@ -139,7 +139,7 @@ const CreatePersonalProjectPage = () => {
                         prevStep={prevStep}
                         isNextDisabled={!isStepValid}
                         handleComplete={handleComplete}
-                        sendDisabled={isSubmitting}
+                        sendDisabled={!isStepValid || isSubmitting}
                     />
                 </section>
 
